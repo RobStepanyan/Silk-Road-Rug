@@ -1,0 +1,175 @@
+// Bootstrap
+// Required
+@import "../bootstrap/scss/functions";
+@import "../bootstrap/scss/variables";
+@import "../bootstrap/scss/mixins";
+// Optional
+@import '../bootstrap/scss/_navbar.scss';
+@import '../bootstrap/scss/utilities/_spacing.scss';
+@import '../bootstrap/scss/bootstrap-grid.scss';
+// End of bootstrap
+
+// AOS - Animation on scroll
+@import '../aos-master/src/sass/aos.scss';
+// End of AOS
+
+// Imported in html from /fonts
+$font-crimson: 'Crimson Text',
+serif;
+$font-work: 'Work Sans',
+sans-serif;
+
+$colors: (gray1: #101010,
+    gray2: #202020,
+    gray3: #303030,
+    gray4: #404040,
+    gray5: #505050,
+    gray6: #606060,
+    white: #fff,
+    black: #101010,
+
+    yellow1: darken(#F2C94C, 20%),
+    yellow2: #F2C94C,
+);
+
+@function c($color-name) {
+    @return map-get($colors, $color-name);
+}
+
+$gradients: (yellow: linear-gradient(145deg, lighten(c(yellow2), 5%), c(yellow1)));
+
+@function g($gradient-name) {
+    @return map-get($gradients, $gradient-name);
+}
+
+$transition-duration: .35s;
+$transition: all $transition-duration;
+
+body,
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: $font-work;
+    background: c(gray2);
+}
+
+a {
+    text-decoration: none;
+}
+
+.btn {
+    margin: 0 1rem;
+    transition: $transition;
+    padding: .75rem 2rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: c(black);
+    border: 2px solid;
+    border-image-slice: 1; // for gradient
+
+    &:hover {
+        box-shadow: 10px 10px 20px #0d0d0d,
+            -10px -10px 20px #333333;
+    }
+
+    &:active {
+        box-shadow: none;
+    }
+}
+
+.btn-primary {
+    background: g(yellow);
+    border-image-source: g(yellow);
+}
+
+.btn-secondary {
+    background: transparent;
+    border-image-source: g(yellow);
+    color: c(yellow2);
+}
+
+.row {
+    padding: 0 16px;
+}
+
+.navbar {
+    ul {
+        margin-top: 0;
+
+        a {
+            padding: 0 !important;
+            margin: 0 12px !important;
+            text-transform: uppercase;
+            transition: $transition;
+            font-size: 1rem;
+            letter-spacing: -0.035rem; //-3.5%
+            border-bottom: 1px solid transparent;
+
+            &:hover {
+                border-color: c(white);
+            }
+
+            &:last-child {
+                margin-right: 0 !important;
+            }
+
+            &.btn-primary {
+                padding: 0 8px !important;
+
+                &:hover {
+                    border-color: initial;
+                    color: c(black) !important;
+                }
+            }
+        }
+
+    }
+}
+
+section {
+    padding: 5rem 0;
+}
+
+.landing {
+    margin: 1rem 0;
+    max-width: 50%;
+
+    .sub-heading {
+        font-weight: bold;
+        font-size: 1.75rem;
+        color: c(gray6);
+        margin-bottom: 12px;
+    }
+
+    .heading {
+        font-family: $font-crimson;
+        font-weight: bold;
+        font-size: 4.5rem;
+        color: c(white);
+    }
+}
+
+.bg-parallax {
+    clip-path: polygon(100% 0, 100% 85%, 0 100%, 0 15%);
+    height: 500px;
+
+    background-image: url('../img/landing page img.jpg');
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-attachment: fixed !important;
+    background-color: c(gray3) !important;
+    opacity: .6 !important;
+}
+
+.squares {
+    background-image: url('../img/2squares.png');
+    background-size: contain;
+    margin: auto;
+    height: 250px;
+    width: 250px;
+    opacity: .04;
+}
