@@ -1,16 +1,16 @@
 // Bootstrap
 // Required
-@import "../bootstrap/scss/functions";
-@import "../bootstrap/scss/variables";
-@import "../bootstrap/scss/mixins";
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+@import "../node_modules/bootstrap/scss/mixins";
 // Optional
-@import '../bootstrap/scss/_navbar.scss';
-@import '../bootstrap/scss/utilities/_spacing.scss';
-@import '../bootstrap/scss/bootstrap-grid.scss';
+@import '../node_modules/bootstrap/scss/_navbar.scss';
+@import '../node_modules/bootstrap/scss/utilities/_spacing.scss';
+@import '../node_modules/bootstrap/scss/bootstrap-grid.scss';
 // End of bootstrap
 
 // AOS - Animation on scroll
-@import '../aos-master/src/sass/aos.scss';
+@import '../node_modules/aos/src/sass/aos.scss';
 // End of AOS
 
 // Imported in html from /fonts
