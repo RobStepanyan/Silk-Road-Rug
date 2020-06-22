@@ -5,13 +5,11 @@
 @import "../node_modules/bootstrap/scss/mixins";
 // Optional
 @import '../node_modules/bootstrap/scss/_navbar.scss';
+@import '../node_modules/bootstrap/scss/_transitions.scss';
+@import '../node_modules/bootstrap/scss/utilities/_position.scss';
 @import '../node_modules/bootstrap/scss/utilities/_spacing.scss';
 @import '../node_modules/bootstrap/scss/bootstrap-grid.scss';
 // End of bootstrap
-
-// AOS - Animation on scroll
-@import '../node_modules/aos/src/sass/aos.scss';
-// End of AOS
 
 // Imported in html from /fonts
 $font-crimson: 'Crimson Text',
@@ -20,6 +18,8 @@ $font-work: 'Work Sans',
 sans-serif;
 
 $colors: (gray1: #101010,
+    gray15:#151515,
+    gray18: #181818,
     gray2: #202020,
     gray3: #303030,
     gray4: #404040,
@@ -70,6 +70,22 @@ a {
     border: 2px solid;
     border-image-slice: 1; // for gradient
 
+    @include media-breakpoint-down(sm) {
+        & {
+            font-size: 1.1rem;
+            padding: .6rem 1.5rem;
+            margin: 0 .9rem;
+        }
+    }
+
+    @include media-breakpoint-down(xs) {
+        & {
+            font-size: 1rem;
+            padding: .6rem 1.5rem;
+            margin: 0 .5rem;
+        }
+    }
+
     &:hover {
         box-shadow: 10px 10px 20px #0d0d0d,
             -10px -10px 20px #333333;
@@ -96,8 +112,14 @@ a {
 }
 
 .navbar {
+    background: c(gray2);
+    transition: $transition;
+
     ul {
         margin-top: 0;
+        text-align: center;
+        padding: .5rem 0;
+        width: fit-content;
 
         a {
             padding: 0 !important;
@@ -107,6 +129,11 @@ a {
             font-size: 1rem;
             letter-spacing: -0.035rem; //-3.5%
             border-bottom: 1px solid transparent;
+
+            &.navbar-brand {
+                height: 50px;
+                padding: 0;
+            }
 
             &:hover {
                 border-color: c(white);
@@ -127,15 +154,52 @@ a {
         }
 
     }
+
+    @include media-breakpoint-down(sm) {
+        ul {
+            margin: 0 auto;
+
+            a {
+                margin: 0 !important;
+            }
+
+            li {
+                margin: 4px 0;
+            }
+        }
+    }
+}
+
+@include media-breakpoint-down(lg) {
+    .navbar {
+        background-color: c(gray18);
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    .navbar-shrink {
+        background-color: c(gray18);
+    }
+}
+
+header+section {
+    margin-top: 5rem;
 }
 
 section {
     padding: 5rem 0;
+
+    @include media-breakpoint-down(sm) {
+        & {
+            padding: 3rem 0;
+        }
+    }
 }
+
 
 .landing {
     margin: 1rem 0;
-    max-width: 50%;
+    padding: 0;
 
     .sub-heading {
         font-weight: bold;
@@ -150,26 +214,66 @@ section {
         font-size: 4.5rem;
         color: c(white);
     }
+
+    @include media-breakpoint-down(sm) {
+        .sub-heading {
+            font-size: 1.4rem;
+        }
+
+        .heading {
+            font-size: 3.5rem;
+        }
+    }
+
+    @include media-breakpoint-down(xs) {
+        .sub-heading {
+            font-size: 1rem;
+        }
+
+        .heading {
+            font-size: 2.5rem;
+        }
+    }
 }
 
 .bg-parallax {
     clip-path: polygon(100% 0, 100% 85%, 0 100%, 0 15%);
     height: 500px;
+    margin: 3rem 0;
 
     background-image: url('../img/landing page img.jpg');
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    background-size: contain !important;
-    background-attachment: fixed !important;
-    background-color: c(gray3) !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-attachment: fixed;
+    background-color: c(gray3);
     opacity: .6 !important;
+
+    @include media-breakpoint-down(lg) {
+        background-size: cover;
+    }
+
+    @include media-breakpoint-down(md) {
+        background-attachment: unset;
+    }
+
+    @include media-breakpoint-down(xs) {
+        clip-path: polygon(100% 0, 100% 95%, 0 100%, 0 5%);
+    }
 }
 
-.squares {
-    background-image: url('../img/2squares.png');
-    background-size: contain;
-    margin: auto;
-    height: 250px;
-    width: 250px;
-    opacity: .04;
+@keyframes slideUp {
+    0% {
+        transform: translate(0, -30px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+
+[data-animation="slideUp"] {
+    animation: slideUp 1s ease;
 }
