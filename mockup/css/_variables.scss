@@ -3,7 +3,7 @@ $font-primary: 'Crimson Text',
 serif;
 $font-secondary: 'Work Sans',
 sans-serif;
-// End of Fonts
+
 
 // Colors
 $colors: (gray1: #101010,
@@ -31,14 +31,24 @@ $gradients: (yellow: linear-gradient(145deg, lighten(c(yellow2), 5%), c(yellow1)
     @return map-get($gradients, $gradient-name);
 }
 
-// End of Colors
+
 
 // transitions
 $transition-duration: .35s;
 $transition: all $transition-duration;
-// End of transitions
+
 
 // border related
 $radius: .25rem;
 $border-width: 2px;
-// End of border related
+
+
+// gutter
+$padding: 15px;
+$margin: 15px;
+
+
+// Shadows
+$shadow-normal: 5px 5px 10px #191919;
+$shadow-neu:10px 10px 20px #0d0d0d,
+-10px -10px 20px #333333;

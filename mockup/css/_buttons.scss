@@ -19,14 +19,13 @@
     @include media-breakpoint-down(xs) {
         & {
             font-size: 1rem;
-            padding: .6rem 1.5rem;
+            padding: .5rem 1.3rem;
             margin: 0 .5rem;
         }
     }
 
     &:hover {
-        box-shadow: 10px 10px 20px #0d0d0d,
-            -10px -10px 20px #333333;
+        box-shadow: $shadow-neu;
     }
 
     &:active {

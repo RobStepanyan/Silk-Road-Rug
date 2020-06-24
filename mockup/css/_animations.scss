@@ -1,4 +1,4 @@
-@keyframes slideUp {
+@keyframes slideDown {
     0% {
         transform: translate(0, -30px);
         opacity: 0;
@@ -10,6 +10,7 @@
     }
 }
 
-[data-animation="slideUp"] {
-    animation: slideUp 1s ease;
+[data-animation="slideDown"],
+section {
+    animation: slideDown 1s ease;
 }

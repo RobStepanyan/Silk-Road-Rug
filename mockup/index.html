@@ -7,6 +7,9 @@
   <!-- Font Imports -->
   <link rel="stylesheet" href="./fonts/Crimson_Text/all/stylesheet.css">
   <link rel="stylesheet" href="./fonts/Work_Sans/static/all/stylesheet.css">
+  <!-- Slick Carousel -->
+  <link rel="stylesheet" href="./node_modules/slick-carousel/slick/slick.css">
+  <link rel="stylesheet" href="./node_modules/slick-carousel/slick/slick-theme.css">
 
   <link rel="stylesheet" href="./css/main.min.css">
   <title>Silk Road Rug</title>
@@ -16,7 +19,7 @@
   <header id="header">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="#top">
           <img src="./img/srri-logo-reversed.png" width="195" alt="Silk Road Rug Logo">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,10 +41,13 @@
               <a class="nav-link" href="#">Cart</a>
             </li>
             <li class="nav-item active">
+              <a class="nav-link" href="#">About us</a>
+            </li>
+            <li class="nav-item active">
               <a class="nav-link" href="#">Log in</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="#">About us</a>
+              <a class="nav-link" href="#">Sign Up</a>
             </li>
           </ul>
         </div>
@@ -53,23 +59,21 @@
   </header>
 
 
-  <section data-animation="slideUp">
+  <section>
     <div class="container">
-      <div class="row">
-        <div class="landing col-lg-9">
-          <div class="sub-heading">
-            Rugs Sales, Cleaning and Restoraton
-          </div>
-          <div class="heading">
-            We are Fulfilling Your Vision of the Ideal Room
-          </div>
+
+      <div class="landing col-lg-9">
+        <div class="sub-heading">
+          Rugs Sales, Cleaning and Restoraton
+        </div>
+        <div class="heading">
+          We are Fulfilling Your Vision of the Ideal Room
         </div>
       </div>
 
-      <div class="row">
-        <a href="" class="btn btn-primary ml-0">Our Shop</a>
-        <a href="" class="btn btn-secondary">Contact Us</a>
-      </div>
+
+      <a href="" class="btn btn-primary ml-0">Our Shop</a>
+      <a href="#services" class="btn btn-secondary js-scroll-trigger">Services</a>
 
       <div class="bg-parallax"></div>
     </div>
@@ -80,7 +84,17 @@
     <div class="container">
       <h1 class="center">I Want to Get...</h1>
       <div class="row p-lg-0">
-        <div class="col-lg-4">
+        <div class="col-sm-6 col-lg-4">
+          <div class="card">
+            <div class="card-heading">My Rug Cleaned</div>
+            <div class="card-text">
+              To protect your heirloom, we offer professional cleaning every 2 to 3 years and more often if it’s subject to frequent heavy traffic or accidents. Dirt particles and pet urine can cause the rug's fibers to become brittle... <b>Read more</b>
+            </div>
+            <div class="btn btn-secondary">Send a Request</div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-lg-4">
           <div class="card">
             <div class="card-heading">A New Rug</div>
             <div class="card-text">
@@ -89,31 +103,43 @@
             <div class="btn btn-primary">Shop for Rugs</div>
           </div>
         </div>
-        <div class="col-lg-4">
-          <div class="card">
-            <div class="card-heading">My Rug Cleaned</div>
-            <div class="card-text">
-              To protect your heirloom, we offer professional cleaning every 2 to 3 years and more often if it’s subject to frequent heavy traffic or accidents. Dirt particles and pet urine can cause the rug's fibers to become brittle... <b>Read more</b>
-            </div>
-            <div class="btn btn-primary">Send a Request</div>
-          </div>
-        </div>
-        <div class="col-lg-4">
+
+        <div class="col-sm-6 col-lg-4">
           <div class="card">
             <div class="card-heading">My Rug Restored</div>
             <div class="card-text">
               While handwoven Oriental Rugs are famous for their durability, some older carpets may need restoration. Restoration differs from repair in its efforts to accurately duplicate the materials and construction... <b>Read more</b>
             </div>
-            <div class="btn btn-primary">Send a Request</div>
+            <div class="btn btn-secondary">Send a Request</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="shop">
+  <section id="gallery">
     <div class="container">
-      <h1 class="center">Shop</h1>
+      <h1 class="center">Gallery</h1>
+
+      <hr>
+      <p>Swipe for photos</p>
+      <div class="carousel">
+        <div>
+          <img src="./img/interior/6b2a2570sm_orig.jpg" alt="">
+        </div>
+        <div>
+          <img src="./img/interior/6b2a3049sm_orig.jpg" alt="">
+        </div>
+        <div>
+          <img src="./img/landing page img.jpg" alt="">
+        </div>
+        <div>
+          <img src="./img/interior/mckenzie-170_orig.jpg" alt="">
+        </div>
+        <div>
+          <img src="./img/interior/screen-shot-2017-11-19-at-6-20-21-pm_orig.png" alt="">
+        </div>
+      </div>
     </div>
   </section>
 
@@ -172,6 +198,7 @@
   <script src="./node_modules/jquery/dist/jquery.min.js"></script>
   <script src="./node_modules/jquery-easing/dist/jquery.easing.1.3.umd.min.js"></script>
   <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="./node_modules/slick-carousel/slick/slick.min.js"></script>
   <script src="./js/main.js"></script>
 </body>
 

@@ -4,12 +4,12 @@
 @import "../node_modules/bootstrap/scss/variables";
 @import "../node_modules/bootstrap/scss/mixins";
 // Optional
-@import '../node_modules/bootstrap/scss/_navbar.scss';
-@import '../node_modules/bootstrap/scss/_transitions.scss';
-@import '../node_modules/bootstrap/scss/utilities/_position.scss';
-@import '../node_modules/bootstrap/scss/utilities/_spacing.scss';
-@import '../node_modules/bootstrap/scss/bootstrap-grid.scss';
-// End of bootstrap
+@import '../node_modules/bootstrap/scss/_navbar';
+@import '../node_modules/bootstrap/scss/_transitions';
+@import '../node_modules/bootstrap/scss/utilities/_position';
+@import '../node_modules/bootstrap/scss/utilities/_spacing';
+@import '../node_modules/bootstrap/scss/bootstrap-grid';
+
 
 @import 'variables';
 @import 'animations';
@@ -31,33 +31,30 @@ a {
     text-decoration: none;
 }
 
-.row {
-    padding: 0 16px;
-}
-
 .navbar {
+    padding: $padding;
     background: c(gray2);
     transition: $transition;
+
+    .navbar-brand {
+        height: 50px;
+        padding: 0;
+    }
 
     ul {
         margin-top: 0;
         text-align: center;
-        padding: .5rem 0;
+        padding: .5*$padding 0;
         width: fit-content;
 
         a {
             padding: 0 !important;
-            margin: 0 12px !important;
+            margin: 0 .75*$margin !important;
             text-transform: uppercase;
             transition: $transition;
             font-size: 1rem;
             letter-spacing: -0.035rem; //-3.5%
             border-bottom: 1px solid transparent;
-
-            &.navbar-brand {
-                height: 50px;
-                padding: 0;
-            }
 
             &:hover {
                 border-color: c(white);
@@ -68,7 +65,7 @@ a {
             }
 
             &.btn-primary {
-                padding: 0 8px !important;
+                padding: 0 .5rem !important;
 
                 &:hover {
                     border-color: initial;
@@ -94,12 +91,16 @@ a {
     }
 }
 
-@include media-breakpoint-down(lg) {
+@include media-breakpoint-down(sm) {
     .navbar {
         background-color: c(gray18);
 
-        .navbar-brand img {
-            width: 150px;
+        .navbar-brand {
+            height: 39px;
+
+            img {
+                width: 150px;
+            }
         }
     }
 }
@@ -110,30 +111,62 @@ a {
     }
 }
 
-header+section {
-    margin-top: 5rem;
-}
-
 section {
-    padding: 3rem 0;
+    margin: $margin 0;
 
-    @include media-breakpoint-down(sm) {
-        & {
-            padding: 3rem 0;
+    .container {
+        padding-top: 3*$padding;
+        padding-bottom: 3*$padding;
+
+        @include media-breakpoint-down(lg) {
+            & {
+                padding-top: 2*$padding;
+                padding-bottom: 2*$padding;
+            }
         }
     }
 }
 
+header+section {
+    margin-top: 5*$margin;
+}
+
+#gallery {
+    img {
+        margin-bottom: 2*$margin;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+        max-height: 800px;
+        cursor: pointer;
+        transition: $transition;
+    }
+
+    h1 {
+        margin-bottom: 0;
+    }
+
+    p {
+        color: c(white);
+        margin: 0;
+        margin-bottom: $margin;
+        text-align: center;
+    }
+
+    hr {
+        background: c(gray3);
+    }
+}
 
 .landing {
-    margin: 1rem 0;
+    margin: $margin 0;
     padding: 0;
 
     .sub-heading {
         font-weight: bold;
         font-size: 1.75rem;
         color: c(gray6);
-        margin-bottom: 12px;
+        margin-bottom: .75*$margin;
     }
 
     .heading {
@@ -167,14 +200,14 @@ section {
 .bg-parallax {
     // clip-path: polygon(100% 0, 100% 85%, 0 100%, 0 15%);
     height: 500px;
-    margin-top: 3rem;
+    margin-top: 3*$margin;
     background-image: url('../img/landing page img.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
     background-attachment: fixed;
     background-color: c(gray3);
-    opacity: .6 !important;
+    opacity: .8 !important;
 
     @include media-breakpoint-down(lg) {
         background-size: cover;
@@ -197,11 +230,11 @@ hr {
 
 footer {
     background: c(gray18);
-    padding-top: 3rem;
+    padding-top: 3*$padding;
     letter-spacing: -0.035rem;
 
     .row {
-        padding-bottom: 3rem;
+        padding-bottom: 3*$padding;
     }
 
     .footer-heading {
@@ -212,9 +245,7 @@ footer {
     }
 
     .col-auto {
-        padding-left: 0;
-        padding-right: 2rem;
-        margin-bottom: 1rem;
+        margin-bottom: $margin;
     }
 
     ul {
@@ -234,7 +265,7 @@ footer {
         svg {
             height: 1rem;
             fill: c(white);
-            margin-right: .25rem;
+            margin-right: .25*$margin;
         }
 
         a {
@@ -263,17 +294,16 @@ footer {
 }
 
 .card {
-    padding: 2rem;
-    margin-bottom: 2rem;
+    padding: 2*$padding;
+    margin-bottom: 2*$margin;
     background-color: c(gray2);
-    box-shadow: 10px 10px 20px #0d0d0d,
-        -10px -10px 20px #333333;
+    box-shadow: $shadow-neu;
 
     .card-heading {
         color: c(white);
         font-weight: 600;
         font-size: 2rem;
-        margin-bottom: 2rem*.25;
+        margin-bottom: 2*$margin*.25;
     }
 
     .card-text {
@@ -284,8 +314,31 @@ footer {
 
     .btn {
         margin: 0 auto;
-        margin-top: 2rem;
+        margin-top: 2*$margin;
         width: fit-content;
         cursor: pointer;
     }
+}
+
+.slick-prev,
+.slick-next {
+    transform: scale(.3);
+
+    @include media-breakpoint-down(lg) {
+        & {
+            display: none !important;
+        }
+    }
+}
+
+.slick-prev {
+    left: -30px;
+}
+
+.slick-prev:before {
+    content: url('../img/left-icon.png');
+}
+
+.slick-next:before {
+    content: url('../img/right-icon.png');
 }

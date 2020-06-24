@@ -27,3 +27,15 @@ $(document).resize(scrollToTarget())
 $(".js-scroll-trigger").click(function () {
     $(".navbar-collapse").collapse("hide");
 });
+
+$(document).ready(() => {
+    $('.carousel').slick({
+        cssEase: 'ease',
+        autoplay: true,
+        autoplaySpeed: 5000,
+        adaptiveHeight: true,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+    });
+});
