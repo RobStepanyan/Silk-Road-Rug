@@ -1,0 +1,51 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $font-primary;
+    font-weight: bold;
+    color: c(white);
+    margin: 0; // Disabling default margins
+
+    &.center {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+h1 {
+    font-size: 3rem;
+    margin-bottom: 3rem*.75;
+}
+
+h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2.5rem*.75;
+}
+
+h3 {
+    font-size: 2rem;
+    margin-bottom: 2rem*.75;
+}
+
+h4 {
+    font-size: 1.75rem;
+    margin-bottom: 1.75rem*.75;
+}
+
+h5 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem*.75;
+}
+
+h6 {
+    font-size: 1.25rem;
+    margin-bottom: 1.25rem*.75;
+}
+
+b,
+strong {
+    font-weight: 600;
+}

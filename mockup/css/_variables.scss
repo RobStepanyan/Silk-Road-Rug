@@ -1,0 +1,44 @@
+// Imported in html from /fonts
+$font-primary: 'Crimson Text',
+serif;
+$font-secondary: 'Work Sans',
+sans-serif;
+// End of Fonts
+
+// Colors
+$colors: (gray1: #101010,
+    gray15:#151515,
+    gray18: #181818,
+    gray2: #202020,
+    gray3: #303030,
+    gray4: #404040,
+    gray5: #505050,
+    gray6: #606060,
+    white: #fff,
+    black: #101010,
+
+    yellow1: darken(#F2C94C, 20%),
+    yellow2: #F2C94C,
+);
+
+@function c($color-name) {
+    @return map-get($colors, $color-name);
+}
+
+$gradients: (yellow: linear-gradient(145deg, lighten(c(yellow2), 5%), c(yellow1)));
+
+@function g($gradient-name) {
+    @return map-get($gradients, $gradient-name);
+}
+
+// End of Colors
+
+// transitions
+$transition-duration: .35s;
+$transition: all $transition-duration;
+// End of transitions
+
+// border related
+$radius: .25rem;
+$border-width: 2px;
+// End of border related
