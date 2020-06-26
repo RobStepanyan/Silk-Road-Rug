@@ -1,3 +1,8 @@
+body {
+    font-family: "Work Sans", sans-serif;
+    font-weight: normal;
+}
+
 h1,
 h2,
 h3,
@@ -16,33 +21,82 @@ h6 {
 }
 
 h1 {
-    font-size: 3rem;
-    margin-bottom: 2rem;
+    font-size: 2.5rem;
+}
+
+@include media-breakpoint-up(sm) {
+    h1 {
+        font-size: 3.125rem
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    h1 {
+        font-size: 3.75rem
+    }
 }
 
 h2 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+@include media-breakpoint-up(sm) {
+    h2 {
+        font-size: 1.75rem
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    h2 {
+        font-size: 2rem
+    }
 }
 
 h3 {
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    font-size: 1.375rem;
+}
+
+@include media-breakpoint-up(sm) {
+    h3 {
+        font-size: 1.375rem
+    }
+}
+
+@include media-breakpoint-up(lg) {
+    h3 {
+        font-size: 1.5rem
+    }
 }
 
 h4 {
-    font-size: 1.75rem;
-    margin-bottom: 1rem;
+    font-size: 1.25rem;
 }
 
 h5 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
+    font-size: 1.125rem;
 }
 
 h6 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+p {
+    font-size: .875rem;
+    line-height: 1.5;
+}
+
+a {
+    font-size: .875rem;
+}
+
+@include media-breakpoint-up(sm) {
+    p {
+        font-size: 1rem
+    }
+
+    a {
+        font-size: 1.1rem;
+    }
 }
 
 b,

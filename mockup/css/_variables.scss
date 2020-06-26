@@ -5,34 +5,6 @@ $font-secondary: 'Work Sans',
 sans-serif;
 
 
-// Colors
-$colors: (gray1: #101010,
-    gray15:#151515,
-    gray18: #181818,
-    gray2: #202020,
-    gray3: #303030,
-    gray4: #404040,
-    gray5: #505050,
-    gray6: #606060,
-    white: #fff,
-    black: #101010,
-
-    yellow1: darken(#F2C94C, 20%),
-    yellow2: #F2C94C,
-);
-
-@function c($color-name) {
-    @return map-get($colors, $color-name);
-}
-
-$gradients: (yellow: linear-gradient(145deg, lighten(c(yellow2), 5%), c(yellow1)));
-
-@function g($gradient-name) {
-    @return map-get($gradients, $gradient-name);
-}
-
-
-
 // transitions
 $transition-duration: .35s;
 $transition: all $transition-duration;
@@ -50,5 +22,6 @@ $margin: 15px;
 
 // Shadows
 $shadow-normal: 5px 5px 10px #191919;
+$shadow-vertical: 0px 5px 10px #191919;
 $shadow-neu:10px 10px 20px #0d0d0d,
 -10px -10px 20px #333333;

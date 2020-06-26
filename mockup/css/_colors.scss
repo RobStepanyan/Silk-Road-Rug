@@ -1,0 +1,65 @@
+// Colors
+$dark0: #121212;
+$colors: (dark0: #121212,
+    dark1: mix($dark0, #fff, 95%),
+    dark2: mix($dark0, #fff, 93%),
+    dark3: mix($dark0, #fff, 92%),
+    dark4: mix($dark0, #fff, 91%),
+    dark5: mix($dark0, #fff, 89%),
+    dark6: mix($dark0, #fff, 88%),
+    dark7: mix($dark0, #fff, 86%),
+    dark8: mix($dark0, #fff, 85%),
+    black: #101010,
+
+    white: #fff,
+    // bright1: rgba(#fff, .95),
+    // bright2: rgba(#fff, .93),
+    // bright3: rgba(#fff, .92),
+    // bright4: rgba(#fff, .91),
+    // bright5: rgba(#fff, .89),
+    // bright6: rgba(#fff, .88),
+    // bright7: rgba(#fff, .86),
+    // bright8: rgba(#fff, .85),
+
+
+    yellow1: darken(#F2C94C, 20%),
+    yellow2: #F2C94C,
+);
+
+@function c($color-name) {
+    @return map-get($colors, $color-name);
+}
+
+$gradients: (yellow: linear-gradient(145deg, lighten(c(yellow2), 5%), c(yellow1)));
+
+@function g($gradient-name) {
+    @return map-get($gradients, $gradient-name);
+}
+
+
+// Surface colors, elevations
+body {
+    background: c(dark0)
+}
+
+section {
+    background: c(dark1);
+    box-shadow: $shadow-vertical;
+}
+
+hr {
+    background: c(dark2)
+}
+
+footer {
+    background: c(dark1)
+}
+
+.card {
+    background: c(dark2)
+}
+
+.navbar {
+    background: c(dark3);
+    box-shadow: $shadow-vertical;
+}

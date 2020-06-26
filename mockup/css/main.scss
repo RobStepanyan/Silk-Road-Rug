@@ -6,12 +6,13 @@
 // Optional
 @import '../node_modules/bootstrap/scss/_navbar';
 @import '../node_modules/bootstrap/scss/_transitions';
-@import '../node_modules/bootstrap/scss/utilities/_position';
-@import '../node_modules/bootstrap/scss/utilities/_spacing';
 @import '../node_modules/bootstrap/scss/bootstrap-grid';
+@import '../node_modules/bootstrap/scss/utilities/spacing';
+@import '../node_modules/bootstrap/scss/utilities/position';
 
 
 @import 'variables';
+@import 'colors';
 @import 'animations';
 @import 'buttons';
 @import 'typography';
@@ -23,8 +24,6 @@ html {
 
 body {
     margin: 0;
-    font-family: $font-secondary;
-    background: c(gray2);
 }
 
 a {
@@ -33,11 +32,23 @@ a {
 
 .navbar {
     padding: $padding;
-    background: c(gray2);
     transition: $transition;
 
     .navbar-brand {
         height: 50px;
+        padding: 0;
+    }
+
+    .navbar-toggler {
+        color: rgba(255, 255, 255, 0.55);
+        border-color: rgba(255, 255, 255, 0.1);
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e")
+        }
+    }
+
+    .container {
         padding: 0;
     }
 
@@ -48,6 +59,7 @@ a {
         width: fit-content;
 
         a {
+            color: c(white);
             padding: 0 !important;
             margin: 0 .75*$margin !important;
             text-transform: uppercase;
@@ -93,8 +105,6 @@ a {
 
 @include media-breakpoint-down(sm) {
     .navbar {
-        background-color: c(gray18);
-
         .navbar-brand {
             height: 39px;
 
@@ -105,30 +115,20 @@ a {
     }
 }
 
-@include media-breakpoint-up(lg) {
-    .navbar-shrink {
-        background-color: c(gray18);
-    }
-}
-
 section {
     margin: $margin 0;
-
-    .container {
-        padding-top: 3*$padding;
-        padding-bottom: 3*$padding;
-
-        @include media-breakpoint-down(lg) {
-            & {
-                padding-top: 2*$padding;
-                padding-bottom: 2*$padding;
-            }
-        }
-    }
+    padding-top: 2*$padding;
+    padding-bottom: 2*$padding;
 }
 
 header+section {
-    margin-top: 5*$margin;
+    margin-top: 6*$margin;
+}
+
+#services {
+    h1 {
+        margin-bottom: 2*$margin;
+    }
 }
 
 #gallery {
@@ -152,10 +152,6 @@ header+section {
         margin-bottom: $margin;
         text-align: center;
     }
-
-    hr {
-        background: c(gray3);
-    }
 }
 
 .landing {
@@ -164,21 +160,21 @@ header+section {
 
     .sub-heading {
         font-weight: bold;
-        font-size: 1.75rem;
-        color: c(gray6);
-        margin-bottom: .75*$margin;
+        font-size: 1rem;
+        color: rgba(#fff, .5);
+        margin-bottom: .5*$margin;
     }
 
     .heading {
+        color: c(white);
         font-family: $font-primary;
         font-weight: bold;
-        font-size: 4.5rem;
-        color: c(white);
+        font-size: 2rem;
     }
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-up(sm) {
         .sub-heading {
-            font-size: 1.4rem;
+            font-size: 1.75rem;
         }
 
         .heading {
@@ -186,13 +182,13 @@ header+section {
         }
     }
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-up(lg) {
         .sub-heading {
-            font-size: 1rem;
+            margin-bottom: .75*$margin;
         }
 
         .heading {
-            font-size: 2.5rem;
+            font-size: 4.5rem;
         }
     }
 }
@@ -206,7 +202,7 @@ header+section {
     background-repeat: no-repeat;
     background-size: contain;
     background-attachment: fixed;
-    background-color: c(gray3);
+    background-color: c(dark1);
     opacity: .8 !important;
 
     @include media-breakpoint-down(lg) {
@@ -229,7 +225,6 @@ hr {
 }
 
 footer {
-    background: c(gray18);
     padding-top: 3*$padding;
     letter-spacing: -0.035rem;
 
@@ -280,10 +275,6 @@ footer {
         }
     }
 
-    hr {
-        background: c(gray4);
-    }
-
     .copy {
         line-height: 3rem;
         text-align: right;
@@ -296,8 +287,7 @@ footer {
 .card {
     padding: 2*$padding;
     margin-bottom: 2*$margin;
-    background-color: c(gray2);
-    box-shadow: $shadow-neu;
+    box-shadow: $shadow-normal;
 
     .card-heading {
         color: c(white);
