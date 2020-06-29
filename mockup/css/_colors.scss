@@ -11,6 +11,10 @@ $colors: (dark0: #121212,
     dark8: mix($dark0, #fff, 85%),
     black: #101010,
 
+    gray1: darken(#ACACAC, 20%),
+    gray2: darken(#ACACAC, 10%),
+    gray3: #ACACAC,
+
     white: #fff,
     // bright1: rgba(#fff, .95),
     // bright2: rgba(#fff, .93),
@@ -42,24 +46,52 @@ body {
     background: c(dark0)
 }
 
+footer {
+    background: c(dark1)
+}
+
 section {
     background: c(dark1);
-    box-shadow: $shadow-vertical;
+    box-shadow: $shadow1;
 }
 
 hr {
     background: c(dark2)
 }
 
-footer {
-    background: c(dark1)
+.card,
+.shop-filter-card {
+    background: c(dark2);
+    box-shadow: $shadow-normal;
 }
 
-.card {
-    background: c(dark2)
+.dropdown-menu {
+    background: c(dark3);
+    box-shadow: $shadow-normal;
+
+    a:hover {
+        background: c(dark5);
+    }
 }
 
 .navbar {
-    background: c(dark3);
-    box-shadow: $shadow-vertical;
+    background: rgba(c(dark3), .9);
+    box-shadow: $shadow1;
+    backdrop-filter: blur(15px);
+
+    .hamburger-inner {
+
+        &,
+        &:after,
+        &:before {
+            background-color: c(gray3)
+        }
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    .navbar-collapse {
+        background: c(dark3);
+        box-shadow: $shadow1;
+    }
 }

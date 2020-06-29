@@ -31,8 +31,8 @@ $(".js-scroll-trigger").click(function () {
 $(document).ready(() => {
     $('.carousel').slick({
         cssEase: 'ease',
-        autoplay: true,
-        autoplaySpeed: 5000,
+        // autoplay: true,
+        // autoplaySpeed: 5000,
         adaptiveHeight: true,
         slidesToShow: 1,
         slidesToScroll: 1,

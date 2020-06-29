@@ -1,4 +1,6 @@
 .btn {
+    display: block;
+    width: fit-content;
     padding: .5*$padding 1.3*$padding;
     margin: 0 .5*$margin;
     transition: $transition;
@@ -6,6 +8,7 @@
     color: c(black);
     border: 2px solid;
     border-image-slice: 1; // for gradient
+    cursor: pointer;
 
     @include media-breakpoint-up(sm) {
         & {
