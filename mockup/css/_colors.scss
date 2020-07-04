@@ -27,7 +27,7 @@ $colors: (dark0: #121212,
 
 
     yellow1: darken(#F2C94C, 20%),
-    yellow2: #F2C94C,
+    yellow2: #F2C94C, // Primary
 );
 
 @function c($color-name) {
@@ -74,10 +74,22 @@ hr {
     }
 }
 
-.navbar {
+.sidenav {
     background: rgba(c(dark3), .9);
     box-shadow: $shadow1;
     backdrop-filter: blur(15px);
+}
+
+.navbar {
+    background: rgba(c(dark4), .9);
+    box-shadow: $shadow1;
+    backdrop-filter: blur(15px);
+
+    a {
+        &:hover {
+            border-color: c(yellow2);
+        }
+    }
 
     .hamburger-inner {
 

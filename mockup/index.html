@@ -16,255 +16,293 @@
 </head>
 
 <body>
-  <header id="header">
-    <nav class="navbar navbar-expand-md fixed-top">
-      <div class="container">
-
-        <button class="hamburger" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+  <nav class="navbar fixed-top">
+    <div class="container">
+      <div class="mr-auto">
+        <button id="sidebarToggle" class="hamburger" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
           <span class="hamburger-box">
             <span class="hamburger-inner"></span>
           </span>
         </button>
-
-        <a class="navbar-brand" href="#top">
-          <img src="./img/srri-logo-reversed.png" alt="Silk Road Rug Logo">
-        </a>
-        <a href="" class="navbar-cart">
+      </div>
+      <a class="navbar-brand" href="#top">
+        <img src="./img/srri-logo-reversed.png" alt="Silk Road Rug Logo">
+      </a>
+      <div class="ml-auto">
+        <a href="" class="navbar-icon">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
             <path
                   d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z" />
           </svg>
         </a>
-
-        <div class="collapse navbar-collapse justify-content-end" id="navbar">
-          <ul class="navbar-nav" id="nav">
-            <li class="nav-item active">
-              <a class="btn-primary nav-link js-scroll-trigger" href="#shop">Shop</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link js-scroll-trigger" href="#services">Services</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Cart</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">About us</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Log in</a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Sign Up</a>
-            </li>
-          </ul>
-        </div>
-
-      </div>
-
-    </nav>
-
-  </header>
-
-
-  <section>
-    <div class="container">
-
-      <div class="landing col-lg-9">
-        <div class="sub-heading">
-          Rugs Sales, Cleaning and Restoraton
-        </div>
-        <div class="heading">
-          We are Fulfilling Your Vision of the Ideal Room
-        </div>
-      </div>
-
-      <div class="d-flex">
-        <a href="#shop" class="btn btn-primary ml-0 js-scroll-trigger">Our Shop</a>
-        <a href="#services" class="btn btn-secondary js-scroll-trigger">Services</a>
-      </div>
-
-      <div class="bg-parallax"></div>
-    </div>
-
-  </section>
-
-  <section id="services">
-    <div class="container">
-      <h1 class="center">I Want to Get...</h1>
-      <div class="row">
-        <div class="col-md-6 col-lg-4">
-          <div class="card">
-            <h2 class="card-title">My Rug Cleaned</h2>
-            <div class="card-text">
-              To protect your heirloom, we offer professional cleaning every 2 to 3 years and more often if it’s subject to frequent heavy traffic or accidents. Dirt particles and pet urine can cause the rug's fibers to become brittle... <b>Read more</b>
-            </div>
-            <a class="btn btn-secondary">Send a Request</a>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-          <div class="card">
-            <h2 class="card-title">A New Rug</h2>
-            <div class="card-text">
-              At Silk Road Rugs we specialize in fine antique, traditional, modern, custom rugs and European tapestries to meet your every interior design need. We work with the trade, architects and designers to provide the fin... <b>Read more</b>
-            </div>
-            <a href="#shop" class="btn btn-primary js-scroll-trigger">Shop for Rugs</a>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4">
-          <div class="card">
-            <h2 class="card-title">My Rug Restored</h2>
-            <div class="card-text">
-              While handwoven Oriental Rugs are famous for their durability, some older carpets may need restoration. Restoration differs from repair in its efforts to accurately duplicate the materials and construction... <b>Read more</b>
-            </div>
-            <a class="btn btn-secondary">Send a Request</a>
-          </div>
-        </div>
       </div>
     </div>
-  </section>
 
-  <section id="gallery">
-    <div class="container">
-      <h1 class="center">Gallery</h1>
-
-      <hr>
-      <p>Swipe for photos</p>
-      <div class="carousel">
-        <div>
-          <img src="./img/interior/6b2a2570sm_orig.jpg" alt="">
+  </nav>
+  <div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+      <nav class="sidenav accordion sidenav-dark" id="sidenavAccordion">
+        <div class="sidenav-menu">
+          <div class="nav">
+            <div class="sidenav-menu-heading">Core</div>
+            <a class="nav-link" href="index.html">
+              <div class="nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+              Dashboard
+            </a>
+            <div class="sidenav-menu-heading">Interface</div>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+              <div class="nav-link-icon"><i class="fas fa-columns"></i></div>
+              Layouts
+              <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+              <nav class="sidenav-menu-nested nav">
+                <a class="nav-link" href="layout-static.html">Static Navigation</a>
+                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+              </nav>
+            </div>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+              <div class="nav-link-icon"><i class="fas fa-book-open"></i></div>
+              Pages
+              <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            </a>
+            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+              <nav class="sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                  Authentication
+                  <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                  <nav class="sidenav-menu-nested nav">
+                    <a class="nav-link" href="login.html">Login</a>
+                    <a class="nav-link" href="register.html">Register</a>
+                    <a class="nav-link" href="password.html">Forgot Password</a>
+                  </nav>
+                </div>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                  Error
+                  <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                  <nav class="sidenav-menu-nested nav">
+                    <a class="nav-link" href="401.html">401 Page</a>
+                    <a class="nav-link" href="404.html">404 Page</a>
+                    <a class="nav-link" href="500.html">500 Page</a>
+                  </nav>
+                </div>
+              </nav>
+            </div>
+            <div class="sidenav-menu-heading">Addons</div>
+            <a class="nav-link" href="charts.html">
+              <div class="nav-link-icon"><i class="fas fa-chart-area"></i></div>
+              Charts
+            </a>
+            <a class="nav-link" href="tables.html">
+              <div class="nav-link-icon"><i class="fas fa-table"></i></div>
+              Tables
+            </a>
+          </div>
         </div>
-        <div>
-          <img src="./img/interior/6b2a3049sm_orig.jpg" alt="">
-        </div>
-        <div>
-          <img src="./img/interior/mckenzie-170_orig.jpg" alt="">
-        </div>
-        <div>
-          <img src="./img/interior/screen-shot-2017-11-19-at-6-20-21-pm_orig.png" alt="">
-        </div>
-      </div>
+      </nav>
     </div>
-  </section>
+    <div id="layoutSidenav_content">
+      <section>
+        <div class="container">
 
-  <section id="shop">
-    <div class="container">
-      <h1 class="center">Shop</h1>
+          <div class="landing col-lg-9">
+            <div class="sub-heading">
+              Rugs Sales, Cleaning and Restoraton
+            </div>
+            <div class="heading">
+              We are Fulfilling Your Vision of the Ideal Room
+            </div>
+          </div>
 
-      <hr>
-      <p>Find a perfect rug</p>
+          <div class="d-flex">
+            <a href="#shop" class="btn btn-primary ml-0 js-scroll-trigger">Our Shop</a>
+            <a href="#services" class="btn btn-secondary js-scroll-trigger">Services</a>
+          </div>
 
-      <div class="row justify-content-center">
-        <div class="col-sm-6 col-lg-3">
-          <div class="shop-filter-card">
-            <h2 class="card-title">Size</h2>
-            <div class="dropdown">
-              <a class="btn card-btn" role="button" id="shop-sizes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                All Sizes
-              </a>
-              <div class="dropdown-menu" aria-labelledby="shop-sizes">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+          <div class="bg-parallax"></div>
+        </div>
+
+      </section>
+
+      <section id="shop">
+        <div class="container">
+          <h1 class="center">Shop</h1>
+
+          <hr>
+          <p>Find a perfect rug</p>
+
+          <div class="row justify-content-center">
+            <div class="col-sm-6 col-lg-3">
+              <div class="shop-filter-card">
+                <h2 class="card-title">Size</h2>
+                <div class="dropdown">
+                  <a class="btn card-btn" role="button" id="shop-sizes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    All Sizes
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="shop-sizes">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="shop-filter-card">
+                <h2 class="card-title">Style</h2>
+                <div class="dropdown">
+                  <a class="btn card-btn" role="button" id="shop-styles" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    All Styles
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="shop-styles">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+              <div class="shop-filter-card">
+                <h2 class="card-title">Color</h2>
+                <div class="dropdown">
+                  <a class="btn card-btn" role="button" id="shop-colors" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    All Colors
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="shop-colors">
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-sm-6 col-lg-3">
-          <div class="shop-filter-card">
-            <h2 class="card-title">Style</h2>
-            <div class="dropdown">
-              <a class="btn card-btn" role="button" id="shop-styles" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                All Styles
-              </a>
-              <div class="dropdown-menu" aria-labelledby="shop-styles">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+      </section>
+
+      <section id="services">
+        <div class="container">
+          <h1 class="center">I Want to Get...</h1>
+          <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+              <div class="card">
+                <h2 class="card-title">My Rug Cleaned</h2>
+                <div class="card-text">
+                  To protect your heirloom, we offer professional cleaning every 2 to 3 years and more often if it’s subject to frequent heavy traffic or accidents. Dirt particles and pet urine can cause the rug's fibers to become brittle... <b>Read more</b>
+                </div>
+                <a class="btn btn-secondary">Send a Request</a>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <div class="card">
+                <h2 class="card-title">A New Rug</h2>
+                <div class="card-text">
+                  At Silk Road Rugs we specialize in fine antique, traditional, modern, custom rugs and European tapestries to meet your every interior design need. We work with the trade, architects and designers to provide the fin... <b>Read more</b>
+                </div>
+                <a href="#shop" class="btn btn-primary js-scroll-trigger">Shop for Rugs</a>
+              </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4">
+              <div class="card">
+                <h2 class="card-title">My Rug Restored</h2>
+                <div class="card-text">
+                  While handwoven Oriental Rugs are famous for their durability, some older carpets may need restoration. Restoration differs from repair in its efforts to accurately duplicate the materials and construction... <b>Read more</b>
+                </div>
+                <a class="btn btn-secondary">Send a Request</a>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-sm-6 col-lg-3">
-          <div class="shop-filter-card">
-            <h2 class="card-title">Color</h2>
-            <div class="dropdown">
-              <a class="btn card-btn" role="button" id="shop-colors" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                All Colors
-              </a>
-              <div class="dropdown-menu" aria-labelledby="shop-colors">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
+      </section>
+
+      <section id="gallery">
+        <div class="container">
+          <h1 class="center">Gallery</h1>
+
+          <hr>
+          <p>Swipe for photos</p>
+          <div class="carousel">
+            <div>
+              <img src="./img/interior/6b2a2570sm_orig.jpg" alt="">
+            </div>
+            <div>
+              <img src="./img/interior/6b2a3049sm_orig.jpg" alt="">
+            </div>
+            <div>
+              <img src="./img/interior/mckenzie-170_orig.jpg" alt="">
+            </div>
+            <div>
+              <img src="./img/interior/screen-shot-2017-11-19-at-6-20-21-pm_orig.png" alt="">
             </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      <footer>
+        <div class="container">
+          <div class="row">
+            <div class="col-auto">
+              <img src="./img/srri-logo-reversed-full-shrinked.png" width="195" alt="Silk Road Rug Logo">
+            </div>
+            <div class="col-auto ">
+              <div class="footer-heading">Contact Information</div>
+              <ul>
+                <li>Studio + Workroom'</li>
+                <li>2881 W. Pico Blvd.</li>
+                <li>Los Angeles, Ca 90006</li>
+                <li><a href="mailto:info@silkroadruginc.com">Info@Silkroadruginc.Com</a></li>
+                <li><a href="tel:+14247775335">Tel: +1 (424) 777-5335</a></li>
+                <li><a href="tel:+12132154944">Tel: +1 (213) 215-4944</a></li>
+              </ul>
+            </div>
+            <div class="col-auto ">
+              <div class="footer-heading">Helpful Links</div>
+              <ul>
+                <li><a href="">Return Policy</a></li>
+                <li><a href="">Shipping Info</a></li>
+                <li><a href="">About Us</a></li>
+              </ul>
+            </div>
+            <div class="col-auto pr-0">
+              <div class="footer-heading">Stay in Touch</div>
+              <ul>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                    <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" /></svg>
+                  <a href="">@SilkRoadRug</a>
+                </li>
+                <li>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path
+                          d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+                  </svg>
+                  <a href="">@SilkRoadRugInc</a>
+                </li>
+                <li></li>
+                <li></li>
+              </ul>
+            </div>
+          </div>
+
+
+          <hr>
+          <div class="copy">@2020 Silk Road Rug Inc. All Rights Reserved.</div>
+        </div>
+      </footer>
     </div>
-  </section>
 
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-auto">
-          <img src="./img/srri-logo-reversed-full-shrinked.png" width="195" alt="Silk Road Rug Logo">
-        </div>
-        <div class="col-auto ">
-          <div class="footer-heading">Contact Information</div>
-          <ul>
-            <li>Studio + Workroom'</li>
-            <li>2881 W. Pico Blvd.</li>
-            <li>Los Angeles, Ca 90006</li>
-            <li><a href="mailto:info@silkroadruginc.com">Info@Silkroadruginc.Com</a></li>
-            <li><a href="tel:+14247775335">Tel: +1 (424) 777-5335</a></li>
-            <li><a href="tel:+12132154944">Tel: +1 (213) 215-4944</a></li>
-          </ul>
-        </div>
-        <div class="col-auto ">
-          <div class="footer-heading">Helpful Links</div>
-          <ul>
-            <li><a href="">Return Policy</a></li>
-            <li><a href="">Shipping Info</a></li>
-            <li><a href="">About Us</a></li>
-          </ul>
-        </div>
-        <div class="col-auto pr-0">
-          <div class="footer-heading">Stay in Touch</div>
-          <ul>
-            <li>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
-                <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" /></svg>
-              <a href="">@SilkRoadRug</a>
-            </li>
-            <li>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                <path
-                      d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
-              </svg>
-              <a href="">@SilkRoadRugInc</a>
-            </li>
-            <li></li>
-            <li></li>
-          </ul>
-        </div>
-      </div>
-
-
-      <hr>
-      <div class="copy">@2020 Silk Road Rug Inc. All Rights Reserved.</div>
-    </div>
-  </footer>
-
-  <script src="./node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="./node_modules/jquery-easing/dist/jquery.easing.1.3.umd.min.js"></script>
-  <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="./node_modules/slick-carousel/slick/slick.min.js"></script>
-  <script src="./js/main.js"></script>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/jquery-easing/dist/jquery.easing.1.3.umd.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./node_modules/slick-carousel/slick/slick.min.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 
 </html>

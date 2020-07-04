@@ -7,6 +7,7 @@
 @import '../node_modules/bootstrap/scss/_navbar';
 @import '../node_modules/bootstrap/scss/_transitions';
 @import '../node_modules/bootstrap/scss/_dropdown';
+@import '../node_modules/bootstrap/scss/_nav';
 @import '../node_modules/bootstrap/scss/bootstrap-grid';
 @import '../node_modules/bootstrap/scss/utilities/spacing';
 @import '../node_modules/bootstrap/scss/utilities/position';
@@ -17,6 +18,7 @@
 @import 'animations';
 @import 'buttons';
 @import 'typography';
+@import 'navbar';
 
 body,
 html {
@@ -31,220 +33,6 @@ a {
     text-decoration: none;
 }
 
-.navbar {
-    padding: $padding 0;
-    transition: $transition;
-
-    @include media-breakpoint-down(sm) {
-        .navbar-collapse {
-            position: absolute;
-            padding: $padding;
-            width: 100%;
-            left: -100%;
-            top: 39px + 2*$padding - 1px;
-        }
-
-        .navbar-collapse.collapsing {
-            height: auto;
-            transition: $transition;
-        }
-
-        .navbar-collapse.show {
-            left: 0;
-            transition: $transition;
-        }
-    }
-
-    .navbar-brand {
-        height: 39px;
-        padding: 0;
-
-        @include media-breakpoint-down(sm) {
-            position: absolute;
-            top: $padding;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        img {
-            width: 150px;
-        }
-
-        @include media-breakpoint-up(md) {
-            & {
-                height: 50px;
-
-                img {
-                    width: 190px;
-                }
-            }
-        }
-    }
-
-    .container {
-        padding: 0 $padding;
-
-        @include media-breakpoint-down(sm) {
-            & {
-                height: 39px; // Same as logo
-            }
-        }
-    }
-
-    .navbar-cart {
-        height: 30px;
-        width: 30px;
-        padding: 2px 0;
-
-        @include media-breakpoint-up(md) {
-            & {
-                display: none;
-            }
-        }
-
-        svg {
-            fill: c(gray3);
-        }
-    }
-
-    .hamburger {
-        display: inline-block;
-        overflow: visible;
-        margin: 0;
-        padding: 0;
-        cursor: pointer;
-        text-transform: none;
-        color: inherit;
-        border: 0;
-        background-color: transparent;
-        height: 3*4px + 20px - 2*4px;
-
-        &:focus {
-            outline: none;
-        }
-
-        @include media-breakpoint-up(md) {
-            & {
-                display: none;
-            }
-        }
-
-        &[aria-expanded="true"] {
-            .hamburger-inner {
-                border-radius: 4px 0 0 4px;
-            }
-
-            .hamburger-inner:after {
-                transform: translate3d(-5.5px, -2.5px, 0) rotate(45deg) scaleX(.7);
-            }
-
-            .hamburger-inner:before {
-                transform: translate3d(-5.5px, 2.5px, 0) rotate(-45deg) scaleX(.7);
-            }
-
-            .hamburger-inner,
-            .hamburger-inner:after,
-            .hamburger-inner:before {
-                transition: all $transition-duration ease $transition-duration;
-            }
-        }
-    }
-
-    .hamburger-box {
-        position: relative;
-        display: inline-block;
-        width: 30px;
-    }
-
-    .hamburger-inner {
-        display: block;
-        margin-top: -2px;
-        top: auto;
-        bottom: 0;
-
-        &,
-        &:after,
-        &:before {
-            position: absolute;
-            width: 30px;
-            height: 4px;
-            transition: all $transition-duration ease;
-            background-color: c(gray3)
-        }
-
-        &:after,
-        &:before {
-            display: block;
-            content: ""
-        }
-
-        &:before {
-            top: -10px
-        }
-
-        &:after {
-            bottom: -10px;
-        }
-    }
-
-
-
-    ul {
-        margin-top: 0;
-        text-align: center;
-        padding: .5*$padding 0;
-        width: fit-content;
-
-        @include media-breakpoint-down(sm) {
-            width: 150px;
-            text-align: left;
-        }
-
-        a {
-            color: c(white);
-            padding: 0 !important;
-            margin: 0 .75*$margin !important;
-            text-transform: uppercase;
-            transition: $transition;
-            font-size: .875rem;
-            letter-spacing: -0.035rem; //-3.5%
-            border-bottom: 1px solid transparent;
-
-            &:hover {
-                border-color: c(white);
-            }
-
-            &:last-child {
-                margin-right: 0 !important;
-            }
-
-            &.btn-primary {
-                padding: 0 .5rem !important;
-
-                &:hover {
-                    border-color: initial;
-                    color: c(black) !important;
-                }
-            }
-        }
-
-    }
-
-    @include media-breakpoint-down(sm) {
-        ul {
-            margin: 0 auto;
-
-            a {
-                margin: 0 !important;
-            }
-
-            li {
-                margin: 4px 0;
-            }
-        }
-    }
-}
-
 section {
     margin: $margin 0;
     padding-top: 2*$padding;
@@ -256,10 +44,6 @@ section {
         margin-bottom: $margin;
         text-align: center;
     }
-}
-
-header+section {
-    margin-top: 6*$margin;
 }
 
 #services {
@@ -354,6 +138,12 @@ hr {
     height: 2px;
 }
 
+ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
 footer {
     padding-top: 3*$padding;
     letter-spacing: -0.035rem;
@@ -374,10 +164,6 @@ footer {
     }
 
     ul {
-        padding: 0;
-        margin: 0;
-        list-style-type: none;
-
         li {
             font-size: 1rem;
             text-transform: uppercase;
@@ -425,7 +211,6 @@ footer {
     .card-text {
         color: c(white);
         font-weight: normal;
-        font-size: 1rem;
     }
 
     .btn {
@@ -466,6 +251,9 @@ footer {
     }
 
     .dropdown-menu {
+        border-radius: 0;
+        border: 0;
+
         a {
             color: c(white);
         }
@@ -495,3 +283,5 @@ footer {
 .slick-next:before {
     content: url('../img/right-icon.png');
 }
+
+.about-page {}
