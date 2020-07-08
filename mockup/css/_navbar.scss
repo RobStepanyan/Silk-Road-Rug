@@ -13,10 +13,14 @@
         content: "";
     }
 
-    .container {
+    .container-fluid {
         align-items: flex-start;
-
+        padding: 0 $padding;
         height: $navbar-logo-height;
+
+        @include media-breakpoint-up(sm) {
+            padding: 0 2*$padding;
+        }
 
         @include media-breakpoint-up(lg) {
             height: $navbar-logo-height-lg;
@@ -25,6 +29,7 @@
 
     .navbar-brand {
         padding: 0;
+        margin: 0;
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
@@ -43,6 +48,7 @@
         height: $navbar-icon-height;
         width: $navbar-icon-height * 1.125; // height will be $navbar-icon-size
         margin-top: ($navbar-logo-height - $navbar-icon-height) / 2;
+        margin-left: $margin;
 
         @include media-breakpoint-up(lg) {
             height: $navbar-icon-height-lg;
@@ -53,7 +59,6 @@
         display: block;
 
         svg {
-            fill: c(gray3);
             height: inherit;
             width: inherit;
         }
@@ -120,12 +125,12 @@
     color: inherit;
     border: 0;
     background-color: transparent;
-    height: $navbar-icon-height;
-    margin-top: ($navbar-logo-height - $navbar-icon-height) / 2;
+    height: $hamburger-line-height * 9; // 3 * 2 space between + 3 line heights
+    margin-top: ($navbar-logo-height - $hamburger-line-height * 9) / 2;
 
     @include media-breakpoint-up(lg) {
-        height: $navbar-icon-height-lg;
-        margin-top: ($navbar-logo-height-lg - $navbar-icon-height-lg) / 2;
+        height: $hamburger-line-height-lg * 9;
+        margin-top: ($navbar-logo-height-lg - $hamburger-line-height-lg * 9) / 2;
     }
 
     &:focus {
@@ -135,64 +140,61 @@
 
 body.sidenav-toggled {
     .hamburger-inner {
-        border-radius: $navbar-icon-height / 6 0 0 $navbar-icon-height / 6;
+        background: transparent;
+
+        &:before {
+            transform: translatey(($navbar-icon-width / 2 / 2) + 2px / 2) rotate(45deg);
+        }
+
+        &:after {
+            transform: translatey(-($navbar-icon-width / 2 / 2) - 2px) rotate(-45deg);
+        }
 
         @include media-breakpoint-up(lg) {
-            border-radius: $navbar-icon-height-lg / 6 0 0 $navbar-icon-height-lg / 6;
+            &:before {
+                transform: translatey(($navbar-icon-width-lg / 2 / 2) + 3px / 2) rotate(45deg);
+            }
+
+            &:after {
+                transform: translatey(-($navbar-icon-width-lg / 2 / 2) - 3px / 2) rotate(-45deg);
+            }
+
         }
-    }
-
-    .hamburger-inner:after {
-        transform: translate3d(-5.9px, -3px, 0) rotate(45deg) scaleX(.6);
-    }
-
-    .hamburger-inner:before {
-        transform: translate3d(-5.9px, 3px, 0) rotate(-45deg) scaleX(.6);
-    }
-
-    @include media-breakpoint-up(lg) {
-        .hamburger-inner:after {
-            transform: translate3d(-10px, -4.8px, 0) rotate(45deg) scaleX(.6);
-        }
-
-        .hamburger-inner:before {
-            transform: translate3d(-10px, 4.8px, 0) rotate(-45deg) scaleX(.6);
-        }
-    }
-
-    .hamburger-inner,
-    .hamburger-inner:after,
-    .hamburger-inner:before {
-        transition: $transition;
     }
 }
 
 .hamburger-box {
     position: relative;
     display: inline-block;
-    width: $navbar-icon-height * 1.25;
+    width: $navbar-icon-width;
 
     @include media-breakpoint-up(lg) {
-        width: $navbar-icon-height-lg * 1.25;
+        width: $navbar-icon-width-lg;
     }
 }
 
 .hamburger-inner {
     display: block;
-    top: -7px;
+    top: -6px;
 
     &,
     &:after,
     &:before {
         position: absolute;
-        width: $navbar-icon-height * 1.25;
-        height: $navbar-icon-height / 6;
+        width: $navbar-icon-width;
+        height: $hamburger-line-height;
+        border-radius: $hamburger-line-height;
         transition: $transition;
         background-color: c(gray3);
 
+        .hamburger-inner:hover & {
+            display: none;
+        }
+
         @include media-breakpoint-up(lg) {
-            width: $navbar-icon-height-lg * 1.25;
-            height: $navbar-icon-height-lg / 6;
+            width: $navbar-icon-width-lg;
+            height: $hamburger-line-height-lg;
+            border-radius: $hamburger-line-height-lg;
         }
     }
 
@@ -203,20 +205,20 @@ body.sidenav-toggled {
     }
 
     &:before {
-        top: -$navbar-icon-height / 2.5;
+        top: -$hamburger-line-height * 4;
     }
 
     &:after {
-        bottom: -$navbar-icon-height / 2.5;
+        bottom: -$hamburger-line-height * 4;
     }
 
     @include media-breakpoint-up(lg) {
         &:before {
-            top: -$navbar-icon-height-lg / 2.5;
+            top: -$hamburger-line-height-lg * 4;
         }
 
         &:after {
-            bottom: -$navbar-icon-height-lg / 2.5;
+            bottom: -$hamburger-line-height-lg * 4;
         }
     }
 }
@@ -228,10 +230,9 @@ body.sidenav-toggled {
     #layoutSidenav_nav {
         position: fixed;
         height: 100%;
-        // flex-basis: 225px;
-        width: 500px;
+        width: 350px;
         max-width: 100%;
-        transform: translateX(-500px);
+        transform: translateX(-350px);
         // flex-shrink: 0;
         transition: $transition;
         z-index: 1038;
@@ -286,16 +287,22 @@ body.sidenav-toggled {
     z-index: 1039;
 }
 
-.nav .nav-link .nav-link-icon,
-.sidenav-menu .nav-link .nav-link-icon {
-    margin-right: 0.5rem;
-}
-
 .sidenav {
+    padding-left: 2*$padding;
     display: flex;
     flex-direction: column;
     height: 100%;
     flex-wrap: nowrap;
+
+    svg {
+        height: 20px;
+    }
+
+    .sidenav-svg {
+        fill: c(white);
+        margin-top: $margin / 3;
+        margin-right: $margin / 2;
+    }
 
     .sidenav-menu {
         flex-grow: 1;
@@ -305,28 +312,26 @@ body.sidenav-toggled {
             flex-wrap: nowrap;
 
             .sidenav-menu-heading {
-                padding: 1.75rem 1rem 0.75rem;
+                margin-top: 1.75*$margin;
             }
 
             .nav-link {
                 display: flex;
                 align-items: center;
-                padding-top: 0.75rem;
-                padding-bottom: 0.75rem;
+                padding: .5*$padding 0;
+                margin-left: $margin;
                 position: relative;
-
-                .nav-link-icon {
-                    font-size: 0.9rem;
-                }
+                transition: $transition-half;
 
                 .sidenav-collapse-arrow {
                     display: inline-block;
-                    margin-left: auto;
-                    transition: transform 0.15s ease;
+                    margin-top: 10px;
+                    margin-left: $margin / 2;
+                    transition: $transition-half;
                 }
 
                 &.collapsed .sidenav-collapse-arrow {
-                    transform: rotate(-90deg);
+                    transform: translatey(-4px) rotate(-90deg);
                 }
             }
 

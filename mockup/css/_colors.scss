@@ -78,6 +78,26 @@ hr {
     background: rgba(c(dark3), .9);
     box-shadow: $shadow1;
     backdrop-filter: blur(15px);
+
+    .sidenav-menu-heading {
+        color: c(yellow2);
+    }
+
+    .nav-link {
+        color: c(white);
+        border-bottom: 2px solid transparent;
+
+        &:hover {
+            border-color: c(white);
+        }
+    }
+
+    .sidenav-collapse-arrow {
+
+        svg {
+            color: rgba(#fff, .5);
+        }
+    }
 }
 
 .navbar {
@@ -85,9 +105,14 @@ hr {
     box-shadow: $shadow1;
     backdrop-filter: blur(15px);
 
-    a {
-        &:hover {
-            border-color: c(yellow2);
+    .navbar-icon {
+        svg {
+            color: c(gray3);
+            transition: $transition-half;
+
+            &:hover {
+                color: c(white);
+            }
         }
     }
 

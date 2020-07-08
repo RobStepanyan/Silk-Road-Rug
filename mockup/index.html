@@ -17,7 +17,7 @@
 
 <body>
   <nav class="navbar fixed-top">
-    <div class="container">
+    <div class="container-fluid">
       <div class="mr-auto">
         <button id="sidebarToggle" class="hamburger" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
           <span class="hamburger-box">
@@ -28,11 +28,19 @@
       <a class="navbar-brand" href="#top">
         <img src="./img/srri-logo-reversed.png" alt="Silk Road Rug Logo">
       </a>
-      <div class="ml-auto">
+      <div class="ml-auto d-flex">
         <a href="" class="navbar-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-            <path
-                  d="M528.12 301.319l47.273-208C578.806 78.301 567.391 64 551.99 64H159.208l-9.166-44.81C147.758 8.021 137.93 0 126.529 0H24C10.745 0 0 10.745 0 24v16c0 13.255 10.745 24 24 24h69.883l70.248 343.435C147.325 417.1 136 435.222 136 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-15.674-6.447-29.835-16.824-40h209.647C430.447 426.165 424 440.326 424 456c0 30.928 25.072 56 56 56s56-25.072 56-56c0-22.172-12.888-41.332-31.579-50.405l5.517-24.276c3.413-15.018-8.002-29.319-23.403-29.319H218.117l-6.545-32h293.145c11.206 0 20.92-7.754 23.403-18.681z" />
+          <svg focusable="false" drole="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+            <path fill="currentColor"
+                  d="M551.991 64H129.28l-8.329-44.423C118.822 8.226 108.911 0 97.362 0H12C5.373 0 0 5.373 0 12v8c0 6.627 5.373 12 12 12h78.72l69.927 372.946C150.305 416.314 144 431.42 144 448c0 35.346 28.654 64 64 64s64-28.654 64-64a63.681 63.681 0 0 0-8.583-32h145.167a63.681 63.681 0 0 0-8.583 32c0 35.346 28.654 64 64 64 35.346 0 64-28.654 64-64 0-17.993-7.435-34.24-19.388-45.868C506.022 391.891 496.76 384 485.328 384H189.28l-12-64h331.381c11.368 0 21.177-7.976 23.496-19.105l43.331-208C578.592 77.991 567.215 64 551.991 64zM240 448c0 17.645-14.355 32-32 32s-32-14.355-32-32 14.355-32 32-32 32 14.355 32 32zm224 32c-17.645 0-32-14.355-32-32s14.355-32 32-32 32 14.355 32 32-14.355 32-32 32zm38.156-192H171.28l-36-192h406.876l-40 192z"
+                  class=""></path>
+          </svg>
+        </a>
+        <a href="" class="navbar-icon account">
+          <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="user-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-user-alt fa-w-16 fa-3x">
+            <path fill="currentColor"
+                  d="M256 32c61.8 0 112 50.2 112 112s-50.2 112-112 112-112-50.2-112-112S194.2 32 256 32m128 320c52.9 0 96 43.1 96 96v32H32v-32c0-52.9 43.1-96 96-96 85 0 67.3 16 128 16 60.9 0 42.9-16 128-16M256 0c-79.5 0-144 64.5-144 144s64.5 144 144 144 144-64.5 144-144S335.5 0 256 0zm128 320c-92.4 0-71 16-128 16-56.8 0-35.7-16-128-16C57.3 320 0 377.3 0 448v32c0 17.7 14.3 32 32 32h448c17.7 0 32-14.3 32-32v-32c0-70.7-57.3-128-128-128z"
+                  class=""></path>
           </svg>
         </a>
       </div>
@@ -44,67 +52,105 @@
       <nav class="sidenav accordion sidenav-dark" id="sidenavAccordion">
         <div class="sidenav-menu">
           <div class="nav">
-            <div class="sidenav-menu-heading">Core</div>
-            <a class="nav-link" href="index.html">
-              <div class="nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-              Dashboard
+
+            <div class="sidenav-menu-heading">Shop</div>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseServices" aria-expanded="false" aria-controls="collapseServices">
+              Services
+              <div class="sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
+                  <path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
+                </svg></div>
             </a>
-            <div class="sidenav-menu-heading">Interface</div>
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-              <div class="nav-link-icon"><i class="fas fa-columns"></i></div>
-              Layouts
-              <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-            </a>
-            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+            <div class="collapse" id="collapseServices" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
               <nav class="sidenav-menu-nested nav">
-                <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                <a class="nav-link" href="#">Rug Cleaning</a>
+                <a class="nav-link" href="#">Rug Restoration</a>
               </nav>
             </div>
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-              <div class="nav-link-icon"><i class="fas fa-book-open"></i></div>
-              Pages
-              <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRugs" aria-expanded="false" aria-controls="collapseRugs">
+              Rugs
+              <div class="sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
+                  <path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
+                </svg></div>
             </a>
-            <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
-              <nav class="sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                  Authentication
-                  <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+            <div class="collapse" id="collapseRugs" aria-labelledby="headingTwo" data-parent="#sidenavAccordion">
+              <nav class="sidenav-menu-nested nav accordion" id="sidenavAccordionRugs">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#rugsCollapseTrending" aria-expanded="false" aria-controls="rugssCollapseTrending">
+                  Trending
+                  <div class="sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
+                      <path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
+                    </svg></div>
                 </a>
-                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
+                <div class="collapse" id="rugsCollapseTrending" aria-labelledby="headingOne" data-parent="#sidenavAccordionRugs">
                   <nav class="sidenav-menu-nested nav">
-                    <a class="nav-link" href="login.html">Login</a>
-                    <a class="nav-link" href="register.html">Register</a>
-                    <a class="nav-link" href="password.html">Forgot Password</a>
+                    <a class="nav-link" href="">Antique</a>
+                    <a class="nav-link" href="">Contemporary</a>
                   </nav>
                 </div>
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                  Error
-                  <div class="sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-parent="#sidenavAccordionPages">
-                  <nav class="sidenav-menu-nested nav">
-                    <a class="nav-link" href="401.html">401 Page</a>
-                    <a class="nav-link" href="404.html">404 Page</a>
-                    <a class="nav-link" href="500.html">500 Page</a>
-                  </nav>
-                </div>
+                <a class="nav-link" href="">Perfect Rug Finder</a>
               </nav>
             </div>
-            <div class="sidenav-menu-heading">Addons</div>
-            <a class="nav-link" href="charts.html">
-              <div class="nav-link-icon"><i class="fas fa-chart-area"></i></div>
-              Charts
+
+            <!-- Other Section -->
+            <div class="sidenav-menu-heading">Other</div>
+            <!-- Contact Us -->
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseContactUs" aria-expanded="false" aria-controls="collapseContactUs">
+              Contact Us
+              <div class="sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
+                  <path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
+                </svg></div>
             </a>
-            <a class="nav-link" href="tables.html">
-              <div class="nav-link-icon"><i class="fas fa-table"></i></div>
-              Tables
+            <div class="collapse" id="collapseContactUs" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+              <nav class="sidenav-menu-nested nav">
+                <a class="nav-link" href="#">Where We Are?</a>
+                <a class="nav-link" href="#">Contact by Phone</a>
+                <a class="nav-link" href="#">or By Email</a>
+                <a class="nav-link" href="#">Send a Message</a>
+              </nav>
+            </div>
+
+            <!-- Helpful Links -->
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLinks" aria-expanded="false" aria-controls="collapseLinks">
+              Helpful Links
+              <div class="sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
+                  <path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
+                </svg></div>
             </a>
+            <div class="collapse" id="collapseLinks" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+              <nav class="sidenav-menu-nested nav">
+                <a class="nav-link" href="#">Return Policy</a>
+                <a class="nav-link" href="#">Shipping Info</a>
+                <a class="nav-link" href="#">About Us</a>
+              </nav>
+            </div>
+
+            <!-- Stay in Touch -->
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTouch" aria-expanded="false" aria-controls="collapseTouch">
+              Stay in Touch
+              <div class="sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down fa-w-10" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg="">
+                  <path fill="currentColor" d="M143 352.3L7 216.3c-9.4-9.4-9.4-24.6 0-33.9l22.6-22.6c9.4-9.4 24.6-9.4 33.9 0l96.4 96.4 96.4-96.4c9.4-9.4 24.6-9.4 33.9 0l22.6 22.6c9.4 9.4 9.4 24.6 0 33.9l-136 136c-9.2 9.4-24.4 9.4-33.8 0z"></path>
+                </svg></div>
+            </a>
+            <div class="collapse" id="collapseTouch" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+              <nav class="sidenav-menu-nested nav">
+                <a class="nav-link" href="#"><svg class="sidenav-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+                    <path d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" /></svg>
+                  @SilkRoadRug
+                </a>
+                <a class="nav-link" href="#">
+                  <svg class="sidenav-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                    <path
+                          d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z" />
+                  </svg>
+                  @SilkRoadRugInc
+                </a>
+              </nav>
+            </div>
+
           </div>
         </div>
       </nav>
     </div>
+
     <div id="layoutSidenav_content">
       <section>
         <div class="container">

@@ -183,7 +183,7 @@ footer {
             color: c(white);
             border-bottom: 1px solid transparent;
             align-items: flex-end;
-            transition: $transition;
+            transition: $transition-half;
 
             &:hover {
                 border-color: c(white);
