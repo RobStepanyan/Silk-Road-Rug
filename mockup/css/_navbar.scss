@@ -125,12 +125,12 @@
     color: inherit;
     border: 0;
     background-color: transparent;
-    height: $hamburger-line-height * 9; // 3 * 2 space between + 3 line heights
-    margin-top: ($navbar-logo-height - $hamburger-line-height * 9) / 2;
+    height: $hamburger-height;
+    margin-top: ($navbar-logo-height -$hamburger-height) / 2;
 
     @include media-breakpoint-up(lg) {
-        height: $hamburger-line-height-lg * 9;
-        margin-top: ($navbar-logo-height-lg - $hamburger-line-height-lg * 9) / 2;
+        height: $hamburger-height-lg;
+        margin-top: ($navbar-logo-height-lg - $hamburger-height-lg) / 2;
     }
 
     &:focus {
@@ -143,20 +143,20 @@ body.sidenav-toggled {
         background: transparent;
 
         &:before {
-            transform: translatey(($navbar-icon-width / 2 / 2) + 2px / 2) rotate(45deg);
+            transform: translatey(($hamburger-line-width / 2 / 2) + $hamburger-line-height / 2) rotate(45deg);
         }
 
         &:after {
-            transform: translatey(-($navbar-icon-width / 2 / 2) - 2px) rotate(-45deg);
+            transform: translatey(-($hamburger-line-width / 2 / 2) - $hamburger-line-height / 2) rotate(-45deg);
         }
 
         @include media-breakpoint-up(lg) {
             &:before {
-                transform: translatey(($navbar-icon-width-lg / 2 / 2) + 3px / 2) rotate(45deg);
+                transform: translatey(($hamburger-line-width-lg / 2 / 2) + $hamburger-line-height-lg / 2) rotate(45deg);
             }
 
             &:after {
-                transform: translatey(-($navbar-icon-width-lg / 2 / 2) - 3px / 2) rotate(-45deg);
+                transform: translatey(-($hamburger-line-width-lg / 2 / 2) - $hamburger-line-height-lg / 2) rotate(-45deg);
             }
 
         }
@@ -166,10 +166,10 @@ body.sidenav-toggled {
 .hamburger-box {
     position: relative;
     display: inline-block;
-    width: $navbar-icon-width;
+    width: $hamburger-line-width;
 
     @include media-breakpoint-up(lg) {
-        width: $navbar-icon-width-lg;
+        width: $hamburger-line-width-lg;
     }
 }
 
@@ -181,7 +181,7 @@ body.sidenav-toggled {
     &:after,
     &:before {
         position: absolute;
-        width: $navbar-icon-width;
+        width: $hamburger-line-width;
         height: $hamburger-line-height;
         border-radius: $hamburger-line-height;
         transition: $transition;
@@ -192,7 +192,7 @@ body.sidenav-toggled {
         }
 
         @include media-breakpoint-up(lg) {
-            width: $navbar-icon-width-lg;
+            width: $hamburger-line-width-lg;
             height: $hamburger-line-height-lg;
             border-radius: $hamburger-line-height-lg;
         }
@@ -205,20 +205,20 @@ body.sidenav-toggled {
     }
 
     &:before {
-        top: -$hamburger-line-height * 4;
+        top: -$hamburger-line-space;
     }
 
     &:after {
-        bottom: -$hamburger-line-height * 4;
+        bottom: -$hamburger-line-space;
     }
 
     @include media-breakpoint-up(lg) {
         &:before {
-            top: -$hamburger-line-height-lg * 4;
+            top: -$hamburger-line-space-lg;
         }
 
         &:after {
-            bottom: -$hamburger-line-height-lg * 4;
+            bottom: -$hamburger-line-space-lg;
         }
     }
 }
@@ -296,10 +296,14 @@ body.sidenav-toggled {
 
     svg {
         height: 20px;
+        width: 25px;
     }
 
     .sidenav-svg {
-        fill: c(white);
+        margin-right: $margin / 2;
+    }
+
+    .sidenav-svg-2 {
         margin-top: $margin / 3;
         margin-right: $margin / 2;
     }

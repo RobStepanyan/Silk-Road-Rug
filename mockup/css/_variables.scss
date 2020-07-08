@@ -39,11 +39,19 @@ $shadow5 : 0 19px 38px rgba(0, 0, 0, 0.30),
 
 
 // Navbar
-$navbar-icon-height: 20px;
-$navbar-icon-height-lg: 35px;
-$navbar-icon-width: 20px * 1.25;
-$navbar-icon-width-lg: 35px * 1.25;
+$navbar-icon-height: 16px;
+$navbar-icon-height-lg: 24px;
+$navbar-icon-width: $navbar-icon-height * 1.125;
+$navbar-icon-width-lg: $navbar-icon-height-lg * 1.125;
+
 $navbar-logo-height: 30px;
 $navbar-logo-height-lg: 50px;
+
+$hamburger-height: 16px;
+$hamburger-height-lg: 24px;
 $hamburger-line-height: 2px;
 $hamburger-line-height-lg: 3px;
+$hamburger-line-width: 25px;
+$hamburger-line-width-lg: 35px;
+$hamburger-line-space: ($hamburger-height - (3 - 2) * $hamburger-line-height) / 2;
+$hamburger-line-space-lg: ($hamburger-height-lg - (3 - 2) * $hamburger-line-height-lg) / 2;
