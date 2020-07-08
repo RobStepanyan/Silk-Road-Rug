@@ -16,18 +16,20 @@ $colors: (dark0: #121212,
     gray3: #ACACAC,
 
     white: #fff,
-    // bright1: rgba(#fff, .95),
-    // bright2: rgba(#fff, .93),
-    // bright3: rgba(#fff, .92),
-    // bright4: rgba(#fff, .91),
-    // bright5: rgba(#fff, .89),
-    // bright6: rgba(#fff, .88),
-    // bright7: rgba(#fff, .86),
-    // bright8: rgba(#fff, .85),
+    bright1: rgba(#fff, .95),
+    bright2: rgba(#fff, .93),
+    bright3: rgba(#fff, .92),
+    bright4: rgba(#fff, .91),
+    bright5: rgba(#fff, .89),
+    bright6: rgba(#fff, .88),
+    bright7: rgba(#fff, .86),
+    bright8: rgba(#fff, .85),
 
 
     yellow1: darken(#F2C94C, 20%),
     yellow2: #F2C94C, // Primary
+
+    red: #f24c4c,
 );
 
 @function c($color-name) {
@@ -72,6 +74,21 @@ hr {
     a:hover {
         background: c(dark5);
     }
+}
+
+.note,
+.disclaimer {
+    color: c(white);
+}
+
+.note {
+    background: c(dark5);
+    border-color: c(white) !important;
+}
+
+.disclaimer {
+    background: c(dark5);
+    border-color: c(red) !important;
 }
 
 .sidenav {
@@ -135,4 +152,20 @@ hr {
         background: c(dark3);
         box-shadow: $shadow1;
     }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+.text-white {
+    color: c(white);
+}
+
+small,
+i {
+    color: c(gray3) !important;
 }
