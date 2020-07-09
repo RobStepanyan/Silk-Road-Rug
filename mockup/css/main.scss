@@ -284,4 +284,8 @@ footer {
     content: url('../img/right-icon.png');
 }
 
-.about-page {}
+ul.style-default {
+    margin: $margin 0;
+    padding-left: 3*$padding;
+    list-style-type: unset;
+}
