@@ -54,3 +54,18 @@ $("#sidebarToggle").on("click", function (e) {
     e.preventDefault();
     $("body").toggleClass("sidenav-toggled");
 });
+
+$('[data-toggle-enabled="true"] .dropdown-item').click(function () {
+    $(this).parent().parent().find('.active').removeClass('active');
+    $(this).addClass('active');
+
+    if ($(this).parent().find('.dropdown-header')) {
+        let header, item;
+        header = $(this).parent().find('.dropdown-header').text()
+        item = $(this).text()
+        $(this).parent().parent().parent().find('[data-toggle="dropdown"]').text(header + ' ' + item);
+    } else {
+        $(this).parent().parent().find('[data-toggle="dropdown"]').text($(this).text());
+    }
+
+});

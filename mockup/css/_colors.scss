@@ -28,6 +28,7 @@ $colors: (dark0: #121212,
 
     yellow1: darken(#F2C94C, 20%),
     yellow2: #F2C94C, // Primary
+    primary: #F2C94C,
 
     red: #f24c4c,
 );
@@ -62,17 +63,30 @@ hr {
 }
 
 .card,
+.shop-card,
 .shop-filter-card {
     background: c(dark2);
     box-shadow: $shadow-normal;
+
+    .btn:not(.btn-primary),
+    .card-btn {
+        background: c(dark3);
+    }
 }
 
 .dropdown-menu {
     background: c(dark3);
     box-shadow: $shadow-normal;
 
-    a:hover {
-        background: c(dark5);
+    .dropdown-item {
+        &:hover {
+            background: c(dark5);
+        }
+
+        &.active {
+            background-color: c(yellow2);
+            color: c(black) !important;
+        }
     }
 }
 
@@ -166,6 +180,11 @@ p,
 }
 
 small,
-i {
+i,
+.shop-card~p {
     color: c(gray3) !important;
+}
+
+.dropdown-header {
+    color: c(primary);
 }

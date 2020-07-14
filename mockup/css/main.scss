@@ -19,6 +19,7 @@
 @import 'buttons';
 @import 'typography';
 @import 'navbar';
+@import 'scrollbar';
 
 body,
 html {
@@ -34,7 +35,7 @@ a {
 }
 
 section {
-    margin: $margin 0;
+    margin: $margin / 2 0;
     padding-top: 2*$padding;
     padding-bottom: 2*$padding;
 
@@ -212,13 +213,8 @@ footer {
         color: c(white);
         font-weight: normal;
     }
-
-    .btn {
-        margin: 0 auto;
-        margin-top: $margin;
-        cursor: pointer;
-    }
 }
+
 
 .shop-filter-card {
     padding: $padding;
@@ -230,34 +226,28 @@ footer {
         padding-bottom: $padding / 3;
     }
 
-    .card-btn {
-        color: c(yellow2);
-        margin: 0 auto;
-        margin-top: $padding / 3;
-        width: 100%;
-
-        &:after {
-            // position: absolute;
-            display: inline-block;
-            content: "";
-            margin-bottom: .05rem;
-            margin-left: .35rem;
-            width: 0;
-            height: 0;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-top: 5px solid c(yellow2);
-        }
-    }
-
     .dropdown-menu {
         border-radius: 0;
         border: 0;
+        max-height: 500px;
+        overflow-y: auto;
 
-        a {
+        .dropdown-item {
             color: c(white);
+            cursor: pointer;
         }
 
+    }
+}
+
+.shop-card {
+
+    img {
+        width: 100%;
+    }
+
+    &~p {
+        margin-top: 0;
     }
 }
 
@@ -288,4 +278,9 @@ ul.style-default {
     margin: $margin 0;
     padding-left: 3*$padding;
     list-style-type: unset;
+}
+
+.dropdown-header {
+    padding: 0;
+    margin: $margin * 2 / 3 $margin * 2 / 3;
 }
