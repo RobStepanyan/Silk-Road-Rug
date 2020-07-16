@@ -221,284 +221,257 @@
 
     <div id="layoutSidenav_content">
       <section>
-        <div class="container">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="filter-sidebar">
+              <h3>Sort By</h3>
 
-          <div class="landing col-lg-9">
-            <div class="sub-heading">
-              Rugs Sales, Cleaning and Restoraton
+              <div class="form-check">
+                <input type="radio" name="sortBy" id="sortByName" value="name" checked>
+                <label class="form-check-label" for="sortByName">
+                  Name
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="sortBy" id="sortByPrice" value="price">
+                <label class="form-check-label" for="sortByPrice">
+                  Price
+                </label>
+              </div>
+
+              <h3>Size</h3>
+              <div class="form-check">
+                <input type="radio" name="size" id="sizeAll" value="all" checked>
+                <label for="sizeAll" class="form-check-label">
+                  All Sizes
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="size" id="size1" value="1">
+                <label for="size1" class="form-check-label">
+                  1' x 2' to 5' x 7'
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="size" id="size2" value="2">
+                <label for="size2" class="form-check-label">
+                  6' x 9'
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="size" id="size3" value="3">
+                <label for="size3" class="form-check-label">
+                  8' x 10'
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="size" id="size4" value="4">
+                <label for="size4" class="form-check-label">
+                  9' x 12'
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="size" id="size5" value="5">
+                <label for="size5" class="form-check-label">
+                  10' x 14'
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="size" id="size6" value="6">
+                <label for="size6" class="form-check-label">
+                  12' x 15' to 12' x 18'
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="size" id="size7" value="7">
+                <label for="size7" class="form-check-label">
+                  14' x 20' to 14' x 40'
+                </label>
+              </div>
+
+              <h3>Style</h3>
+              <div class="form-check">
+                <input type="radio" name="style" id="styleAll" value="all" checked>
+                <label for="styleAll" class="form-check-label">
+                  All Styles
+                </label>
+              </div>
+
+              <div>
+                <div class="dropdown-header">Antique</div>
+                <div class="form-check">
+                  <input type="radio" name="style" id="styleAntiquePersian" value="persian">
+                  <label for="styleAntiquePersian" class="form-check-label">
+                    Persian
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" name="style" id="styleAntiqueArmenianCaucasian" value="armenianCaucasian">
+                  <label for="styleAntiqueArmenianCaucasian" class="form-check-label">
+                    Armenian / Caucasian
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" name="style" id="styleAntiqueKhotanSamerkand" value="khotanSamerkand">
+                  <label for="styleAntiqueKhotanSamerkand" class="form-check-label">
+                    Khotan / Samerkand
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" name="style" id="styleAntiqueTurkish" value="turkish">
+                  <label for="styleAntiqueTurkish" class="form-check-label">
+                    Turkish
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" name="style" id="styleAntiqueTurqishKilim" value="turqishKilim">
+                  <label for="styleAntiqueTurqishKilim" class="form-check-label">
+                    Turqish Kilim
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" name="style" id="styleAntiqueIndian" value="indian">
+                  <label for="styleAntiqueIndian" class="form-check-label">
+                    Indian
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" name="style" id="styleAntiqueEuropean" value="european">
+                  <label for="styleAntiqueEuropean" class="form-check-label">
+                    European
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" name="style" id="styleAntiqueChinese" value="chinese">
+                  <label for="styleAntiqueChinese" class="form-check-label">
+                    Chinese
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" name="style" id="styleAntiqueInspiredRecreation" value="inspiredRecreation">
+                  <label for="styleAntiqueInspiredRecreation" class="form-check-label">
+                    Inspired / Recreation
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <div class="dropdown-header">Vintage</div>
+                <div class="form-check">
+                  <input type="radio" name="style" id="styleVintageMoroccan" value="moroccan">
+                  <label for="styleVintageMoroccan" class="form-check-label">
+                    Moroccan
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" name="style" id="styleVintageTurkish" value="turkish">
+                  <label for="styleVintageTurkish" class="form-check-label">
+                    Turkish
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <div class="dropdown-header">Contemporary</div>
+                <div class="form-check">
+                  <input type="radio" name="style" id="styleContemporaryMoroccanHighAtlas" value="moroccanHighAtlas">
+                  <label for="styleContemporaryMoroccanHighAtlas" class="form-check-label">
+                    Moroccan High Atlas
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" name="style" id="styleContemporaryModern" value="modern">
+                  <label for="styleContemporaryModern" class="form-check-label">
+                    Modern
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <div class="dropdown-header">Other</div>
+                <div class="form-check">
+                  <input type="radio" name="style" id="styleOtherAfghanBalouch" value="afghanBalouch">
+                  <label for="styleOtherAfghanBalouch" class="form-check-label">
+                    Afghan / Balouch
+                  </label>
+                </div>
+              </div>
+
+              <h3>Color</h3>
+              <div class="form-check">
+                <input type="radio" name="color" id="colorAll" value="all">
+                <label for="colorAll" class="form-check-label">
+                  All Colors
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="color" id="colorBlackCharcoal" value="blackCharcoal">
+                <label for="colorBlackCharcoal" class="form-check-label">
+                  Black / Charcoal
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="color" id="colorBlue" value="blue">
+                <label for="colorBlue" class="form-check-label">
+                  Blue
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="color" id="colorGreen" value="green">
+                <label for="colorGreen" class="form-check-label">
+                  Green
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="color" id="colorGrey" value="grey">
+                <label for="colorGrey" class="form-check-label">
+                  Grey
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="color" id="colorNeutralBeigeTaupe" value="neutralBeigeTaupe">
+                <label for="colorNeutralBeigeTaupe" class="form-check-label">
+                  Neutral / Beige / Taupe
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="color" id="colorOrange" value="orange">
+                <label for="colorOrange" class="form-check-label">
+                  Orange
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="color" id="colorPurpleLilac" value="purpleLilac">
+                <label for="colorPurpleLilac" class="form-check-label">
+                  Purple / Lilac
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="color" id="colorRedPink" value="redPink">
+                <label for="colorRedPink" class="form-check-label">
+                  Red / Pink
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="color" id="colorWhiteCream" value="whiteCream">
+                <label for="colorWhiteCream" class="form-check-label">
+                  White / Cream
+                </label>
+              </div>
+              <div class="form-check">
+                <input type="radio" name="color" id="colorYellow" value="yellow">
+                <label for="colorYellow" class="form-check-label">
+                  Yellow
+                </label>
+              </div>
+
             </div>
-            <div class="heading">
-              We are Fulfilling Your Vision of the Ideal Room
-            </div>
-          </div>
-
-          <div class="d-flex">
-            <a href="#shop" class="btn btn-primary ml-0 js-scroll-trigger">Our Shop</a>
-            <a href="#services" class="btn btn-secondary js-scroll-trigger">Services</a>
-          </div>
-
-          <div class="bg-parallax"></div>
-      </section>
-
-      <section id="shop">
-        <div class="container">
-          <h1 class="center">Shop</h1>
-
-          <hr>
-          <p>Find a perfect rug</p>
-
-          <div class="row justify-content-center">
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="shop-filter-card">
-                <h2 class="card-title">Size</h2>
-                <div class="dropdown">
-                  <a class="btn card-btn" id="shop-sizes" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    All Sizes
-                  </a>
-                  <div class="dropdown-menu" data-toggle-enabled="true" aria-labelledby="shop-sizes">
-                    <a class="dropdown-item active">All Sizes</a>
-                    <a class="dropdown-item">1' x 2' to 5' x 7'</a>
-                    <a class="dropdown-item">6' x 9'</a>
-                    <a class="dropdown-item">8' x 10'</a>
-                    <a class="dropdown-item">9' x 12'</a>
-                    <a class="dropdown-item">10' x 14'</a>
-                    <a class="dropdown-item">12' x 15' to 12' x 18'</a>
-                    <a class="dropdown-item">14' x 20' to 14' x 40'</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="shop-filter-card">
-                <h2 class="card-title">Style</h2>
-                <div class="dropdown">
-                  <a class="btn card-btn" role="button" id="shop-styles" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    All Styles
-                  </a>
-                  <div class="dropdown-menu" data-toggle-enabled="true" aria-labelledby="shop-styles">
-                    <a class="dropdown-item active">All Styles</a>
-
-                    <div>
-                      <div class="dropdown-header">Antique</div>
-                      <a class="dropdown-item">Persian</a>
-                      <a class="dropdown-item">Armenian / Caucasian</a>
-                      <a class="dropdown-item">Khotan / Samerkand</a>
-                      <a class="dropdown-item">Turkish</a>
-                      <a class="dropdown-item">Turqish Kilim</a>
-                      <a class="dropdown-item">Indian</a>
-                      <a class="dropdown-item">European</a>
-                      <a class="dropdown-item">Chinese</a>
-                      <a class="dropdown-item">Inspired/Recreation</a>
-                    </div>
-
-                    <div>
-                      <div class="dropdown-header">Vintage</div>
-                      <a class="dropdown-item">Moroccan</a>
-                      <a class="dropdown-item">Turkish</a>
-                      <a class="dropdown-item">Kilim / Flat Weave</a>
-                      <a class="dropdown-item">Over-Dyed Distressed</a>
-                      <a class="dropdown-item">Swedish</a>
-                      <a class="dropdown-item">Scandinavian</a>
-                      <a class="dropdown-item">Swedish / Scandinavian</a>
-                      <a class="dropdown-item">Ingegerd</a>
-                      <a class="dropdown-item">Marta Mass Fjetterstrom</a>
-                      <a class="dropdown-item">Judith Johansson</a>
-                      <a class="dropdown-item">Tulu</a>
-                    </div>
-
-                    <div>
-                      <div class="dropdown-header">Contemporary</div>
-                      <a class="dropdown-item">Moroccan High Atlas</a>
-                      <a class="dropdown-item">Moroccan Tuareg Matts</a>
-                      <a class="dropdown-item">Modern</a>
-                      <a class="dropdown-item">Modern Flatweave</a>
-                      <a class="dropdown-item">Custom Ordered</a>
-                    </div>
-
-                    <div>
-                      <div class="dropdown-header">Other</div>
-                      <a class="dropdown-item">Afghan / Balouch</a>
-                      <a class="dropdown-item">Afshar</a>
-                      <a class="dropdown-item">Saddle Bags</a>
-                      <a class="dropdown-item">Turkaman / Ersari</a>
-                      <a class="dropdown-item">Bukara / Tekke</a>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4">
-              <div class="shop-filter-card">
-                <h2 class="card-title">Color</h2>
-                <div class="dropdown">
-                  <a class="btn card-btn" role="button" id="shop-colors" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    All Colors
-                  </a>
-                  <div class="dropdown-menu" data-toggle-enabled="true" aria-labelledby="shop-colors">
-                    <a class="dropdown-item active">All Colors</a>
-                    <a class="dropdown-item">Black / Charcoal</a>
-                    <a class="dropdown-item">Blue</a>
-                    <a class="dropdown-item">Green</a>
-                    <a class="dropdown-item">Grey</a>
-                    <a class="dropdown-item">Neutral / Beige / Taupe</a>
-                    <a class="dropdown-item">Orange</a>
-                    <a class="dropdown-item">Purple / Lilac</a>
-                    <a class="dropdown-item">Red / Pink</a>
-                    <a class="dropdown-item">White / Cream</a>
-                    <a class="dropdown-item">Yellow</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="shop">
-          <div class="container">
-            <div class="row justify-content-center">
-
-              <div class="col-12 col-sm-6 col-lg-4">
-                <div class="shop-card">
-                  <img src="./img/rug.jpeg" alt="">
-                </div>
-                <h3>Some title that goes on and on</h3>
-                <p>$25,000.00</p>
-              </div>
-
-              <div class="col-6 col-lg-4">
-                <div class="shop-card">
-                  <img src="./img/rug.jpeg" alt="">
-                </div>
-                <h3>Some title that goes on and on</h3>
-                <p>$25,000.00</p>
-              </div>
-
-              <div class="col-6 col-lg-4">
-                <div class="shop-card">
-                  <img src="./img/rug.jpeg" alt="">
-                </div>
-                <h3>Some title that goes on and on</h3>
-                <p>$25,000.00</p>
-              </div>
-
-              <div class="col-12 col-sm-6 col-lg-4">
-                <div class="shop-card">
-                  <img src="./img/rug.jpeg" alt="">
-                </div>
-                <h3>Some title that goes on and on</h3>
-                <p>$25,000.00</p>
-              </div>
-
-              <div class="col-6 col-lg-4">
-                <div class="shop-card">
-                  <img src="./img/rug.jpeg" alt="">
-                </div>
-                <h3>Some title that goes on and on</h3>
-                <p>$25,000.00</p>
-              </div>
-
-              <div class="col-6 col-lg-4">
-                <div class="shop-card">
-                  <img src="./img/rug.jpeg" alt="">
-                </div>
-                <h3>Some title that goes on and on</h3>
-                <p>$25,000.00</p>
-              </div>
-
-              <div class="col-12 col-sm-6 col-lg-4">
-                <div class="shop-card">
-                  <img src="./img/rug.jpeg" alt="">
-                </div>
-                <h3>Some title that goes on and on</h3>
-                <p>$25,000.00</p>
-              </div>
-
-              <div class="col-6 col-lg-4">
-                <div class="shop-card">
-                  <img src="./img/rug.jpeg" alt="">
-                </div>
-                <h3>Some title that goes on and on</h3>
-                <p>$25,000.00</p>
-              </div>
-
-              <div class="col-6 col-lg-4">
-                <div class="shop-card">
-                  <img src="./img/rug.jpeg" alt="">
-                </div>
-                <h3>Some title that goes on and on</h3>
-                <p>$25,000.00</p>
-              </div>
-
-              <div class="col-12 col-sm-6 col-lg-4">
-                <div class="shop-card">
-                  <img src="./img/rug.jpeg" alt="">
-                </div>
-                <h3>Some title that goes on and on</h3>
-                <p>$25,000.00</p>
-              </div>
-
-            </div>
-            <div class="row justify-content-center">
-              <a class="btn btn-primary" href="">Load More</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="services">
-        <div class="container">
-          <h1 class="center m-0">I Want to Get...</h1>
-
-          <hr>
-          <p>Services</p>
-
-          <div class="row justify-content-center">
-            <div class="col-12 col-sm-6 col-lg-4 col-lg-4">
-              <div class="card">
-                <h2 class="card-title">My Rug Cleaned</h2>
-                <div class="card-text">
-                  To protect your heirloom, we offer professional cleaning every 2 to 3 years and more often if it’s subject to frequent heavy traffic or accidents. Dirt particles and pet urine can cause the rug's fibers to become brittle... <b>Read more</b>
-                </div>
-                <a class="btn btn-secondary">Send a Request</a>
-              </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-lg-4 col-lg-4">
-              <div class="card">
-                <h2 class="card-title">My Rug Restored</h2>
-                <div class="card-text">
-                  While handwoven Oriental Rugs are famous for their durability, some older carpets may need restoration. Restoration differs from repair in its efforts to accurately duplicate the materials and construction... <b>Read more</b>
-                </div>
-                <a class="btn btn-secondary">Send a Request</a>
-              </div>
+            <div class="col">
+              <h1>Hi </h1>
             </div>
           </div>
         </div>
       </section>
-
-      <section id="gallery">
-        <div class="container">
-          <h1 class="center">Gallery</h1>
-
-          <hr>
-          <p>Swipe for photos</p>
-          <div class="carousel">
-            <div>
-              <img src="./img/interior/6b2a2570sm_orig.jpg" alt="">
-            </div>
-            <div>
-              <img src="./img/interior/6b2a3049sm_orig.jpg" alt="">
-            </div>
-            <div>
-              <img src="./img/interior/mckenzie-170_orig.jpg" alt="">
-            </div>
-            <div>
-              <img src="./img/interior/screen-shot-2017-11-19-at-6-20-21-pm_orig.png" alt="">
-            </div>
-          </div>
-        </div>
-      </section>
-
       <footer>
         <div class="container">
           <div class="row">

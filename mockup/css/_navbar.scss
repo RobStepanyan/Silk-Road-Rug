@@ -81,7 +81,6 @@
             margin: 0 .9*$margin !important;
             text-transform: uppercase;
             transition: $transition;
-            font-size: .875rem;
             border-bottom: 1px solid transparent;
 
             &:last-child {
@@ -257,10 +256,10 @@ body.sidenav-toggled {
         }
 
         & section:first-of-type {
-            margin-top: $navbar-logo-height + 2*$padding + $margin;
+            margin-top: $navbar-logo-height + 2*$padding;
 
             @include media-breakpoint-up(lg) {
-                margin-top: $navbar-logo-height-lg + 2*$padding + $margin;
+                margin-top: $navbar-logo-height-lg + 2*$padding;
             }
         }
     }

@@ -63,6 +63,7 @@ hr {
 }
 
 .card,
+.filter-sidebar,
 .shop-card,
 .shop-filter-card {
     background: c(dark2);
@@ -175,6 +176,7 @@ h4,
 h5,
 h6,
 p,
+.form-check-label,
 .text-white {
     color: c(white);
 }
@@ -187,4 +189,25 @@ i,
 
 .dropdown-header {
     color: c(primary);
+}
+
+input[type="radio"] {
+    background: c(dark1);
+    border-color: c(dark8) !important;
+
+    &:hover {
+        background: c(dark0);
+    }
+
+    &:checked:before {
+        background: c(primary);
+    }
+}
+
+.card-btn {
+    color: c(yellow2) !important;
+}
+
+.dropdown-item {
+    color: c(white) !important;
 }
