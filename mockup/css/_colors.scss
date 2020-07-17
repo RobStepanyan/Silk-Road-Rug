@@ -191,9 +191,10 @@ i,
     color: c(primary);
 }
 
-input[type="radio"] {
+input[type="radio"],
+input[type="checkbox"] {
     background: c(dark1);
-    border-color: c(dark8) !important;
+    border-color: c(dark5) !important;
 
     &:hover {
         background: c(dark0);
@@ -210,4 +211,13 @@ input[type="radio"] {
 
 .dropdown-item {
     color: c(white) !important;
+}
+
+#filterToggle {
+    background: transparent;
+    border-image-source: g(yellow) !important;
+
+    svg {
+        color: c(primary);
+    }
 }

@@ -25,6 +25,12 @@ $("#sidebarToggle").on("click", function (e) {
     $("body").toggleClass("sidenav-toggled");
 });
 
+// Toggle the shop filter sidebar
+$("#filterToggle").on("click", function (e) {
+    e.preventDefault();
+    $("body").toggleClass("filter-toggled");
+});
+
 // Dropdown button title change on click
 $('[data-toggle-enabled="true"] .dropdown-item').click(function () {
     $(this).parent().parent().find('.active').removeClass('active');
