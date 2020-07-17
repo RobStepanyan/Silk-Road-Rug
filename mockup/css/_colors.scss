@@ -64,7 +64,6 @@ hr {
 
 .card,
 .filter-sidebar,
-.shop-card,
 .shop-filter-card {
     background: c(dark2);
     box-shadow: $shadow-normal;
@@ -214,7 +213,7 @@ input[type="checkbox"] {
 }
 
 #filterToggle {
-    background: transparent;
+    background: c(dark2);
     border-image-source: g(yellow) !important;
 
     svg {

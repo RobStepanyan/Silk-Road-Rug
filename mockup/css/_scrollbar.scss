@@ -16,22 +16,3 @@ body {
     scrollbar-face-color: c(gray3);
     scrollbar-track-color: c(dark8);
 }
-
-::-webkit-scrollbar {
-    width: $margin;
-    height: $margin;
-}
-
-::-webkit-scrollbar-thumb {
-    background: c(gray3);
-}
-
-::-webkit-scrollbar-track {
-    background: c(dark8);
-}
-
-// For Internet Explorer
-body {
-    scrollbar-face-color: c(gray3);
-    scrollbar-track-color: c(dark8);
-}
