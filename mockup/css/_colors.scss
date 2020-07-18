@@ -105,6 +105,12 @@ hr {
     border-color: c(red) !important;
 }
 
+textarea,
+input[type="text"] {
+    background: c(dark5);
+    color: white;
+}
+
 .sidenav {
     background: rgba(c(dark3), .9);
     box-shadow: $shadow1;
@@ -219,4 +225,9 @@ input[type="checkbox"] {
     svg {
         color: c(primary);
     }
+}
+
+.gmap_canvas,
+.carousel img {
+    box-shadow: $shadow-normal;
 }
