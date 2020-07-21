@@ -77,6 +77,14 @@ hr {
     }
 }
 
+#shop {
+    .carousel-2 {
+        margin: $margin 0;
+        background: c(dark2);
+        box-shadow: $shadow2;
+    }
+}
+
 .card {
     hr {
         background: c(dark7);

@@ -218,6 +218,17 @@ ul {
     }
 }
 
+#shop {
+    h2 {
+        margin-top: 2*$margin;
+    }
+
+    .slick-prev,
+    .slick-next {
+        transform: scale(.3) translateY(-100px);
+    }
+}
+
 .dropdown-menu {
     border-radius: 0;
     border: 0;
@@ -272,7 +283,7 @@ ul {
 }
 
 .slick-prev {
-    left: -30px;
+    left: -35px;
 }
 
 .slick-prev:before {
