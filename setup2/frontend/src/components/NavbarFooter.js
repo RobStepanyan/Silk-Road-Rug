@@ -6,6 +6,11 @@ export default class NavbarFooter extends React.Component {
     super(props)
   }
 
+  handleNavbarToggleClick(e) {
+    e.preventDefault();
+    $("body").toggleClass("sidenav-toggled");
+  }
+
   componentDidMount() {
     $('.carousel').slick({
       autoplay: true,
@@ -49,7 +54,7 @@ export default class NavbarFooter extends React.Component {
         <nav className="navbar fixed-top">
           <div className="container-fluid">
             <div className="mr-auto">
-              <button id="sidebarToggle" className="hamburger" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+              <button onClick={this.handleNavbarToggleClick} id="sidebarToggle" className="hamburger" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="hamburger-box">
                   <span className="hamburger-inner"></span>
                 </span>
