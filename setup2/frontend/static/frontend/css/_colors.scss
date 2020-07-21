@@ -26,11 +26,14 @@ $colors: (dark0: #121212,
     bright8: rgba(#fff, .85),
 
 
-    yellow1: darken(#F2C94C, 20%),
-    yellow2: #F2C94C, // Primary
-    primary: #F2C94C,
+    yellow1: darken(#facf5a, 20%),
+    yellow2: #facf5a, // Primary
+    primary: #facf5a,
 
-    red: #f24c4c,
+    red: #ff5959,
+    green: #59ff59,
+    blue1:#085f63,
+    blue2: #49beb7,
 );
 
 @function c($color-name) {
