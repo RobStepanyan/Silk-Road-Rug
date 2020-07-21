@@ -7,6 +7,11 @@
     }
 }
 
+input,
+textarea {
+    outline: 0 !important;
+}
+
 input[type="radio"],
 input[type="checkbox"] {
     appearance: none;

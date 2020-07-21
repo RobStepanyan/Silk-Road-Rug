@@ -66,7 +66,7 @@ hr {
 .filter-sidebar,
 .shop-filter-card {
     background: c(dark2);
-    box-shadow: $shadow-normal;
+    box-shadow: $shadow2;
 
     .btn:not(.btn-primary),
     .card-btn {
@@ -74,9 +74,15 @@ hr {
     }
 }
 
+.card {
+    hr {
+        background: c(dark7);
+    }
+}
+
 .dropdown-menu {
     background: c(dark3);
-    box-shadow: $shadow-normal;
+    box-shadow: $shadow3;
 
     .dropdown-item {
         &:hover {
@@ -96,12 +102,14 @@ hr {
 }
 
 .note {
-    background: c(dark5);
+    background: c(dark2);
+    box-shadow: $shadow2;
     border-color: c(white) !important;
 }
 
 .disclaimer {
-    background: c(dark5);
+    background: c(dark2);
+    box-shadow: $shadow2;
     border-color: c(red) !important;
 }
 
@@ -109,11 +117,15 @@ textarea,
 input[type="text"] {
     background: c(dark5);
     color: white;
+
+    &:focus {
+        box-shadow: $shadow3;
+    }
 }
 
 .sidenav {
     background: rgba(c(dark3), .9);
-    box-shadow: $shadow1;
+    box-shadow: $shadow3;
     backdrop-filter: blur(15px);
 
     .sidenav-menu-heading {
@@ -143,7 +155,7 @@ input[type="text"] {
 
 .navbar {
     background: rgba(c(dark4), .9);
-    box-shadow: $shadow1;
+    box-shadow: $shadow4;
     backdrop-filter: blur(15px);
 
     .navbar-icon {
@@ -170,7 +182,7 @@ input[type="text"] {
 @include media-breakpoint-down(sm) {
     .navbar-collapse {
         background: c(dark3);
-        box-shadow: $shadow1;
+        box-shadow: $shadow3;
     }
 }
 
@@ -184,6 +196,14 @@ p,
 .form-check-label,
 .text-white {
     color: c(white);
+}
+
+.text-gray {
+
+    &,
+    * {
+        color: c(gray3);
+    }
 }
 
 small,
@@ -220,6 +240,7 @@ input[type="checkbox"] {
 
 #filterToggle {
     background: c(dark2);
+    box-shadow: $shadow2;
     border-image-source: g(yellow) !important;
 
     svg {
@@ -229,5 +250,17 @@ input[type="checkbox"] {
 
 .gmap_canvas,
 .carousel img {
-    box-shadow: $shadow-normal;
+    box-shadow: $shadow2;
+}
+
+ul.style-default {
+    li:before {
+        background: c(primary);
+    }
+}
+
+.cart.card {
+    p {
+        color: c(gray3);
+    }
 }

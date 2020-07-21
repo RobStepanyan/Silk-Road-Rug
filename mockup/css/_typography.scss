@@ -196,3 +196,26 @@ input[type="text"] {
     font-weight: bold;
     font-family: "Work Sans";
 }
+
+#cart,
+#contact,
+#shipping,
+#about {
+    h1 {
+        margin-bottom: $margin * 3 / 4;
+    }
+}
+
+.cart.card {
+    ul {
+
+        &,
+        * {
+            font-size: .75rem;
+
+            @include media-breakpoint-up(md) {
+                font-size: 1rem;
+            }
+        }
+    }
+}
