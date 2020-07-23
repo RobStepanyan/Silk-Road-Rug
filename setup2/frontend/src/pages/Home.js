@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NavbarFooter from '../components/NavbarFooter';
-import ShopFilterCard from '../components/ShopFilterCard';
+import Card, { ShopCard } from '../components/Cards';
 
 export default class Home extends Component {
   render() {
@@ -35,210 +35,30 @@ export default class Home extends Component {
             <p>Find a perfect rug</p>
             <h2 className="text-center">Antique</h2>
             <div className="row carousel-2">
-
-              <div className="col">
-                <div className="shop-card lg">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card lg">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card lg">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card lg">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
 
             </div>
             <h2 className="text-center">Contemporary</h2>
             <div className="row carousel-2">
-
-              <div className="col">
-                <div className="shop-card lg">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card lg">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card lg">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
-
-              <div className="col">
-                <div className="shop-card lg">
-                  <img src="/static/frontend/img/rug.jpeg" alt="" />
-                </div>
-                <a href="">
-                  <h3>Some title that goes on and on</h3>
-                </a>
-                <p>$25,000.00</p>
-              </div>
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
 
             </div>
             <div className="row justify-content-center">
@@ -256,24 +76,19 @@ export default class Home extends Component {
 
             <div className="row justify-content-center">
               <div className="col-12 col-md-6 col-lg-4">
-                <div className="card">
-                  <h2 className="card-title">My Rug Cleaned</h2>
-                  <div className="card-text">
-                    To protect your heirloom, we offer professional cleaning every 2 to 3 years and more often if it’s subject to frequent heavy traffic or accidents. Dirt particles and pet urine can cause the rug's fibers to become brittle...
-                </div>
-                  <a className="btn btn-secondary">Learn More</a>
-                </div>
+                <Card heading="My Rug Cleaned"
+                  text="To protect your heirloom, we offer professional cleaning every 2 to 3 years and more often if it’s subject to frequent heavy traffic or accidents. Dirt particles and pet urine can cause the rug's fibers to become brittle..."
+                  withBtn
+                  btnText="Learn More" />
               </div>
 
               <div className="col-12 col-md-6 col-lg-4">
-                <div className="card">
-                  <h2 className="card-title">My Rug Restored</h2>
-                  <div className="card-text">
-                    While handwoven Oriental Rugs are famous for their durability, some older carpets may need restoration. Restoration differs from repair in its efforts to accurately duplicate the materials and construction...
-                </div>
-                  <a className="btn btn-secondary">Learn More</a>
-                </div>
+                <Card heading="My Rug Restored"
+                  text="While handwoven Oriental Rugs are famous for their durability, some older carpets may need restoration. Restoration differs from repair in its efforts to accurately duplicate the materials and construction..."
+                  withBtn
+                  btnText="Learn More" />
               </div>
+
             </div>
           </div>
         </section>

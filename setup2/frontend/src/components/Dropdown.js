@@ -6,7 +6,7 @@ export default class Dropdown extends React.Component {
     super(props)
     this.handleDropItemClick = this.handleDropItemClick.bind(this);
     this.state = {
-      'btnText': "All " + this.props.title.slice(0, 1).toUpperCase() + this.props.title.slice(1) + "s",
+      'btnText': "All " + this.props.heading.slice(0, 1).toUpperCase() + this.props.heading.slice(1) + "s",
       'activeItemIndex': "0"
     }
   }
@@ -18,14 +18,14 @@ export default class Dropdown extends React.Component {
   render() {
     return (
       <div className="dropdown" >
-        <a className="btn card-btn" id={"shop-" + this.props.title + "s"} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a className="btn card-btn" id={"shop-" + this.props.heading + "s"} data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {this.state.btnText}
         </a>
-        <div className="dropdown-menu" data-toggle-enabled="true" aria-labelledby={"shop-" + this.props.title + "s"}>
+        <div className="dropdown-menu" data-toggle-enabled="true" aria-labelledby={"shop-" + this.props.heading + "s"}>
           {[
             <DropdownItem
               key="0"
-              content={`All ${this.props.title}s`}
+              content={`All ${this.props.heading}s`}
               active={this.state['activeItemIndex'] == '0' ? true : false}
               onClick={() => { this.handleDropItemClick("0") }} />
           ].concat(

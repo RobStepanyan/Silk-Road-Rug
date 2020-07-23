@@ -197,7 +197,7 @@ ul {
     padding: 2*$padding;
     margin-bottom: 2*$margin;
 
-    .card-title {
+    .card-heading {
         margin-bottom: 2*$margin*.25;
     }
 
@@ -212,7 +212,7 @@ ul {
     padding: $padding;
     margin: $margin 0;
 
-    .card-title {
+    .card-heading {
         border-bottom: 1px solid c(gray3);
         padding-bottom: $padding / 3;
     }
@@ -242,20 +242,10 @@ ul {
 
 .shop-card {
     overflow: hidden;
-    max-height: 310px;
-
-    @include media-breakpoint-down(sm) {
-        &.lg {
-            max-height: 650px;
-        }
-    }
+    max-height: 500px;
 
     @include media-breakpoint-up(sm) {
-        max-height: 300px;
-    }
-
-    @include media-breakpoint-up(md) {
-        max-height: 440px;
+        max-height: 600px;
     }
 
     img {
@@ -275,7 +265,7 @@ ul {
 .slick-next {
     transform: scale(.3);
 
-    @include media-breakpoint-down(lg) {
+    @include media-breakpoint-down(sm) {
         & {
             display: none !important;
         }
