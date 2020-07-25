@@ -60,7 +60,7 @@ export default class NavbarFooter extends React.Component {
                 </span>
               </button>
             </div>
-            <a className="navbar-brand" href="#top">
+            <a className="navbar-brand" href="/">
               <img src="/static/frontend/img/srri-logo-reversed.png" alt="Silk Road Rug Logo" />
             </a>
             <div className="ml-auto d-flex">
@@ -123,7 +123,7 @@ export default class NavbarFooter extends React.Component {
                   {/* Other Section */}
                   <div className="sidenav-menu-heading">Other</div>
                   {/* Contact Us */}
-                  <a className="nav-link collapsed" href="#">
+                  <a className="nav-link collapsed" href="/contact-us">
                     Contact Us
                   </a>
 
