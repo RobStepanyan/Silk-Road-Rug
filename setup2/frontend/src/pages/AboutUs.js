@@ -6,7 +6,7 @@ export default function AboutUs(props) {
   return (
     <NavbarFooter>
       <section id="about">
-        <div class="container">
+        <div className="container">
           <h1>About Our Company</h1>
 
           <p>
