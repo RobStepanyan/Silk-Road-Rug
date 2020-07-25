@@ -135,9 +135,9 @@ input[type="text"] {
 }
 
 .sidenav {
-    background: rgba(c(dark3), .9);
+    background: rgba(c(dark4), .95);
     box-shadow: $shadow3;
-    backdrop-filter: blur(15px);
+    // backdrop-filter: blur(15px);
 
     .sidenav-menu-heading {
         color: c(yellow2);
@@ -165,9 +165,9 @@ input[type="text"] {
 }
 
 .navbar {
-    background: rgba(c(dark4), .9);
+    background: rgba(c(dark4), .95);
     box-shadow: $shadow4;
-    backdrop-filter: blur(15px);
+    // backdrop-filter: blur(15px);
 
     .navbar-icon {
         svg {

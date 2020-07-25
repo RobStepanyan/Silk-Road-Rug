@@ -6,6 +6,9 @@ import {
     Route,
 } from 'react-router-dom';
 import Home from './pages/Home';
+import AboutUs from './pages/AboutUs';
+import ReturnPolicy from './pages/ReturnPolicy';
+import ShippingInfo from './pages/ShippingInfo';
 import 'jquery';
 import 'popper.js'
 import 'bootstrap';
@@ -16,9 +19,10 @@ class App extends Component {
         return (
             <Router>
                 <Switch>
-                    <Route path='/'>
-                        <Home />
-                    </Route>
+                    <Route path='/learn/about-us' component={AboutUs} />
+                    <Route path='/learn/return-policy' component={ReturnPolicy} />
+                    <Route path='/learn/shipping-info' component={ShippingInfo} />
+                    <Route path='/' component={Home} />
                 </Switch>
             </Router>
         );
