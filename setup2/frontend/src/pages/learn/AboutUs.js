@@ -1,6 +1,6 @@
 import React from 'react';
-import NavbarFooter from '../components/NavbarFooter';
-import HelpfulLinksFooter from '../components/HelpfulLinksFooter';
+import NavbarFooter from '../../components/NavbarFooter';
+import HelpfulLinksFooter from '../../components/HelpfulLinksFooter';
 
 export default function AboutUs(props) {
   return (
