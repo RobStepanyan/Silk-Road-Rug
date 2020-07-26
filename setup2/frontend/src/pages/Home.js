@@ -77,14 +77,14 @@ export default class Home extends Component {
             <div className="row justify-content-center">
               <div className="col-12 col-md-6 col-lg-4">
                 <Card heading="My Rug Cleaned"
-                  text="To protect your heirloom, we offer professional cleaning every 2 to 3 years and more often if it’s subject to frequent heavy traffic or accidents. Dirt particles and pet urine can cause the rug's fibers to become brittle..."
+                  text="To protect your heirloom, we offer professional cleaning every 2 to 3 years and more often if it’s subject to frequent heavy traffic or accidents. Dirt particles and pet urine can cause the rug's fibers to become brittle"
                   withBtn
                   btnText="Learn More" />
               </div>
 
               <div className="col-12 col-md-6 col-lg-4">
                 <Card heading="My Rug Restored"
-                  text="While handwoven Oriental Rugs are famous for their durability, some older carpets may need restoration. Restoration differs from repair in its efforts to accurately duplicate the materials and construction..."
+                  text="While handwoven Oriental Rugs are famous for their durability, some older carpets may need restoration. Restoration differs from repair in its efforts to accurately duplicate the materials and construction"
                   withBtn
                   btnText="Learn More" />
               </div>
