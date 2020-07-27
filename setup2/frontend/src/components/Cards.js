@@ -9,7 +9,7 @@ export default function Card(props) {
         {props.text.slice(0, 220) + '...'}
       </div>
       {props.withBtn &&
-        <a className="btn btn-secondary">{props.btnText}</a>
+        <a href={props.btnHref} className="btn btn-secondary">{props.btnText}</a>
       }
     </div>
   )

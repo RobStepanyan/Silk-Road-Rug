@@ -393,6 +393,7 @@ ul.style-default {
     text-align: right;
     height: 500px;
     width: 100%;
+    margin-bottom: 2*$margin;
 }
 
 .gmap_canvas {
@@ -455,4 +456,19 @@ ul.style-default {
         }
     }
 
+}
+
+#service {
+    img {
+        width: 100%;
+        margin: $margin 0;
+    }
+
+    .row {
+
+        .col-12 {
+            display: block;
+            margin: auto;
+        }
+    }
 }
