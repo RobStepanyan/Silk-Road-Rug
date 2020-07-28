@@ -35,7 +35,7 @@ export default function AboutUs(props) {
 
           <h2>Signature Release Required</h2>
           <p className="style-2">
-            All orders will be shipped with signature release required unless you notify us otherwise.
+            All orders will be shipped with <strong>signature release required</strong> unless you notify us otherwise.
           </p>
 
           <h2>Delivery Time</h2>
