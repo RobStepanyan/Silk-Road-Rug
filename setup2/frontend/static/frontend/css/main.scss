@@ -15,7 +15,6 @@
 
 @import 'variables';
 @import 'colors';
-@import 'animations';
 @import 'buttons';
 @import 'typography';
 @import 'navbar';
@@ -298,8 +297,8 @@ ul.style-default {
             left: -$padding;
             transform: translate(-50%, -50%);
 
-            width: .3rem;
-            height: .3rem;
+            width: .5rem;
+            height: .5rem;
             border-radius: 50%;
         }
     }

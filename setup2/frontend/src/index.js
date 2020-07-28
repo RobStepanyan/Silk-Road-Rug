@@ -6,6 +6,7 @@ import {
     Route,
 } from 'react-router-dom';
 import Home from './pages/Home';
+import Cart from './pages/Cart';
 import ContactUs from './pages/ContactUs';
 import AboutUs from './pages/learn/AboutUs';
 import ReturnPolicy from './pages/learn/ReturnPolicy';
@@ -28,6 +29,7 @@ class App extends Component {
                     <Route path='/services/rug-cleaning' component={RugCleaning} />
                     <Route path='/services/rug-restoration' component={RugRestoration} />
                     <Route path='/contact-us' component={ContactUs} />
+                    <Route path='/cart' component={Cart} />
                     <Route path='/' component={Home} />
                 </Switch>
             </Router>

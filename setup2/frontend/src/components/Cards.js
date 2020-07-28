@@ -40,3 +40,76 @@ export function ShopFilterCard(props) {
     </div >
   )
 }
+
+export function CartCard(props) {
+  return (
+    <div className="cart card">
+      <div className="container">
+        <div className="row">
+          <div className="col-12 col-sm-4 p-0">
+            <img src={props.imgSrc} alt="" />
+          </div>
+          <div className="col p-0">
+            <h2>{props.heading}</h2>
+            <h4>Details</h4>
+            <ul className="style-default">
+              <li>Size: {props.size}</li>
+              <li>Style: {props.style}</li>
+              <li>Color: {props.color}</li>
+            </ul>
+
+            <h4>Shipping Method</h4>
+            <ul className="style-default p-0">
+              <div className="form-check">
+                <input type="radio" name={props.keyProp + "shipping"} id="willCall" value="name" checked />
+                <label className="form-check-label" htmlFor="willCall">
+                  Will-Call Pick Up
+                </label>
+              </div>
+              <div className="form-check">
+                <input type="radio" name={props.keyProp + "shipping"} id="ground" value="price" />
+                <label className="form-check-label" htmlFor="ground">
+                  Ground Shipping
+                </label>
+              </div>
+            </ul>
+
+            <h4>Additional Services</h4>
+            <ul className="style-default p-0">
+              <div className="form-check">
+                <input type="checkbox" name={props.keyProp + "additional"} id="insurance" value="name" />
+                <label className="form-check-label" htmlFor="insurance">
+                  Insurance
+                </label>
+              </div>
+              <div className="form-check">
+                <input type="checkbox" name={props.keyProp + "additional"} id="expedited" value="price" />
+                <label className="form-check-label" htmlFor="expedited">
+                  Expedited Shipping
+                </label>
+              </div>
+              <div className="form-check">
+                <input type="checkbox" name={props.keyProp + "additional"} id="signature" value="name" />
+                <label className="form-check-label" htmlFor="signature">
+                  Signature Release Required
+                </label>
+              </div>
+              <div className="form-check">
+                <input type="checkbox" name={props.keyProp + "additional"} id="whiteGlove" value="price" />
+                <label className="form-check-label" htmlFor="whiteGlove">
+                  White Glove Delivery
+                </label>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <hr />
+        <div className="row justify-content-end">
+          <div className="col">
+            <p>{props.price}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
