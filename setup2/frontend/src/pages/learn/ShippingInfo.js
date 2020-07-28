@@ -56,7 +56,7 @@ export default function AboutUs(props) {
             Local will-call pick-up is available without charge.
           </p>
 
-          <h2>Delivery</h2>
+          <h2>White Glove Delivery</h2>
           <p className="style-2">
             White Glove delivery and installation is available, please email to inquire pricing for your area.
           </p>
