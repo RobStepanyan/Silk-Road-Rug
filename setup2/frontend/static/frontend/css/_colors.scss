@@ -113,29 +113,38 @@ hr {
 }
 
 .note {
-    background: c(dark2);
+    background-color: c(dark2);
     box-shadow: $shadow2;
     border-color: c(white) !important;
 }
 
 .disclaimer {
-    background: c(dark2);
+    background-color: c(dark2);
     box-shadow: $shadow2;
     border-color: c(red) !important;
 }
 
+/* Change Autocomplete styles in Chrome*/
 textarea,
 input[type="text"] {
-    background: c(dark5);
-    color: white;
+    background-color: c(dark5) !important;
+    color: white !important;
 
     &:focus {
         box-shadow: $shadow3;
     }
+
+    &.invalid {
+        border-color: c(red);
+    }
+
+    &.valid {
+        border-color: c(green);
+    }
 }
 
 .sidenav {
-    background: rgba(c(dark4), .95);
+    background-color: rgba(c(dark4), .95);
     box-shadow: $shadow3;
     // backdrop-filter: blur(15px);
 
@@ -206,15 +215,19 @@ h6,
 p,
 .form-check-label,
 .text-white {
-    color: c(white);
+    color: c(white) !important;
 }
 
 .text-gray {
 
     &,
     * {
-        color: c(gray3);
+        color: c(gray3) !important;
     }
+}
+
+.text-red {
+    color: c(red) !important;
 }
 
 small,
@@ -229,15 +242,15 @@ i,
 
 input[type="radio"],
 input[type="checkbox"] {
-    background: c(dark1);
+    background-color: c(dark1);
     border-color: c(dark5) !important;
 
     &:hover {
-        background: c(dark0);
+        background-color: c(dark0);
     }
 
     &:checked:before {
-        background: c(primary);
+        background-color: c(primary);
     }
 }
 
@@ -250,7 +263,7 @@ input[type="checkbox"] {
 }
 
 #filterToggle {
-    background: c(dark2);
+    background-color: c(dark2);
     box-shadow: $shadow2;
     border-image-source: g(yellow) !important;
 

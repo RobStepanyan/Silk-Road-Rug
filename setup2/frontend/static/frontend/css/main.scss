@@ -471,3 +471,7 @@ ul.style-default {
         }
     }
 }
+
+h3.required:after {
+    content: "*";
+}

@@ -198,7 +198,6 @@ input[type="text"] {
 }
 
 #cart,
-#contact,
 #shipping,
 #about {
     h1 {
@@ -216,4 +215,8 @@ input[type="text"] {
             font-size: 1rem;
         }
     }
+}
+
+.btn-file-upload {
+    font-size: .875rem;
 }
