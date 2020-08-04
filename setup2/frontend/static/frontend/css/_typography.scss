@@ -61,10 +61,8 @@ h2 {
 
 h3 {
     font-size: 1.375rem;
-}
 
-@include media-breakpoint-up(lg) {
-    h3 {
+    @include media-breakpoint-up(lg) {
         font-size: 1.5rem
     }
 }
@@ -219,4 +217,8 @@ input[type="text"] {
 
 .btn-file-upload {
     font-size: .875rem;
+}
+
+.price {
+    font-family: $font-secondary;
 }

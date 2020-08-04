@@ -12,3 +12,16 @@ export function toTitleCase(text) {
 
     return res;
 }
+
+export function formatPrice(float, currency = '$') {
+    let strPrice = '', cents = '';
+    float = String(float.toFixed(2))
+    if (float.includes('.') && float.slice(-2) != '00') {
+        cents = float.slice(-3)
+    }
+    float = float.slice(0, -3)
+    float.split('').reverse().forEach((char, i) => {
+        i % 3 == 0 && i > 0 ? strPrice += ',' + char : strPrice += char
+    })
+    return currency + strPrice.split('').reverse().join('') + cents
+}

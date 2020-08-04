@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { toTitleCase, validateEmail } from '../other/functions';
+import { toTitleCase, validateEmail, formatPrice } from '../other/functions';
 
 
 export default class Form extends Component {
@@ -130,3 +130,28 @@ export default class Form extends Component {
 Form.propTypes = {
   fields: PropTypes.array.isRequired,
 };
+
+export function RadioGroupWithPrice(props) {
+
+  return (
+    <ul className="style-default p-0">
+      {
+        props.items.map((item, id) => {
+          return (
+            <div className="form-check" key={id}>
+              <input type="radio" name={props.name} id={props.name + id} checked={props.selectedKeyShipping == id} onChange={() => props.onChange(id)} />
+              <label className="form-check-label" htmlFor={props.name + id}>
+                {item.label} <span className="price">{item.price == 0 ? '(Free)' : `(+${formatPrice(item.price)})`}</span>
+              </label>
+            </div>
+          )
+        })
+      }
+    </ul>
+  )
+}
+
+RadioGroupWithPrice.propTypes = {
+  name: PropTypes.string.isRequired,
+  items: PropTypes.array.isRequired,
+}
