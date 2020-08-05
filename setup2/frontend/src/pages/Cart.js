@@ -24,7 +24,7 @@ export default class Cart extends React.Component {
     let { selectedCheckboxes } = this.state;
 
     selectedCheckboxes[keyProp][nameString].includes(id)
-      ? selectedCheckboxes[keyProp][nameString].splice(selectedCheckboxes[keyProp][nameString].findIndex(id), 1) // remove id from the list
+      ? selectedCheckboxes[keyProp][nameString].splice(selectedCheckboxes[keyProp][nameString].indexOf(id), 1) // remove id from the list
       : selectedCheckboxes[keyProp][nameString].push(id)
 
     this.setState({ 'selectedCheckboxes': selectedCheckboxes })
