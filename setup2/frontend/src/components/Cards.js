@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Dropdown from './Dropdown';
 import PropTypes from 'prop-types';
-import { RadioGroupWithPrice } from './Form';
+import { RadioGroupWithPrice, CheckboxGroupWithPrice } from './Form';
 import { formatPrice } from '../other/functions';
 
 export default function Card(props) {
@@ -73,30 +73,27 @@ export class CartCard extends Component {
 
               <h4>Shipping Method</h4>
               <RadioGroupWithPrice
-                selectedKeyShipping={this.props.selectedKeyShipping}
-                onChange={(id) => this.props.onChange(this.props.keyProp, 'shipping', id)}
-                name={this.props.keyProp + "shiping"}
+                selectedId={this.props.selectedId}
+                onChange={(id) => this.props.onChangeRadio(this.props.keyProp, 'shipping', id)}
+                name={this.props.keyProp + 'shiping'}
                 items={[
                   { 'label': 'Will-Call Pick Up', 'price': 0 },
                   { 'label': 'Ground Shipping', 'price': this.props.pricesUSD['groundShipping'] }
                 ]} />
-              {/* <ul className="style-default p-0">
-                <div className="form-check">
-                  <input type="radio" name={this.props.keyProp + "shipping"} id="willCall" value="name" checked />
-                  <label className="form-check-label" htmlFor="willCall">
-                    Will-Call Pick Up <span className="price">(Free)</span>
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input type="radio" name={this.props.keyProp + "shipping"} id="ground" value="price" />
-                  <label className="form-check-label" htmlFor="ground">
-                    Ground Shipping <span className="price">{`(+$${this.props.pricesUSD['groundShipping']})`}</span>
-                  </label>
-                </div>
-              </ul> */}
 
               <h4>Additional Services</h4>
-              <ul className="style-default p-0">
+              <CheckboxGroupWithPrice
+                selectedIds={this.props.selectedIds}
+                onChange={(id) => this.props.onChangeCheckbox(this.props.keyProp, 'additional', id)}
+                name={this.props.keyProp + 'additional'}
+                items={[
+                  { 'label': 'Insurance', 'price': this.props.pricesUSD['insurance'] },
+                  { 'label': 'Expedited Shipping', 'price': this.props.pricesUSD['expeditedShipping'] },
+                  { 'label': 'Signature Release Required', 'price': this.props.pricesUSD['signatureReleaseRequired'] },
+                  { 'label': 'White Glove Delivery', 'price': this.props.pricesUSD['whiteGloveDelivery'] }
+                ]} />
+
+              {/* <ul className="style-default p-0">
                 <div className="form-check">
                   <input type="checkbox" name={this.props.keyProp + "additional"} id="insurance" value="name" />
                   <label className="form-check-label" htmlFor="insurance">
@@ -121,7 +118,7 @@ export class CartCard extends Component {
                     White Glove Delivery <span className="price">{`(+$${this.props.pricesUSD['whiteGloveDelivery']})`}</span>
                   </label>
                 </div>
-              </ul>
+              </ul> */}
             </div>
           </div>
         </div>

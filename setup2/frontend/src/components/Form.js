@@ -139,7 +139,7 @@ export function RadioGroupWithPrice(props) {
         props.items.map((item, id) => {
           return (
             <div className="form-check" key={id}>
-              <input type="radio" name={props.name} id={props.name + id} checked={props.selectedKeyShipping == id} onChange={() => props.onChange(id)} />
+              <input type="radio" name={props.name} id={props.name + id} checked={props.selectedId == id} onChange={() => props.onChange(id)} />
               <label className="form-check-label" htmlFor={props.name + id}>
                 {item.label} <span className="price">{item.price == 0 ? '(Free)' : `(+${formatPrice(item.price)})`}</span>
               </label>
@@ -152,6 +152,31 @@ export function RadioGroupWithPrice(props) {
 }
 
 RadioGroupWithPrice.propTypes = {
+  name: PropTypes.string.isRequired,
+  items: PropTypes.array.isRequired,
+}
+
+export function CheckboxGroupWithPrice(props) {
+
+  return (
+    <ul className="style-default p-0">
+      {
+        props.items.map((item, id) => {
+          return (
+            <div className="form-check" key={id}>
+              <input type="checkbox" name={props.name} id={props.name + id} checked={props.selectedIds.includes(id)} onChange={() => props.onChange(id)} />
+              <label className="form-check-label" htmlFor={props.name + id}>
+                {item.label} <span className="price">{item.price == 0 ? '(Free)' : `(+${formatPrice(item.price)})`}</span>
+              </label>
+            </div>
+          )
+        })
+      }
+    </ul>
+  )
+}
+
+CheckboxGroupWithPrice.propTypes = {
   name: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired,
 }

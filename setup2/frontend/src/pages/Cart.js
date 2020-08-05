@@ -8,23 +8,37 @@ export default class Cart extends React.Component {
     this.handleRadioWithPriceChange = this.handleRadioWithPriceChange.bind(this)
     this.state = {
       'selectedRadios': {},
+      'selectedCheckboxes': {},
       'itemsQuanity': 2
     }
   }
 
   handleRadioWithPriceChange(keyProp, nameString, id) {
-    let selectedRadios = this.state.selectedRadios;
-    selectedRadios[keyProp][nameString] = id
+    let { selectedRadios } = this.state;
+    selectedRadios[keyProp][nameString] = id;
+
     this.setState({ 'selectedRadios': selectedRadios })
   }
 
+  handleCheckboxWithPriceChange(keyProp, nameString, id) {
+    let { selectedCheckboxes } = this.state;
+
+    selectedCheckboxes[keyProp][nameString].includes(id)
+      ? selectedCheckboxes[keyProp][nameString].splice(selectedCheckboxes[keyProp][nameString].findIndex(id), 1) // remove id from the list
+      : selectedCheckboxes[keyProp][nameString].push(id)
+
+    this.setState({ 'selectedCheckboxes': selectedCheckboxes })
+  }
+
   componentWillMount() {
-    let selectedRadios = this.state.selectedRadios;
+    let { selectedRadios, selectedCheckboxes } = this.state;
     for (let i = 0; i <= this.state.itemsQuanity - 1; i++) {
       selectedRadios[i] = {}
+      selectedCheckboxes[i] = {}
       selectedRadios[i]['shipping'] = 0
+      selectedCheckboxes[i]['additional'] = []
     }
-    this.setState({ 'selectedRadios': selectedRadios })
+    this.setState({ 'selectedRadios': selectedRadios, 'selectedCheckboxes': selectedCheckboxes })
   }
 
   render() {
@@ -40,8 +54,10 @@ export default class Cart extends React.Component {
                     <CartCard
                       key={String(i)} keyProp={String(i)} heading="Name of the Rug" size="1' x 3'" style="Contemporary" color="White" imgSrc="/static/frontend/img/rug.jpeg"
                       pricesUSD={{ 'price': 25000.00, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 }}
-                      selectedKeyShipping={this.state.selectedRadios[String(i)]['shipping']}
-                      onChange={(keyProp, nameString, id) => this.handleRadioWithPriceChange(keyProp, nameString, id)} />
+                      selectedId={this.state.selectedRadios[String(i)]['shipping']}
+                      selectedIds={this.state.selectedCheckboxes[String(i)]['additional']}
+                      onChangeRadio={(keyProp, nameString, id) => this.handleRadioWithPriceChange(keyProp, nameString, id)}
+                      onChangeCheckbox={(keyProp, nameString, id) => this.handleCheckboxWithPriceChange(keyProp, nameString, id)} />
                   )
                 })
               )
