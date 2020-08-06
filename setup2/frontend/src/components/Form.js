@@ -139,10 +139,22 @@ export function RadioGroupWithPrice(props) {
         props.items.map((item, id) => {
           return (
             <div className="form-check" key={id}>
-              <input type="radio" name={props.name} id={props.name + id} checked={props.selectedId == id} onChange={() => props.onChange(id)} />
-              <label className="form-check-label" htmlFor={props.name + id}>
-                {item.label} <span className="price">{item.price == 0 ? '(Free)' : `(+${formatPrice(item.price)})`}</span>
-              </label>
+              {item.price != null
+                ? (
+                  <>
+                    <input type="radio" name={props.name} id={props.name + id} checked={props.selectedId == id} onChange={() => props.onChange(id)} />
+                    <label className="form-check-label" htmlFor={props.name + id}>
+                      {item.label} <span className="price">{item.price == 0 ? '(Free)' : `(+${formatPrice(item.price)})`}</span>
+                    </label>
+                  </>
+                )
+                : (
+                  <label className="form-check-label disabled">
+                    {item.label}
+                  </label>
+                )
+              }
+
             </div>
           )
         })
@@ -164,10 +176,21 @@ export function CheckboxGroupWithPrice(props) {
         props.items.map((item, id) => {
           return (
             <div className="form-check" key={id}>
-              <input type="checkbox" name={props.name} id={props.name + id} checked={props.selectedIds.includes(id)} onChange={() => props.onChange(id)} />
-              <label className="form-check-label" htmlFor={props.name + id}>
-                {item.label} <span className="price">{item.price == 0 ? '(Free)' : `(+${formatPrice(item.price)})`}</span>
-              </label>
+              {item.price != null
+                ? (
+                  <>
+                    <input type="checkbox" name={props.name} id={props.name + id} checked={props.selectedIds.includes(id)} onChange={() => props.onChange(id)} />
+                    <label className="form-check-label" htmlFor={props.name + id}>
+                      {item.label} <span className="price">{item.price == 0 ? '(Free)' : `(+${formatPrice(item.price)})`}</span>
+                    </label>
+                  </>
+                )
+                : (
+                  <label className="form-check-label disabled">
+                    {item.label}
+                  </label>
+                )
+              }
             </div>
           )
         })

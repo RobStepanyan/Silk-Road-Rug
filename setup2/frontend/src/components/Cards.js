@@ -59,7 +59,7 @@ export class CartCard extends Component {
             </div>
             <div className="col p-0">
               <h2>{this.props.heading}</h2>
-              <h3 className="price">{formatPrice(this.props.pricesUSD['price'])}</h3>
+              <h3 className="price">{formatPrice(this.props.price) + (this.props.additionalCosts ? ` (+${formatPrice(this.props.additionalCosts)})` : '')}</h3>
               <h4>Details</h4>
               <ul className="style-default">
                 <li>Size: {this.props.size}</li>
@@ -71,11 +71,40 @@ export class CartCard extends Component {
                 }
               </ul>
 
-              <h4>Shipping Method</h4>
+              {this.props.inputs.map((input, i) => {
+                let component;
+
+                if (input.inputType == 'radio') {
+                  component = (
+                    <RadioGroupWithPrice //key={String(i)}
+                      selectedId={this.props.selectedId[input.name]}
+                      onChange={(id) => this.props.onChangeRadio(this.props.keyProp, input.name, id)}
+                      name={this.props.keyProp + input.name}
+                      items={input.items} />
+                  )
+                } else {
+                  component = (
+                    component = (
+                      <CheckboxGroupWithPrice // key={String(i)}
+                        selectedIds={this.props.selectedIds[input.name]}
+                        onChange={(id) => this.props.onChangeCheckbox(this.props.keyProp, input.name, id)}
+                        name={this.props.keyProp + input.name}
+                        items={input.items} />
+                    )
+                  )
+                }
+                return (
+                  <div key={String(i)}>
+                    <h4>{input.heading}</h4>
+                    {component}
+                  </div>
+                )
+              })}
+              {/* <h4>Shipping Method</h4>
               <RadioGroupWithPrice
                 selectedId={this.props.selectedId}
                 onChange={(id) => this.props.onChangeRadio(this.props.keyProp, 'shipping', id)}
-                name={this.props.keyProp + 'shiping'}
+                name={this.props.keyProp + 'shipping'}
                 items={[
                   { 'label': 'Will-Call Pick Up', 'price': 0 },
                   { 'label': 'Ground Shipping', 'price': this.props.pricesUSD['groundShipping'] }
@@ -91,7 +120,7 @@ export class CartCard extends Component {
                   { 'label': 'Expedited Shipping', 'price': this.props.pricesUSD['expeditedShipping'] },
                   { 'label': 'Signature Release Required', 'price': this.props.pricesUSD['signatureReleaseRequired'] },
                   { 'label': 'White Glove Delivery', 'price': this.props.pricesUSD['whiteGloveDelivery'] }
-                ]} />
+                ]} /> */}
 
               {/* <ul className="style-default p-0">
                 <div className="form-check">
@@ -127,12 +156,11 @@ export class CartCard extends Component {
   }
 }
 
-CartCard.propTypes = {
-  keyProp: PropTypes.string.isRequired,
-  heading: PropTypes.string.isRequired,
-  size: PropTypes.string.isRequired,
-  style: PropTypes.string,
-  color: PropTypes.string,
-  imgSrc: PropTypes.string,
-  pricesUSD: PropTypes.object.isRequired,
-}
+// CartCard.propTypes = {
+//   keyProp: PropTypes.string.isRequired,
+//   heading: PropTypes.string.isRequired,
+//   size: PropTypes.string.isRequired,
+//   style: PropTypes.string,
+//   color: PropTypes.string,
+//   imgSrc: PropTypes.string,
+// }
