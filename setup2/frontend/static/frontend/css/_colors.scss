@@ -144,7 +144,7 @@ input[type="text"] {
 }
 
 .sidenav {
-    background-color: rgba(c(dark4), .95);
+    background-color: rgba(c(dark4), .975);
     box-shadow: $shadow3;
     // backdrop-filter: blur(15px);
 
@@ -174,7 +174,7 @@ input[type="text"] {
 }
 
 .navbar {
-    background: rgba(c(dark4), .95);
+    background: rgba(c(dark4), .975);
     box-shadow: $shadow4;
     // backdrop-filter: blur(15px);
 
@@ -275,7 +275,7 @@ input[type="checkbox"] {
 
 #filterToggle {
     background-color: c(dark2);
-    box-shadow: $shadow2;
+    box-shadow: $shadow-normal;
     border-image-source: g(yellow) !important;
 
     svg {
