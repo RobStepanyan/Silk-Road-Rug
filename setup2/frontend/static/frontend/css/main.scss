@@ -415,6 +415,7 @@ ul.style-default {
 
 .cart.card {
     display: flex;
+    position: relative;
 
     .col-12 {
         margin-right: 2*$margin;
@@ -431,6 +432,46 @@ ul.style-default {
 
     h3.price {
         margin-bottom: 2*$margin;
+    }
+
+    .container {
+        margin-top: 2*$margin;
+    }
+
+    .close-btn {
+        top: 2*$margin;
+        right: 2 * $margin - ($hamburger-line-width / 2) + 2px / 2;
+
+        &,
+        &::after {
+            cursor: pointer;
+            position: absolute;
+            border-radius: 2px;
+            height: 2px;
+            width: $hamburger-line-width;
+            background-color: c(gray3);
+            transition: $transition;
+
+            @include media-breakpoint-up(lg) {
+                width: $hamburger-line-width-lg;
+            }
+        }
+
+
+        &:hover {
+
+            &,
+            &::after {
+                background-color: c(red);
+            }
+        }
+
+        &::after {
+            content: "";
+            transform: rotate(90deg);
+        }
+
+        transform: rotate(-45deg);
     }
 
     .row {
@@ -482,4 +523,12 @@ h3.required:after {
     * {
         opacity: .25;
     }
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.w-max-content {
+    width: max-content;
 }

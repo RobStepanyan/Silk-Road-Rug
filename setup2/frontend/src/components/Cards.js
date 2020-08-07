@@ -53,6 +53,7 @@ export class CartCard extends Component {
     return (
       <div className="cart card" >
         <div className="container">
+          <div onClick={this.props.onClickClose} className="close-btn"></div>
           <div className="row">
             <div className="col-12 col-sm-4 p-0">
               <img src={this.props.imgSrc} alt="" />

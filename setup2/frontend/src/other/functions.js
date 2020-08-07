@@ -50,3 +50,18 @@ export function calculateAdditionalCosts(selectedRadios, selectedCheckboxes, dat
     })
     return addCosts;
 }
+
+export function calculatePriceSum(data, addCosts) {
+    let sum = 0;
+    if (data) {
+        data.forEach(data => {
+            sum += data.pricesUSD['price']
+        })
+    }
+    if (addCosts) {
+        Object.values(addCosts).forEach(cost => {
+            sum += cost
+        })
+    }
+    return sum;
+}

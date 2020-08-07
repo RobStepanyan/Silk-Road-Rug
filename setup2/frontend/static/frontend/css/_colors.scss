@@ -194,7 +194,18 @@ input[type="text"] {
         &,
         &:after,
         &:before {
-            background-color: c(gray3)
+            background-color: c(gray3);
+        }
+    }
+}
+
+.hamburger:hover {
+    .hamburger-inner {
+
+        body:not(.sidenav-toggled) &,
+        &:after,
+        &:before {
+            background-color: c(white);
         }
     }
 }
