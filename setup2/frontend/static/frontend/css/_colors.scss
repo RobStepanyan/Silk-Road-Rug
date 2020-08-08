@@ -273,9 +273,14 @@ input[type="checkbox"] {
     color: c(white) !important;
 }
 
+
+.dropdown-heading {
+    color: c(primary);
+}
+
 #filterToggle {
     background-color: c(dark2);
-    box-shadow: $shadow-normal;
+    box-shadow: $shadow5;
     border-image-source: g(yellow) !important;
 
     svg {

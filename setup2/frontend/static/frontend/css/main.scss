@@ -320,14 +320,16 @@ ul.style-default {
     padding: 2*$padding;
     margin-right: 2*$margin;
 
-    // display: none;
-    transform: translateX(-100%);
-    transition: $transition;
+    &:not(.toggled) {
+        transform: translateX(-100%);
+        transition: $transition;
+    }
 
-    body.filter-toggled & {
+    &.toggled {
         position: fixed;
         height: 100%;
         overflow-y: auto;
+        transition: $transition;
         transform: translateX(0);
     }
 
@@ -366,7 +368,6 @@ ul.style-default {
 
     height: 3*$margin;
     width: 3*$margin;
-    box-shadow: $shadow-neu;
     border: 2px solid;
     border-image-slice: 1;
     cursor: pointer;
@@ -440,7 +441,7 @@ ul.style-default {
 
     .close-btn {
         top: 2*$margin;
-        right: 2 * $margin - ($hamburger-line-width / 2) + 2px / 2;
+        right: 2 * $margin - ($hamburger-line-width / 2)+2px / 2;
 
         &,
         &::after {

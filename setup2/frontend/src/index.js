@@ -13,6 +13,7 @@ import ReturnPolicy from './pages/learn/ReturnPolicy';
 import ShippingInfo from './pages/learn/ShippingInfo';
 import RugCleaning from './pages/services/RugCleaning';
 import RugRestoration from './pages/services/RugRestoration';
+import Shop from './pages/shop/Shop';
 import 'jquery';
 import 'popper.js'
 import 'bootstrap';
@@ -30,6 +31,7 @@ class App extends Component {
                     <Route path='/services/rug-restoration' component={RugRestoration} />
                     <Route path='/contact-us' component={ContactUs} />
                     <Route path='/cart' component={Cart} />
+                    <Route path='/shop' component={Shop} />
                     <Route path='/' component={Home} />
                 </Switch>
             </Router>

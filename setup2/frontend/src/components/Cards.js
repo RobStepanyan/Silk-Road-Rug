@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Dropdown from './Dropdown';
 import PropTypes from 'prop-types';
-import { RadioGroupWithPrice, CheckboxGroupWithPrice } from './Form';
+import { RadioGroupWithPrice, CheckboxGroupWithPrice, RadioGroup, CheckboxGroup } from './Form';
 import { formatPrice } from '../other/functions';
 
 export default function Card(props) {
@@ -32,136 +32,112 @@ export function ShopCard(props) {
   )
 }
 
-
-export function ShopFilterCard(props) {
+export function CartCard(props) {
   return (
-    <div className="col-12 col-sm-6 col-lg-4">
-      <div className="shop-filter-card">
-        <h2 className="card-heading">{props.heading.slice(0, 1).toUpperCase() + props.heading.slice(1)}</h2>
-        <Dropdown heading={props.heading} values={props.values} />
-      </div>
-    </div >
-  )
-}
+    <div className="cart card" >
+      <div className="container">
+        <div onClick={props.onClickClose}>
+          <div className="close-btn"></div>
+        </div>
+        <div className="row">
+          <div className="col-12 col-sm-4 p-0">
+            <img src={props.imgSrc} alt="" />
+          </div>
+          <div className="col p-0">
+            <h2>{props.heading}</h2>
+            <h3 className="price">{formatPrice(props.price) + (props.additionalCosts ? ` (+${formatPrice(props.additionalCosts)})` : '')}</h3>
+            <h4>Details</h4>
+            <ul className="style-default">
+              <li>Size: {props.size}</li>
+              {props.style &&
+                <li>Style: {props.style}</li>
+              }
+              {props.color &&
+                <li>Color: {props.color}</li>
+              }
+            </ul>
 
-export class CartCard extends Component {
-  constructor(props) {
-    super(props);
-  }
+            {props.inputs.map((input, i) => {
+              let component;
 
-  render() {
-    return (
-      <div className="cart card" >
-        <div className="container">
-          <div onClick={this.props.onClickClose} className="close-btn"></div>
-          <div className="row">
-            <div className="col-12 col-sm-4 p-0">
-              <img src={this.props.imgSrc} alt="" />
-            </div>
-            <div className="col p-0">
-              <h2>{this.props.heading}</h2>
-              <h3 className="price">{formatPrice(this.props.price) + (this.props.additionalCosts ? ` (+${formatPrice(this.props.additionalCosts)})` : '')}</h3>
-              <h4>Details</h4>
-              <ul className="style-default">
-                <li>Size: {this.props.size}</li>
-                {this.props.style &&
-                  <li>Style: {this.props.style}</li>
-                }
-                {this.props.color &&
-                  <li>Color: {this.props.color}</li>
-                }
-              </ul>
-
-              {this.props.inputs.map((input, i) => {
-                let component;
-
-                if (input.inputType == 'radio') {
+              if (input.inputType == 'radio') {
+                component = (
+                  <RadioGroupWithPrice //key={String(i)}
+                    selectedId={props.selectedId[input.name]}
+                    onChange={(id) => props.onChangeRadio(props.keyProp, input.name, id)}
+                    name={props.keyProp + input.name}
+                    items={input.items} />
+                )
+              } else {
+                component = (
                   component = (
-                    <RadioGroupWithPrice //key={String(i)}
-                      selectedId={this.props.selectedId[input.name]}
-                      onChange={(id) => this.props.onChangeRadio(this.props.keyProp, input.name, id)}
-                      name={this.props.keyProp + input.name}
+                    <CheckboxGroupWithPrice // key={String(i)}
+                      selectedIds={props.selectedIds[input.name]}
+                      onChange={(id) => props.onChangeCheckbox(props.keyProp, input.name, id)}
+                      name={props.keyProp + input.name}
                       items={input.items} />
                   )
-                } else {
-                  component = (
-                    component = (
-                      <CheckboxGroupWithPrice // key={String(i)}
-                        selectedIds={this.props.selectedIds[input.name]}
-                        onChange={(id) => this.props.onChangeCheckbox(this.props.keyProp, input.name, id)}
-                        name={this.props.keyProp + input.name}
-                        items={input.items} />
-                    )
-                  )
-                }
-                return (
-                  <div key={String(i)}>
-                    <h4>{input.heading}</h4>
-                    {component}
-                  </div>
                 )
-              })}
-              {/* <h4>Shipping Method</h4>
-              <RadioGroupWithPrice
-                selectedId={this.props.selectedId}
-                onChange={(id) => this.props.onChangeRadio(this.props.keyProp, 'shipping', id)}
-                name={this.props.keyProp + 'shipping'}
-                items={[
-                  { 'label': 'Will-Call Pick Up', 'price': 0 },
-                  { 'label': 'Ground Shipping', 'price': this.props.pricesUSD['groundShipping'] }
-                ]} />
-
-              <h4>Additional Services</h4>
-              <CheckboxGroupWithPrice
-                selectedIds={this.props.selectedIds}
-                onChange={(id) => this.props.onChangeCheckbox(this.props.keyProp, 'additional', id)}
-                name={this.props.keyProp + 'additional'}
-                items={[
-                  { 'label': 'Insurance', 'price': this.props.pricesUSD['insurance'] },
-                  { 'label': 'Expedited Shipping', 'price': this.props.pricesUSD['expeditedShipping'] },
-                  { 'label': 'Signature Release Required', 'price': this.props.pricesUSD['signatureReleaseRequired'] },
-                  { 'label': 'White Glove Delivery', 'price': this.props.pricesUSD['whiteGloveDelivery'] }
-                ]} /> */}
-
-              {/* <ul className="style-default p-0">
-                <div className="form-check">
-                  <input type="checkbox" name={this.props.keyProp + "additional"} id="insurance" value="name" />
-                  <label className="form-check-label" htmlFor="insurance">
-                    Insurance <span className="price">{`(+$${this.props.pricesUSD['insurance']})`}</span>
-                  </label>
+              }
+              return (
+                <div key={String(i)}>
+                  <h4>{input.heading}</h4>
+                  {component}
                 </div>
-                <div className="form-check">
-                  <input type="checkbox" name={this.props.keyProp + "additional"} id="expedited" value="price" />
-                  <label className="form-check-label" htmlFor="expedited">
-                    Expedited Shipping <span className="price">{`(+$${this.props.pricesUSD['expeditedShipping']})`}</span>
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input type="checkbox" name={this.props.keyProp + "additional"} id="signature" value="name" />
-                  <label className="form-check-label" htmlFor="signature">
-                    Signature Release Required <span className="price">{`(+$${this.props.pricesUSD['signatureReleaseRequired']})`}</span>
-                  </label>
-                </div>
-                <div className="form-check">
-                  <input type="checkbox" name={this.props.keyProp + "additional"} id="whiteGlove" value="price" />
-                  <label className="form-check-label" htmlFor="whiteGlove">
-                    White Glove Delivery <span className="price">{`(+$${this.props.pricesUSD['whiteGloveDelivery']})`}</span>
-                  </label>
-                </div>
-              </ul> */}
-            </div>
+              )
+            })}
           </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+CartCard.propTypes = {
+  keyProp: PropTypes.string.isRequired,
+  heading: PropTypes.string.isRequired,
+  size: PropTypes.string.isRequired,
+  style: PropTypes.string,
+  color: PropTypes.string,
+  imgSrc: PropTypes.string,
+}
+
+
+export class ShopFilterSidebar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { 'filterToggled': false }
+  }
+  render() {
+    return (
+      <>
+        <div id="filterToggle" onClick={() => this.setState({ 'filterToggled': !this.state.filterToggled })}>
+          <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="filter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+            <path fill="currentColor" d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z" className=""></path>
+          </svg>
+        </div>
+        <div className={"filter-sidebar" + (this.state.filterToggled ? ' toggled' : '')}>
+          {this.props.inputs.map((input, i) => {
+            let component;
+            if (input.inputType == 'radio') {
+              component = <RadioGroup name={input.name} items={input.items}
+                onChange={(itemNo) => this.props.onChangeInput(i, itemNo, 'radio')} selectedId={this.props.selectedInputs[i][0]} />
+
+            } else if (input.inputType == 'checkbox') {
+              component = <CheckboxGroup name={input.name} items={input.items}
+                onChange={(itemNo) => this.props.onChangeInput(i, itemNo, 'checkbox')} selectedIds={this.props.selectedInputs[i]} />
+            }
+
+            return (
+              <div key={i}>
+                <h3>{input.heading}</h3>
+                {component}
+              </div>
+            )
+          })
+          }
+        </div>
+      </>
     )
   }
 }
-
-// CartCard.propTypes = {
-//   keyProp: PropTypes.string.isRequired,
-//   heading: PropTypes.string.isRequired,
-//   size: PropTypes.string.isRequired,
-//   style: PropTypes.string,
-//   color: PropTypes.string,
-//   imgSrc: PropTypes.string,
-// }

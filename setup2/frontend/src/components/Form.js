@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { toTitleCase, validateEmail, formatPrice } from '../other/functions';
+import { type } from 'jquery';
 
 
 export default class Form extends Component {
@@ -200,6 +201,62 @@ export function CheckboxGroupWithPrice(props) {
 }
 
 CheckboxGroupWithPrice.propTypes = {
+  name: PropTypes.string.isRequired,
+  items: PropTypes.array.isRequired,
+}
+
+export function RadioGroup(props) {
+
+  return (
+    <ul className="style-default p-0">
+      {
+        props.items.map((item, id) => {
+          return (
+            <div className="form-check" key={id}>
+              <input type="radio" name={props.name} id={props.name + id} checked={props.selectedId == id} onChange={() => props.onChange(id)} />
+              <label className="form-check-label" htmlFor={props.name + id}>
+                {item}
+              </label>
+            </div>
+          )
+        })
+      }
+    </ul>
+  )
+}
+
+RadioGroup.propTypes = {
+  name: PropTypes.string.isRequired,
+  items: PropTypes.array.isRequired,
+}
+
+export function CheckboxGroup(props) {
+
+  return (
+    <ul className="style-default p-0">
+      {
+        props.items.map((item, id) => {
+          if (type(item) == 'object') {
+            return <div key={id} className="dropdown-heading">{item.heading}</div>
+          } else {
+            return (
+              <div key={id} className="form-check" key={id}>
+                <input type="checkbox" name={props.name} id={props.name + id} checked={props.selectedIds.includes(id)}
+                  onChange={() => props.onChange(id)} />
+                <label className="form-check-label" htmlFor={props.name + id}>
+                  {item}
+                </label>
+              </div>
+            )
+          }
+
+        })
+      }
+    </ul>
+  )
+}
+
+CheckboxGroup.propTypes = {
   name: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired,
 }
