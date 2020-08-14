@@ -89,7 +89,7 @@ export default class NavbarFooter extends React.Component {
                 <div className="nav">
 
                   <div className="sidenav-menu-heading">Shop</div>
-                  <a className="nav-link" href="#">
+                  <a className="nav-link" href="/shop">
                     Rugs
                   </a>
 

@@ -19,7 +19,7 @@ export default class Home extends Component {
             </div>
 
             <div className="d-flex">
-              <a href="#shop" className="btn btn-primary ml-0">Our Shop</a>
+              <a href="/shop" className="btn btn-primary ml-0">Our Shop</a>
               <a href="#services" className="btn btn-secondary">Services</a>
             </div>
 
@@ -62,7 +62,7 @@ export default class Home extends Component {
 
             </div>
             <div className="row justify-content-center">
-              <a className="btn btn-primary" href="">Open Shop</a>
+              <a className="btn btn-primary" href="/shop">Open Shop</a>
             </div>
           </div>
         </section>
