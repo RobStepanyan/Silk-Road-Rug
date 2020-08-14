@@ -124,25 +124,6 @@ hr {
     border-color: c(red) !important;
 }
 
-/* Change Autocomplete styles in Chrome*/
-textarea,
-input[type="text"] {
-    background-color: c(dark5) !important;
-    color: white !important;
-
-    &:focus {
-        box-shadow: $shadow3;
-    }
-
-    &.invalid {
-        border-color: c(red);
-    }
-
-    &.valid {
-        border-color: c(green);
-    }
-}
-
 .sidenav {
     background-color: rgba(c(dark4), .975);
     box-shadow: $shadow3;
@@ -251,10 +232,15 @@ i,
     color: c(primary);
 }
 
+textarea,
+input[type="text"],
 input[type="radio"],
-input[type="checkbox"] {
+input[type="checkbox"],
+.rs-slider-bar {
+    transition: $transition;
     background-color: c(dark1);
     border-color: c(dark5) !important;
+    color: c(white);
 
     &:hover {
         background-color: c(dark0);
@@ -263,6 +249,27 @@ input[type="checkbox"] {
     &:checked:before {
         background-color: c(primary);
     }
+
+    &:focus {
+        box-shadow: $shadow3;
+    }
+
+}
+
+textarea,
+input[type="text"] {
+    &.invalid {
+        border-color: c(red) !important;
+    }
+
+    &.valid {
+        border-color: c(green) !important;
+    }
+
+}
+
+.rs-input-group {
+    border-color: c(dark5) !important;
 }
 
 .card-btn {
@@ -307,4 +314,40 @@ ul.style-default {
 
 .price {
     color: c(primary) !important;
+}
+
+.rs-slider-progress-bar {
+    background-color: c(primary);
+}
+
+.rs-slider-handle {
+    &::before {
+        background-color: c(dark1);
+        border-color: c(primary) !important;
+    }
+
+    &:hover::before {
+        box-shadow: $shadow1;
+    }
+}
+
+.rs-tooltip-inner {
+    color: c(white);
+    background-color: c(dark5);
+}
+
+.rs-tooltip[class*='placement-top'] {
+    .rs-tooltip-arrow {
+        border-top-color: c(dark5);
+    }
+}
+
+.rs-input-group-btn,
+.rs-input-group-addon,
+.btn-subtle {
+    color: c(white);
+}
+
+.rs-input-number-btn-group-vertical {
+    background: c(dark1);
 }
