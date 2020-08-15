@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { RadioGroupWithPrice, CheckboxGroupWithPrice, RadioGroup, CheckboxGroup } from './Form';
+import {
+  RadioGroupWithPrice, CheckboxGroupWithPrice,
+  RadioGroup, CheckboxGroup, RangeSliderGroup
+} from './Form';
 import { formatPrice } from '../other/functions';
-import { RangeSlider, InputGroup, InputNumber } from 'rsuite';
 
 
 export default function Card(props) {
@@ -122,47 +124,20 @@ export class ShopFilterSidebar extends Component {
             let component;
             if (input.inputType == 'radio') {
               component = <RadioGroup name={input.name} items={input.items}
-                onChange={(itemNo) => this.props.onChangeInput(i, itemNo, 'radio')} selectedId={this.props.selectedInputs[i][0]} />
+                onChange={itemNo => this.props.onChange(i, itemNo, 'radio')} selectedId={this.props.selectedInputs[i][0]} />
 
             } else if (input.inputType == 'checkbox') {
               component = <CheckboxGroup name={input.name} items={input.items}
-                onChange={(itemNo) => this.props.onChangeInput(i, itemNo, 'checkbox')} selectedIds={this.props.selectedInputs[i]} />
+                onChange={itemNo => this.props.onChange(i, itemNo, 'checkbox')} selectedIds={this.props.selectedInputs[i]} />
+
             } else if (input.inputType == 'range') {
-              component = (
-                <>
-                  <RangeSlider defaultValue={[10, 50]} />
-                  <InputGroup>
-                    <InputNumber
-                      min={0}
-                      max={100}
-                      onChange={nextValue => {
-                        const [start, end] = value;
-                        if (nextValue > end) {
-                          return;
-                        }
-                        setValue([nextValue, end]);
-                      }}
-                    />
-                    <InputGroup.Addon>to</InputGroup.Addon>
-                    <InputNumber
-                      min={0}
-                      max={100}
-                      onChange={nextValue => {
-                        const [start, end] = value;
-                        if (start > nextValue) {
-                          return;
-                        }
-                        setValue([start, nextValue]);
-                      }}
-                    />
-                  </InputGroup>
-                </>
-              )
+              component = <RangeSliderGroup items={input.items}
+                onChange={vars => this.props.onChange(i, vars, 'range')} values={this.props.selectedInputs[i]} />
             }
 
             return (
               <div key={i}>
-                <h3>{input.heading}</h3>
+                <h3>{input.heading} <p className="text-gray font-secondary d-inline">{input.subHeading}</p></h3>
                 {component}
               </div>
             )

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { toTitleCase, validateEmail, formatPrice } from '../other/functions';
 import { type } from 'jquery';
+import { RangeSlider, InputGroup, InputNumber } from 'rsuite';
 
 
 export default class Form extends Component {
@@ -236,7 +237,7 @@ export function CheckboxGroup(props) {
     <ul className="style-default p-0">
       {
         props.items.map((item, id) => {
-          if (type(item) == 'object') {
+          if (typeof item == 'object') {
             return <div key={id} className="dropdown-heading">{item.heading}</div>
           } else {
             return (
@@ -259,4 +260,39 @@ export function CheckboxGroup(props) {
 CheckboxGroup.propTypes = {
   name: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired,
+}
+
+export function RangeSliderGroup(props) {
+  return (
+    props.items.map((item, id) => {
+      if ('heading' in item) {
+        return <div key={id} className="dropdown-heading">{item.heading}</div>
+      }
+      return (
+        <div key={id}>
+          <RangeSlider onChange={values => props.onChange([values, id, 'both'])}
+            defaultValue={item.minMax}
+            value={props.values[id]}
+            min={item.minMax[0]}
+            max={item.minMax[1]}
+          />
+          <InputGroup>
+            <InputNumber
+              min={item.minMax[0]}
+              max={item.minMax[1]}
+              value={props.values[id][0]}
+              onChange={nextValue => props.onChange([nextValue, id, 'start'])}
+            />
+            <InputGroup.Addon>to</InputGroup.Addon>
+            <InputNumber
+              min={item.minMax[0]}
+              max={item.minMax[1]}
+              value={props.values[id][1]}
+              onChange={nextValue => props.onChange([nextValue, id, 'end'])}
+            />
+          </InputGroup>
+        </div>
+      )
+    })
+  )
 }

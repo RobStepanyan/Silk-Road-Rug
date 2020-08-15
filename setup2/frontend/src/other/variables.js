@@ -8,9 +8,9 @@ export const cartCardInputsOrder = {
 
 export const sizes = [
   { 'heading': 'Width' },
-  '1',
+  { 'minMax': [1, 20] },
   { 'heading': 'Height' },
-  '1'
+  { 'minMax': [1, 40] }
 ]
 
 export const styles = [
@@ -56,7 +56,7 @@ export const shopFilterInputOrder = [
     'items': ['Name', 'Price']
   },
   {
-    'inputType': 'range', 'heading': 'Size', 'subHeading': 'Width', 'name': 'size',
+    'inputType': 'range', 'heading': 'Size', 'subHeading': '(Inches)', 'name': 'size',
     'items': sizes
   },
   {

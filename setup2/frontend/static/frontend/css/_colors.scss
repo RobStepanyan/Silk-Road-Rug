@@ -327,12 +327,13 @@ ul.style-default {
     }
 
     &:hover::before {
+        background-color: c(dark0);
         box-shadow: $shadow1;
     }
 }
 
 .rs-tooltip-inner {
-    color: c(white);
+    color: c(primary);
     background-color: c(dark5);
 }
 

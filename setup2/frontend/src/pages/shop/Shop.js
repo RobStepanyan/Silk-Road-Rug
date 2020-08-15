@@ -21,6 +21,11 @@ export default class Shop extends Component {
         selectedInputs[i] = [0]
       } else if (input.inputType == 'checkbox') {
         selectedInputs[i] = []
+      } else if (input.inputType == 'range') {
+        selectedInputs[i] = []
+        input.items.map(item => {
+          selectedInputs[i].push(item.minMax ? item.minMax : [null, null])
+        })
       }
     })
     this.setState({ 'selectedInputs': selectedInputs })
@@ -36,6 +41,18 @@ export default class Shop extends Component {
       } else {
         selectedInputs[groupNo].push(itemNo)
       }
+    } else if (type == 'range') {
+      let [nextValue, itemNo_, startEnd] = itemNo;
+      let [start, end] = selectedInputs[groupNo][itemNo_];
+
+      if (startEnd == 'start' && parseInt(nextValue) <= end) {
+        start = nextValue
+      } else if (startEnd == 'end' && parseInt(nextValue) >= start) {
+        end = nextValue
+      } else if (startEnd == 'both') {
+        [start, end] = nextValue
+      }
+      selectedInputs[groupNo][itemNo_] = [parseInt(start), parseInt(end)]
     }
     this.setState({ 'selectedInputs': selectedInputs })
   }
@@ -52,7 +69,7 @@ export default class Shop extends Component {
           <div className="container">
             <div className="row">
               <ShopFilterSidebar inputs={shopFilterInputOrder}
-                onChangeInput={(groupNo, itemNo, type) => this.handleChangeInput(groupNo, itemNo, type)}
+                onChange={(groupNo, itemNo, type) => this.handleChangeInput(groupNo, itemNo, type)}
                 selectedInputs={this.state.selectedInputs} />
             </div>
           </div>
