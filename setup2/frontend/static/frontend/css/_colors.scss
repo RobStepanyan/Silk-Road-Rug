@@ -233,10 +233,22 @@ i,
 }
 
 textarea,
-input[type="text"],
+input[type="text"]:not(.rs-input) {
+    transition: $transition;
+    background-color: c(dark5);
+    color: c(white);
+    box-shadow: $shadow3;
+
+    &:hover,
+    &:focus {
+        box-shadow: none;
+    }
+}
+
 input[type="radio"],
 input[type="checkbox"],
-.rs-slider-bar {
+.rs-slider-bar,
+.rs-input {
     transition: $transition;
     background-color: c(dark1);
     border-color: c(dark5) !important;
@@ -249,21 +261,16 @@ input[type="checkbox"],
     &:checked:before {
         background-color: c(primary);
     }
-
-    &:focus {
-        box-shadow: $shadow3;
-    }
-
 }
 
 textarea,
 input[type="text"] {
     &.invalid {
-        border-color: c(red) !important;
+        border-bottom-color: c(red) !important;
     }
 
     &.valid {
-        border-color: c(green) !important;
+        border-bottom-color: c(green) !important;
     }
 
 }
@@ -322,12 +329,12 @@ ul.style-default {
 
 .rs-slider-handle {
     &::before {
-        background-color: c(dark1);
+        background-color: c(dark5);
         border-color: c(primary) !important;
     }
 
     &:hover::before {
-        background-color: c(dark0);
+        background-color: c(dark3);
         box-shadow: $shadow1;
     }
 }
