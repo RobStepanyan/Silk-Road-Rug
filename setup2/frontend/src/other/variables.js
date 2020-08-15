@@ -35,6 +35,8 @@ export const styles = [
 
   { 'heading': 'Other' },
   'Afghan / Balouch',
+  'Gallery-Size Rugs',
+  'Furniture / Accessories'
 ]
 
 export const colors = [
