@@ -10,7 +10,7 @@ export const sizes = [
   { 'heading': 'Width' },
   { 'minMax': [1, 20] },
   { 'heading': 'Height' },
-  { 'minMax': [1, 40] }
+  { 'minMax': [1, 50] }
 ]
 
 export const styles = [
@@ -58,7 +58,7 @@ export const shopFilterInputOrder = [
     'items': ['Name', 'Price']
   },
   {
-    'inputType': 'range', 'heading': 'Size', 'subHeading': '(Inches)', 'name': 'size',
+    'inputType': 'range', 'heading': 'Size', 'subHeading': '(Feet)', 'name': 'size',
     'items': sizes
   },
   {
