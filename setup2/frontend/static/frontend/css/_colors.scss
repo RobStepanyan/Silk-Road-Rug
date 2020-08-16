@@ -339,6 +339,10 @@ ul.style-default {
     }
 }
 
+.rs-tooltip {
+    box-shadow: $shadow-normal;
+}
+
 .rs-tooltip-inner {
     color: c(primary);
     background-color: c(dark5);

@@ -97,6 +97,7 @@ p.style-2 {
     margin-bottom: 3*$margin;
 }
 
+.rs-tooltip,
 a {
     font-size: .875rem;
 }
@@ -115,6 +116,7 @@ a {
         font-size: .875rem;
     }
 
+    .rs-tooltip,
     a {
         font-size: 1.1rem;
     }
@@ -130,6 +132,7 @@ a {
     width: fit-content;
 }
 
+.rs-tooltip,
 b,
 strong {
     font-weight: 600;
