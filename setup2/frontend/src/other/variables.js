@@ -39,18 +39,18 @@ export const styles = [
   'Furniture / Accessories'
 ]
 
-export const colors = [
-  'Black / Charcoal',
-  'Blue',
-  'Green',
-  'Grey',
-  'Neutral / Beige / Taupe',
-  'Orange',
-  'Purple / Lilac',
-  'Red / Pink',
-  'White / Cream',
-  'Yellow'
-]
+// export const colors = [
+//   'Black / Charcoal',
+//   'Blue',
+//   'Green',
+//   'Grey',
+//   'Neutral / Beige / Taupe',
+//   'Orange',
+//   'Purple / Lilac',
+//   'Red / Pink',
+//   'White / Cream',
+//   'Yellow'
+// ]
 
 export const shopFilterInputOrder = [
   {
@@ -65,10 +65,10 @@ export const shopFilterInputOrder = [
     'inputType': 'checkbox', 'heading': 'Style', 'name': 'style',
     'items': styles
   },
-  {
-    'inputType': 'checkbox', 'heading': 'Color', 'name': 'color',
-    'items': colors
-  }
+  // {
+  //   'inputType': 'checkbox', 'heading': 'Color', 'name': 'color',
+  //   'items': colors
+  // }
 ]
 
 export const dummyData = [
