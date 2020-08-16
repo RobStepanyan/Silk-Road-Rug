@@ -558,3 +558,22 @@ h3.required:after {
         }
     }
 }
+
+.full-page-noscroll {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+
+    .centered-div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+
+        .btn {
+            margin: $margin auto;
+        }
+    }
+}
