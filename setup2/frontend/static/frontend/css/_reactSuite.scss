@@ -1,3 +1,5 @@
+$height: 12px;
+
 .rs-slider {
   position: relative;
   margin: $margin $margin * 2 / 3 + 8px;
@@ -14,7 +16,7 @@
 }
 
 .rs-slider-bar {
-  height: 1rem;
+  height: $height;
   border: 2px solid transparent;
   border-radius: 8px;
   cursor: pointer;
@@ -22,8 +24,8 @@
 
 .rs-slider-progress-bar {
   position: absolute;
-  height: calc(1rem - 2px * 2);
-  border-radius: calc((1rem - 2px * 2) / 2);
+  height: $height - 2px * 2;
+  border-radius: ($height - 2px * 2) / 2;
 }
 
 // Handle
@@ -34,10 +36,10 @@
   &::before {
     content: '';
     position: absolute;
-    width: 1rem;
-    height: 1rem;
+    width: $height;
+    height: $height;
     border-radius: 50%;
-    border: calc((1rem - .5rem) / 2) solid transparent;
+    border: 3px solid transparent;
     cursor: pointer;
     transform: translateX(-50%);
     transition: $transition;
@@ -262,7 +264,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      font-size: 1rem;
+      font-size: $height;
     }
   }
 
