@@ -149,7 +149,7 @@ class RugVariation(models.Model):
     quanity = models.IntegerField(
         verbose_name='Quanity (Available)', default=1)
     is_sample = models.BooleanField(
-        verbose_name="Sample (True / False)", default=False)
+        verbose_name="Is Sample", default=False)
 
     def __str__(self):
         return ''
