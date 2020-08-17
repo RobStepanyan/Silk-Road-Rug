@@ -1,18 +1,21 @@
 from django.contrib import admin
-from . import models
+from . import models, forms
 
 admin.site.site_header = 'Silk Road Rug Inc'
 admin.site.site_title = 'Silk Road Rug Inc'
 admin.site.index_title = 'Admin'
 
 
-class RugImageInline(admin.TabularInline):
-    model = models.RugImage
-    extra = 3
+class RugVariationInline(admin.TabularInline):
+    model = models.RugVariation
+    extra = 1
 
 
+@admin.register(models.Rug)
 class RugAdmin(admin.ModelAdmin):
-    inlines = [RugImageInline, ]
+    form = forms.RugAdminForm
+    inlines = [RugVariationInline, ]
 
-
-admin.site.register(models.Rug, RugAdmin)
+    def save_related(self, request, form, formsets, change):
+        super().save_related(request, form, formsets, change)
+        form.save_images(form.instance)
