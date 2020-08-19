@@ -13,7 +13,7 @@ class RugViewSet(viewsets.ViewSet):
     """
 
     @staticmethod
-    def get_rugs(id_, sort_by_=None, quanity=1):
+    def get_rugs(id_, sort_by_=None, quanity=1, ids=None):
         fields = {
             'name': 'name',
             'price': 'price_usd'
@@ -32,6 +32,8 @@ class RugViewSet(viewsets.ViewSet):
 
         if id_:
             rugs = [model_to_dict(models_['rug'].objects.get(id=id_))]
+        elif ids:
+            rugs = models_['rug'].objects.filter(id__in=ids).values()
         else:
             field = fields[sort_by[sort_by_].split(' ')[0].lower()]
             order = '' if sort_by_ % 2 == 0 else '-'
@@ -64,10 +66,11 @@ class RugViewSet(viewsets.ViewSet):
 
     @classmethod
     def list(cls, request):
+        ids = request.GET.get('ids', None).split(',')
         sort_by = request.GET.get('sort_by', 0)
-        quanity = request.GET.get('quanity', 10)
+        quanity = len(ids) if ids else request.GET.get('quanity', 10)
 
-        return Response(cls.get_rugs(None, sort_by, quanity))
+        return Response(cls.get_rugs(None, sort_by, quanity, ids))
 
     @classmethod
     def retrieve(cls, request, pk=None):
