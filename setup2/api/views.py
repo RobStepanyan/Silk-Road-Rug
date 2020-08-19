@@ -12,6 +12,7 @@ class RugViewSet(viewsets.ViewSet):
     ViewSet for listing or retrieving rugs.
     """
 
+    @staticmethod
     def get_rugs(id_, sort_by_=None, quanity=1):
         fields = {
             'name': 'name',
@@ -55,11 +56,13 @@ class RugViewSet(viewsets.ViewSet):
 
         return data
 
-    def list(self, request):
+    @classmethod
+    def list(cls, request):
         sort_by = request.GET.get('sort_by', 0)
         quanity = request.GET.get('quanity', 1)
 
-        return Response(self.__class__.get_rugs(None, sort_by, quanity))
+        return Response(cls.get_rugs(None, sort_by, quanity))
 
-    def retrieve(self, request, pk=None):
-        return Response(self.__class__.get_rugs(pk))
+    @classmethod
+    def retrieve(cls, request, pk=None):
+        return Response(cls.get_rugs(pk))
