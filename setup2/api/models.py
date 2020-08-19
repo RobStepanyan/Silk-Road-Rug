@@ -11,14 +11,24 @@ class Rug(models.Model):
     desc = models.TextField(verbose_name='Description', blank=True, null=True)
     sku = models.CharField(verbose_name='SKU', max_length=255)
 
+    @property
+    def price_usd(self):
+        prices = []
+        for x in RugVariation.objects.filter(rug=self.id):
+            if x.is_sample:
+                continue
+            if x.price_usd_after_sale:
+                prices.append(x.price_usd_after_sale)
+            else:
+                prices.append(x.price_usd)
+        return sorted(prices)
+
     def __str__(self):
         return self.name
 
 
 class RugImage(models.Model):
-    # related_name (images = Rug(...).images)
-    rug = models.ForeignKey(
-        Rug, on_delete=models.CASCADE, related_name='images')
+    rug = models.ForeignKey(Rug, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='rugs')
 
     def __str__(self):
@@ -26,9 +36,7 @@ class RugImage(models.Model):
 
 
 class RugVariation(models.Model):
-    # related_name (images = Rug(...).images)
-    rug = models.ForeignKey(
-        Rug, on_delete=models.CASCADE)
+    rug = models.ForeignKey(Rug, on_delete=models.CASCADE)
     width_feet = models.IntegerField(verbose_name="Width Feet X'")
     width_inch = models.IntegerField(
         verbose_name="Width Inch X\"", blank=True, null=True)

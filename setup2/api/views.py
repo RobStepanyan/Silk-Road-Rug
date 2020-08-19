@@ -28,15 +28,21 @@ class RugViewSet(viewsets.ViewSet):
             'rug_images': serializers.RugImageSerializer,
             'rug_variations': serializers.RugVariationSerializer,
         }
+        sort_by_ = int(sort_by_)
 
         if id_:
             rugs = [model_to_dict(models_['rug'].objects.get(id=id_))]
         else:
             field = fields[sort_by[sort_by_].split(' ')[0].lower()]
             order = '' if sort_by_ % 2 == 0 else '-'
-            rugs = list(
-                models_['rug'].objects.order_by(order+field).values()
-            )[:int(quanity)]
+            if field == 'price_usd':
+                rugs = sorted(models_['rug'].objects.all(),
+                              key=lambda x: x.price_usd, reverse=False if order == '' else True)[:int(quanity)]
+                rugs = [model_to_dict(x) for x in rugs]
+            else:
+                rugs = list(
+                    models_['rug'].objects.order_by(order+field).values()
+                )[:int(quanity)]
 
         data = []
         for rug in rugs:
@@ -59,7 +65,7 @@ class RugViewSet(viewsets.ViewSet):
     @classmethod
     def list(cls, request):
         sort_by = request.GET.get('sort_by', 0)
-        quanity = request.GET.get('quanity', 1)
+        quanity = request.GET.get('quanity', 10)
 
         return Response(cls.get_rugs(None, sort_by, quanity))
 
