@@ -56,11 +56,10 @@ class RugViewSet(viewsets.ViewSet):
         return data
 
     def list(self, request):
-        id_ = request.GET.get('id', None)
         sort_by = request.GET.get('sort_by', 0)
         quanity = request.GET.get('quanity', 1)
 
-        return Response(self.__class__.get_rugs(id_, sort_by, quanity))
+        return Response(self.__class__.get_rugs(None, sort_by, quanity))
 
     def retrieve(self, request, pk=None):
         return Response(self.__class__.get_rugs(pk))
