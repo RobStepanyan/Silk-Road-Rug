@@ -10,12 +10,6 @@ class RugAdminForm(forms.ModelForm):
             'name', 'style',
             'desc',  'sku',
         )
-        # fields = (
-        #     'name', 'width_feet', 'width_inch',
-        #     'height_feet', 'height_inch', 'style',
-        #     'price_usd', 'price_usd_after_sale',
-        #     'desc', 'quanity', 'sku',
-        # )
 
     images = forms.FileField(
         widget=forms.ClearableFileInput(attrs={"multiple": True}),
