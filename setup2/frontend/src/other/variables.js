@@ -1,3 +1,5 @@
+import { toTitleCase } from './functions';
+
 export const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 export const cartCardInputsOrder = {
   'shipping': [
@@ -134,10 +136,13 @@ export const styles = [
 //   'Yellow'
 // ]
 
+export const sortByOrder = ['name', 'price']
+export const sortBy = sortByOrder.flatMap(x => [toTitleCase(x) + ' ↑', toTitleCase(x) + ' ↓'])
+
 export const shopFilterInputOrder = [
   {
     'inputType': 'radio', 'heading': 'Sort By', 'name': 'sortBy',
-    'items': ['Name', 'Price']
+    'items': sortBy
   },
   {
     'inputType': 'range', 'heading': 'Size', 'subHeading': '(Feet)', 'name': 'size',

@@ -4,6 +4,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from django.forms.models import model_to_dict
 from collections import OrderedDict
+from .variables import sort_by
 
 
 class RugViewSet(viewsets.ViewSet):
@@ -11,42 +12,55 @@ class RugViewSet(viewsets.ViewSet):
     ViewSet for listing or retrieving rugs.
     """
 
-    def list(self, request):
-        querysets = {
-            'rug': models.Rug.objects.all(),
-            'rug_images': models.RugImage.objects.all(),
-            'rug_variations': models.RugVariation.objects.all(),
+    def get_rugs(id_, sort_by_=None, quanity=1):
+        fields = {
+            'name': 'name',
+            'price': 'price_usd'
+        }
+        models_ = {
+            'rug': models.Rug,
+            'rug_images': models.RugImage,
+            'rug_variations': models.RugVariation,
         }
         serializers_ = {
             'rug': serializers.RugSerializer,
             'rug_images': serializers.RugImageSerializer,
             'rug_variations': serializers.RugVariationSerializer,
         }
-        data = {}
-        for key in querysets:
-            data[key] = list(serializers_[key](querysets[key], many=True).data)
-            data[key] = [dict(dct) for dct in data[key]]
 
-        data_final = []
-        for rug in data['rug']:
-            image_srcs = []
-            for image in data['rug_images']:
-                if image['rug'] == rug['id']:
-                    image_srcs.append(image['image'])
-            rug['images'] = image_srcs
+        if id_:
+            rugs = [model_to_dict(models_['rug'].objects.get(id=id_))]
+        else:
+            field = fields[sort_by[sort_by_].split(' ')[0].lower()]
+            order = '' if sort_by_ % 2 == 0 else '-'
+            rugs = list(
+                models_['rug'].objects.order_by(order+field).values()
+            )[:int(quanity)]
 
-            variations = []
-            for variation in data['rug_variations']:
-                if variation['rug'] == rug['id']:
-                    variations.append(variation)
+        data = []
+        for rug in rugs:
+            new_rug = rug
+            for key, val in models_.items():
+                if key == 'rug':
+                    continue
+                new_rug[key] = []
+                for x in serializers_[key](val.objects.filter(rug=rug['id']), many=True).data:
+                    x = dict(x)
+                    if key == 'rug_images':
+                        new_rug[key].append(x['image'])
+                    elif key == 'rug_variations':
+                        new_rug[key].append(x)
 
-            rug['variations'] = variations
-            data_final.append(OrderedDict(rug))
+            data.append(new_rug)
 
-        return Response(data_final)
+        return data
+
+    def list(self, request):
+        id_ = request.GET.get('id', None)
+        sort_by = request.GET.get('sort_by', 0)
+        quanity = request.GET.get('quanity', 1)
+
+        return Response(self.__class__.get_rugs(id_, sort_by, quanity))
 
     def retrieve(self, request, pk=None):
-        queryset = models.Rug.objects.all()
-        user = get_object_or_404(queryset, pk=pk)
-        serializer = serializers.RugSerializer(user)
-        return Response(serializer.data)
+        return Response(self.__class__.get_rugs(pk))
