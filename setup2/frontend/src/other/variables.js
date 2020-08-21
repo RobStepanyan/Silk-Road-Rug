@@ -241,3 +241,9 @@ export const dummyData = [
     'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
   }
 ]
+
+const apiBase = '/api/'
+export const apiUrls = {
+  'listRugs': apiBase + 'rugs/',
+  'rugById': id => apiBase + `rugs/${id}/`,
+}

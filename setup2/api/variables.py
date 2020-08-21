@@ -108,3 +108,17 @@ styles = [
 sort_by_order = ['name', 'price']
 sort_by = [xx for x in sort_by_order for xx in (
     x.title() + ' ↑', x.title() + ' ↓')]
+
+shop_filter_input_order = [
+    {
+        'inputType': 'radio', 'heading': 'Sort By', 'name': 'sortBy',
+        'items': sort_by
+    },
+    {
+        'inputType': 'range', 'heading': 'Size', 'subHeading': '(Feet)', 'name': 'size',
+    },
+    {
+        'inputType': 'checkbox', 'heading': 'Style', 'name': 'style',
+        'items': styles
+    },
+]

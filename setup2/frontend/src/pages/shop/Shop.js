@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import NavbarFooter from '../../components/NavbarFooter';
 import { ShopFilterSidebar } from '../../components/Cards';
-import { shopFilterInputOrder } from '../../other/variables';
+import { shopFilterInputOrder, apiUrls } from '../../other/variables';
+import axios from 'axios';
 
 export default class Shop extends Component {
   constructor(props) {
     super(props);
     this.state = {
       'selectedInputs': {},
-      'filterToggled': false
+      'filterToggled': false,
+      'data': null,
     }
 
     this.onClickFilterToggle = this.onClickFilterToggle.bind(this)
+    this.getData = this.getData.bind(this)
   }
 
   componentWillMount() {
@@ -55,13 +58,37 @@ export default class Shop extends Component {
       selectedInputs[groupNo][itemNo_] = [parseInt(start), parseInt(end)]
     }
     this.setState({ 'selectedInputs': selectedInputs })
+    this.getData(selectedInputs)
   }
 
   onClickFilterToggle() {
     $("body").toggleClass("sidenav-toggled");
   }
 
+  getData(selectedInputs) {
+    let groupNo;
+    shopFilterInputOrder.map((val, i) => {
+      if (val.name == 'sortBy') {
+        groupNo = i;
+      }
+    })
+    axios({
+      method: 'get',
+      url: apiUrls['listRugs'],
+      data: {
+        sort_by: groupNo,
+        quanity: 20
+      }
+    })
+      .then(response => console.log(response))
+  }
+
+  componentDidMount() {
+    this.getData()
+  }
+
   render() {
+    let data = this.state.data ? <h1>Received</h1> : <h1>Loading</h1>
 
     return (
       <NavbarFooter>
@@ -71,6 +98,7 @@ export default class Shop extends Component {
               <ShopFilterSidebar inputs={shopFilterInputOrder}
                 onChange={(groupNo, itemNo, type) => this.handleChangeInput(groupNo, itemNo, type)}
                 selectedInputs={this.state.selectedInputs} />
+              {data}
             </div>
           </div>
         </section>

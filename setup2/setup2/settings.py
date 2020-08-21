@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'frontend',
-    'api',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [

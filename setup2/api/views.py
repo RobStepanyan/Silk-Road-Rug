@@ -16,7 +16,7 @@ class RugViewSet(viewsets.ViewSet):
     def get_rugs(id_, sort_by_=None, quanity=1, ids=None):
         fields = {
             'name': 'name',
-            'price': 'price_usd'
+            'price': 'base_price'
         }
         models_ = {
             'rug': models.Rug,
@@ -37,14 +37,9 @@ class RugViewSet(viewsets.ViewSet):
         else:
             field = fields[sort_by[sort_by_].split(' ')[0].lower()]
             order = '' if sort_by_ % 2 == 0 else '-'
-            if field == 'price_usd':
-                rugs = sorted(models_['rug'].objects.all(),
-                              key=lambda x: x.price_usd, reverse=False if order == '' else True)[:int(quanity)]
-                rugs = [model_to_dict(x) for x in rugs]
-            else:
-                rugs = list(
-                    models_['rug'].objects.order_by(order+field).values()
-                )[:int(quanity)]
+            rugs = list(
+                models_['rug'].objects.order_by(order+field).values()
+            )[:int(quanity)]
 
         data = []
         for rug in rugs:
@@ -66,7 +61,9 @@ class RugViewSet(viewsets.ViewSet):
 
     @classmethod
     def list(cls, request):
-        ids = request.GET.get('ids', None).split(',')
+        ids = request.GET.get('ids', None)
+        if ids:
+            ids = ids.split(',')
         sort_by = request.GET.get('sort_by', 0)
         quanity = len(ids) if ids else request.GET.get('quanity', 10)
 
