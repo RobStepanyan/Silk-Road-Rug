@@ -5,6 +5,7 @@ import {
   RadioGroup, CheckboxGroup, RangeSliderGroup
 } from './Form';
 import { formatPrice } from '../other/functions';
+import { hrefURLs } from '../other/variables';
 
 
 export default function Card(props) {
@@ -23,15 +24,13 @@ export default function Card(props) {
 
 export function ShopCard(props) {
   return (
-    <div className="col">
+    <a href={hrefURLs.rugDetails + props.id} className="col-6 col-sm-6 col-md-4">
       <div className="shop-card">
         <img src={props.imgSrc} alt={props.imgAlt} />
       </div>
-      <a href="">
-        <h3>{props.heading}</h3>
-      </a>
-      <p>{props.price}</p>
-    </div>
+      <h5>{props.heading}</h5>
+      <p>{formatPrice(props.price)}</p>
+    </a>
   )
 }
 

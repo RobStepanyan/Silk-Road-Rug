@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import NavbarFooter from '../../components/NavbarFooter';
-import { ShopFilterSidebar } from '../../components/Cards';
-import { shopFilterInputOrder, apiUrls } from '../../other/variables';
+import { ShopFilterSidebar, ShopCard } from '../../components/Cards';
+import { shopFilterInputOrder, apiURLs } from '../../other/variables';
+import Loading from '../../components/Loading';
 import axios from 'axios';
 
 export default class Shop extends Component {
@@ -58,29 +59,27 @@ export default class Shop extends Component {
       selectedInputs[groupNo][itemNo_] = [parseInt(start), parseInt(end)]
     }
     this.setState({ 'selectedInputs': selectedInputs })
-    this.getData(selectedInputs)
+    this.getData()
   }
 
   onClickFilterToggle() {
     $("body").toggleClass("sidenav-toggled");
   }
 
-  getData(selectedInputs) {
+  getData() {
+    let { selectedInputs } = this.state;
     let groupNo;
     shopFilterInputOrder.map((val, i) => {
       if (val.name == 'sortBy') {
         groupNo = i;
       }
     })
+    let sortBy = selectedInputs[groupNo][0]
     axios({
       method: 'get',
-      url: apiUrls['listRugs'],
-      data: {
-        sort_by: groupNo,
-        quanity: 20
-      }
+      url: apiURLs['listRugs'] + `?sort_by=${sortBy}&quanity=${20}`,
     })
-      .then(response => console.log(response))
+      .then(response => this.setState({ 'data': response.data }))
   }
 
   componentDidMount() {
@@ -88,17 +87,28 @@ export default class Shop extends Component {
   }
 
   render() {
-    let data = this.state.data ? <h1>Received</h1> : <h1>Loading</h1>
-
     return (
       <NavbarFooter>
         <section>
-          <div className="container">
+          <div className="container-fluid">
             <div className="row">
-              <ShopFilterSidebar inputs={shopFilterInputOrder}
-                onChange={(groupNo, itemNo, type) => this.handleChangeInput(groupNo, itemNo, type)}
-                selectedInputs={this.state.selectedInputs} />
-              {data}
+              <div className="col-auto p-0">
+                <ShopFilterSidebar inputs={shopFilterInputOrder}
+                  onChange={(groupNo, itemNo, type) => this.handleChangeInput(groupNo, itemNo, type)}
+                  selectedInputs={this.state.selectedInputs} />
+              </div>
+              <div className="mh-100 col">
+                <div className="container">
+                  <div className="row justify-content-center">
+                    {this.state.data
+                      ? this.state.data.map((data, i) => {
+                        return <ShopCard key={i} id={data.id} heading={data.name} imgSrc={data.rug_images[0]} imgAlt={'Rug Image'} price={data.base_price} />
+                      })
+                      : <Loading />
+                    }
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

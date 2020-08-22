@@ -367,3 +367,7 @@ ul.style-default {
 .rs-input-number-btn-group-vertical {
     background: c(dark1);
 }
+
+.loading:after {
+    backdrop-filter: blur(5px) brightness(10%);
+}

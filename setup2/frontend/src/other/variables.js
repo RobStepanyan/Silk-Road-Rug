@@ -243,7 +243,11 @@ export const dummyData = [
 ]
 
 const apiBase = '/api/'
-export const apiUrls = {
+export const apiURLs = {
   'listRugs': apiBase + 'rugs/',
   'rugById': id => apiBase + `rugs/${id}/`,
+}
+
+export const hrefURLs = {
+  'rugDetails': '/rug/',
 }
