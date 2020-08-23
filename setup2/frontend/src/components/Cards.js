@@ -24,13 +24,15 @@ export default function Card(props) {
 
 export function ShopCard(props) {
   return (
-    <a href={hrefURLs.rugDetails + props.id} className="col-6 col-sm-6 col-md-4">
-      <div className="shop-card">
-        <img src={props.imgSrc} alt={props.imgAlt} />
-      </div>
-      <h5>{props.heading}</h5>
-      <p>{formatPrice(props.price)}</p>
-    </a>
+    <div className="col-6 col-sm-6 col-md-4">
+      <a href={hrefURLs.rugById(props.id)} className="shop-card-a">
+        <div className="shop-card">
+          <img src={props.imgSrc} alt={props.imgAlt} />
+        </div>
+        <h5>{props.heading}</h5>
+        <h5 className="price">{formatPrice(props.price)}</h5>
+      </a>
+    </div>
   )
 }
 

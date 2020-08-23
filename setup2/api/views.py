@@ -28,7 +28,8 @@ class RugViewSet(viewsets.ViewSet):
             'rug_images': serializers.RugImageSerializer,
             'rug_variations': serializers.RugVariationSerializer,
         }
-        sort_by_ = int(sort_by_)
+        if sort_by_:
+            sort_by_ = int(sort_by_)
 
         if id_:
             rugs = [model_to_dict(models_['rug'].objects.get(id=id_))]

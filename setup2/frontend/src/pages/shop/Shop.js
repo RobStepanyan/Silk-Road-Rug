@@ -89,29 +89,32 @@ export default class Shop extends Component {
   render() {
     return (
       <NavbarFooter>
-        <section>
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-auto p-0">
-                <ShopFilterSidebar inputs={shopFilterInputOrder}
-                  onChange={(groupNo, itemNo, type) => this.handleChangeInput(groupNo, itemNo, type)}
-                  selectedInputs={this.state.selectedInputs} />
-              </div>
-              <div className="mh-100 col">
-                <div className="container">
-                  <div className="row justify-content-center">
-                    {this.state.data
-                      ? this.state.data.map((data, i) => {
+
+        {this.state.data
+          ? <section>
+            <div className="container-fluid">
+              <div className="row">
+                <div className="col-auto p-0">
+                  <ShopFilterSidebar inputs={shopFilterInputOrder}
+                    onChange={(groupNo, itemNo, type) => this.handleChangeInput(groupNo, itemNo, type)}
+                    selectedInputs={this.state.selectedInputs} />
+                </div>
+                <div className="mh-100 col">
+                  <div className="container">
+                    <div className="row justify-content-center">
+                      {this.state.data.map((data, i) => {
                         return <ShopCard key={i} id={data.id} heading={data.name} imgSrc={data.rug_images[0]} imgAlt={'Rug Image'} price={data.base_price} />
                       })
-                      : <Loading />
-                    }
+                      }
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+          : <Loading />
+        }
+
       </NavbarFooter >
     );
   }

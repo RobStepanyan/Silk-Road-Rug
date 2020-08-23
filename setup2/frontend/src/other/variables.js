@@ -249,5 +249,5 @@ export const apiURLs = {
 }
 
 export const hrefURLs = {
-  'rugDetails': '/rug/',
+  'rugById': id => `/rug/${id}`,
 }

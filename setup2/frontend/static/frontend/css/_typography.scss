@@ -175,7 +175,7 @@ strong {
 }
 
 .shop-card {
-    &~p {
+    &:after {
         font-weight: bold;
     }
 }

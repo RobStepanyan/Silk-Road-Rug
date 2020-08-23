@@ -35,30 +35,30 @@ export default class Home extends Component {
             <p>Find a perfect rug</p>
             <h2 className="text-center">Antique</h2>
             <div className="row carousel-2">
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
 
             </div>
             <h2 className="text-center">Contemporary</h2>
             <div className="row carousel-2">
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
-              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price="$25,000.00" />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
+              <ShopCard imgSrc="/static/frontend/img/rug.jpeg" imgAlt="Rug Image" heading="Rug's Name but longer" price={25000} />
 
             </div>
             <div className="row justify-content-center">

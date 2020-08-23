@@ -239,16 +239,43 @@ ul {
     }
 }
 
-.shop-card {
-    margin-bottom: $margin / 3;
+.shop-card-a {
 
-    img {
-        width: 100%;
+    .shop-card:after {
+        content: "View";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 300%);
+        opacity: 0;
+        transition: $transition;
     }
 
-    &~p {
+    &:hover {
+        img {
+            opacity: .25;
+        }
+
+        .shop-card:after {
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        }
+    }
+}
+
+.shop-card {
+    margin-bottom: $margin / 3;
+    position: relative;
+
+    img {
+        opacity: 1;
+        width: 100%;
+        transition: $transition;
+    }
+
+    &~.price {
         margin: 0;
-        margin-bottom: 2*$margin;
+        margin-bottom: $margin;
     }
 }
 
@@ -571,20 +598,17 @@ h3.required:after {
 }
 
 .loading {
-    z-index: 99999;
 
-    &,
+    // &,
     &:after {
-        position: absolute;
+        content: '';
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
         transition: $transition;
-    }
-
-    &:after {
-        content: '';
+        z-index: 99999;
     }
 
     &:before {
@@ -617,4 +641,26 @@ h3.required:after {
     height: 100%;
     width: 100%;
     overflow: hidden;
+}
+
+.transition {
+    transition: $transition
+}
+
+img.thumbnail {
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    object-position: center;
+    transition: $transition;
+    margin: 0 $margin * 2 / 3 $margin * 2 / 3 0;
+
+    &:hover {
+        opacity: .5;
+    }
+
+    &.selected {
+        transform: scale(1);
+    }
 }

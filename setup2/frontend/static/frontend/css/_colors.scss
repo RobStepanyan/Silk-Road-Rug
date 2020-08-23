@@ -227,12 +227,12 @@ p,
 }
 
 small,
-i,
-.shop-card~p {
+i {
     color: c(gray3) !important;
 }
 
-.dropdown-heading {
+.dropdown-heading,
+.shop-card:after {
     color: c(primary);
 }
 
