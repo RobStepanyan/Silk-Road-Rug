@@ -2,6 +2,7 @@
     display: block;
     width: fit-content;
     padding: .5*$padding 1.3*$padding;
+    text-align: center;
 
     &.sm {
         padding: $padding / 3 $padding;

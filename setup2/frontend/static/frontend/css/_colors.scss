@@ -307,7 +307,7 @@ input[type="text"] {
 }
 
 .gmap_canvas,
-.carousel img {
+img {
     box-shadow: $shadow2;
 }
 
@@ -325,6 +325,10 @@ ul.style-default {
 
 .price {
     color: c(primary) !important;
+
+    &.discounted {
+        color: c(gray3) !important;
+    }
 }
 
 .rs-slider-progress-bar {

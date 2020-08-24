@@ -224,6 +224,11 @@ input[type="text"] {
 
 .price {
     font-family: $font-secondary;
+
+    &.discounted {
+        text-decoration: line-through;
+        font-weight: normal;
+    }
 }
 
 .dropdown-heading {

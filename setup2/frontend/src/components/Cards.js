@@ -23,6 +23,7 @@ export default function Card(props) {
 }
 
 export function ShopCard(props) {
+  let [before, after] = props.price
   return (
     <div className="col-6 col-sm-6 col-md-4">
       <a href={hrefURLs.rugById(props.id)} className="shop-card-a">
@@ -30,7 +31,13 @@ export function ShopCard(props) {
           <img src={props.imgSrc} alt={props.imgAlt} />
         </div>
         <h5>{props.heading}</h5>
-        <h5 className="price">{formatPrice(props.price)}</h5>
+        {!after
+          ? <h5 className="price">{formatPrice(before)}</h5>
+          : <div className="d-flex">
+            <h5 className="price mr-2">{formatPrice(after)}</h5>
+            <h5 className="price discounted">{formatPrice(before)}</h5>
+          </div>
+        }
       </a>
     </div>
   )

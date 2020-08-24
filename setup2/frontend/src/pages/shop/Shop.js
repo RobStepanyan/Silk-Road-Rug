@@ -103,7 +103,8 @@ export default class Shop extends Component {
                   <div className="container">
                     <div className="row justify-content-center">
                       {this.state.data.map((data, i) => {
-                        return <ShopCard key={i} id={data.id} heading={data.name} imgSrc={data.rug_images[0]} imgAlt={'Rug Image'} price={data.base_price} />
+                        return <ShopCard key={i} id={data.id} heading={data.name} imgSrc={data.rug_images[0]} imgAlt={'Rug Image'}
+                          price={[data.base_price_before_sale, data.base_price_after_sale]} />
                       })
                       }
                     </div>

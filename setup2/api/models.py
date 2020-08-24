@@ -7,7 +7,15 @@ STYLES = [(styles.index(x), x) for x in styles]
 class Rug(models.Model):
     name = models.CharField(verbose_name="Name*", max_length=256)
     base_price = models.DecimalField(
-        verbose_name="Base Price (LEAVE EMPTY)",
+        verbose_name="(LEAVE EMPTY)",
+        max_digits=12, decimal_places=2, default=0,
+        blank=True, null=True)
+    base_price_before_sale = models.DecimalField(
+        verbose_name="(LEAVE EMPTY)",
+        max_digits=12, decimal_places=2, default=0,
+        blank=True, null=True)
+    base_price_after_sale = models.DecimalField(
+        verbose_name="(LEAVE EMPTY)",
         max_digits=12, decimal_places=2, default=0,
         blank=True, null=True)
     style = models.IntegerField(
@@ -49,3 +57,6 @@ class RugVariation(models.Model):
 
     def __str__(self):
         return ''
+
+    class Meta:
+        ordering = ['rug', 'width_feet']

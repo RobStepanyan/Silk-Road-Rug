@@ -146,7 +146,22 @@ export function RadioGroupWithPrice(props) {
                   <>
                     <input type="radio" name={props.name} id={props.name + id} checked={props.selectedId == id} onChange={() => props.onChange(id)} />
                     <label className="form-check-label" htmlFor={props.name + id}>
-                      {item.label} <span className="price">{item.price == 0 ? '(Free)' : `(+${formatPrice(item.price)})`}</span>
+                      {item.label + ' '}
+                      {item.with_sale
+                        ? <>
+                          <span className="price">{formatPrice(item.price[1]) + ' '}</span>
+                          <span className="price discounted">{formatPrice(item.price[1])}
+                            {item.is_sample &&
+                              <span className="badge">Sample</span>
+                            }
+                          </span>
+                        </>
+                        : <span className="price">{item.price == 0 ? '(Free)' : `${props.priceSign}${formatPrice(item.price)}`}
+                          {item.is_sample &&
+                            <span className="badge">Sample</span>
+                          }
+                        </span>
+                      }
                     </label>
                   </>
                 )
@@ -168,6 +183,12 @@ export function RadioGroupWithPrice(props) {
 RadioGroupWithPrice.propTypes = {
   name: PropTypes.string.isRequired,
   items: PropTypes.array.isRequired,
+  selectedId: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+  priceSign: PropTypes.string,
+}
+RadioGroup.defaultProps = {
+  priceSign: '+'
 }
 
 export function CheckboxGroupWithPrice(props) {
@@ -183,7 +204,7 @@ export function CheckboxGroupWithPrice(props) {
                   <>
                     <input type="checkbox" name={props.name} id={props.name + id} checked={props.selectedIds.includes(id)} onChange={() => props.onChange(id)} />
                     <label className="form-check-label" htmlFor={props.name + id}>
-                      {item.label} <span className="price">{item.price == 0 ? '(Free)' : `(+${formatPrice(item.price)})`}</span>
+                      {item.label} <span className="price">{item.price == 0 ? '(Free)' : `+${formatPrice(item.price)}`}</span>
                     </label>
                   </>
                 )

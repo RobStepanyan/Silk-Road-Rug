@@ -196,6 +196,16 @@ ul {
     padding: 2*$padding;
     margin-bottom: 2*$margin;
 
+    .row .btn {
+        margin: 0;
+        margin-top: $margin * 2 / 3;
+        margin-left: $margin;
+
+        @include media-breakpoint-only(sm) {
+            width: 100%;
+        }
+    }
+
     .card-heading {
         margin-bottom: 2*$margin*.25;
     }
@@ -663,4 +673,28 @@ img.thumbnail {
     &.selected {
         transform: scale(1);
     }
+}
+
+footer img {
+    box-shadow: none;
+}
+
+.price {
+    &.discounted {
+        opacity: .5;
+    }
+}
+
+.badge {
+    color: inherit;
+    border: 1px solid;
+    display: inline-block;
+    padding: .25em .4em;
+    margin-left: .4em;
+    font-size: 75%;
+    font-weight: inherit;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
 }

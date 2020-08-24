@@ -36,6 +36,7 @@
 
         &,
         img {
+            box-shadow: none;
             height: $navbar-logo-height;
 
             @include media-breakpoint-up(lg) {

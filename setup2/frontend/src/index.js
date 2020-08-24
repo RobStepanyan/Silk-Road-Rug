@@ -14,6 +14,7 @@ import ShippingInfo from './pages/learn/ShippingInfo';
 import RugCleaning from './pages/services/RugCleaning';
 import RugRestoration from './pages/services/RugRestoration';
 import Shop from './pages/shop/Shop';
+import Rug from './pages/shop/Rug';
 import Error from './pages/Error';
 import 'jquery';
 import 'popper.js'
@@ -33,6 +34,7 @@ class App extends Component {
                     <Route path='/contact-us' component={ContactUs} />
                     <Route path='/cart' component={Cart} />
                     <Route path='/shop' component={Shop} />
+                    <Route path='/rug/:id' component={Rug} />
                     <Route path='/' exact component={Home} />
                     <Route path=''><Error error={404} /></Route>
                 </Switch>
