@@ -58,7 +58,7 @@ export default class Shop extends Component {
       }
       selectedInputs[groupNo][itemNo_] = [parseInt(start), parseInt(end)]
     }
-    this.setState({ 'selectedInputs': selectedInputs })
+    this.setState({ selectedInputs: selectedInputs });
     this.getData()
   }
 
@@ -68,16 +68,26 @@ export default class Shop extends Component {
 
   getData() {
     let { selectedInputs } = this.state;
-    let groupNo;
+    let sortBy, width, height, styles;
     shopFilterInputOrder.map((val, i) => {
-      if (val.name == 'sortBy') {
-        groupNo = i;
+      switch (val.name) {
+        case 'sortBy':
+          sortBy = selectedInputs[i][0]
+          break;
+        case 'size':
+          width = selectedInputs[i][1]
+          height = selectedInputs[i][3]
+          break;
+        case 'style':
+          styles = selectedInputs[i]
+          break;
       }
     })
-    let sortBy = selectedInputs[groupNo][0]
+
     axios({
       method: 'get',
-      url: apiURLs['listRugs'] + `?sort_by=${sortBy}&quanity=${20}`,
+      url: apiURLs['listRugs'] + `?sort_by=${sortBy}`
+        + `&quanity=${20}&width=${width}&height=${height}&styles=${styles ? styles.join(',') : ''}`,
     })
       .then(response => this.setState({ 'data': response.data }))
   }
@@ -89,7 +99,6 @@ export default class Shop extends Component {
   render() {
     return (
       <NavbarFooter>
-
         {this.state.data
           ? <section>
             <div className="container-fluid">
@@ -102,6 +111,9 @@ export default class Shop extends Component {
                 <div className="mh-100 col">
                   <div className="container">
                     <div className="row justify-content-center">
+                      {this.state.data.length == 0 &&
+                        <h3>No Rugs Found</h3>
+                      }
                       {this.state.data.map((data, i) => {
                         return <ShopCard key={i} id={data.id} heading={data.name} imgSrc={data.rug_images[0]} imgAlt={'Rug Image'}
                           price={[data.base_price_before_sale, data.base_price_after_sale]} />
@@ -115,7 +127,6 @@ export default class Shop extends Component {
           </section>
           : <Loading />
         }
-
       </NavbarFooter >
     );
   }

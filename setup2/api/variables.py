@@ -1,3 +1,10 @@
+sizes = [
+    {'heading': 'Width'},
+    {'minMax': [1, 20]},
+    {'heading': 'Height'},
+    {'minMax': [1, 50]}
+]
+
 styles = [
     '****Antique****',
     'Khotan',

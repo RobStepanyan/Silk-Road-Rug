@@ -118,7 +118,7 @@ export default class Rug extends React.Component {
                     }
                     <div className="row">
                       <a href="" className="btn btn-primary">Buy Now</a>
-                      <a href="" className="btn btn-secondary">Add to Card</a>
+                      <a href="" className="btn btn-secondary">Add to Cart</a>
                     </div>
                   </div>
                 </div>

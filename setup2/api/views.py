@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from django.forms.models import model_to_dict
 from collections import OrderedDict
-from .variables import sort_by
+from .variables import sort_by, sizes, styles
 
 
 class RugViewSet(viewsets.ViewSet):
@@ -13,7 +13,7 @@ class RugViewSet(viewsets.ViewSet):
     """
 
     @staticmethod
-    def get_rugs(id_, sort_by_=None, quanity=1, ids=None):
+    def get_rugs(id_, sort_by_=None, quanity=1, ids=None, width=sizes[1]['minMax'], height=sizes[3]['minMax'], styles_=list(range(len(styles)))):
         fields = {
             'name': 'name',
             'price': 'base_price'
@@ -38,9 +38,12 @@ class RugViewSet(viewsets.ViewSet):
         else:
             field = fields[sort_by[sort_by_].split(' ')[0].lower()]
             order = '' if sort_by_ % 2 == 0 else '-'
-            rugs = list(
-                models_['rug'].objects.order_by(order+field).values()
-            )[:int(quanity)]
+            rugs = models_['rug'].objects.filter(width_smallest__gte=width[0]
+                                                 ).filter(width_largest__lte=width[1]
+                                                          ).filter(height_smallest__gte=height[0]
+                                                                   ).filter(height_largest__lte=height[1]
+                                                                            ).filter(style__in=styles_)
+            rugs = list(rugs.order_by(order+field).values())[:int(quanity)]
 
         data = []
         for rug in rugs:
@@ -67,8 +70,20 @@ class RugViewSet(viewsets.ViewSet):
             ids = ids.split(',')
         sort_by = request.GET.get('sort_by', 0)
         quanity = len(ids) if ids else request.GET.get('quanity', 10)
+        width = request.GET.get('width', sizes[1]['minMax'])
+        if width != sizes[1]['minMax']:
+            width = width.split(',')
+        height = request.GET.get('height', sizes[3]['minMax'])
+        if height != sizes[3]['minMax']:
+            height = height.split(',')
+        styles_ = request.GET.get('styles', list(range(len(styles))))
+        if styles_ != list(range(len(styles))):
+            if styles_:
+                styles_ = styles_.split(',')
+            else:
+                styles_ = list(range(len(styles)))
 
-        return Response(cls.get_rugs(None, sort_by, quanity, ids))
+        return Response(cls.get_rugs(None, sort_by, quanity, ids, width, height, styles_))
 
     @classmethod
     def retrieve(cls, request, pk=None):
