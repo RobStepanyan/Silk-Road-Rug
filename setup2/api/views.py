@@ -38,10 +38,9 @@ class RugViewSet(viewsets.ViewSet):
         else:
             field = fields[sort_by[sort_by_].split(' ')[0].lower()]
             order = '' if sort_by_ % 2 == 0 else '-'
-            rugs = models_['rug'].objects.filter(variations__width_feet__range=width
-                                                 ).filter(variations__height_feet__range=height
-                                                          ).exclude(variations__is_sample=True
-                                                                    ).distinct().filter(style__in=styles_)
+            rugs = models_['rug'].objects.filter(style__in=styles_
+                                                 ).filter(variations__width_feet__range=width
+                                                          ).filter(variations__height_feet__range=height).distinct()
             rugs = list(rugs.order_by(order+field).values())[:int(quanity)]
 
         data = []
