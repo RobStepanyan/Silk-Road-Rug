@@ -18,10 +18,6 @@ class Rug(models.Model):
         verbose_name="(LEAVE EMPTY)",
         max_digits=12, decimal_places=2, default=0,
         blank=True, null=True)
-    width_smallest = models.IntegerField(default=0)
-    width_largest = models.IntegerField(default=0)
-    height_smallest = models.IntegerField(default=0)
-    height_largest = models.IntegerField(default=0)
     style = models.IntegerField(
         verbose_name="Style*", choices=STYLES)
     desc = models.TextField(
