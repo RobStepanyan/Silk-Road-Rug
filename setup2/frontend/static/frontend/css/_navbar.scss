@@ -138,28 +138,26 @@
     }
 }
 
-body.sidenav-toggled {
-    .hamburger-inner {
-        background: transparent;
+body.sidenav-toggled .hamburger-inner {
+    background: transparent;
 
+    &:before {
+        transform: translatey(($hamburger-line-width / 2 / 2) + $hamburger-line-height / 2) rotate(45deg);
+    }
+
+    &:after {
+        transform: translatey(-($hamburger-line-width / 2 / 2) - $hamburger-line-height / 2) rotate(-45deg);
+    }
+
+    @include media-breakpoint-up(lg) {
         &:before {
-            transform: translatey(($hamburger-line-width / 2 / 2) + $hamburger-line-height / 2) rotate(45deg);
+            transform: translatey(($hamburger-line-width-lg / 2 / 2) + $hamburger-line-height-lg / 2) rotate(45deg);
         }
 
         &:after {
-            transform: translatey(-($hamburger-line-width / 2 / 2) - $hamburger-line-height / 2) rotate(-45deg);
+            transform: translatey(-($hamburger-line-width-lg / 2 / 2) - $hamburger-line-height-lg / 2) rotate(-45deg);
         }
 
-        @include media-breakpoint-up(lg) {
-            &:before {
-                transform: translatey(($hamburger-line-width-lg / 2 / 2) + $hamburger-line-height-lg / 2) rotate(45deg);
-            }
-
-            &:after {
-                transform: translatey(-($hamburger-line-width-lg / 2 / 2) - $hamburger-line-height-lg / 2) rotate(-45deg);
-            }
-
-        }
     }
 }
 
