@@ -251,3 +251,42 @@ export const apiURLs = {
 export const hrefURLs = {
   'rugById': id => `/rug/${id}`,
 }
+
+export const slickCarouselSettings = [
+  {
+    autoplay: true,
+    autoplaySpeed: 5000,
+    adaptiveHeight: true,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    infinite: true,
+    cssEase: 'ease',
+  },
+
+  {
+    // autoplay: true,
+    // autoplaySpeed: 2000,
+    adaptiveHeight: true,
+    slidesToShow: 4,
+    slidesToScroll: 3,
+    centerMode: true,
+    cssEase: 'ease',
+
+    responsive: [
+      {
+        breakpoint: 787,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ],
+  }
+]

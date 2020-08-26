@@ -11,43 +11,6 @@ export default class NavbarFooter extends React.Component {
     $("body").toggleClass("sidenav-toggled");
   }
 
-  componentDidMount() {
-    $('.carousel').slick({
-      autoplay: true,
-      autoplaySpeed: 5000,
-      adaptiveHeight: true,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      infinite: true,
-    })
-
-    $('.carousel-2').slick({
-      // autoplay: true,
-      // autoplaySpeed: 2000,
-      adaptiveHeight: true,
-      slidesToShow: 4,
-      slidesToScroll: 3,
-      centerMode: true,
-
-      responsive: [
-        {
-          breakpoint: 787,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 1
-          }
-        },
-        {
-          breakpoint: 576,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1
-          }
-        }
-      ],
-    })
-  }
-
   render() {
     return (
       <>

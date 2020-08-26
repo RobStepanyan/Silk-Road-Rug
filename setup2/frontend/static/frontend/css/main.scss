@@ -1,16 +1,20 @@
 // Bootstrap
 // Required
-@import "../vendor/bootstrap/scss/functions";
-@import "../vendor/bootstrap/scss/variables";
-@import "../vendor/bootstrap/scss/mixins";
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/variables";
+@import "../../../node_modules/bootstrap/scss/mixins";
 // Optional
-@import '../vendor/bootstrap/scss/_navbar';
-@import '../vendor/bootstrap/scss/_transitions';
-@import '../vendor/bootstrap/scss/_dropdown';
-@import '../vendor/bootstrap/scss/_nav';
-@import '../vendor/bootstrap/scss/bootstrap-grid';
-@import '../vendor/bootstrap/scss/utilities/spacing';
-@import '../vendor/bootstrap/scss/utilities/position';
+@import '../../../node_modules/bootstrap/scss/_navbar';
+@import '../../../node_modules/bootstrap/scss/_transitions';
+@import '../../../node_modules/bootstrap/scss/_dropdown';
+@import '../../../node_modules/bootstrap/scss/_nav';
+@import '../../../node_modules/bootstrap/scss/bootstrap-grid';
+@import '../../../node_modules/bootstrap/scss/utilities/spacing';
+@import '../../../node_modules/bootstrap/scss/utilities/position';
+
+// Slick
+@import '../../../node_modules/slick-carousel/slick/slick';
+@import '../../../node_modules/slick-carousel/slick/slick-theme';
 
 @import 'variables';
 @import 'colors';
@@ -287,6 +291,10 @@ ul {
         margin: 0;
         margin-bottom: $margin;
     }
+}
+
+.slick-list {
+    transition: height $transition-duration;
 }
 
 .slick-prev,

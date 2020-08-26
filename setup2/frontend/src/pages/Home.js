@@ -1,50 +1,14 @@
 import React, { Component } from 'react';
 import NavbarFooter from '../components/NavbarFooter';
 import Card, { ShopCard } from '../components/Cards';
-import { apiURLs } from '../other/variables';
+import { apiURLs, slickCarouselSettings } from '../other/variables';
 import axios from 'axios';
+import Slider from 'react-slick';
 
 export default class Home extends Component {
   constructor(props) {
     super(props);
     this.state = { data: null }
-  }
-
-  initCarousel() {
-    $('.carousel').slick({
-      autoplay: true,
-      autoplaySpeed: 5000,
-      adaptiveHeight: true,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      infinite: true,
-    })
-
-    $('.carousel-2').slick({
-      // autoplay: true,
-      // autoplaySpeed: 2000,
-      adaptiveHeight: true,
-      slidesToShow: 4,
-      slidesToScroll: 3,
-      centerMode: true,
-
-      responsive: [
-        {
-          breakpoint: 787,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 1
-          }
-        },
-        {
-          breakpoint: 576,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1
-          }
-        }
-      ],
-    })
   }
 
   componentWillMount() {
@@ -86,13 +50,12 @@ export default class Home extends Component {
             <p>Find a perfect rug</p>
             {!this.state.data || this.state.data.length == 0
               ? <h3 className="center">Error Occured</h3>
-              : <div className="row carousel-2">
+              : <Slider {...slickCarouselSettings[1]} className="row mb-3">
                 {this.state.data.map((data, i) => {
-                  return <ShopCard key={i} id={data.id} heading={data.name} imgSrc={data.rug_images[0]} imgAlt={'Rug Image'}
+                  return <ShopCard notResponsive={true} key={i} id={data.id} heading={data.name} imgSrc={data.rug_images[0]} imgAlt={'Rug Image'}
                     price={[data.base_price_before_sale, data.base_price_after_sale]} />
                 })}
-                {this.initCarousel()}
-              </div>
+              </Slider>
             }
             <div className="row justify-content-center">
               <a className="btn btn-primary" href="/shop">Open Shop</a>
@@ -134,7 +97,7 @@ export default class Home extends Component {
 
             <hr />
             <p>Swipe for photos</p>
-            <div className="carousel">
+            <Slider {...slickCarouselSettings[0]}>
               <div>
                 <img src="/static/frontend/img/interior/6b2a2570sm_orig.jpg" alt="" />
               </div>
@@ -147,7 +110,7 @@ export default class Home extends Component {
               <div>
                 <img src="/static/frontend/img/interior/screen-shot-2017-11-19-at-6-20-21-pm_orig.png" alt="" />
               </div>
-            </div>
+            </Slider>
           </div>
         </section>
       </NavbarFooter>
