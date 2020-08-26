@@ -13,6 +13,7 @@
 @import '../../../node_modules/bootstrap/scss/utilities/position';
 
 // Slick
+$slick-font-path: "../../../node_modules/slick-carousel/slick/fonts/";
 @import '../../../node_modules/slick-carousel/slick/slick';
 @import '../../../node_modules/slick-carousel/slick/slick-theme';
 
