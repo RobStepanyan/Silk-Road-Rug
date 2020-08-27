@@ -33,33 +33,33 @@ export default class Form extends Component {
       case 'name':
       case 'email':
         component = (
-          <>
+          <label>
             <h3 className={required ? 'required' : ''}>{toTitleCase(context)}</h3>
             <input className={this.state.isValid[context] ? '' : 'invalid'}
               onChange={() => this.handleInputChange(event, context, required)}
               type="text" placeholder={'Your ' + toTitleCase(context)} />
-          </>
+          </label>
         );
         break;
       case 'textarea':
         component = (
-          <>
+          <label>
             <h3 className={required ? 'required' : ''}>Message</h3>
             <textarea className={this.state.isValid[context] ? '' : 'invalid'}
               onChange={() => this.handleInputChange(event, context, required)}
               placeholder="Enter your message here"></textarea>
-          </>
+          </label>
         );
         break;
       case 'file':
         component = (
-          <>
+          <label>
             <h3 className={'text-center' + (required ? ' required' : '')}>Give us an idea</h3>
             <label className="btn btn-secondary btn-file-upload" htmlFor="uploadFile">Upload a file</label>
             <input onChange={() => this.handleInputChange(event, context, required)}
               type="file" id="uploadFile" name="uploadFile" />
             <small className={"mt-0 text-center" + (this.state.fileHelpText.includes('exceeded') ? ' text-red' : '')}>{this.state.fileHelpText}</small>
-          </>
+          </label>
         );
         break;
     }

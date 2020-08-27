@@ -26,7 +26,7 @@ export function ShopCard(props) {
   let [before, after] = props.price
   return (
     <div className={props.notResponsive ? "col-auto" : "col-6 col-sm-6 col-md-4"}>
-      <a href={hrefURLs.rugById(props.id)} className="shop-card-a">
+      <a href={'/rug/' + props.id} className="shop-card-a">
         <div className="shop-card">
           <img src={props.imgSrc} alt={props.imgAlt} />
         </div>

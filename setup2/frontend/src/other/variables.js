@@ -158,98 +158,10 @@ export const shopFilterInputOrder = [
   // }
 ]
 
-export const dummyData = [
-  {
-
-    'heading': 'Rug Name', 'size': "10' x 13'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': null, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-  {
-    'heading': 'Another Fancy rug', 'size': "1' x 3'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-  {
-    'heading': 'Still rug names', 'size': "11' x 13'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': null, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': null },
-  },
-  {
-    'heading': 'Name of the Rug', 'size': "1' x 3'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-  {
-    'heading': 'Rug Name', 'size': "11' x 13'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': null, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-  {
-    'heading': 'Another Fancy rug', 'size': "1' x 3'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-  {
-    'heading': 'Still rug names', 'size': "1' x 3'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': null, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': null },
-  },
-  {
-    'heading': 'Name of the Rug', 'size': "1' x 3'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-  {
-    'heading': 'Rug Name', 'size': "1' x 3'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': null, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-  {
-    'heading': 'Another Fancy rug', 'size': "1' x 3'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-  {
-    'heading': 'Still rug names', 'size': "1' x 3'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': null, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': null },
-  },
-  {
-    'heading': 'Name of the Rug', 'size': "1' x 3'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-  {
-    'heading': 'Rug Name', 'size': "1' x 3'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': null, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-  {
-    'heading': 'Another Fancy rug', 'size': "1' x 3'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-  {
-    'heading': 'Still rug names', 'size': "1' x 3'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': null, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': null },
-  },
-  {
-    'heading': 'Name of the Rug', 'size': "1' x 3'", 'style': 'Contemporary',
-    'color': 'White', 'imgSrc': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  }
-]
-
 const apiBase = '/api/'
 export const apiURLs = {
   'listRugs': apiBase + 'rugs/',
   'rugById': id => apiBase + `rugs/${id}/`,
-}
-
-export const hrefURLs = {
-  'rugById': id => `/rug/${id}`,
 }
 
 export const slickCarouselSettings = [
