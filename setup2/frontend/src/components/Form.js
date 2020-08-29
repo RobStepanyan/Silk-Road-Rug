@@ -1,21 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { toTitleCase, validateEmail, formatPrice } from '../other/functions';
-import { type } from 'jquery';
+import { toTitleCase, validateEmail, validatePwd, formatPrice } from '../other/functions';
 import { RangeSlider, InputGroup, InputNumber } from 'rsuite';
+import { type } from 'jquery';
 
 
 export default class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      'isValid': {},
-      'value': {},
+      isValid: {},
+      isTouched: {},
+      values: {},
+      helpText: {},
     }
-    props.fields.forEach(field => {
-      this.state.isValid[field.context] = field.required ? false : true;
+    props.fields.forEach((field, i) => {
+      this.state.isValid[i] = field.required ? false : true;
+      this.state.isTouched[i] = false
+      this.state.helpText[i] = ''
       if (field.context == 'file') {
-        this.state.fileHelpText = `Max size: ${field.maxSizeMB}MB`
+        this.state.helpText[i] = `Max size: ${field.maxSizeMB}MB`
         this.state.fileMaxSizeMB = field.maxSizeMB
       }
     });
@@ -26,18 +30,33 @@ export default class Form extends Component {
   }
 
 
-  generateInput(field) {
-    let component, { context, required } = field;
+  generateInput(field, i) {
+    let component, { context, required, autoComplete } = field,
+      title = toTitleCase(field.title ? field.title : field.context);
 
     switch (context) {
-      case 'name':
+      case 'text':
       case 'email':
+      case 'password':
         component = (
           <label>
-            <h3 className={required ? 'required' : ''}>{toTitleCase(context)}</h3>
-            <input className={this.state.isValid[context] ? '' : 'invalid'}
-              onChange={() => this.handleInputChange(event, context, required)}
-              type="text" placeholder={'Your ' + toTitleCase(context)} />
+            <h3 className={required ? 'required' : ''}>{title}</h3>
+            <input className={'m-0' + (this.state.isTouched[i] ? this.state.isValid[i] ? ' valid' : ' invalid' : '')}
+              onChange={() => this.handleInputChange(event, context, i, required)}
+              type={context} placeholder={title} autoComplete={autoComplete} />
+            {typeof this.state.helpText[i] == 'object'
+              ? <>
+                <small className="text-red mb-0">{this.state.helpText[i][0]}</small>
+                <ul className="small">
+                  {this.state.helpText[i].map((text, i) => {
+                    if (i == 0) { return }
+                    return <li key={i}> <small className="text-red">{text}</small></li>
+                  })
+                  }
+                </ul>
+              </>
+              : <small className="text-red">{this.state.helpText[i]}</small>
+            }
           </label>
         );
         break;
@@ -45,8 +64,8 @@ export default class Form extends Component {
         component = (
           <label>
             <h3 className={required ? 'required' : ''}>Message</h3>
-            <textarea className={this.state.isValid[context] ? '' : 'invalid'}
-              onChange={() => this.handleInputChange(event, context, required)}
+            <textarea className={this.state.isTouched[i] ? this.state.isValid[i] ? ' valid' : ' invalid' : ''}
+              onChange={() => this.handleInputChange(event, context, i, required)}
               placeholder="Enter your message here"></textarea>
           </label>
         );
@@ -56,9 +75,9 @@ export default class Form extends Component {
           <label>
             <h3 className={'text-center' + (required ? ' required' : '')}>Give us an idea</h3>
             <label className="btn btn-secondary btn-file-upload" htmlFor="uploadFile">Upload a file</label>
-            <input onChange={() => this.handleInputChange(event, context, required)}
+            <input onChange={() => this.handleInputChange(event, context, i, required)}
               type="file" id="uploadFile" name="uploadFile" />
-            <small className={"mt-0 text-center" + (this.state.fileHelpText.includes('exceeded') ? ' text-red' : '')}>{this.state.fileHelpText}</small>
+            <small className={"mt-0 text-center" + (this.state.helpText[i].includes('exceeded') ? ' text-red' : '')}>{this.state.helpText[i]}</small>
           </label>
         );
         break;
@@ -68,38 +87,70 @@ export default class Form extends Component {
   }
 
 
-  handleInputChange(e, context, required) {
-    let val = e.target.value, valid, file = context == 'file' ? e.target.files[0] : '';
-
-    if ((context == 'email' && validateEmail(val))
-      || (['name', 'textarea'].includes(context) && required && val.length > 0)
-      || (['name', 'textarea'].includes(context) && !required)
-      || (context == 'file' && ((!required && e.target.length == 0) || file.size / 1024 / 1024 < this.state.fileMaxSizeMB))) {
-
-      if (context == 'file') {
-        this.setState({ 'fileHelpText': `${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)` })
+  handleInputChange(e, context, i, required) {
+    let pwds, confirmPwd, val = e.target.value, valid, file = context == 'file' ? e.target.files[0] : '';
+    let { values, isValid, isTouched, helpText } = this.state;
+    if (context == 'password') {
+      pwds = []
+      let indices = []
+      this.props.fields.forEach((field, ii) => {
+        if (field.context == 'password') {
+          indices = indices.concat(ii)
+          pwds = pwds.concat(ii == i ? val : this.state.values[ii])
+        }
+      })
+      confirmPwd = Boolean(indices.indexOf(i))
+      if (pwds[1] && !confirmPwd && this.state.isTouched[indices[1]]) {
+        let f = validatePwd(pwds, true)
+        helpText[indices[1]] = f.errorMsgs
+        isValid[indices[1]] = f.isValid;
+        this.setState({ helpText: helpText, isValid: isValid })
       }
-      valid = true
-
-    } else {
-      if (context == 'file') {
-        this.setState({ 'fileHelpText': `Max file size exceeded (${(file.size / 1024 / 1024).toFixed(1)}/${this.state.fileMaxSizeMB} MB)` })
-      }
-      valid = false
     }
 
+    if ((context == 'email' && validateEmail(val))
+      || (['text', 'textarea'].includes(context) && required && val.length > 0)
+      || (['text', 'textarea'].includes(context) && !required)
+      || (context == 'file' && ((!required && e.target.length == 0) || file.size / 1024 / 1024 < this.state.fileMaxSizeMB))
+      || (context == 'password' && validatePwd(pwds, confirmPwd).isValid)) {
 
-    let value = this.state.value, isValid = this.state.isValid;
-    value[context] = val;
-    isValid[context] = valid;
+      valid = true
+      if (context == 'file') {
+        helpText[i] = `${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`
+      } else {
+        helpText[i] = ''
+      }
 
-    this.setState({ 'value': value, 'isValid': isValid })
+    } else {
+      valid = false
+      switch (context) {
+        case 'file':
+          helpText[i] = `Max file size exceeded (${(file.size / 1024 / 1024).toFixed(1)}/${this.state.fileMaxSizeMB} MB)`
+          break;
+        case 'email':
+          helpText[i] = 'Invalid Email'
+          break;
+        case 'text':
+        case 'textarea':
+          helpText[i] = toTitleCase(context) + ' shouldn\'t empty'
+          break;
+        case 'password':
+          helpText[i] = validatePwd(pwds, confirmPwd).errorMsgs
+          break;
+      }
+    }
+
+    values[i] = val;
+    isValid[i] = valid;
+    isTouched[i] = true
+
+    this.setState({ values: values, isValid: isValid, isTouched: isTouched, helpText: helpText })
   }
 
 
   handleSubmitClick() {
     if (Object.values(this.state.isValid).every(Boolean)) {
-      console.log('Send an api')
+      this.props.handleSubmit ? this.props.handleSubmit() : console.log('No Submit Handler Received')
     }
   }
 
@@ -107,20 +158,22 @@ export default class Form extends Component {
   render() {
     return (
       <div className="row justify-content-center">
-        <div className="col-12">
+        <div className={this.props.cols ? this.props.cols : "col-12"}>
           <div className="card">
-            <div className="row justify-content-center">
+            <form className="row justify-content-center">
               {
                 this.props.fields.map((field, i) => {
                   return (
                     <div key={i} className={'col-12' + (field.half ? ' col-md-6' : '')}>
-                      {this.generateInput(field)}
+                      {this.generateInput(field, i)}
                     </div>
                   )
                 })
               }
-              <div onClick={this.handleSubmitClick} className="btn btn-primary mb-4">Send a Message</div>
-            </div>
+              <div onClick={this.handleSubmitClick} className="btn btn-primary mb-4">
+                {this.props.submitText ? this.props.submitText : 'Send a Message'}
+              </div>
+            </form>
           </div>
         </div>
       </div>

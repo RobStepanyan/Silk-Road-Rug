@@ -16,7 +16,8 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+small {
     font-family: $font-primary;
     font-weight: bold;
     margin: 0; // Disabling default margins
@@ -80,9 +81,9 @@ h6 {
 }
 
 small {
+    font-family: $font-secondary;
     display: block;
-    margin: .75 * $margin 0;
-    color: c(white);
+    margin: $margin * 2 / 3 0 $margin 0;
     font-size: .675rem;
 }
 
@@ -192,7 +193,9 @@ strong {
 
 .rs-tooltip,
 textarea,
-input[type="text"] {
+input[type="text"],
+input[type="email"],
+input[type="password"] {
     font-size: 1rem;
     font-weight: bold;
     font-family: "Work Sans";
@@ -200,9 +203,11 @@ input[type="text"] {
 
 #cart,
 #shipping,
-#about {
+#about,
+#signup,
+#login {
     h1 {
-        margin-bottom: $margin * 3 / 4;
+        margin-bottom: $margin;
     }
 }
 

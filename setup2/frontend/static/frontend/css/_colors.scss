@@ -1,201 +1,201 @@
 // Colors
 $dark0: #121212;
 $colors: (dark0: #121212,
-    dark1: mix($dark0, #fff, 95%),
-    dark2: mix($dark0, #fff, 93%),
-    dark3: mix($dark0, #fff, 92%),
-    dark4: mix($dark0, #fff, 91%),
-    dark5: mix($dark0, #fff, 89%),
-    dark6: mix($dark0, #fff, 88%),
-    dark7: mix($dark0, #fff, 86%),
-    dark8: mix($dark0, #fff, 85%),
-    black: #101010,
+  dark1: mix($dark0, #fff, 95%),
+  dark2: mix($dark0, #fff, 93%),
+  dark3: mix($dark0, #fff, 92%),
+  dark4: mix($dark0, #fff, 91%),
+  dark5: mix($dark0, #fff, 89%),
+  dark6: mix($dark0, #fff, 88%),
+  dark7: mix($dark0, #fff, 86%),
+  dark8: mix($dark0, #fff, 85%),
+  black: #101010,
 
-    gray1: darken(#ACACAC, 20%),
-    gray2: darken(#ACACAC, 10%),
-    gray3: #ACACAC,
+  gray1: darken(#ACACAC, 20%),
+  gray2: darken(#ACACAC, 10%),
+  gray3: #ACACAC,
 
-    white: #fff,
-    bright1: rgba(#fff, .95),
-    bright2: rgba(#fff, .93),
-    bright3: rgba(#fff, .92),
-    bright4: rgba(#fff, .91),
-    bright5: rgba(#fff, .89),
-    bright6: rgba(#fff, .88),
-    bright7: rgba(#fff, .86),
-    bright8: rgba(#fff, .85),
+  white: #fff,
+  bright1: rgba(#fff, .95),
+  bright2: rgba(#fff, .93),
+  bright3: rgba(#fff, .92),
+  bright4: rgba(#fff, .91),
+  bright5: rgba(#fff, .89),
+  bright6: rgba(#fff, .88),
+  bright7: rgba(#fff, .86),
+  bright8: rgba(#fff, .85),
 
 
-    yellow1: darken(#facf5a, 20%),
-    yellow2: #facf5a, // Primary
-    primary: #facf5a,
+  yellow1: darken(#facf5a, 20%),
+  yellow2: #facf5a, // Primary
+  primary: #facf5a,
 
-    red: #ff5959,
-    green: #59ff59,
-    blue1:#085f63,
-    blue2: #49beb7,
+  red: #ff5959,
+  green: #009100,
+  blue1:#085f63,
+  blue2: #49beb7,
 );
 
 @function c($color-name) {
-    @return map-get($colors, $color-name);
+  @return map-get($colors, $color-name);
 }
 
 $gradients: (yellow: linear-gradient(145deg, lighten(c(yellow2), 5%), c(yellow1)));
 
 @function g($gradient-name) {
-    @return map-get($gradients, $gradient-name);
+  @return map-get($gradients, $gradient-name);
 }
 
 
 // Surface colors, elevations
 body {
-    background: c(dark0)
+  background: c(dark0)
 }
 
 footer {
-    background: c(dark1)
+  background: c(dark1)
 }
 
 section {
-    background: c(dark1);
-    box-shadow: $shadow1;
+  background: c(dark1);
+  box-shadow: $shadow1;
 }
 
 hr {
-    background: c(dark2)
+  background: c(dark2)
 }
 
 .card,
 .filter-sidebar,
 .shop-filter-card {
-    background: c(dark2);
-    box-shadow: $shadow2;
+  background: c(dark2);
+  box-shadow: $shadow2;
 
-    .btn:not(.btn-primary),
-    .card-btn {
-        background: c(dark3);
-    }
+  // .card-btn,
+  .btn:not(.btn-primary) {
+    background: c(dark3);
+  }
 }
 
 #shop {
-    .carousel-2 {
-        margin: $margin 0;
-        background: c(dark2);
-        box-shadow: $shadow2;
-    }
+  .carousel-2 {
+    margin: $margin 0;
+    background: c(dark2);
+    box-shadow: $shadow2;
+  }
 }
 
 .card {
-    hr {
-        background: c(dark7);
-    }
+  hr {
+    background: c(dark7);
+  }
 }
 
 .dropdown-menu {
-    background: c(dark3);
-    box-shadow: $shadow1;
+  background: c(dark3);
+  box-shadow: $shadow1;
 
-    .dropdown-item {
-        &:hover {
-            background: c(dark5);
-        }
-
-        &.active {
-            background-color: c(yellow2);
-            color: c(black) !important;
-        }
+  .dropdown-item {
+    &:hover {
+      background: c(dark5);
     }
+
+    &.active {
+      background-color: c(yellow2);
+      color: c(black) !important;
+    }
+  }
 }
 
 .note,
 .disclaimer {
-    color: c(white);
+  color: c(white);
 }
 
 .note {
-    background-color: c(dark2);
-    box-shadow: $shadow2;
-    border-color: c(white) !important;
+  background-color: c(dark2);
+  box-shadow: $shadow2;
+  border-color: c(white) !important;
 }
 
 .disclaimer {
-    background-color: c(dark2);
-    box-shadow: $shadow2;
-    border-color: c(red) !important;
+  background-color: c(dark2);
+  box-shadow: $shadow2;
+  border-color: c(red) !important;
 }
 
 .sidenav {
-    background-color: rgba(c(dark4), .975);
-    box-shadow: $shadow3;
-    // backdrop-filter: blur(15px);
+  background-color: rgba(c(dark4), .975);
+  box-shadow: $shadow3;
+  // backdrop-filter: blur(15px);
 
-    .sidenav-menu-heading {
-        color: c(yellow2);
+  .sidenav-menu-heading {
+    color: c(yellow2);
+  }
+
+  .sidenav-svg-2 {
+    fill: c(white);
+  }
+
+  .nav-link {
+    color: c(white);
+    border-bottom: 2px solid transparent;
+
+    &:hover {
+      border-color: c(white);
     }
+  }
 
-    .sidenav-svg-2 {
-        fill: c(white);
+  .sidenav-collapse-arrow {
+
+    svg {
+      color: rgba(#fff, .5);
     }
-
-    .nav-link {
-        color: c(white);
-        border-bottom: 2px solid transparent;
-
-        &:hover {
-            border-color: c(white);
-        }
-    }
-
-    .sidenav-collapse-arrow {
-
-        svg {
-            color: rgba(#fff, .5);
-        }
-    }
+  }
 }
 
 .navbar {
-    background: rgba(c(dark4), .975);
-    box-shadow: $shadow4;
-    // backdrop-filter: blur(15px);
+  background: rgba(c(dark4), .975);
+  box-shadow: $shadow4;
+  // backdrop-filter: blur(15px);
 
-    .navbar-icon {
-        svg {
-            color: c(gray3);
-            transition: $transition-half;
+  .navbar-icon {
+    svg {
+      color: c(gray3);
+      transition: $transition-half;
 
-            &:hover {
-                color: c(white);
-            }
-        }
+      &:hover {
+        color: c(white);
+      }
     }
+  }
 
-    .hamburger-inner {
+  .hamburger-inner {
 
-        &,
-        &:after,
-        &:before {
-            background-color: c(gray3);
-        }
+    &,
+    &:after,
+    &:before {
+      background-color: c(gray3);
     }
+  }
 }
 
 .hamburger:hover {
-    .hamburger-inner {
+  .hamburger-inner {
 
-        body:not(.sidenav-toggled) &,
-        &:after,
-        &:before {
-            background-color: c(white);
-        }
+    body:not(.sidenav-toggled) &,
+    &:after,
+    &:before {
+      background-color: c(white);
     }
+  }
 }
 
 @include media-breakpoint-down(sm) {
-    .navbar-collapse {
-        background: c(dark3);
-        box-shadow: $shadow3;
-    }
+  .navbar-collapse {
+    background: c(dark3);
+    box-shadow: $shadow3;
+  }
 }
 
 h1,
@@ -205,181 +205,190 @@ h4,
 h5,
 h6,
 p,
+small,
 .form-check-label,
 .text-white {
-    color: c(white) !important;
+  color: c(white) !important;
 }
 
 .text-gray {
 
-    &,
-    * {
-        color: c(gray3) !important;
-    }
+  &,
+  * {
+    color: c(gray3) !important;
+  }
 }
 
 .text-red {
-    color: c(red) !important;
+  color: c(red) !important;
 }
 
 .text-primary {
-    color: c(primary) !important;
+  color: c(primary) !important;
 }
 
 small,
 i {
-    color: c(gray3) !important;
+  color: c(gray3) !important;
 }
 
 .dropdown-heading,
 .shop-card:after {
-    color: c(primary);
+  color: c(primary);
 }
 
+
+input:-internal-autofill-selected,
 textarea,
-input[type="text"]:not(.rs-input) {
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  &:not(.rs-input) {
     transition: $transition;
-    background-color: c(dark5);
-    color: c(white);
-    box-shadow: $shadow3;
+    background-color: c(dark5) !important;
+    color: c(white) !important;
+    box-shadow: none;
 
     &:hover,
     &:focus {
-        box-shadow: none;
+      box-shadow: $shadow3;
     }
+  }
 }
 
 input[type="radio"],
 input[type="checkbox"],
 .rs-slider-bar,
 .rs-input {
-    transition: $transition;
-    background-color: c(dark1);
-    border-color: c(dark5) !important;
-    color: c(white);
+  transition: $transition;
+  background-color: c(dark1);
+  border-color: c(dark5) !important;
+  color: c(white);
 
-    &:hover {
-        background-color: c(dark0);
-    }
+  &:hover {
+    background-color: c(dark0);
+  }
 
-    &:checked:before {
-        background-color: c(primary);
-    }
+  &:checked:before {
+    background-color: c(primary);
+  }
 }
 
 textarea,
-input[type="text"] {
-    &.invalid {
-        border-bottom-color: c(red) !important;
-    }
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  &.invalid {
+    border-bottom-color: c(red) !important;
+  }
 
-    &.valid {
-        border-bottom-color: c(green) !important;
-    }
+  &.valid {
+    border-bottom-color: c(green) !important;
+  }
 
 }
 
 .rs-input-group {
-    border-color: c(dark5) !important;
+  border-color: c(dark5) !important;
 }
 
-.card-btn {
-    color: c(yellow2) !important;
-}
+// .card-btn {
+//   color: c(yellow2) !important;
+// }
 
 .dropdown-item {
-    color: c(white) !important;
+  color: c(white) !important;
 }
 
 
 .dropdown-heading {
-    color: c(primary);
+  color: c(primary);
 }
 
 #filterToggle {
-    background-color: c(dark2);
-    box-shadow: $shadow5;
-    border-image-source: g(yellow) !important;
+  background-color: c(dark2);
+  box-shadow: $shadow5;
+  border-image-source: g(yellow) !important;
 
-    svg {
-        color: c(primary);
-    }
+  svg {
+    color: c(primary);
+  }
 }
 
 .gmap_canvas,
 img {
-    box-shadow: $shadow2;
+  box-shadow: $shadow2;
 }
 
 ul.style-default {
-    li:before {
-        background: c(primary);
-    }
+  li:before {
+    background: c(primary);
+  }
 }
 
 .cart.card {
-    p {
-        color: c(gray3);
-    }
+  p {
+    color: c(gray3);
+  }
 }
 
 .price {
-    color: c(primary) !important;
+  color: c(primary) !important;
 
-    &.discounted {
-        color: c(gray3) !important;
-    }
+  &.discounted {
+    color: c(gray3) !important;
+  }
 }
 
 .rs-slider-progress-bar {
-    background-color: c(primary);
+  background-color: c(primary);
 }
 
 .rs-slider-handle {
-    &::before {
-        background-color: c(dark5);
-        border-color: c(primary) !important;
-    }
+  &::before {
+    background-color: c(dark5);
+    border-color: c(primary) !important;
+  }
 
-    &:hover::before {
-        background-color: c(dark3);
-        box-shadow: $shadow1;
-    }
+  &:hover::before {
+    background-color: c(dark3);
+    box-shadow: $shadow1;
+  }
 }
 
 .rs-tooltip {
-    box-shadow: $shadow-normal;
+  box-shadow: $shadow-normal;
 }
 
 .rs-tooltip-inner {
-    color: c(primary);
-    background-color: c(dark5);
+  color: c(primary);
+  background-color: c(dark5);
 }
 
 .rs-tooltip[class*='placement-top'] {
-    .rs-tooltip-arrow {
-        border-top-color: c(dark5);
-    }
+  .rs-tooltip-arrow {
+    border-top-color: c(dark5);
+  }
 }
 
 .rs-input-group-btn,
 .rs-input-group-addon,
 .btn-subtle {
-    color: c(white);
+  color: c(white);
 }
 
 .rs-input-number-btn-group-vertical {
-    background: c(dark1);
+  background: c(dark1);
 }
 
 .loading:after {
-    backdrop-filter: blur(5px) brightness(10%);
+  backdrop-filter: blur(5px) brightness(10%);
 }
 
 .close-btn {
-    color: c(white);
+  color: c(white);
 
-    &:hover {
-        color: c(red);
-    }
+  &:hover {
+    color: c(red);
+  }
 }

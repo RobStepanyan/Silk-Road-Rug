@@ -1,7 +1,27 @@
-import { emailRegex, cartCardInputsOrder } from './variables';
+import { emailRegex, pwdRegexes, pwdErrorMsgs, cartCardInputsOrder } from './variables';
 
 export function validateEmail(email) {
     return emailRegex.test(email)
+}
+
+export function validatePwd(pwds, confirmPwd = false) {
+    if (confirmPwd) {
+        if (pwds[0] != pwds[1]) {
+            return { isValid: false, errorMsgs: pwdErrorMsgs.diff }
+        }
+        return { isValid: true }
+    }
+    let errorMsgs = []
+    Object.entries(pwdRegexes).forEach(x => {
+        let [key, value] = x
+        if (!value.test(pwds[0])) {
+            errorMsgs = errorMsgs.concat(pwdErrorMsgs[key])
+        }
+    })
+    if (errorMsgs.length) {
+        return { isValid: false, errorMsgs: errorMsgs }
+    }
+    return { isValid: true }
 }
 
 export function toTitleCase(text) {

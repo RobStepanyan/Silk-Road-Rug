@@ -54,9 +54,12 @@ input[type="checkbox"]:checked:before {
 }
 
 textarea,
-input[type="text"] {
+input[type="text"],
+input[type="email"],
+input[type="password"] {
     width: 100%;
-    border: 2px solid transparent;
+    border: 0;
+    border-bottom: 2px solid transparent;
     padding: $padding * 2 / 3 $padding;
     margin-bottom: $margin;
 }

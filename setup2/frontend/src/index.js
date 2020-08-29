@@ -16,6 +16,7 @@ import RugRestoration from './pages/services/RugRestoration';
 import Shop from './pages/shop/Shop';
 import Rug from './pages/shop/Rug';
 import Error from './pages/Error';
+import SignUp from './pages/account/SignUp';
 import 'jquery';
 import 'popper.js'
 import 'bootstrap';
@@ -35,6 +36,7 @@ class App extends Component {
                     <Route path='/cart' component={Cart} />
                     <Route path='/shop' component={Shop} />
                     <Route path='/rug/:id' component={Rug} />
+                    <Route path='/signup' component={SignUp} />
                     <Route path='/' exact component={Home} />
                     <Route path=''><Error error={404} /></Route>
                 </Switch>

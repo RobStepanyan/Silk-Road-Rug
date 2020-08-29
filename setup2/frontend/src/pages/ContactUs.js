@@ -12,7 +12,7 @@ export default function ContactUs() {
           <p>We would love to hear from you!</p>
 
           <Form fields={[
-            { 'context': 'name', 'required': false, 'half': true },
+            { 'context': 'text', 'title': 'name', 'required': false, 'half': true },
             { 'context': 'email', 'required': true, 'half': true },
             { 'context': 'textarea', 'required': true, 'half': false },
             { 'context': 'file', 'maxSizeMB': 25, 'required': false, 'half': false }

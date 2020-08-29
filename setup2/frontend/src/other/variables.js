@@ -1,6 +1,21 @@
 import { toTitleCase } from './functions';
 
 export const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const pwdRegexes = {
+  all: /^(?=.*[0-9])(?=.*[A-Za-z]).\w{7,63}$/,
+  length: /^.\w{7,63}$/,
+  char: /(?=.*[A-Za-z]).\w*/,
+  num: /(?=.*[0-9]).\w*/
+}
+
+export const pwdErrorMsgs = {
+  all: 'Password should contain ',
+  length: '8 or more characters.',
+  char: 'At least one letter',
+  num: 'At least one digit',
+  diff: 'Passwords didn\'t match',
+}
+
 export const cartCardInputsOrder = {
   'shipping': [
     'Will-Call Pick Up', 'Ground Shipping'],

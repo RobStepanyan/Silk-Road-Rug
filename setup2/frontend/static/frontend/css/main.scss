@@ -201,12 +201,15 @@ ul {
     padding: 2*$padding;
     margin-bottom: 2*$margin;
 
-    .row .btn {
+    .card-btn {
         margin: 0;
-        margin-top: $margin * 2 / 3;
-        margin-left: $margin;
+        margin: $margin * 2 / 3 $margin / 3 $margin / 3 $margin;
 
         @include media-breakpoint-only(sm) {
+            width: 100%;
+        }
+
+        @include media-breakpoint-only(md) {
             width: 100%;
         }
     }
@@ -227,6 +230,7 @@ ul {
     margin: $margin 0;
 
     .card-heading {
+        border: 0;
         border-bottom: 1px solid c(gray3);
         padding-bottom: $padding / 3;
     }
@@ -338,6 +342,33 @@ ul.style-default {
             width: .5rem;
             height: .5rem;
             border-radius: 50%;
+        }
+    }
+}
+
+ul.small {
+    margin: $margin / 3 0 $margin 0;
+    padding-left: $padding;
+
+    li {
+        position: relative;
+        text-transform: initial;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -$padding / 2;
+            transform: translate(-50%, -50%);
+
+            width: .25rem;
+            height: .25rem;
+            border-radius: 50%;
+            background: c(red);
+        }
+
+        small {
+            margin: $margin / 3;
         }
     }
 }
