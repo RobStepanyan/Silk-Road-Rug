@@ -1,7 +1,8 @@
-from . import models, serializers
+from . import models, serializers, tokens
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.response import Response
+from rest_framework.generics import GenericAPIView
 from django.forms.models import model_to_dict
 from collections import OrderedDict
 from .variables import sort_by, sizes, styles
@@ -86,3 +87,17 @@ class RugViewSet(viewsets.ViewSet):
     @classmethod
     def retrieve(cls, request, pk=None):
         return Response(cls.get_rugs(pk))
+
+
+class UserSignUpView(GenericAPIView):
+    serializer_class = serializers.SignUpSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+
+        return Response({
+            'user': serializers.UserSerializer(user, context=self.get_serializer_context()).data,
+            'token': tokens.get_tokens_for_user(user)
+        })
