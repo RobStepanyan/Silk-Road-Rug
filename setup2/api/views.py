@@ -3,6 +3,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.exceptions import TokenError
 from django.forms.models import model_to_dict
 from collections import OrderedDict
 from .variables import sort_by, sizes, styles
@@ -114,3 +116,21 @@ class LogInView(GenericAPIView):
             'user': serializers.UserSerializer(user, context=self.get_serializer_context()).data,
             'token': tokens.get_tokens_for_user(user)
         })
+
+
+class LogOutView(GenericAPIView):
+    serializer_class = serializers.LogOutSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        try:
+            serializer.is_valid()
+            token = serializer.validated_data
+            token.blacklist()
+            return Response({
+                'response': 'Logged Out'
+            })
+        except TokenError:
+            return Response({
+                'response': 'Invalid Token'
+            })
