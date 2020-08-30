@@ -89,7 +89,7 @@ class RugViewSet(viewsets.ViewSet):
         return Response(cls.get_rugs(pk))
 
 
-class UserSignUpView(GenericAPIView):
+class SignUpView(GenericAPIView):
     serializer_class = serializers.SignUpSerializer
 
     def post(self, request, *args, **kwargs):
@@ -97,6 +97,19 @@ class UserSignUpView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
 
+        return Response({
+            'user': serializers.UserSerializer(user, context=self.get_serializer_context()).data,
+            'token': tokens.get_tokens_for_user(user)
+        })
+
+
+class LogInView(GenericAPIView):
+    serializer_class = serializers.LogInSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data
         return Response({
             'user': serializers.UserSerializer(user, context=self.get_serializer_context()).data,
             'token': tokens.get_tokens_for_user(user)
