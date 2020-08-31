@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { toTitleCase, validateEmail, validatePwd, formatPrice } from '../other/functions';
 import { RangeSlider, InputGroup, InputNumber } from 'rsuite';
-import { type } from 'jquery';
-
 
 export default class Form extends Component {
   constructor(props) {
@@ -13,6 +11,8 @@ export default class Form extends Component {
       isTouched: {},
       values: {},
       helpText: {},
+      alert: null,
+      switchBtn: false,
     }
     props.fields.forEach((field, i) => {
       this.state.isValid[i] = field.required ? false : true;
@@ -31,7 +31,7 @@ export default class Form extends Component {
 
 
   generateInput(field, i) {
-    let component, { context, required, autoComplete } = field,
+    let component, { context, required, autoComplete, validate } = field,
       title = toTitleCase(field.title ? field.title : field.context);
 
     switch (context) {
@@ -41,8 +41,8 @@ export default class Form extends Component {
         component = (
           <label>
             <h3 className={required ? 'required' : ''}>{title}</h3>
-            <input className={'m-0' + (this.state.isTouched[i] ? this.state.isValid[i] ? ' valid' : ' invalid' : '')}
-              onChange={() => this.handleInputChange(event, context, i, required)}
+            <input className={'m-0' + (this.state.isTouched[i] && validate != false ? this.state.isValid[i] ? ' valid' : ' invalid' : '')}
+              onChange={() => this.handleInputChange(event, context, i, required, validate, title)}
               type={context} placeholder={title} autoComplete={autoComplete} />
             {typeof this.state.helpText[i] == 'object'
               ? <>
@@ -64,8 +64,8 @@ export default class Form extends Component {
         component = (
           <label>
             <h3 className={required ? 'required' : ''}>Message</h3>
-            <textarea className={this.state.isTouched[i] ? this.state.isValid[i] ? ' valid' : ' invalid' : ''}
-              onChange={() => this.handleInputChange(event, context, i, required)}
+            <textarea className={this.state.isTouched[i] && validate != false ? this.state.isValid[i] ? ' valid' : ' invalid' : ''}
+              onChange={() => this.handleInputChange(event, context, i, required, validate, title)}
               placeholder="Enter your message here"></textarea>
           </label>
         );
@@ -75,7 +75,7 @@ export default class Form extends Component {
           <label>
             <h3 className={'text-center' + (required ? ' required' : '')}>Give us an idea</h3>
             <label className="btn btn-secondary btn-file-upload" htmlFor="uploadFile">Upload a file</label>
-            <input onChange={() => this.handleInputChange(event, context, i, required)}
+            <input onChange={() => this.handleInputChange(event, context, i, required, validate, title)}
               type="file" id="uploadFile" name="uploadFile" />
             <small className={"mt-0 text-center" + (this.state.helpText[i].includes('exceeded') ? ' text-red' : '')}>{this.state.helpText[i]}</small>
           </label>
@@ -87,7 +87,7 @@ export default class Form extends Component {
   }
 
 
-  handleInputChange(e, context, i, required) {
+  handleInputChange(e, context, i, required, validate, title) {
     let pwds, confirmPwd, val = e.target.value, valid, file = context == 'file' ? e.target.files[0] : '';
     let { values, isValid, isTouched, helpText } = this.state;
     if (context == 'password') {
@@ -96,9 +96,10 @@ export default class Form extends Component {
       this.props.fields.forEach((field, ii) => {
         if (field.context == 'password') {
           indices = indices.concat(ii)
-          pwds = pwds.concat(ii == i ? val : this.state.values[ii])
+          pwds = pwds.concat(ii == i ? val : this.state.values[field.title])
         }
       })
+
       confirmPwd = Boolean(indices.indexOf(i))
       if (pwds[1] && !confirmPwd && this.state.isTouched[indices[1]]) {
         let f = validatePwd(pwds, true)
@@ -108,12 +109,12 @@ export default class Form extends Component {
       }
     }
 
-    if ((context == 'email' && validateEmail(val))
+    if ((validate == false)
+      || (context == 'email' && validateEmail(val))
       || (['text', 'textarea'].includes(context) && required && val.length > 0)
       || (['text', 'textarea'].includes(context) && !required)
       || (context == 'file' && ((!required && e.target.length == 0) || file.size / 1024 / 1024 < this.state.fileMaxSizeMB))
       || (context == 'password' && validatePwd(pwds, confirmPwd).isValid)) {
-
       valid = true
       if (context == 'file') {
         helpText[i] = `${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`
@@ -132,7 +133,7 @@ export default class Form extends Component {
           break;
         case 'text':
         case 'textarea':
-          helpText[i] = toTitleCase(context) + ' shouldn\'t empty'
+          helpText[i] = toTitleCase(title) + ' shouldn\'t empty'
           break;
         case 'password':
           helpText[i] = validatePwd(pwds, confirmPwd).errorMsgs
@@ -140,7 +141,7 @@ export default class Form extends Component {
       }
     }
 
-    values[i] = val;
+    values[title.toLowerCase().replace(' ', '_')] = val;
     isValid[i] = valid;
     isTouched[i] = true
 
@@ -150,7 +151,28 @@ export default class Form extends Component {
 
   handleSubmitClick() {
     if (Object.values(this.state.isValid).every(Boolean)) {
-      this.props.handleSubmit ? this.props.handleSubmit() : console.log('No Submit Handler Received')
+      let values = {}
+      Object.entries(this.state.values).forEach(entry => {
+        let [key, val] = entry
+        if (this.props.submitFields.includes(key)) {
+          values[key] = val
+        }
+      })
+
+      if (this.props.handleSubmit) {
+        this.props.handleSubmit(values)
+          .then(response => {
+            let { data } = response
+            if (Object.keys(data).includes('error')) {
+              this.setState({ alert: { isError: true, msg: data['error'][0] } })
+            } else {
+              if (this.props.authForm) {
+                // pass
+              }
+              this.setState({ alert: { isError: false, msg: data['msg'] }, switchBtn: true })
+            }
+          })
+      }
     }
   }
 
@@ -159,6 +181,9 @@ export default class Form extends Component {
     return (
       <div className="row justify-content-center">
         <div className={this.props.cols ? this.props.cols : "col-12"}>
+          {this.state.alert &&
+            <div className={"alert" + (this.state.alert.isError ? " danger" : " success")}>{this.state.alert.msg}</div>
+          }
           <div className="card">
             <form className="row justify-content-center">
               {
@@ -170,13 +195,16 @@ export default class Form extends Component {
                   )
                 })
               }
-              <div onClick={this.handleSubmitClick} className="btn btn-primary mb-4">
-                {this.props.submitText ? this.props.submitText : 'Send a Message'}
-              </div>
+              {(this.state.switchBtn && this.props.redirectTo)
+                ? <a href={this.props.redirectTo} className="btn btn-primary mb-4">{this.props.redirectTitle}</a>
+                : <div onClick={this.handleSubmitClick} className="btn btn-primary mb-4">
+                  {this.props.submitText ? this.props.submitText : 'Send a Message'}
+                </div>
+              }
             </form>
           </div>
         </div>
-      </div>
+      </div >
     );
   }
 }

@@ -177,6 +177,7 @@ const apiBase = '/api/'
 export const apiURLs = {
   'listRugs': apiBase + 'rugs/',
   'rugById': id => apiBase + `rugs/${id}/`,
+  'signUp': apiBase + 'auth/signup/',
 }
 
 export const dummyData = [

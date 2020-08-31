@@ -96,10 +96,14 @@ class SignUpView(GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
+        try:
+            serializer.is_valid(raise_exception=True)
+            user = serializer.save()
+        except Exception as e:
+            return Response({'error': e.detail})
 
         return Response({
+            'msg': 'Account successfuly created.',
             'user': serializers.UserSerializer(user, context=self.get_serializer_context()).data,
             'token': tokens.get_tokens_for_user(user)
         })
@@ -128,9 +132,9 @@ class LogOutView(GenericAPIView):
             token = serializer.validated_data
             token.blacklist()
             return Response({
-                'response': 'Logged Out'
+                'error': 'Logged Out'
             })
         except TokenError:
             return Response({
-                'response': 'Invalid Token'
+                'error': 'Invalid Token'
             })

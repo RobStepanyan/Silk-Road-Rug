@@ -237,22 +237,28 @@ i {
   color: c(primary);
 }
 
-
 input:-internal-autofill-selected,
-textarea,
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-  &:not(.rs-input) {
-    transition: $transition;
-    background-color: c(dark5) !important;
-    color: c(white) !important;
-    box-shadow: none;
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 30px c(dark5) inset !important;
+  -webkit-text-fill-color: c(white) !important;
+  transition: $transition;
+}
 
-    &:hover,
-    &:focus {
-      box-shadow: $shadow3;
-    }
+textarea,
+input[type="text"]:not(.rs-input),
+input[type="email"]:not(.rs-input),
+input[type="password"]:not(.rs-input) {
+  transition: border-color $transition-duration;
+  background-color: c(dark5) !important;
+  color: c(white) !important;
+  box-shadow: none;
+
+  &:hover,
+  &:focus {
+    box-shadow: $shadow3;
   }
 }
 
@@ -390,5 +396,19 @@ ul.style-default {
 
   &:hover {
     color: c(red);
+  }
+}
+
+.alert {
+  &.danger {
+    color: c(red);
+    border-color: c(red) !important;
+    background: c(dark5);
+  }
+
+  &.success {
+    color: c(green);
+    border-color: c(green);
+    background: c(dark5);
   }
 }

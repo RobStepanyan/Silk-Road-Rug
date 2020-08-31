@@ -4,6 +4,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
+    Redirect,
 } from 'react-router-dom';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
@@ -17,6 +18,7 @@ import Shop from './pages/shop/Shop';
 import Rug from './pages/shop/Rug';
 import Error from './pages/Error';
 import SignUp from './pages/account/SignUp';
+import LogIn from './pages/account/LogIn';
 import 'jquery';
 import 'popper.js'
 import 'bootstrap';
@@ -36,7 +38,14 @@ class App extends Component {
                     <Route path='/cart' component={Cart} />
                     <Route path='/shop' component={Shop} />
                     <Route path='/rug/:id' component={Rug} />
+                    <Route path='/account'>
+                        {false
+                            ? <Redirect to='/signup' />
+                            : <Redirect to='/login' />
+                        }
+                    </Route>
                     <Route path='/signup' component={SignUp} />
+                    <Route path='/login' component={LogIn} />
                     <Route path='/' exact component={Home} />
                     <Route path=''><Error error={404} /></Route>
                 </Switch>
