@@ -8,6 +8,8 @@ from rest_framework_simplejwt.exceptions import TokenError
 from django.forms.models import model_to_dict
 from collections import OrderedDict
 from .variables import sort_by, sizes, styles
+from django.views.decorators.csrf import csrf_protect
+from django.utils.decorators import method_decorator
 
 
 class RugViewSet(viewsets.ViewSet):
@@ -94,6 +96,7 @@ class RugViewSet(viewsets.ViewSet):
 class SignUpView(GenericAPIView):
     serializer_class = serializers.SignUpSerializer
 
+    @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         try:
@@ -103,7 +106,7 @@ class SignUpView(GenericAPIView):
             return Response({'error': e.detail})
 
         return Response({
-            'msg': 'Account successfuly created.',
+            'msg': 'Account successfully created.',
             'user': serializers.UserSerializer(user, context=self.get_serializer_context()).data,
             'token': tokens.get_tokens_for_user(user)
         })
@@ -112,6 +115,7 @@ class SignUpView(GenericAPIView):
 class LogInView(GenericAPIView):
     serializer_class = serializers.LogInSerializer
 
+    @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -125,6 +129,7 @@ class LogInView(GenericAPIView):
 class LogOutView(GenericAPIView):
     serializer_class = serializers.LogOutSerializer
 
+    @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         try:
