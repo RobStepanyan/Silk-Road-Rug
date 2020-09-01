@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'frontend',
     'api.apps.ApiConfig',
-    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
