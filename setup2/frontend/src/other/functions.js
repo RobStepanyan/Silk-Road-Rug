@@ -1,4 +1,4 @@
-import { emailRegex, pwdRegexes, pwdErrorMsgs, cartCardInputsOrder } from './variables';
+import { emailRegex, pwdRegexes, pwdErrorMsgs, cartCardInputsOrder, onlyTextRegex } from './variables';
 import Cookies from 'universal-cookie';
 
 export function validateEmail(email) {
@@ -23,6 +23,10 @@ export function validatePwd(pwds, confirmPwd = false) {
         return { isValid: false, errorMsgs: errorMsgs }
     }
     return { isValid: true }
+}
+
+export function validateOnlyText(text) {
+    return onlyTextRegex.test(text) ? true : false
 }
 
 export function toTitleCase(text) {
