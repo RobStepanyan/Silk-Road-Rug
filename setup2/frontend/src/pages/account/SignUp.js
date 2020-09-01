@@ -30,8 +30,8 @@ export default function SignUp() {
           <Form handleSubmit={handleSubmit} submitFields={['first_name', 'last_name', 'email', 'password']}
             redirectTo="/" redirectTitle="Go to Home" authForm={true}
             cols="col-12 col-sm-10 col-lg-6" submitText="Sign Up" fields={[
-              { context: 'text', autoComplete: 'first-name', title: 'first name', required: true, half: true },
-              { context: 'text', autoComplete: 'last-name', title: 'last name', required: true, half: true },
+              { context: 'text', autoComplete: 'first-name', title: 'first name', onlyText: true, required: true, half: true },
+              { context: 'text', autoComplete: 'last-name', title: 'last name', onlyText: true, required: true, half: true },
               { context: 'email', autoComplete: 'email', required: true, half: false },
               { context: 'password', autoComplete: 'new-password', title: 'password', required: true, half: false },
               { context: 'password', autoComplete: 'new-password', title: 'confirm password', required: true, half: false },

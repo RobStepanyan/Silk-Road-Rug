@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { toTitleCase, validateEmail, validatePwd, formatPrice, setJWTCookie } from '../other/functions';
+import { toTitleCase, validateEmail, validatePwd, formatPrice, setJWTCookie, validateOnlyText } from '../other/functions';
 import { RangeSlider, InputGroup, InputNumber } from 'rsuite';
 
 export default class Form extends Component {
@@ -31,7 +31,7 @@ export default class Form extends Component {
 
 
   generateInput(field, i) {
-    let component, { context, required, autoComplete, validate } = field,
+    let component, { context, required, autoComplete, validate, onlyText } = field,
       title = toTitleCase(field.title ? field.title : field.context);
 
     switch (context) {
@@ -42,7 +42,7 @@ export default class Form extends Component {
           <label>
             <h3 className={required ? 'required' : ''}>{title}</h3>
             <input className={'m-0' + (this.state.isTouched[i] && validate != false ? this.state.isValid[i] ? ' valid' : ' invalid' : '')}
-              onChange={() => this.handleInputChange(event, context, i, required, validate, title)}
+              onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText)}
               type={context} placeholder={title} autoComplete={autoComplete} />
             {typeof this.state.helpText[i] == 'object'
               ? <>
@@ -65,7 +65,7 @@ export default class Form extends Component {
           <label>
             <h3 className={required ? 'required' : ''}>Message</h3>
             <textarea className={this.state.isTouched[i] && validate != false ? this.state.isValid[i] ? ' valid' : ' invalid' : ''}
-              onChange={() => this.handleInputChange(event, context, i, required, validate, title)}
+              onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText)}
               placeholder="Enter your message here"></textarea>
           </label>
         );
@@ -75,7 +75,7 @@ export default class Form extends Component {
           <label>
             <h3 className={'text-center' + (required ? ' required' : '')}>Give us an idea</h3>
             <label className="btn btn-secondary btn-file-upload" htmlFor="uploadFile">Upload a file</label>
-            <input onChange={() => this.handleInputChange(event, context, i, required, validate, title)}
+            <input onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText)}
               type="file" id="uploadFile" name="uploadFile" />
             <small className={"mt-0 text-center" + (this.state.helpText[i].includes('exceeded') ? ' text-red' : '')}>{this.state.helpText[i]}</small>
           </label>
@@ -87,7 +87,7 @@ export default class Form extends Component {
   }
 
 
-  handleInputChange(e, context, i, required, validate, title) {
+  handleInputChange(e, context, i, required, validate, title, onlyText) {
     let pwds, confirmPwd, val = e.target.value, valid, file = context == 'file' ? e.target.files[0] : '';
     let { values, isValid, isTouched, helpText } = this.state;
     if (context == 'password') {
@@ -109,10 +109,10 @@ export default class Form extends Component {
       }
     }
 
-    if ((validate == false)
+    if ((validate == false) && val.length > 1 && val.length < 255
       || (context == 'email' && validateEmail(val))
-      || (['text', 'textarea'].includes(context) && required && val.length > 0)
-      || (['text', 'textarea'].includes(context) && !required)
+      || (['text', 'textarea'].includes(context) && required && val.length > 0 && val.length < 255 && (onlyText ? validateOnlyText(val) ? true : false : true))
+      || (['text', 'textarea'].includes(context) && !required && val.length > 1 && val.length < 255)
       || (context == 'file' && ((!required && e.target.length == 0) || file.size / 1024 / 1024 < this.state.fileMaxSizeMB))
       || (context == 'password' && validatePwd(pwds, confirmPwd).isValid)) {
       valid = true
@@ -124,20 +124,22 @@ export default class Form extends Component {
 
     } else {
       valid = false
-      switch (context) {
-        case 'file':
-          helpText[i] = `Max file size exceeded (${(file.size / 1024 / 1024).toFixed(1)}/${this.state.fileMaxSizeMB} MB)`
-          break;
-        case 'email':
-          helpText[i] = 'Invalid Email'
-          break;
-        case 'text':
-        case 'textarea':
-          helpText[i] = toTitleCase(title) + ' shouldn\'t empty'
-          break;
-        case 'password':
-          helpText[i] = validatePwd(pwds, confirmPwd).errorMsgs
-          break;
+      if (validate) {
+        switch (context) {
+          case 'file':
+            helpText[i] = `Max file size exceeded (${(file.size / 1024 / 1024).toFixed(1)}/${this.state.fileMaxSizeMB} MB)`
+            break;
+          case 'email':
+            helpText[i] = 'Invalid Email'
+            break;
+          case 'text':
+          case 'textarea':
+            helpText[i] = toTitleCase(title) + ' shouldn\'t empty'
+            break;
+          case 'password':
+            helpText[i] = validatePwd(pwds, confirmPwd).errorMsgs
+            break;
+        }
       }
     }
 
@@ -154,7 +156,7 @@ export default class Form extends Component {
       let values = {}
       Object.entries(this.state.values).forEach(entry => {
         let [key, val] = entry
-        if (this.props.submitFields.includes(key)) {
+        if (this.props.submitFields && this.props.submitFields.includes(key)) {
           values[key] = val
         }
       })
