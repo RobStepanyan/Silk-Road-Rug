@@ -118,4 +118,17 @@ export function setJWTCookie(token) {
 
     cookies.set('accessJWT', token.access, { ...settings })
     cookies.set('refreshJWT', token.refresh, { ...settings })
-}   
+}
+
+export function removeJWTCookies() {
+    const cookies = new Cookies()
+
+    cookies.remove('accessJWT')
+    cookies.remove('refreshJWT')
+}
+
+export function isAuthed() {
+    const cookies = new Cookies()
+
+    return cookies.get('refreshJWT') ? true : false
+}

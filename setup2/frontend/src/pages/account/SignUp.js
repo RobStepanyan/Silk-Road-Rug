@@ -36,7 +36,7 @@ export default function SignUp() {
               { context: 'password', autoComplete: 'new-password', title: 'password', required: true, half: false },
               { context: 'password', autoComplete: 'new-password', title: 'confirm password', required: true, half: false },
             ]} />
-          <small className="center m-0">Already have an account? <a href="/login">Log In</a></small>
+          <small className="center m-0">Already have an account? <a className="with-underline" href="/login">Log In</a></small>
         </div>
       </section>
     </NavbarFooter>

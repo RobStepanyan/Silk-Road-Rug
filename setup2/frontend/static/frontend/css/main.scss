@@ -33,11 +33,7 @@ html {
 
 body {
     margin: 0;
-    overflow-y: hidden;
-}
-
-a {
-    text-decoration: none;
+    overflow-x: hidden;
 }
 
 section {
@@ -189,6 +185,15 @@ ul {
     a {
         align-items: flex-end;
     }
+}
+
+a {
+    transition: $transition;
+}
+
+ul a,
+a.with-underline {
+    border-bottom: 1px solid transparent;
 }
 
 .card {

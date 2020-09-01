@@ -413,7 +413,8 @@ ul.style-default {
   }
 }
 
-a {
+ul a,
+a.with-underline {
   color: c(white);
 
   &:hover {

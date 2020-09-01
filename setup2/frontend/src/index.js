@@ -6,6 +6,7 @@ import {
     Route,
     Redirect,
 } from 'react-router-dom';
+import { removeJWTCookies, isAuthed } from './other/functions';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import ContactUs from './pages/ContactUs';
@@ -41,13 +42,30 @@ class App extends Component {
                     <Route path='/shop' component={Shop} />
                     <Route path='/rug/:id' component={Rug} />
                     <Route path='/account'>
-                        {cookies.get('refreshJWT')
+                        {isAuthed()
                             ? <h1>Logged in</h1>
                             : <Redirect to='/login' />
                         }
                     </Route>
-                    <Route path='/signup' component={SignUp} />
-                    <Route path='/login' component={LogIn} />
+                    <Route path='/signup'>
+                        {isAuthed()
+                            ? <Redirect to='/account' />
+                            : <SignUp />
+                        }
+                    </Route>
+                    <Route path='/login'>
+                        {isAuthed()
+                            ? <Redirect to='/account' />
+                            : <LogIn />
+                        }
+                    </Route>
+                    <Route path='/logout'>
+                        {isAuthed() ? removeJWTCookies() : ''}
+                        {isAuthed()
+                            ? <Home alert={{ isError: false, msg: 'Successfully Logged Out.' }} />
+                            : <Redirect to='/login' />
+                        }
+                    </Route>
                     <Route path='/' exact component={Home} />
                     <Route path=''><Error error={404} /></Route>
                 </Switch>

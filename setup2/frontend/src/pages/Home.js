@@ -24,7 +24,9 @@ export default class Home extends Component {
       <NavbarFooter>
         <section>
           <div className="container">
-
+            {this.props.alert &&
+              <div className={"alert" + (this.props.alert.isError ? " danger" : " success")}>{this.props.alert.msg}</div>
+            }
             <div className="landing col-lg-9">
               <div className="sub-heading">
                 Rugs Sales, Cleaning and Restoraton
