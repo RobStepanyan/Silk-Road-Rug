@@ -29,6 +29,7 @@
     "react-slick": "^0.27.10",
     "rsuite": "^4.8.0",
     "slick-carousel": "^1.8.1",
-    "underscore": "^1.10.2"
+    "underscore": "^1.10.2",
+    "universal-cookie": "^4.0.3"
   }
 }

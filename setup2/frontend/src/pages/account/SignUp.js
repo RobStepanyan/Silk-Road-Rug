@@ -3,10 +3,17 @@ import NavbarFooter from '../../components/NavbarFooter';
 import Form from '../../components/Form';
 import { apiURLs } from '../../other/variables';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 const handleSubmit = (values) => {
+  const cookies = new Cookies()
+  let csrftoken = cookies.get('csrftoken')
+
   return axios({
     url: apiURLs['signUp'],
+    headers: {
+      'X-CSRFToken': csrftoken,
+    },
     method: 'post',
     data: values,
   })
@@ -29,6 +36,7 @@ export default function SignUp() {
               { context: 'password', autoComplete: 'new-password', title: 'password', required: true, half: false },
               { context: 'password', autoComplete: 'new-password', title: 'confirm password', required: true, half: false },
             ]} />
+          <small className="center m-0">Already have an account? <a href="/login">Log In</a></small>
         </div>
       </section>
     </NavbarFooter>

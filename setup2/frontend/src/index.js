@@ -23,9 +23,11 @@ import 'jquery';
 import 'popper.js'
 import 'bootstrap';
 import 'slick-carousel';
+import Cookies from 'universal-cookie';
 
 class App extends Component {
     render() {
+        const cookies = new Cookies()
         return (
             <Router>
                 <Switch>
@@ -39,8 +41,8 @@ class App extends Component {
                     <Route path='/shop' component={Shop} />
                     <Route path='/rug/:id' component={Rug} />
                     <Route path='/account'>
-                        {false
-                            ? <Redirect to='/signup' />
+                        {cookies.get('refreshJWT')
+                            ? <h1>Logged in</h1>
                             : <Redirect to='/login' />
                         }
                     </Route>

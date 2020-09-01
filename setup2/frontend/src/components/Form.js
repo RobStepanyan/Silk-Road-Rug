@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { toTitleCase, validateEmail, validatePwd, formatPrice } from '../other/functions';
+import { toTitleCase, validateEmail, validatePwd, formatPrice, setJWTCookie } from '../other/functions';
 import { RangeSlider, InputGroup, InputNumber } from 'rsuite';
 
 export default class Form extends Component {
@@ -166,10 +166,17 @@ export default class Form extends Component {
             if (Object.keys(data).includes('error')) {
               this.setState({ alert: { isError: true, msg: data['error'][0] } })
             } else {
-              if (this.props.authForm) {
-                // pass
-              }
               this.setState({ alert: { isError: false, msg: data['msg'] }, switchBtn: true })
+              if (this.props.authForm) {
+                setJWTCookie(data.token)
+              }
+            }
+          })
+          .catch(error => {
+            if (error.response) {
+              // The request was made and the server responded with a status code
+              // that falls out of the range of 2xx
+              this.setState({ alert: { isError: true, msg: 'An error has occurred. Please try again later.' } })
             }
           })
       }

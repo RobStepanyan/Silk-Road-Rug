@@ -17,7 +17,8 @@ h3,
 h4,
 h5,
 h6,
-small {
+small,
+.small {
     font-family: $font-primary;
     font-weight: bold;
     margin: 0; // Disabling default margins
@@ -80,7 +81,8 @@ h6 {
     font-size: 1rem;
 }
 
-small {
+small,
+.small {
     font-family: $font-secondary;
     display: block;
     margin: $margin * 2 / 3 0 $margin 0;
@@ -98,8 +100,7 @@ p.style-2 {
     margin-bottom: 3*$margin;
 }
 
-.btn.sm,
-a {
+.btn.sm {
     font-size: .875rem;
 }
 
@@ -113,12 +114,9 @@ a {
         font-size: 1rem
     }
 
-    small {
+    small,
+    .small {
         font-size: .875rem;
-    }
-
-    a {
-        font-size: 1.1rem;
     }
 }
 
@@ -244,4 +242,9 @@ input[type="password"] {
 .alert {
     font-weight: bold;
     text-align: center;
+}
+
+a {
+    border-bottom: 1px solid transparent;
+    transition: $transition-half;
 }

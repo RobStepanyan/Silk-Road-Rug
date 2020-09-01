@@ -1,4 +1,5 @@
 import { emailRegex, pwdRegexes, pwdErrorMsgs, cartCardInputsOrder } from './variables';
+import Cookies from 'universal-cookie';
 
 export function validateEmail(email) {
     return emailRegex.test(email)
@@ -99,3 +100,18 @@ export function calculatePriceSum(data, addCosts) {
     }
     return sum;
 }
+
+export function setJWTCookie(token) {
+    let date = new Date()
+    let settings = {
+        path: '/',
+        maxAge: 86400, //one day = 86400 seconds
+        // secure: true,
+        // httpOnly: true,
+        // sameSite: true,
+    }
+    const cookies = new Cookies()
+
+    cookies.set('accessJWT', token.access, { ...settings })
+    cookies.set('refreshJWT', token.refresh, { ...settings })
+}   

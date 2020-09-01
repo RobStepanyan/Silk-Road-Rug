@@ -412,3 +412,11 @@ ul.style-default {
     background: c(dark5);
   }
 }
+
+a {
+  color: c(white);
+
+  &:hover {
+    border-color: c(white);
+  }
+}

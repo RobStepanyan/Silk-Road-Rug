@@ -23,8 +23,9 @@ export default function LogIn() {
               { context: 'email', autoComplete: 'email', required: true, half: false, validate: false },
               { context: 'password', autoComplete: 'new-password', title: 'password', required: true, half: false, validate: false },
             ]} />
+          <small className="center m-0">Haven't got an account yet? <a href="/signup">Sign Up</a></small>
         </div>
       </section>
-    </NavbarFooter>
+    </NavbarFooter >
   )
 }
