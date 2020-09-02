@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { toTitleCase, validateEmail, validatePwd, formatPrice, setJWTCookie, validateOnlyText } from '../other/functions';
+import Loading from '../components/Loading';
 import { RangeSlider, InputGroup, InputNumber } from 'rsuite';
 import { Redirect } from 'react-router-dom';
 
@@ -14,6 +15,7 @@ export default class Form extends Component {
       helpText: {},
       alert: null,
       redirectNow: false,
+      loading: false
     }
     props.fields.forEach((field, i) => {
       this.state.isValid[i] = field.required ? false : true;
@@ -153,6 +155,7 @@ export default class Form extends Component {
 
 
   handleSubmitClick() {
+    this.setState({ loading: true })
     if (Object.values(this.state.isValid).every(Boolean)) {
       let values = {}
       if (this.props.submitFields) {
@@ -174,10 +177,11 @@ export default class Form extends Component {
               this.setState({ alert: { isError: true, msg: data['error'] } })
             } else {
               if (this.props.authForm) {
-                setJWTCookie(data.token)
-                this.setState({ redirectNow: true })
+                if (this.props.setJWT) { setJWTCookie(data.token) }
+                this.setState({ redirectNow: true, alert: { msg: data['msg'] } })
               }
             }
+            this.setState({ loading: false })
           })
           .catch(error => {
             if (error.response) {
@@ -185,6 +189,7 @@ export default class Form extends Component {
               // that falls out of the range of 2xx
               this.setState({ alert: { isError: true, msg: 'An error has occurred. Please try again later.' } })
             }
+            this.setState({ loading: false })
           })
       }
     }
@@ -194,10 +199,12 @@ export default class Form extends Component {
   render() {
     return (
       <div className="row justify-content-center">
+        {this.state.loading ? <Loading /> : ''}
         <div className={this.props.cols ? this.props.cols : "col-12"}>
           {this.state.alert &&
             <div className={"alert" + (this.state.alert.isError ? " danger" : " success")}>{this.state.alert.msg}</div>
           }
+
           <div className="card">
             <form className="row justify-content-center">
               {
@@ -209,8 +216,11 @@ export default class Form extends Component {
                   )
                 })
               }
-              {(this.state.redirectNow && this.props.authForm)
-                ? <Redirect to='/' />
+              {(this.state.redirectNow)
+                ? <>{this.props.removeBtnAfterSubmit
+                  ? <></>
+                  : this.props.redirect ? <Redirect to='/' /> : ''
+                }</>
                 : <div onClick={this.handleSubmitClick} className="btn btn-primary mb-4">
                   {this.props.submitText ? this.props.submitText : 'Send a Message'}
                 </div>

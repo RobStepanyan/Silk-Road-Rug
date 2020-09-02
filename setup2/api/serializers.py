@@ -41,6 +41,7 @@ class SignUpSerializer(serializers.ModelSerializer):
                 'Account with that email already exists.')
 
         user = User.objects.create_user(
+            is_active=False,
             username=validated_data['email'],
             first_name=validated_data['first_name'],
             last_name=validated_data['last_name'],

@@ -179,6 +179,7 @@ export const apiURLs = {
   'listRugs': apiBase + 'rugs/',
   'rugById': id => apiBase + `rugs/${id}/`,
   'signUp': apiBase + 'auth/signup/',
+  'signUpVerify': (uidb64, token) => apiBase + `auth/signup-verify/?uidb64=${uidb64}&token=${token}`,
   'logIn': apiBase + 'auth/login/',
 }
 

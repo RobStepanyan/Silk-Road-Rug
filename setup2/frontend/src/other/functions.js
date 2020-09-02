@@ -106,10 +106,8 @@ export function calculatePriceSum(data, addCosts) {
 }
 
 export function setJWTCookie(token) {
-    let date = new Date()
     let settings = {
         path: '/',
-        // maxAge: 86400, //one day = 86400 seconds
         // secure: true,
         // httpOnly: true,
         // sameSite: true,

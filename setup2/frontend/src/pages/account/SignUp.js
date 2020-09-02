@@ -29,7 +29,7 @@ export default function SignUp() {
           <h1 className="center">Sign Up</h1>
           <Form handleSubmit={handleSubmit} submitFields={['first_name', 'last_name', 'email', 'password']}
             authForm={true}
-            cols="col-12 col-sm-10 col-lg-6" submitText="Sign Up" fields={[
+            cols="col-12 col-sm-10 col-lg-6" submitText="Sign Up" removeBtnAfterSubmit={true} fields={[
               { context: 'text', autoComplete: 'first-name', title: 'first name', onlyText: true, required: true, half: true },
               { context: 'text', autoComplete: 'last-name', title: 'last name', onlyText: true, required: true, half: true },
               { context: 'email', autoComplete: 'email', required: true, half: false },

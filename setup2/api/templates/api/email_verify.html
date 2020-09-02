@@ -1,0 +1,9 @@
+{% autoescape off %}
+Hi {{ user.last_name }}, <br>
+<br>
+To activate your profile please follow the link bellow. <br>
+{{ request.scheme }}://{{ domain }}/signup-verify/{{uid}}/{{token}} <br>
+<br>
+Regards, SilkRoadRugInc.com <br>
+If you didn't intend to create an account, ignore this email.<br>
+{% endautoescape %}

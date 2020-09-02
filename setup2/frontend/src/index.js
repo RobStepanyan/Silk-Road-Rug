@@ -20,6 +20,7 @@ import Rug from './pages/shop/Rug';
 import Error from './pages/Error';
 import SignUp from './pages/account/SignUp';
 import LogIn from './pages/account/LogIn';
+import SignUpVerify from './pages/account/SignUpVerify';
 import 'jquery';
 import 'popper.js'
 import 'bootstrap';
@@ -47,18 +48,23 @@ class App extends Component {
               : <Redirect to='/login' />
             }
           </Route>
+
           <Route path='/signup'>
             {isAuthed()
               ? <Redirect to='/account' />
               : <SignUp />
             }
           </Route>
+
+          <Route path='/signup-verify/:uidb64/:token' component={SignUpVerify} />
+
           <Route path='/login'>
             {isAuthed()
               ? <Redirect to='/account' />
               : <LogIn />
             }
           </Route>
+
           <Route path='/logout'>
             {isAuthed()
               ? <Redirect to={{
@@ -67,6 +73,7 @@ class App extends Component {
               : <Redirect to='/login' />
             }
           </Route>
+
           <Route path='/' exact component={Home} />
           <Route path=''><Error error={404} /></Route>
         </Switch>

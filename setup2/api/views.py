@@ -1,4 +1,4 @@
-from . import models, serializers, tokens
+from . import models, serializers, tokens, functions
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -10,6 +10,10 @@ from collections import OrderedDict
 from .variables import sort_by, sizes, styles
 from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
+from django.contrib.auth.models import User
+from django.utils.encoding import force_text
+from django.utils.http import urlsafe_base64_decode
+from django.http import HttpResponse
 
 
 class RugViewSet(viewsets.ViewSet):
@@ -105,11 +109,42 @@ class SignUpView(GenericAPIView):
         except Exception as e:
             return Response({'error': e.detail[0]})
 
-        return Response({
-            'msg': 'Account successfully created.',
-            'user': serializers.UserSerializer(user, context=self.get_serializer_context()).data,
-            'token': tokens.get_tokens_for_user(user)
-        })
+        try:
+            # Send email with token
+            functions.send_email(
+                request=request,
+                user=user,
+                html_path='api/email_verify.html',
+                to_email=user.email,
+                mail_subject='Silk Road Rug Email Verification',
+                mail_login='rob1stepanyan@yandex.ru',
+                mail_pass='temporary'
+            )
+        except:
+            user.delete()
+            return HttpResponse(status=500)
+        # Retun Response msg: Check your email
+        return Response({'msg': 'Please check your email for the verification link.'})
+
+
+class SignUpVerifyView(GenericAPIView):
+    def get(self, request):
+        uidb64 = request.GET['uidb64']
+        token = request.GET['token']
+
+        if not all([uidb64, token]):
+            return Response({'is_valid': False})
+        try:
+            uid = force_text(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(id=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+        if user and functions.account_activation_token.check_token(user, token):
+            user.is_active = True
+            user.save()
+            return Response({'is_valid': True, 'token': tokens.get_tokens_for_user(user)})
+        else:
+            return Response({'is_valid': False})
 
 
 class LogInView(GenericAPIView):
@@ -141,9 +176,9 @@ class LogOutView(GenericAPIView):
             token = serializer.validated_data
             token.blacklist()
             return Response({
-                'error': 'Logged Out'
+                'msg': 'Logged Out'
             })
         except TokenError:
             return Response({
-                'error': 'Invalid Token'
+                'msg': 'Invalid Token'
             })
