@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { toTitleCase, validateEmail, validatePwd, formatPrice, setJWTCookie, validateOnlyText } from '../other/functions';
 import { RangeSlider, InputGroup, InputNumber } from 'rsuite';
+import { Redirect } from 'react-router-dom';
 
 export default class Form extends Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export default class Form extends Component {
       values: {},
       helpText: {},
       alert: null,
-      switchBtn: false,
+      redirectNow: false,
     }
     props.fields.forEach((field, i) => {
       this.state.isValid[i] = field.required ? false : true;
@@ -154,23 +155,27 @@ export default class Form extends Component {
   handleSubmitClick() {
     if (Object.values(this.state.isValid).every(Boolean)) {
       let values = {}
-      Object.entries(this.state.values).forEach(entry => {
-        let [key, val] = entry
-        if (this.props.submitFields && this.props.submitFields.includes(key)) {
-          values[key] = val
-        }
-      })
+      if (this.props.submitFields) {
+        Object.entries(this.state.values).forEach(entry => {
+          let [key, val] = entry
+          if (this.props.submitFields.includes(key)) {
+            values[key] = val
+          }
+        })
+      } else {
+        values = this.state.values
+      }
 
       if (this.props.handleSubmit) {
         this.props.handleSubmit(values)
           .then(response => {
             let { data } = response
             if (Object.keys(data).includes('error')) {
-              this.setState({ alert: { isError: true, msg: data['error'][0] } })
+              this.setState({ alert: { isError: true, msg: data['error'] } })
             } else {
-              this.setState({ alert: { isError: false, msg: data['msg'] }, switchBtn: true })
               if (this.props.authForm) {
                 setJWTCookie(data.token)
+                this.setState({ redirectNow: true })
               }
             }
           })
@@ -204,8 +209,8 @@ export default class Form extends Component {
                   )
                 })
               }
-              {(this.state.switchBtn && this.props.redirectTo)
-                ? <a href={this.props.redirectTo} className="btn btn-primary mb-4">{this.props.redirectTitle}</a>
+              {(this.state.redirectNow && this.props.authForm)
+                ? <Redirect to='/' />
                 : <div onClick={this.handleSubmitClick} className="btn btn-primary mb-4">
                   {this.props.submitText ? this.props.submitText : 'Send a Message'}
                 </div>

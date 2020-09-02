@@ -103,7 +103,7 @@ class SignUpView(GenericAPIView):
             serializer.is_valid(raise_exception=True)
             user = serializer.save()
         except Exception as e:
-            return Response({'error': e.detail})
+            return Response({'error': e.detail[0]})
 
         return Response({
             'msg': 'Account successfully created.',
@@ -118,8 +118,11 @@ class LogInView(GenericAPIView):
     @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data
+        try:
+            serializer.is_valid(raise_exception=True)
+            user = serializer.validated_data
+        except Exception as e:
+            return Response({'error': e.detail['non_field_errors'][0]})
         return Response({
             'user': serializers.UserSerializer(user, context=self.get_serializer_context()).data,
             'token': tokens.get_tokens_for_user(user)
@@ -127,6 +130,7 @@ class LogInView(GenericAPIView):
 
 
 class LogOutView(GenericAPIView):
+    # disabled in urls.py
     serializer_class = serializers.LogOutSerializer
 
     @method_decorator(csrf_protect)

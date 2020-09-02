@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Redirect,
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
 } from 'react-router-dom';
-import { removeJWTCookies, isAuthed } from './other/functions';
+import { isAuthed } from './other/functions';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import ContactUs from './pages/ContactUs';
@@ -27,51 +27,52 @@ import 'slick-carousel';
 import Cookies from 'universal-cookie';
 
 class App extends Component {
-    render() {
-        const cookies = new Cookies()
-        return (
-            <Router>
-                <Switch>
-                    <Route path='/learn/about-us' component={AboutUs} />
-                    <Route path='/learn/return-policy' component={ReturnPolicy} />
-                    <Route path='/learn/shipping-info' component={ShippingInfo} />
-                    <Route path='/services/rug-cleaning' component={RugCleaning} />
-                    <Route path='/services/rug-restoration' component={RugRestoration} />
-                    <Route path='/contact-us' component={ContactUs} />
-                    <Route path='/cart' component={Cart} />
-                    <Route path='/shop' component={Shop} />
-                    <Route path='/rug/:id' component={Rug} />
-                    <Route path='/account'>
-                        {isAuthed()
-                            ? <h1>Logged in</h1>
-                            : <Redirect to='/login' />
-                        }
-                    </Route>
-                    <Route path='/signup'>
-                        {isAuthed()
-                            ? <Redirect to='/account' />
-                            : <SignUp />
-                        }
-                    </Route>
-                    <Route path='/login'>
-                        {isAuthed()
-                            ? <Redirect to='/account' />
-                            : <LogIn />
-                        }
-                    </Route>
-                    <Route path='/logout'>
-                        {isAuthed() ? removeJWTCookies() : ''}
-                        {isAuthed()
-                            ? <Home alert={{ isError: false, msg: 'Successfully Logged Out.' }} />
-                            : <Redirect to='/login' />
-                        }
-                    </Route>
-                    <Route path='/' exact component={Home} />
-                    <Route path=''><Error error={404} /></Route>
-                </Switch>
-            </Router>
-        );
-    }
+  render() {
+    const cookies = new Cookies()
+    return (
+      <Router>
+        <Switch>
+          <Route path='/learn/about-us' component={AboutUs} />
+          <Route path='/learn/return-policy' component={ReturnPolicy} />
+          <Route path='/learn/shipping-info' component={ShippingInfo} />
+          <Route path='/services/rug-cleaning' component={RugCleaning} />
+          <Route path='/services/rug-restoration' component={RugRestoration} />
+          <Route path='/contact-us' component={ContactUs} />
+          <Route path='/cart' component={Cart} />
+          <Route path='/shop' component={Shop} />
+          <Route path='/rug/:id' component={Rug} />
+          <Route path='/account'>
+            {isAuthed()
+              ? <h1>Logged in</h1>
+              : <Redirect to='/login' />
+            }
+          </Route>
+          <Route path='/signup'>
+            {isAuthed()
+              ? <Redirect to='/account' />
+              : <SignUp />
+            }
+          </Route>
+          <Route path='/login'>
+            {isAuthed()
+              ? <Redirect to='/account' />
+              : <LogIn />
+            }
+          </Route>
+          <Route path='/logout'>
+            {isAuthed()
+              ? <Redirect to={{
+                pathname: '/', props: { logOut: true, alert: { isError: false, msg: 'Successfully Logged Out.' } }
+              }} />
+              : <Redirect to='/login' />
+            }
+          </Route>
+          <Route path='/' exact component={Home} />
+          <Route path=''><Error error={404} /></Route>
+        </Switch>
+      </Router>
+    );
+  }
 }
 
 

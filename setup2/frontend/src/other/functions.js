@@ -109,7 +109,7 @@ export function setJWTCookie(token) {
     let date = new Date()
     let settings = {
         path: '/',
-        maxAge: 86400, //one day = 86400 seconds
+        // maxAge: 86400, //one day = 86400 seconds
         // secure: true,
         // httpOnly: true,
         // sameSite: true,
@@ -129,6 +129,5 @@ export function removeJWTCookies() {
 
 export function isAuthed() {
     const cookies = new Cookies()
-
     return cookies.get('refreshJWT') ? true : false
 }

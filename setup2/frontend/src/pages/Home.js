@@ -4,6 +4,7 @@ import Card, { ShopCard } from '../components/Cards';
 import { apiURLs, slickCarouselSettings } from '../other/variables';
 import axios from 'axios';
 import Slider from 'react-slick';
+import { removeJWTCookies } from '../other/functions';
 
 export default class Home extends Component {
   constructor(props) {
@@ -12,6 +13,7 @@ export default class Home extends Component {
   }
 
   componentWillMount() {
+    this.props.location.props && this.props.location.props.logOut ? removeJWTCookies() : ''
     axios({
       method: 'get',
       url: apiURLs['listRugs'],
@@ -20,12 +22,13 @@ export default class Home extends Component {
   }
 
   render() {
+    let alert = this.props.location.props && this.props.location.props.alert ? this.props.location.props.alert : false
     return (
       <NavbarFooter>
         <section>
           <div className="container">
-            {this.props.alert &&
-              <div className={"alert" + (this.props.alert.isError ? " danger" : " success")}>{this.props.alert.msg}</div>
+            {alert &&
+              <div className={"alert" + (alert.isError ? " danger" : " success")}>{alert.msg}</div>
             }
             <div className="landing col-lg-9">
               <div className="sub-heading">

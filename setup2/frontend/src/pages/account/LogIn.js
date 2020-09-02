@@ -3,10 +3,17 @@ import NavbarFooter from '../../components/NavbarFooter';
 import Form from '../../components/Form';
 import axios from 'axios';
 import { apiURLs } from '../../other/variables';
+import Cookies from 'universal-cookie';
 
 const handleSubmit = (values) => {
+  const cookies = new Cookies()
+  let csrftoken = cookies.get('csrftoken')
+
   return axios({
     url: apiURLs['logIn'],
+    headers: {
+      'X-CSRFToken': csrftoken,
+    },
     method: 'post',
     data: values,
   })
@@ -18,10 +25,10 @@ export default function LogIn() {
       <section id="login">
         <div className="container mh-50">
           <h1 className="center">Log In</h1>
-          <Form handleSubmit={handleSubmit}
+          <Form handleSubmit={handleSubmit} authForm={true}
             cols="col-12 col-sm-10 col-md-7 col-lg-5" submitText="Log In" fields={[
               { context: 'email', autoComplete: 'email', required: true, half: false, validate: false },
-              { context: 'password', autoComplete: 'new-password', title: 'password', required: true, half: false, validate: false },
+              { context: 'password', autoComplete: 'password', title: 'password', required: true, half: false, validate: false },
             ]} />
           <small className="center m-0">Haven't got an account yet? <a className="with-underline" href="/signup">Sign Up</a></small>
         </div>
