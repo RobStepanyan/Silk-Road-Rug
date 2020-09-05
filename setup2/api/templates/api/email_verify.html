@@ -1,5 +1,5 @@
 {% autoescape off %}
-Hi {{ user.last_name }}, <br>
+Hi {{ user.first_name }}, <br>
 <br>
 To activate your profile please follow the link bellow. <br>
 {{ request.scheme }}://{{ domain }}/signup-verify/{{uid}}/{{token}} <br>

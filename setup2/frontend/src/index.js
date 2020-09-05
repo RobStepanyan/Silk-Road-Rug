@@ -21,12 +21,12 @@ import Error from './pages/Error';
 import Account from './pages/account/Account';
 import SignUp from './pages/account/SignUp';
 import LogIn from './pages/account/LogIn';
+import ForgotPwd from './pages/account/ForgotPwd';
 import SignUpVerify from './pages/account/SignUpVerify';
 import 'jquery';
 import 'popper.js'
 import 'bootstrap';
 import 'slick-carousel';
-import Cookies from 'universal-cookie';
 
 class App extends Component {
   render() {
@@ -65,7 +65,16 @@ class App extends Component {
             }
           </Route>
 
-          {/* <Route path='/login/forgot' component={} /> */}
+          {!isAuthed() &&
+            <>
+              <Route path='/forgot-password'>
+                <ForgotPwd title="Password Reset" stage="inputEmail" />
+              </Route>
+
+              <Route path='/reset-password/:uidb64/:token'
+                render={(props) => <ForgotPwd {...props} title="Password Reset" stage="inputNewPwd" />} />
+            </>
+          }
 
           <Route path='/logout'>
             {isAuthed()

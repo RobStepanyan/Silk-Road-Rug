@@ -69,3 +69,24 @@ class LogOutSerializer(serializers.Serializer):
     def validate(self, data):
         refresh = RefreshToken(dict(data)['refresh'])
         return refresh
+
+
+class ForgotInputEmailSerializer(serializers.Serializer):
+    email = serializers.CharField()
+
+    def validate(self, data):
+        data = dict(data)
+        try:
+            user = User.objects.get(username=data['email'])
+            return user
+        except Exception:
+            raise serializers.ValidationError(
+                'An account with the provided email doesn\'t exist.')
+
+
+class ForgotInputNewPwdSerializer(serializers.Serializer):
+    password = serializers.CharField()
+
+    def update(self, instance, validated_data):
+        instance.set_password(validated_data['password'])
+        return instance

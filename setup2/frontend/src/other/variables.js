@@ -181,6 +181,11 @@ export const apiURLs = {
   'signUp': apiBase + 'auth/signup/',
   'signUpVerify': (uidb64, token) => apiBase + `auth/signup-verify/?uidb64=${uidb64}&token=${token}`,
   'logIn': apiBase + 'auth/login/',
+  'forgotPwd': {
+    'inputEmail': apiBase + 'auth/forgot/input-email/',
+    'verifyToken': (uidb64, token) => apiBase + `auth/forgot/verify-token/?uidb64=${uidb64}&token=${token}`,
+    'inputNewPwd': apiBase + 'auth/forgot/input-new-pwd/',
+  }
 }
 
 export const dummyData = [

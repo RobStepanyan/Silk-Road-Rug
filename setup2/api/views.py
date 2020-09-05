@@ -116,13 +116,13 @@ class SignUpView(GenericAPIView):
                 user=user,
                 html_path='api/email_verify.html',
                 to_email=user.email,
-                mail_subject='Silk Road Rug Email Verification',
+                mail_subject='Silk Road Rug | Email Verification',
                 mail_login='rob1stepanyan@yandex.ru',
                 mail_pass='temporary'
             )
         except:
             user.delete()
-            return HttpResponse(status=500)
+            return HttpResponse('SMTP Error', status=500)
         # Retun Response msg: Check your email
         return Response({'msg': 'Please check your email for the verification link.'})
 
@@ -182,3 +182,60 @@ class LogOutView(GenericAPIView):
             return Response({
                 'msg': 'Invalid Token'
             })
+
+
+class ForgotInputEmail(GenericAPIView):
+    serializer_class = serializers.ForgotInputEmailSerializer
+
+    @method_decorator(csrf_protect)
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+            user = serializer.validated_data
+        except Exception as e:
+            return Response({'error': e.detail['non_field_errors'][0]})
+
+        try:
+            # Send email with token
+            functions.send_email(
+                request=request,
+                user=user,
+                html_path='api/forgot_pass.html',
+                to_email=user.email,
+                mail_subject='Silk Road Rug | Password Reset',
+                mail_login='rob1stepanyan@yandex.ru',
+                mail_pass='temporary'
+            )
+        except Exception as e:
+            return HttpResponse('SMTP Error', status=500)
+        # Retun Response msg: Check your email
+        return Response({'msg': 'Please check your email for the verification link.'})
+
+
+class ForgotInputNewPwd(GenericAPIView):
+    serializer_class = serializers.ForgotInputNewPwdSerializer
+
+    @method_decorator(csrf_protect)
+    def post(self, request, *args, **kwargs):
+        uidb64 = request.data['uidb64']
+        token = request.data['token']
+
+        if not all([uidb64, token]):
+            return HttpResponse(status=500)
+        try:
+            uid = force_text(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(id=uid)
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            user = None
+        if user and functions.account_activation_token.check_token(user, token):
+            user.is_active = True
+            serializer = self.get_serializer(user, data=request.data)
+            try:
+                serializer.is_valid(raise_exception=True)
+                user = serializer.save()
+            except Exception as e:
+                return Response({'error': e.detail['non_field_errors'][0]})
+            return Response({'msg': 'Your password is changed. Now you can use your account.'})
+
+        return HttpResponse(status=500)

@@ -51,7 +51,7 @@ export default class Form extends Component {
             </label>
             <>{
               context == 'password' && this.props.loginForm &&
-              <small className="text-right mb-n2"><a href="/login/forgot" className="with-underline">Forgot Password?</a></small>
+              <small className="text-right mb-n2"><a href="/forgot-password" className="with-underline">Forgot Password?</a></small>
             }
               {
                 typeof this.state.helpText[i] == 'object'
@@ -163,8 +163,8 @@ export default class Form extends Component {
 
 
   handleSubmitClick() {
-    this.setState({ loading: true })
     if (Object.values(this.state.isValid).every(Boolean)) {
+      this.setState({ loading: true })
       let values = {}
       if (this.props.submitFields) {
         Object.entries(this.state.values).forEach(entry => {
@@ -176,18 +176,18 @@ export default class Form extends Component {
       } else {
         values = this.state.values
       }
+      if (this.props.uidb64) { values.uidb64 = this.props.uidb64 }
+      if (this.props.token) { values.token = this.props.token }
 
       if (this.props.handleSubmit) {
         this.props.handleSubmit(values)
           .then(response => {
             let { data } = response
+            if (this.props.setJWT && data.token) { setJWTCookie(data.token) }
             if (Object.keys(data).includes('error')) {
               this.setState({ alert: { isError: true, msg: data['error'] } })
             } else {
-              if (this.props.authForm) {
-                if (this.props.setJWT) { setJWTCookie(data.token) }
-                this.setState({ redirectNow: true, alert: { msg: data['msg'] } })
-              }
+              this.setState({ redirectNow: true, alert: { msg: data['msg'] } })
             }
             this.setState({ loading: false })
           })
@@ -244,6 +244,17 @@ export default class Form extends Component {
 
 Form.propTypes = {
   fields: PropTypes.array.isRequired,
+  loginForm: PropTypes.bool, // is it a Login Form? (forgot pass btn)
+  submitFields: PropTypes.array, // what fields to submit
+  handleSubmit: PropTypes.func.isRequired, // func that handles submit
+  authForm: PropTypes.bool, // is Authentication form? (login, signup)
+  setJWT: PropTypes.bool, // are JWT's received and needed to be stored
+  cols: PropTypes.string, // col classes to be applied to Form
+  removeBtnAfterSubmit: PropTypes.bool,
+  redirect: PropTypes.bool,
+  submitText: PropTypes.string, // submit btn's text
+  uidb64: PropTypes.string, //optional
+  token: PropTypes.string, // optional
 };
 
 export function RadioGroupWithPrice(props) {
