@@ -421,3 +421,23 @@ a.with-underline {
     border-color: c(white);
   }
 }
+
+.account.card {
+  .angle {
+    color: c(white);
+  }
+
+  &:hover {
+    box-shadow: $shadow-neu;
+  }
+}
+
+.account-card-icon {
+  svg {
+    color: c(primary);
+  }
+
+  &.danger svg {
+    color: c(red);
+  }
+}

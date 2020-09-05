@@ -25,7 +25,7 @@ export default function LogIn() {
       <section id="login">
         <div className="container mh-50">
           <h1 className="center">Log In</h1>
-          <Form handleSubmit={handleSubmit} redirect={true} authForm={true} setJWT={true}
+          <Form handleSubmit={handleSubmit} redirect={true} authForm={true} setJWT={true} loginForm={true}
             cols="col-12 col-sm-10 col-md-7 col-lg-5" submitText="Log In" fields={[
               { context: 'email', autoComplete: 'email', required: true, half: false, validate: false },
               { context: 'password', autoComplete: 'password', title: 'password', required: true, half: false, validate: false },

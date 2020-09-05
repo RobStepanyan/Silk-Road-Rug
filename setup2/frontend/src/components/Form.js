@@ -42,25 +42,33 @@ export default class Form extends Component {
       case 'email':
       case 'password':
         component = (
-          <label>
-            <h3 className={required ? 'required' : ''}>{title}</h3>
-            <input className={'m-0' + (this.state.isTouched[i] && validate != false ? this.state.isValid[i] ? ' valid' : ' invalid' : '')}
-              onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText)}
-              type={context} placeholder={title} autoComplete={autoComplete} />
-            {typeof this.state.helpText[i] == 'object'
-              ? <>
-                <small className="text-red mb-0">{this.state.helpText[i][0]}</small>
-                <ul className="small">
-                  {this.state.helpText[i].map((text, i) => {
-                    if (i == 0) { return }
-                    return <li key={i}> <small className="text-red">{text}</small></li>
-                  })
-                  }
-                </ul>
-              </>
-              : <small className="text-red">{this.state.helpText[i]}</small>
+          <>
+            <label>
+              <h3 className={required ? 'required' : ''}>{title}</h3>
+              <input className={'m-0' + (this.state.isTouched[i] && validate != false ? this.state.isValid[i] ? ' valid' : ' invalid' : '')}
+                onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText)}
+                type={context} placeholder={title} autoComplete={autoComplete} />
+            </label>
+            <>{
+              context == 'password' && this.props.loginForm &&
+              <small className="text-right"><a href="/login/forgot" className="with-underline">Forgot Password?</a></small>
             }
-          </label>
+              {
+                typeof this.state.helpText[i] == 'object'
+                  ? <>
+                    <small className="text-red mb-0">{this.state.helpText[i][0]}</small>
+                    <ul className="small">
+                      {this.state.helpText[i].map((text, i) => {
+                        if (i == 0) { return }
+                        return <li key={i}> <small className="text-red">{text}</small></li>
+                      })
+                      }
+                    </ul>
+                  </>
+                  : <small className="text-red">{this.state.helpText[i]}</small>
+              }
+            </>
+          </>
         );
         break;
       case 'textarea':

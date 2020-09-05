@@ -18,6 +18,7 @@ import RugRestoration from './pages/services/RugRestoration';
 import Shop from './pages/shop/Shop';
 import Rug from './pages/shop/Rug';
 import Error from './pages/Error';
+import Account from './pages/account/Account';
 import SignUp from './pages/account/SignUp';
 import LogIn from './pages/account/LogIn';
 import SignUpVerify from './pages/account/SignUpVerify';
@@ -29,7 +30,6 @@ import Cookies from 'universal-cookie';
 
 class App extends Component {
   render() {
-    const cookies = new Cookies()
     return (
       <Router>
         <Switch>
@@ -44,7 +44,7 @@ class App extends Component {
           <Route path='/rug/:id' component={Rug} />
           <Route path='/account'>
             {isAuthed()
-              ? <h1>Logged in</h1>
+              ? <Account />
               : <Redirect to='/login' />
             }
           </Route>
@@ -64,6 +64,8 @@ class App extends Component {
               : <LogIn />
             }
           </Route>
+
+          {/* <Route path='/login/forgot' component={} /> */}
 
           <Route path='/logout'>
             {isAuthed()
