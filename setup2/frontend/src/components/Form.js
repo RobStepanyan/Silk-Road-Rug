@@ -51,7 +51,7 @@ export default class Form extends Component {
             </label>
             <>{
               context == 'password' && this.props.loginForm &&
-              <small className="text-right"><a href="/login/forgot" className="with-underline">Forgot Password?</a></small>
+              <small className="text-right mb-n2"><a href="/login/forgot" className="with-underline">Forgot Password?</a></small>
             }
               {
                 typeof this.state.helpText[i] == 'object'
