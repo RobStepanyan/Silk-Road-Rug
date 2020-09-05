@@ -37,7 +37,6 @@ export default class ForgotPwd extends React.Component {
         .then(response => {
           let { data } = response
           this.setState({ isTokenValid: data.is_valid ? true : false, loading: false })
-          if (data.is_valid) { setJWTCookie(data.token) }
         })
     }
   }
