@@ -262,6 +262,10 @@ input[type="password"]:not(.rs-input) {
   }
 }
 
+.eye-icon svg {
+  color: c(white);
+}
+
 input[type="radio"],
 input[type="checkbox"],
 .rs-slider-bar,
