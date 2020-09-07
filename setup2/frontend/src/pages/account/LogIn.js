@@ -11,9 +11,6 @@ const handleSubmit = (values) => {
 
   return axios({
     url: apiURLs['logIn'],
-    headers: {
-      'X-CSRFToken': csrftoken,
-    },
     method: 'post',
     data: values,
   })

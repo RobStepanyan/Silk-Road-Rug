@@ -11,9 +11,6 @@ const handleSubmit = (values) => {
 
   return axios({
     url: apiURLs['signUp'],
-    headers: {
-      'X-CSRFToken': csrftoken,
-    },
     method: 'post',
     data: values,
   })
