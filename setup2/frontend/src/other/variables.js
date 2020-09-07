@@ -185,6 +185,10 @@ export const apiURLs = {
     'inputEmail': apiBase + 'auth/forgot/input-email/',
     'verifyToken': (uidb64, token) => apiBase + `auth/forgot/verify-token/?uidb64=${uidb64}&token=${token}`,
     'inputNewPwd': apiBase + 'auth/forgot/input-new-pwd/',
+  },
+  'token': {
+    'refresh': apiBase + 'token/refresh/',
+    'verify': apiBase + 'token/verify/',
   }
 }
 
