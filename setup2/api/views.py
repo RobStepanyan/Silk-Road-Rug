@@ -8,7 +8,6 @@ from rest_framework_simplejwt.exceptions import TokenError
 from django.forms.models import model_to_dict
 from collections import OrderedDict
 from .variables import sort_by, sizes, styles
-from django.views.decorators.csrf import csrf_protect
 from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from django.utils.encoding import force_text
@@ -100,7 +99,6 @@ class RugViewSet(viewsets.ViewSet):
 class SignUpView(GenericAPIView):
     serializer_class = serializers.SignUpSerializer
 
-    @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         try:
@@ -150,7 +148,6 @@ class SignUpVerifyView(GenericAPIView):
 class LogInView(GenericAPIView):
     serializer_class = serializers.LogInSerializer
 
-    @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         try:
@@ -159,7 +156,7 @@ class LogInView(GenericAPIView):
         except Exception as e:
             return Response({'error': e.detail['non_field_errors'][0]})
         return Response({
-            'user': serializers.UserSerializer(user, context=self.get_serializer_context()).data,
+            # 'user': serializers.UserSerializer(user, context=self.get_serializer_context()).data,
             'token': tokens.get_tokens_for_user(user)
         })
 
@@ -168,7 +165,6 @@ class LogOutView(GenericAPIView):
     # disabled in urls.py
     serializer_class = serializers.LogOutSerializer
 
-    @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         try:
@@ -187,7 +183,6 @@ class LogOutView(GenericAPIView):
 class ForgotInputEmail(GenericAPIView):
     serializer_class = serializers.ForgotInputEmailSerializer
 
-    @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         try:
@@ -216,7 +211,6 @@ class ForgotInputEmail(GenericAPIView):
 class ForgotInputNewPwd(GenericAPIView):
     serializer_class = serializers.ForgotInputNewPwdSerializer
 
-    @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         uidb64 = request.data['uidb64']
         token = request.data['token']
