@@ -10,6 +10,9 @@ const handleSubmit = (values) => {
   let csrftoken = cookies.get('csrftoken')
 
   return axios({
+    headers: {
+      'X-CSRFToken': csrftoken,
+    },
     url: apiURLs['signUp'],
     method: 'post',
     data: values,

@@ -1,3 +1,4 @@
+from django.views.decorators.csrf import csrf_protect
 from . import models, serializers, tokens, functions
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
@@ -99,6 +100,7 @@ class RugViewSet(viewsets.ViewSet):
 class SignUpView(GenericAPIView):
     serializer_class = serializers.SignUpSerializer
 
+    @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         try:
@@ -148,6 +150,7 @@ class SignUpVerifyView(GenericAPIView):
 class LogInView(GenericAPIView):
     serializer_class = serializers.LogInSerializer
 
+    @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         try:
@@ -183,6 +186,7 @@ class LogOutView(GenericAPIView):
 class ForgotInputEmail(GenericAPIView):
     serializer_class = serializers.ForgotInputEmailSerializer
 
+    @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         try:
@@ -211,6 +215,7 @@ class ForgotInputEmail(GenericAPIView):
 class ForgotInputNewPwd(GenericAPIView):
     serializer_class = serializers.ForgotInputNewPwdSerializer
 
+    @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         uidb64 = request.data['uidb64']
         token = request.data['token']

@@ -5,7 +5,6 @@ import Loading from '../../components/Loading';
 import { apiURLs } from '../../other/variables';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
-import { setJWTCookie } from '../../other/functions';
 
 export default class ForgotPwd extends React.Component {
   constructor(props) {

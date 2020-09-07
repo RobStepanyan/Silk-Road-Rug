@@ -5,9 +5,14 @@ import axios from 'axios';
 import { apiURLs } from '../../other/variables';
 
 const handleSubmit = (values) => {
+  const cookies = new Cookies()
+  let csrftoken = cookies.get('csrftoken')
 
   return axios({
     url: apiURLs['logIn'],
+    headers: {
+      'X-CSRFToken': csrftoken,
+    },
     method: 'post',
     data: values,
   })
