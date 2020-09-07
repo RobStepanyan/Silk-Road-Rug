@@ -3,11 +3,8 @@ import NavbarFooter from '../../components/NavbarFooter';
 import Form from '../../components/Form';
 import axios from 'axios';
 import { apiURLs } from '../../other/variables';
-import Cookies from 'universal-cookie';
 
 const handleSubmit = (values) => {
-  const cookies = new Cookies()
-  let csrftoken = cookies.get('csrftoken')
 
   return axios({
     url: apiURLs['logIn'],
