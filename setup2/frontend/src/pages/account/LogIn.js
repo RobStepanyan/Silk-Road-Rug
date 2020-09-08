@@ -2,17 +2,13 @@ import React from 'react';
 import NavbarFooter from '../../components/NavbarFooter';
 import Form from '../../components/Form';
 import axios from 'axios';
-import { apiURLs } from '../../other/variables';
+import { apiURLs, apiHeaders } from '../../other/variables';
 
 const handleSubmit = (values) => {
-  const cookies = new Cookies()
-  let csrftoken = cookies.get('csrftoken')
 
   return axios({
     url: apiURLs['logIn'],
-    headers: {
-      'X-CSRFToken': csrftoken,
-    },
+    headers: apiHeaders.csrf,
     method: 'post',
     data: values,
   })

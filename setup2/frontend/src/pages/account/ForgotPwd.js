@@ -2,7 +2,7 @@ import React from 'react';
 import NavbarFooter from '../../components/NavbarFooter';
 import Form from '../../components/Form';
 import Loading from '../../components/Loading';
-import { apiURLs } from '../../other/variables';
+import { apiURLs, apiHeaders } from '../../other/variables';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 
@@ -20,9 +20,7 @@ export default class ForgotPwd extends React.Component {
 
       return axios({
         url: url,
-        headers: {
-          'X-CSRFToken': csrftoken,
-        },
+        headers: apiHeaders.csrf,
         method: 'post',
         data: values,
       })

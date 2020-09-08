@@ -1,7 +1,7 @@
 import React from 'react';
 import NavbarFooter from '../../components/NavbarFooter';
 import Form from '../../components/Form';
-import { apiURLs } from '../../other/variables';
+import { apiURLs, apiHeaders } from '../../other/variables';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 
@@ -10,9 +10,7 @@ const handleSubmit = (values) => {
   let csrftoken = cookies.get('csrftoken')
 
   return axios({
-    headers: {
-      'X-CSRFToken': csrftoken,
-    },
+    headers: apiHeaders.csrf,
     url: apiURLs['signUp'],
     method: 'post',
     data: values,
