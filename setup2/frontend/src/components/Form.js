@@ -58,7 +58,7 @@ export default class Form extends Component {
                 <input className={'m-0' + (this.state.isTouched[i] && validate != false ? this.state.isValid[i] ? ' valid' : ' invalid' : '')}
                   onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText)}
                   type={context == 'password' ? this.state.typePwdState[i] : context} placeholder={title} autoComplete={autoComplete}
-                  value={this.state.values[title.toLocaleLowerCase().replace(' ', '_')]} />
+                  value={this.state.values[title.toLocaleLowerCase().replace(' ', '_')] ? this.state.values[title.toLocaleLowerCase().replace(' ', '_')] : ''} />
                 {context == 'password' &&
                   <div className="eye-icon" onClick={() => this.handleClickTypePwd(i)}>
                     {(context == 'password' && this.state.typePwdState[i] == 'text') &&
@@ -99,7 +99,8 @@ export default class Form extends Component {
             <h3 className={required ? 'required' : ''}>Message</h3>
             <textarea className={this.state.isTouched[i] && validate != false ? this.state.isValid[i] ? ' valid' : ' invalid' : ''}
               onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText)}
-              placeholder="Enter your message here" value={this.state.values[title.toLocaleLowerCase().replace(' ', '_')]}></textarea>
+              placeholder="Enter your message here"
+              value={this.state.values[title.toLocaleLowerCase().replace(' ', '_')] ? this.state.values[title.toLocaleLowerCase().replace(' ', '_')] : ''}></textarea>
           </label>
         );
         break;
