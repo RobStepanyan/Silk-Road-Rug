@@ -204,7 +204,7 @@ class ForgotInputEmail(GenericAPIView):
                 user=user,
                 html_path='api/forgot_pass.html',
                 to_email=user.email,
-                mail_subject='Silk Road Rug | Password Reset',
+                mail_subject='Silk Road Rug | Password Reset Confirmation',
                 mail_login='rob1stepanyan@yandex.ru',
                 mail_pass='temporary'
             )
@@ -262,11 +262,11 @@ class UserUpdateView(GenericAPIView):
         data = request.data
         data.update({'user': request.user})
         serializer = self.get_serializer(data=data)
-        # try:
-        serializer.is_valid(raise_exception=True)
-        m = serializer.save()
-        # except Exception as e:
-        # return Response({'error': e.detail['non_field_errors'][0]})
+        try:
+            serializer.is_valid(raise_exception=True)
+            m = serializer.save()
+        except Exception as e:
+            return Response({'error': e.detail['non_field_errors'][0]})
         try:
             # Send email with token
             functions.send_email(
@@ -274,7 +274,7 @@ class UserUpdateView(GenericAPIView):
                 user=request.user,
                 html_path='api/edit_user.html',
                 to_email=request.user.email,
-                mail_subject='Silk Road Rug | Personal Info Update',
+                mail_subject='Silk Road Rug | Personal Info Update Confirmation',
                 mail_login='rob1stepanyan@yandex.ru',
                 mail_pass='temporary',
                 custom_params={
@@ -296,12 +296,66 @@ class UserUpdateVerifyView(GenericAPIView):
             mid = force_text(urlsafe_base64_decode(midb64))
             m = models.PendingUserPersonalInfoUpdate.objects.get(id=mid)
         except:
-            user = None
-        if m and m.status == 'p':
+            m = None
+        if m:
             user = m.user
             user.email = m.email_to
             user.first_name = m.first_name_to
             user.last_name = m.last_name_to
+            user.save()
+            m.delete()
+            return Response({'is_valid': True})
+        else:
+            return Response({'is_valid': False})
+
+
+class UserChangePwdView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = serializers.UserChangePwdSerializer
+
+    @method_decorator(csrf_protect)
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+            m = serializer.save()
+        except Exception as e:
+            return Response({'error': e.detail[0]})
+
+        try:
+            # Send email with token
+            functions.send_email(
+                request=request,
+                user=m.user,
+                html_path='api/change_pwd.html',
+                to_email=m.user.email,
+                mail_subject='Silk Road Rug | Password Change Confirmation',
+                mail_login='rob1stepanyan@yandex.ru',
+                mail_pass='temporary',
+                custom_params={
+                    'midb64': urlsafe_base64_encode(force_bytes(m.id))
+                }
+            )
+        except:
+            return HttpResponse('SMTP Error', status=500)
+        # Retun Response msg: Check your email
+        return Response({'msg': 'Please check your email for the verification link.'})
+
+
+class UserChangePwdVerifyView(GenericAPIView):
+    def get(self, request):
+        midb64 = request.GET['midb64']
+
+        if not midb64:
+            return Response({'is_valid': False})
+        try:
+            mid = force_text(urlsafe_base64_decode(midb64))
+            m = models.PendingUserPwdChange.objects.get(id=mid)
+        except:
+            m = None
+        if m:
+            user = m.user
+            user.set_password(m.password_to)
             user.save()
             m.delete()
             return Response({'is_valid': True})

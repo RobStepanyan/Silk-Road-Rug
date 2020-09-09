@@ -19,4 +19,6 @@ urlpatterns += [
     path('user/details/', views.UserDetailsView.as_view()),
     path('user/update/personal-info/', views.UserUpdateView.as_view()),
     path('user/update/verify/', views.UserUpdateVerifyView.as_view()),
+    path('user/change-pwd/', views.UserChangePwdView.as_view()),
+    path('user/change-pwd/verify/', views.UserChangePwdVerifyView.as_view()),
 ]

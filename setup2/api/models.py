@@ -64,9 +64,12 @@ class RugVariation(models.Model):
 
 
 class PendingUserPersonalInfoUpdate(models.Model):
-    choices = (('p', 'pending'), ('f', 'finished'))
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     email_to = models.EmailField()
     first_name_to = models.CharField(max_length=255)
     last_name_to = models.CharField(max_length=255)
-    status = models.CharField(choices=choices, default='p', max_length=1)
+
+
+class PendingUserPwdChange(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    password_to = models.CharField(max_length=255)

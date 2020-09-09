@@ -14,7 +14,7 @@ export default class Account extends React.Component {
     this.state = {
       cards: {
         '/account/personal-info': { title: 'Personal Info', component: <PersonalInfo /> },
-        '/account/security': { title: 'Security' },
+        '/account/security': { title: 'Security', component: <Security /> },
         '/account/orders': { title: 'Orders' },
         '/account/preferences': { title: 'Preferences' },
         '/logout': { title: 'Log Out', withoutAngle: true, danger: true },
@@ -113,6 +113,53 @@ class PersonalInfo extends React.Component {
                 { context: 'text', autoComplete: "first name", title: 'First Name', validate: true, onlyText: true, initValue: this.state.firstName },
                 { context: 'text', autoComplete: "last name", title: 'Last Name', validate: true, onlyText: true, initValue: this.state.lastName },
                 { context: 'email', autoComplete: "email", validate: true, initValue: this.state.email },
+              ]}
+            />
+          </>
+        }
+      </>
+    )
+  }
+}
+
+class Security extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+      redirectToLogin: false,
+      firstName: '',
+      lastName: '',
+      email: '',
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleSubmit(values) {
+    isAuthed().then(v => { if (!v) { this.setState({ redirectToLogin: true }) } })
+    return axios({
+      method: 'post',
+      headers: { ...apiHeaders.csrf, ...apiHeaders.authorization },
+      url: apiURLs.user.changePwd,
+      data: values
+    })
+  }
+
+  render() {
+    return (
+      <>
+        {this.state.redirectToLogin ? <Redirect to='/login' /> : ''}
+        {this.state.loading ? <Loading />
+          : <>
+            <small className="mt-n3 mb-4">You will be asked to confirm your email after hitting "Save"</small>
+            <Form handleSubmit={this.handleSubmit}
+              cols="col-12 col-sm-10 col-lg-6"
+              removeBtnAfterSubmit
+              submitText="Save"
+              withoutCard notJustified
+              fields={[
+                { context: 'password', autoComplete: "new-password", title: 'New Password', validate: true, required: true },
+                { context: 'password', autoComplete: "new-password", title: 'Confirm Password', validate: true, required: true },
               ]}
             />
           </>

@@ -7,6 +7,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { isAuthed } from './other/functions';
+import { apiURLs } from './other/variables';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import ContactUs from './pages/ContactUs';
@@ -57,7 +58,24 @@ class App extends Component {
             }
           </Route>
 
-          <Route exact path='/account/update/verify/:midb64' component={AccountUpdateVerify} />
+          <Route exact path='/account/update/verify/:midb64'
+            render={props => {
+              return <AccountUpdateVerify {...props} apiURL={apiURLs.user.updateVerify}
+                text="Your personal info is changed. Now you can use your account." />
+            }} />
+
+          <Route exact path='/account/change-pwd/:midb64'
+            render={props => {
+              return <AccountUpdateVerify {...props} apiURL={apiURLs.user.changePwdVerify}
+                text="Your password is changed. Now you can use your account." />
+            }} />
+
+          <Route exact path='/account/security'>
+            {isAuthed()
+              ? <Account path='/account/security' />
+              : <Redirect to='/login' />
+            }
+          </Route>
 
           <Route exact path='/signup'>
             {isAuthed()

@@ -98,10 +98,23 @@ class UserUpdateSerializer(serializers.Serializer):
     last_name = serializers.CharField()
 
     def create(self, validated_data):
-        m = models.PendingUserPersonalInfoUpdate(user=self.context['request'].user,
-                                                 email_to=validated_data['email'],
-                                                 first_name_to=validated_data['first_name'],
-                                                 last_name_to=validated_data['last_name'],
-                                                 )
+        m = models.PendingUserPersonalInfoUpdate(
+            user=self.context['request'].user,
+            email_to=validated_data['email'],
+            first_name_to=validated_data['first_name'],
+            last_name_to=validated_data['last_name'],
+        )
+        m.save()
+        return m
+
+
+class UserChangePwdSerializer(serializers.Serializer):
+    new_password = serializers.CharField()
+
+    def create(self, validated_data):
+        m = models.PendingUserPwdChange(
+            user=self.context['request'].user,
+            password_to=validated_data['new_password'],
+        )
         m.save()
         return m
