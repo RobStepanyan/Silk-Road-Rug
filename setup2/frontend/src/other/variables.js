@@ -4,10 +4,10 @@ import Cookies from 'universal-cookie';
 export const onlyTextRegex = /^[a-zA-Z ]*$/
 export const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 export const pwdRegexes = {
-  all: /^(?=.*[0-9])(?=.*[A-Za-z]).\w{7,63}$/,
-  length: /^.\w{7,63}$/,
-  char: /(?=.*[A-Za-z]).\w*/,
-  num: /(?=.*[0-9]).\w*/
+  all: /^(?=.*[0-9])(?=.*[A-Za-z]).{7,63}$/,
+  length: /^.{7,63}$/,
+  char: /(?=.*[A-Za-z]).*/,
+  num: /(?=.*[0-9]).*/
 }
 
 export const pwdErrorMsgs = {
