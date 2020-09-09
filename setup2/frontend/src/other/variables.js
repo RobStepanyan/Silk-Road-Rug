@@ -194,6 +194,7 @@ export const apiURLs = {
   user: {
     details: apiBase + 'user/details/',
     updatePersonalInfo: apiBase + 'user/update/personal-info/',
+    updateVerify: midb64 => apiBase + 'user/update/verify/?midb64=' + midb64,
   }
 }
 const cookies = new Cookies()

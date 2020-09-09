@@ -97,9 +97,11 @@ class UserUpdateSerializer(serializers.Serializer):
     first_name = serializers.CharField()
     last_name = serializers.CharField()
 
-    def update(self, instance, validated_data):
-        instance.email = validated_data['email']
-        instance.first_name = validated_data['first_name']
-        instance.last_name = validated_data['last_name']
-        instance.save()
-        return instance
+    def create(self, validated_data):
+        m = models.PendingUserPersonalInfoUpdate(user=self.context['request'].user,
+                                                 email_to=validated_data['email'],
+                                                 first_name_to=validated_data['first_name'],
+                                                 last_name_to=validated_data['last_name'],
+                                                 )
+        m.save()
+        return m

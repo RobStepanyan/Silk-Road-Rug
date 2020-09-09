@@ -69,6 +69,7 @@ class PersonalInfo extends React.Component {
       lastName: '',
       email: '',
     }
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   componentWillMount() {
@@ -101,17 +102,20 @@ class PersonalInfo extends React.Component {
       <>
         {this.state.redirectToLogin ? <Redirect to='/login' /> : ''}
         {this.state.loading ? <Loading />
-          : <Form handleSubmit={this.handleSubmit}
-            cols="col-12 col-sm-10 col-lg-6"
-            removeBtnAfterSubmit
-            submitText="Save"
-            withoutCard notJustified
-            fields={[
-              { context: 'text', autoComplete: "first name", title: 'First Name', validate: true, onlyText: true, initValue: this.state.firstName },
-              { context: 'text', autoComplete: "last name", title: 'Last Name', validate: true, onlyText: true, initValue: this.state.lastName },
-              { context: 'email', autoComplete: "email", validate: true, initValue: this.state.email },
-            ]}
-          />
+          : <>
+            <small className="mt-n3 mb-4">You will be asked to confirm your email after hitting "Save"</small>
+            <Form handleSubmit={this.handleSubmit}
+              cols="col-12 col-sm-10 col-lg-6"
+              removeBtnAfterSubmit
+              submitText="Save"
+              withoutCard notJustified
+              fields={[
+                { context: 'text', autoComplete: "first name", title: 'First Name', validate: true, onlyText: true, initValue: this.state.firstName },
+                { context: 'text', autoComplete: "last name", title: 'Last Name', validate: true, onlyText: true, initValue: this.state.lastName },
+                { context: 'email', autoComplete: "email", validate: true, initValue: this.state.email },
+              ]}
+            />
+          </>
         }
       </>
     )

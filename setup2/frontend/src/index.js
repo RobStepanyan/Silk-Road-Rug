@@ -23,6 +23,7 @@ import SignUp from './pages/account/SignUp';
 import LogIn from './pages/account/LogIn';
 import ForgotPwd from './pages/account/ForgotPwd';
 import SignUpVerify from './pages/account/SignUpVerify';
+import AccountUpdateVerify from './pages/account/AccountUpdateVerify';
 import 'jquery';
 import 'popper.js'
 import 'bootstrap';
@@ -55,6 +56,8 @@ class App extends Component {
               : <Redirect to='/login' />
             }
           </Route>
+
+          <Route exact path='/account/update/verify/:midb64' component={AccountUpdateVerify} />
 
           <Route exact path='/signup'>
             {isAuthed()

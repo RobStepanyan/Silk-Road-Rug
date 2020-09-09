@@ -1,5 +1,6 @@
 from django.db import models
 from .variables import styles
+from django.contrib.auth.models import User
 
 STYLES = [(styles.index(x), x) for x in styles]
 
@@ -60,3 +61,12 @@ class RugVariation(models.Model):
 
     class Meta:
         ordering = ['rug', 'width_feet']
+
+
+class PendingUserPersonalInfoUpdate(models.Model):
+    choices = (('p', 'pending'), ('f', 'finished'))
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    email_to = models.EmailField()
+    first_name_to = models.CharField(max_length=255)
+    last_name_to = models.CharField(max_length=255)
+    status = models.CharField(choices=choices, default='p', max_length=1)

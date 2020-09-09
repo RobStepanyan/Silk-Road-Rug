@@ -1,0 +1,9 @@
+{% autoescape off %}
+Hi {{ user.first_name }}, <br>
+<br>
+To finish the process please follow the link bellow. <br>
+{{ request.scheme }}://{{ domain }}/account/update/verify/{{midb64}} <br>
+<br>
+Regards, SilkRoadRugInc.com <br>
+If you didn't intend to update an account, ignore this email.<br>
+{% endautoescape %}
