@@ -129,7 +129,8 @@ export default class Form extends Component {
       this.props.fields.forEach((field, ii) => {
         if (field.context == 'password') {
           indices = indices.concat(ii)
-          pwds = pwds.concat(ii == i ? val : this.state.values[field.title])
+          let title = field.title.toLowerCase().replace(' ', '_')
+          pwds = pwds.concat(ii == i ? val : this.state.values[title])
         }
       })
 
