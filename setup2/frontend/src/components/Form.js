@@ -228,7 +228,7 @@ export default class Form extends Component {
 
   render() {
     return (
-      <div className={"row" + (this.props.notJustified ? '' : "justify-content-center")}>
+      <div className={"row" + (this.props.notJustified ? '' : " justify-content-center")}>
         {this.state.loading ? <Loading /> : ''}
         <div className={this.props.cols ? this.props.cols : "col-12"}>
           {this.state.alert &&
@@ -236,7 +236,7 @@ export default class Form extends Component {
           }
 
           <div className={this.props.withoutCard ? '' : "card"}>
-            <form className={"row" + (this.props.notJustified ? '' : "justify-content-center")}>
+            <form className={"row" + (this.props.notJustified ? '' : " justify-content-center")}>
               {
                 this.props.fields.map((field, i) => {
                   return (
