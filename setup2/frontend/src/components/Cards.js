@@ -159,8 +159,8 @@ export class ShopFilterSidebar extends Component {
 
 export function AccountCard(props) {
   return (
-    <a href={props.href}>
-      <div className="account card">
+    <a href={props.href ? props.href : null}>
+      <div className="account card" onClick={props.onClick} >
         <div className="row align-items-center">
           <div className={"account-card-icon" + (props.danger ? ' danger' : '')}>
             {props.children}

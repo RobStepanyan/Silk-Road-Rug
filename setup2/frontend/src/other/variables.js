@@ -177,21 +177,24 @@ export const shopFilterInputOrder = [
 
 const apiBase = '/api/'
 export const apiURLs = {
-  'listRugs': apiBase + 'rugs/',
-  'rugById': id => apiBase + `rugs/${id}/`,
-  'signUp': apiBase + 'auth/signup/',
-  'signUpVerify': (uidb64, token) => apiBase + `auth/signup-verify/?uidb64=${uidb64}&token=${token}`,
-  'logIn': apiBase + 'auth/login/',
-  'forgotPwd': {
-    'inputEmail': apiBase + 'auth/forgot/input-email/',
-    'verifyToken': (uidb64, token) => apiBase + `auth/forgot/verify-token/?uidb64=${uidb64}&token=${token}`,
-    'inputNewPwd': apiBase + 'auth/forgot/input-new-pwd/',
+  listRugs: apiBase + 'rugs/',
+  rugById: id => apiBase + `rugs/${id}/`,
+  signUp: apiBase + 'auth/signup/',
+  signUpVerify: (uidb64, token) => apiBase + `auth/signup-verify/?uidb64=${uidb64}&token=${token}`,
+  logIn: apiBase + 'auth/login/',
+  forgotPwd: {
+    inputEmail: apiBase + 'auth/forgot/input-email/',
+    verifyToken: (uidb64, token) => apiBase + `auth/forgot/verify-token/?uidb64=${uidb64}&token=${token}`,
+    inputNewPwd: apiBase + 'auth/forgot/input-new-pwd/',
   },
-  'token': {
-    'refresh': apiBase + 'token/refresh/',
-    'verify': apiBase + 'token/verify/',
+  token: {
+    refresh: apiBase + 'token/refresh/',
+    verify: apiBase + 'token/verify/',
   },
-  'userDetails': apiBase + 'user-details/'
+  user: {
+    details: apiBase + 'user/details/',
+    updatePersonalInfo: apiBase + 'user/update/personal-info/',
+  }
 }
 const cookies = new Cookies()
 export const apiHeaders = {

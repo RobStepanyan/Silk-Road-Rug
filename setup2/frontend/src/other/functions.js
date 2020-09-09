@@ -168,6 +168,7 @@ export function isAuthed() {
               setJWTCookie(data)
               return true
             })
+            .catch(() => false)
         })
         .catch(() => {
           // if both access and refresh tokens are invalid/expired

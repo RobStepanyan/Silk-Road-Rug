@@ -3,7 +3,6 @@ import NavbarFooter from '../../components/NavbarFooter';
 import Form from '../../components/Form';
 import Loading from '../../components/Loading';
 import { apiURLs, apiHeaders } from '../../other/variables';
-import Cookies from 'universal-cookie';
 import axios from 'axios';
 
 export default class ForgotPwd extends React.Component {
@@ -15,8 +14,6 @@ export default class ForgotPwd extends React.Component {
 
   handleSubmits(url) {
     return (values) => {
-      const cookies = new Cookies()
-      let csrftoken = cookies.get('csrftoken')
 
       return axios({
         url: url,

@@ -27,6 +27,8 @@ export default class Form extends Component {
         this.state.fileMaxSizeMB = field.maxSizeMB
       }
       if (field.context == 'password') { this.state.typePwdState[i] = 'password' }
+      let title = field.title ? field.title : field.context
+      if (field.initValue) { this.state.values[title.toLowerCase().replace(' ', '_')] = field.initValue }
     });
 
     this.generateInput = this.generateInput.bind(this);
@@ -41,7 +43,7 @@ export default class Form extends Component {
   }
 
   generateInput(field, i) {
-    let component, { context, required, autoComplete, validate, onlyText } = field,
+    let component, { context, required, autoComplete, validate, onlyText, initValue } = field,
       title = toTitleCase(field.title ? field.title : field.context);
 
     switch (context) {
@@ -55,7 +57,8 @@ export default class Form extends Component {
               <div className="eye-icon-wrapper">
                 <input className={'m-0' + (this.state.isTouched[i] && validate != false ? this.state.isValid[i] ? ' valid' : ' invalid' : '')}
                   onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText)}
-                  type={context == 'password' ? this.state.typePwdState[i] : context} placeholder={title} autoComplete={autoComplete} />
+                  type={context == 'password' ? this.state.typePwdState[i] : context} placeholder={title} autoComplete={autoComplete}
+                  value={this.state.values[title.toLocaleLowerCase().replace(' ', '_')]} />
                 {context == 'password' &&
                   <div className="eye-icon" onClick={() => this.handleClickTypePwd(i)}>
                     {(context == 'password' && this.state.typePwdState[i] == 'text') &&
@@ -96,7 +99,7 @@ export default class Form extends Component {
             <h3 className={required ? 'required' : ''}>Message</h3>
             <textarea className={this.state.isTouched[i] && validate != false ? this.state.isValid[i] ? ' valid' : ' invalid' : ''}
               onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText)}
-              placeholder="Enter your message here"></textarea>
+              placeholder="Enter your message here" value={this.state.values[title.toLocaleLowerCase().replace(' ', '_')]}></textarea>
           </label>
         );
         break;
@@ -142,7 +145,7 @@ export default class Form extends Component {
     if ((validate == false) && val.length > 1 && val.length < 255
       || (context == 'email' && validateEmail(val))
       || (['text', 'textarea'].includes(context) && required && val.length > 0 && val.length < 255 && (onlyText ? validateOnlyText(val) ? true : false : true))
-      || (['text', 'textarea'].includes(context) && !required && val.length > 1 && val.length < 255)
+      || (['text', 'textarea'].includes(context) && !required && val.length > 0 && val.length < 255)
       || (context == 'file' && ((!required && e.target.length == 0) || file.size / 1024 / 1024 < this.state.fileMaxSizeMB))
       || (context == 'password' && validatePwd(pwds, confirmPwd).isValid)) {
       valid = true
@@ -225,15 +228,15 @@ export default class Form extends Component {
 
   render() {
     return (
-      <div className="row justify-content-center">
+      <div className={"row" + (this.props.notJustified ? '' : "justify-content-center")}>
         {this.state.loading ? <Loading /> : ''}
         <div className={this.props.cols ? this.props.cols : "col-12"}>
           {this.state.alert &&
             <div className={"alert" + (this.state.alert.isError ? " danger" : " success")}>{this.state.alert.msg}</div>
           }
 
-          <div className="card">
-            <form className="row justify-content-center">
+          <div className={this.props.withoutCard ? '' : "card"}>
+            <form className={"row" + (this.props.notJustified ? '' : "justify-content-center")}>
               {
                 this.props.fields.map((field, i) => {
                   return (
@@ -243,15 +246,17 @@ export default class Form extends Component {
                   )
                 })
               }
-              {(this.state.redirectNow)
-                ? <>{this.props.removeBtnAfterSubmit
-                  ? <></>
-                  : this.props.redirect ? <Redirect to='/' /> : ''
-                }</>
-                : <div onClick={this.handleSubmitClick} className="btn btn-primary mb-4">
-                  {this.props.submitText ? this.props.submitText : 'Send a Message'}
-                </div>
-              }
+              <div className="col-12">
+                {(this.state.redirectNow)
+                  ? <>{this.props.removeBtnAfterSubmit
+                    ? <></>
+                    : this.props.redirect ? <Redirect to='/' /> : ''
+                  }</>
+                  : <div onClick={this.handleSubmitClick} className="btn btn-primary mb-4 ml-0">
+                    {this.props.submitText ? this.props.submitText : 'Send a Message'}
+                  </div>
+                }
+              </div>
             </form>
           </div>
         </div>
@@ -263,6 +268,15 @@ export default class Form extends Component {
 
 Form.propTypes = {
   fields: PropTypes.array.isRequired,
+  // Field props:
+  // context: e.g. password, email (type=), 
+  // autoComplete: check chrome docs,
+  // title: Title displayed above input (if empty context used),
+  // required: Boolean,
+  // half: Boolean (half of the .row),
+  // validate: Boolean,
+  // initValue: String
+  // onlyText: Boolean
   loginForm: PropTypes.bool, // is it a Login Form? (forgot pass btn)
   submitFields: PropTypes.array, // what fields to submit
   handleSubmit: PropTypes.func.isRequired, // func that handles submit
@@ -272,8 +286,10 @@ Form.propTypes = {
   removeBtnAfterSubmit: PropTypes.bool,
   redirect: PropTypes.bool,
   submitText: PropTypes.string, // submit btn's text
-  uidb64: PropTypes.string, //optional
-  token: PropTypes.string, // optional
+  uidb64: PropTypes.string, //optional (used in "Forgot" views)
+  token: PropTypes.string, // optional (used in "Forgot" views)
+  withoutCard: PropTypes.bool, // do not wrap the form in .card
+  notJustified: PropTypes.bool, // do not add .justify-content-center to the form's row
 };
 
 export function RadioGroupWithPrice(props) {

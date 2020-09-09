@@ -99,3 +99,15 @@
 //     margin-bottom: 2.5px;
 //     transform: rotate(180deg);
 // }
+
+.btn.btn-back {
+
+    &::before {
+        content: "";
+        display: inline-block;
+        border-bottom: 5px solid transparent;
+        border-top: 5px solid transparent;
+        border-right: 5px solid c(primary);
+        margin-right: $margin * 2 / 3;
+    }
+}

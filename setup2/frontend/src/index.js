@@ -33,50 +33,57 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route path='/learn/about-us' component={AboutUs} />
-          <Route path='/learn/return-policy' component={ReturnPolicy} />
-          <Route path='/learn/shipping-info' component={ShippingInfo} />
-          <Route path='/services/rug-cleaning' component={RugCleaning} />
-          <Route path='/services/rug-restoration' component={RugRestoration} />
-          <Route path='/contact-us' component={ContactUs} />
-          <Route path='/cart' component={Cart} />
-          <Route path='/shop' component={Shop} />
-          <Route path='/rug/:id' component={Rug} />
-          <Route path='/account'>
+          <Route exact path='/learn/about-us' component={AboutUs} />
+          <Route exact path='/learn/return-policy' component={ReturnPolicy} />
+          <Route exact path='/learn/shipping-info' component={ShippingInfo} />
+          <Route exact path='/services/rug-cleaning' component={RugCleaning} />
+          <Route exact path='/services/rug-restoration' component={RugRestoration} />
+          <Route exact path='/contact-us' component={ContactUs} />
+          <Route exact path='/cart' component={Cart} />
+          <Route exact path='/shop' component={Shop} />
+          <Route exact path='/rug/:id' component={Rug} />
+          <Route exact path='/account'>
             {isAuthed()
               ? <Account />
               : <Redirect to='/login' />
             }
           </Route>
 
-          <Route path='/signup'>
+          <Route exact path='/account/personal-info'>
+            {isAuthed()
+              ? <Account path='/account/personal-info' />
+              : <Redirect to='/login' />
+            }
+          </Route>
+
+          <Route exact path='/signup'>
             {isAuthed()
               ? <Redirect to='/account' />
               : <SignUp />
             }
           </Route>
 
-          <Route path='/signup-verify/:uidb64/:token' component={SignUpVerify} />
+          <Route exact path='/signup-verify/:uidb64/:token' component={SignUpVerify} />
 
-          <Route path='/login'>
+          <Route exact path='/login'>
             {isAuthed()
               ? <Redirect to='/account' />
               : <LogIn />
             }
           </Route>
 
-          {!isAuthed() &&
-            <>
-              <Route path='/forgot-password'>
-                <ForgotPwd title="Password Reset" stage="inputEmail" />
-              </Route>
 
-              <Route path='/reset-password/:uidb64/:token'
-                render={(props) => <ForgotPwd {...props} title="Password Reset" stage="inputNewPwd" />} />
-            </>
-          }
+          <Route exact path='/forgot-password'>
+            {!isAuthed()
+              ? <ForgotPwd title="Password Reset" stage="inputEmail" />
+              : <Error error={404} />
+            }
+          </Route>
 
-          <Route path='/logout'>
+          <Route exact path='/reset-password/:uidb64/:token'
+            render={(props) => !isAuthed() ? <ForgotPwd {...props} title="Password Reset" stage="inputNewPwd" /> : <Error error={404} />} />
+
+          <Route exact path='/logout'>
             {isAuthed()
               ? <Redirect to={{
                 pathname: '/', props: { logOut: true, alert: { isError: false, msg: 'Successfully Logged Out.' } }
@@ -85,7 +92,7 @@ class App extends Component {
             }
           </Route>
 
-          <Route path='/' exact component={Home} />
+          <Route exact path='/' component={Home} />
           <Route path=''><Error error={404} /></Route>
         </Switch>
       </Router>

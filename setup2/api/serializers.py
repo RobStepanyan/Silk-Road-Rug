@@ -26,7 +26,7 @@ class RugVariationSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'email')
+        fields = ('first_name', 'last_name', 'email')
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -89,4 +89,17 @@ class ForgotInputNewPwdSerializer(serializers.Serializer):
 
     def update(self, instance, validated_data):
         instance.set_password(validated_data['password'])
+        return instance
+
+
+class UserUpdateSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    first_name = serializers.CharField()
+    last_name = serializers.CharField()
+
+    def update(self, instance, validated_data):
+        instance.email = validated_data['email']
+        instance.first_name = validated_data['first_name']
+        instance.last_name = validated_data['last_name']
+        instance.save()
         return instance

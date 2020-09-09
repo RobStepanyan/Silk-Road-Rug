@@ -16,4 +16,6 @@ urlpatterns += [
     # path('auth/logout/', views.LogOutView.as_view(), name='logout')
     path('token/refresh/', TokenRefreshView.as_view()),
     path('token/verify/', TokenVerifyView.as_view()),
+    path('user/details/', views.UserDetailsView.as_view()),
+    path('user/update/personal-info/', views.UserUpdateView.as_view()),
 ]

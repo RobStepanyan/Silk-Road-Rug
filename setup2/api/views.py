@@ -238,3 +238,29 @@ class ForgotInputNewPwd(GenericAPIView):
             return Response({'msg': 'Your password is changed. Now you can use your account.'})
 
         return HttpResponse(status=500)
+
+
+class UserDetailsView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @method_decorator(csrf_protect)
+    def post(self, request, *args, **kwargs):
+        user = request.user
+        return Response({
+            'user': serializers.UserSerializer(user).data,
+        })
+
+
+class UserUpdateView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = serializers.UserUpdateSerializer
+
+    @method_decorator(csrf_protect)
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(request.user, data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+        except Exception as e:
+            return Response({'error': e.detail['non_field_errors'][0]})
+        return Response({'msg': 'Your personal info is changed.'})

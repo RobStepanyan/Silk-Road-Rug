@@ -251,7 +251,6 @@ textarea,
 input[type="text"]:not(.rs-input),
 input[type="email"]:not(.rs-input),
 input[type="password"]:not(.rs-input) {
-  transition: border-color $transition-duration;
   background-color: c(dark5) !important;
   color: c(white) !important;
   box-shadow: none;
@@ -392,7 +391,7 @@ ul.style-default {
 }
 
 .loading:after {
-  backdrop-filter: blur(5px) brightness(10%);
+  background: c(dark0);
 }
 
 .close-btn {
