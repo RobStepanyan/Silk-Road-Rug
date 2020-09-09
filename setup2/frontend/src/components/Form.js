@@ -277,6 +277,7 @@ Form.propTypes = {
   // validate: Boolean,
   // initValue: String
   // onlyText: Boolean
+  // required: Boolean
   loginForm: PropTypes.bool, // is it a Login Form? (forgot pass btn)
   submitFields: PropTypes.array, // what fields to submit
   handleSubmit: PropTypes.func.isRequired, // func that handles submit
