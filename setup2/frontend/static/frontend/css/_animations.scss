@@ -1,0 +1,23 @@
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes bounce {
+  0% {
+    bottom: 2*$margin;
+  }
+
+  50% {
+    bottom: $margin;
+  }
+
+  100% {
+    bottom: 2*$margin;
+  }
+}

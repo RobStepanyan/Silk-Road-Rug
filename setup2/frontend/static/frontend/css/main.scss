@@ -25,6 +25,7 @@ $slick-font-path: "../../../node_modules/slick-carousel/slick/fonts/";
 @import 'scrollbar';
 @import 'forms';
 @import 'reactSuite';
+@import 'animations';
 
 body,
 html {
@@ -46,6 +47,12 @@ section {
         margin: 0;
         margin-bottom: $margin;
         text-align: center;
+    }
+
+    &.section-landing {
+        position: relative;
+        height: calc(100vh - 160px);
+        background: #000;
     }
 }
 
@@ -72,8 +79,33 @@ section {
 }
 
 .landing {
-    margin-top: $margin;
-    padding: 0;
+    position: absolute;
+    top: calc(50% - 22.5px - 20px); // 30px - (2xmargin-1xmargin)/2 - landing angle height
+    left: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
+    z-index: 2;
+    width: 90%;
+
+    @include media-breakpoint-up(sm) {
+        width: 80%;
+    }
+
+    @include media-breakpoint-up(md) {
+        width: 70%;
+    }
+
+    @include media-breakpoint-up(lg) {
+        width: 50%;
+    }
+
+    * {
+        text-align: center;
+    }
+
+    .d-flex {
+        justify-content: center;
+    }
 }
 
 .sub-heading {
@@ -81,13 +113,6 @@ section {
     font-size: 1rem;
     color: c(gray3);
     margin-bottom: .5*$margin;
-}
-
-.heading {
-    color: c(white);
-    font-family: $font-primary;
-    font-weight: bold;
-    font-size: 2rem;
 }
 
 @include media-breakpoint-up(sm) {
@@ -111,18 +136,31 @@ section {
 }
 
 .bg-parallax {
-    // clip-path: polygon(100% 0, 100% 85%, 0 100%, 0 15%);
-    height: 500px;
-    margin-top: 3*$margin;
+    position: absolute;
+    height: calc(100vh - 160px);
+    margin-top: 45px;
+    left: 0;
+    top: -45px;
+    width: 100%;
     background-image: url('../img/landing page img.jpg');
     background-position: bottom;
     background-repeat: no-repeat;
     background-size: cover;
-    background-color: c(dark1);
-    opacity: .8 !important;
+    background-color: #000000;
+    opacity: .1 !important;
+    z-index: 1;
 
-    @include media-breakpoint-up(lg) {
-        height: 600px;
+    &+.angle {
+        position: absolute;
+        left: 50%;
+        height: $landing-angle-height;
+        transform: rotate(90deg) translateX(-50%);
+        color: (white);
+        animation: bounce 1s linear infinite reverse;
+
+        @include media-breakpoint-up(md) {
+            height: $landing-angle-height-md;
+        }
     }
 }
 
@@ -647,16 +685,6 @@ h3.required:after {
         animation: rotate 1s linear infinite;
         transition: $transition;
         z-index: 100000;
-    }
-}
-
-@keyframes rotate {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-
-    100% {
-        transform: translate(-50%, -50%) rotate(360deg);
     }
 }
 
