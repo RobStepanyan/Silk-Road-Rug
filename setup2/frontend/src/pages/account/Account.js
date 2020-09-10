@@ -73,7 +73,8 @@ class PersonalInfo extends React.Component {
   }
 
   componentWillMount() {
-    isAuthed().then(v => { if (!v) { this.setState({ redirectToLogin: true }) } })
+    if (!isAuthed()) { this.setState({ redirectToLogin: true }) }
+
     axios({
       method: 'post',
       headers: { ...apiHeaders.csrf, ...apiHeaders.authorization },
@@ -88,7 +89,7 @@ class PersonalInfo extends React.Component {
   }
 
   handleSubmit(values) {
-    isAuthed().then(v => { if (!v) { this.setState({ redirectToLogin: true }) } })
+    if (!isAuthed()) { this.setState({ redirectToLogin: true }) }
     return axios({
       method: 'post',
       headers: { ...apiHeaders.csrf, ...apiHeaders.authorization },
@@ -136,7 +137,7 @@ class Security extends React.Component {
   }
 
   handleSubmit(values) {
-    isAuthed().then(v => { if (!v) { this.setState({ redirectToLogin: true }) } })
+    if (!isAuthed()) { this.setState({ redirectToLogin: true }) }
     return axios({
       method: 'post',
       headers: { ...apiHeaders.csrf, ...apiHeaders.authorization },
@@ -183,7 +184,7 @@ class Preferences extends React.Component {
   }
 
   handleSubmit(values) {
-    isAuthed().then(v => { if (!v) { this.setState({ redirectToLogin: true }) } })
+    if (!isAuthed()) { this.setState({ redirectToLogin: true }) }
     // return axios({
     //   method: 'post',
     //   headers: { ...apiHeaders.csrf, ...apiHeaders.authorization },
@@ -218,7 +219,7 @@ class Orders extends React.Component {
   }
 
   handleSubmit(values) {
-    isAuthed().then(v => { if (!v) { this.setState({ redirectToLogin: true }) } })
+    if (!isAuthed()) { this.setState({ redirectToLogin: true }) }
     // return axios({
     //   method: 'post',
     //   headers: { ...apiHeaders.csrf, ...apiHeaders.authorization },

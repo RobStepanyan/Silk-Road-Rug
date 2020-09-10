@@ -114,9 +114,9 @@ export function setJWTCookie(token) {
     // sameSite: true,
   }
   const cookies = new Cookies()
-
-  cookies.set('accessJWT', token.access, { ...settings })
-  cookies.set('refreshJWT', token.refresh, { ...settings })
+  // maxAge is same as in settings.py
+  cookies.set('accessJWT', token.access, { ...settings, maxAge: 10 * 60 })
+  cookies.set('refreshJWT', token.refresh, { ...settings, maxAge: 60 * 60 * 24 })
 }
 
 export function removeJWTCookies() {
@@ -133,46 +133,21 @@ export function isAuthed() {
     return false
   }
 
-  // Validate / Refresh tokens
-  return axios({
+  if (cookies.get('accessJWT')) {
+    return true
+  }
+  // if access is not available
+  axios({
     method: 'post',
-    url: apiURLs.token.verify,
+    url: apiURLs.token.refresh,
     data: {
-      token: cookies.get('accessJWT')
+      refresh: cookies.get('refreshJWT')
     }
   })
-    .then(() => {
-      // if Access Token is Valid
+    .then(response => {
+      let { data } = response
+      setJWTCookie(data)
       return true
     })
-    .catch(() => {
-      // Check if Refresh Token is Valid
-      axios({
-        method: 'post',
-        url: apiURLs.token.verify,
-        data: {
-          token: cookies.get('refreshJWT')
-        }
-      })
-        .then(() => {
-          // if refresh token is valid, refresh the access token
-          axios({
-            method: 'post',
-            url: apiURLs.token.refresh,
-            data: {
-              refresh: cookies.get('refreshJWT')
-            }
-          })
-            .then(response => {
-              let { data } = response
-              setJWTCookie(data)
-              return true
-            })
-            .catch(() => false)
-        })
-        .catch(() => {
-          // if both access and refresh tokens are invalid/expired
-          return false
-        })
-    })
+    .catch(() => false)
 }

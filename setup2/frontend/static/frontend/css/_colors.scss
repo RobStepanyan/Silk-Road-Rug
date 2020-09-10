@@ -407,6 +407,8 @@ ul.style-default {
 }
 
 .alert {
+  background: c(dark2);
+
   &.danger {
     color: c(red);
     border-color: c(red) !important;
