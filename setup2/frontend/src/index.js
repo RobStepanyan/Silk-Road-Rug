@@ -77,6 +77,20 @@ class App extends Component {
             }
           </Route>
 
+          <Route exact path='/account/preferences'>
+            {isAuthed()
+              ? <Account path='/account/preferences' />
+              : <Redirect to='/login' />
+            }
+          </Route>
+
+          <Route exact path='/account/orders'>
+            {isAuthed()
+              ? <Account path='/account/orders' />
+              : <Redirect to='/login' />
+            }
+          </Route>
+
           <Route exact path='/signup'>
             {isAuthed()
               ? <Redirect to='/account' />

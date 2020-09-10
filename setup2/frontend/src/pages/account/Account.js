@@ -15,8 +15,8 @@ export default class Account extends React.Component {
       cards: {
         '/account/personal-info': { title: 'Personal Info', component: <PersonalInfo /> },
         '/account/security': { title: 'Security', component: <Security /> },
-        '/account/orders': { title: 'Orders' },
-        '/account/preferences': { title: 'Preferences' },
+        '/account/orders': { title: 'Orders', component: <Orders /> },
+        '/account/preferences': { title: 'Preferences', component: <Preferences /> },
         '/logout': { title: 'Log Out', withoutAngle: true, danger: true },
       },
       icons: [
@@ -163,6 +163,76 @@ class Security extends React.Component {
               ]}
             />
           </>
+        }
+      </>
+    )
+  }
+}
+
+class Preferences extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+      redirectToLogin: false,
+      firstName: '',
+      lastName: '',
+      email: '',
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleSubmit(values) {
+    isAuthed().then(v => { if (!v) { this.setState({ redirectToLogin: true }) } })
+    // return axios({
+    //   method: 'post',
+    //   headers: { ...apiHeaders.csrf, ...apiHeaders.authorization },
+    //   url: apiURLs.user.changePwd,
+    //   data: values
+    // })
+  }
+
+  render() {
+    return (
+      <>
+        {this.state.redirectToLogin ? <Redirect to='/login' /> : ''}
+        {this.state.loading ? <Loading />
+          : <p>Content</p>
+        }
+      </>
+    )
+  }
+}
+
+class Orders extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      loading: false,
+      redirectToLogin: false,
+      firstName: '',
+      lastName: '',
+      email: '',
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleSubmit(values) {
+    isAuthed().then(v => { if (!v) { this.setState({ redirectToLogin: true }) } })
+    // return axios({
+    //   method: 'post',
+    //   headers: { ...apiHeaders.csrf, ...apiHeaders.authorization },
+    //   url: apiURLs.user.changePwd,
+    //   data: values
+    // })
+  }
+
+  render() {
+    return (
+      <>
+        {this.state.redirectToLogin ? <Redirect to='/login' /> : ''}
+        {this.state.loading ? <Loading />
+          : <p>Content</p>
         }
       </>
     )
