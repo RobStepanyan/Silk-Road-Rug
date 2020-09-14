@@ -7,8 +7,8 @@ import Slider from 'react-slick';
 import { removeJWTCookies } from '../other/functions';
 
 export default class Home extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = { data: null }
   }
 

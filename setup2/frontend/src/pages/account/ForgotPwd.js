@@ -6,8 +6,8 @@ import { apiURLs, apiHeaders } from '../../other/variables';
 import axios from 'axios';
 
 export default class ForgotPwd extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = { isTokenValid: false, loading: false }
   }
 

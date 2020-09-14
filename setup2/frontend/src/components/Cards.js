@@ -115,8 +115,8 @@ CartCard.propTypes = {
 
 
 export class ShopFilterSidebar extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = { 'filterToggled': false }
   }
   render() {

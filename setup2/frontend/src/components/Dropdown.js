@@ -1,9 +1,8 @@
 import React from 'react';
-import $ from 'jquery';
 
 export default class Dropdown extends React.Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.handleDropItemClick = this.handleDropItemClick.bind(this);
     this.state = {
       'btnText': "All " + this.props.heading.slice(0, 1).toUpperCase() + this.props.heading.slice(1) + "s",

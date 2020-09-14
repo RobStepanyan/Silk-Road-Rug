@@ -5,8 +5,8 @@ import { apiURLs } from '../../other/variables';
 import { setJWTCookie } from '../../other/functions';
 
 export default class SignUpVerify extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = { isTokenValid: false, loading: false }
   }
 

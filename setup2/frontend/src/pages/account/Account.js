@@ -9,8 +9,8 @@ import { isAuthed } from '../../other/functions';
 import { Redirect } from 'react-router-dom';
 
 export default class Account extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super()
     this.state = {
       cards: {
         '/account/personal-info': { title: 'Personal Info', component: <PersonalInfo /> },
@@ -60,8 +60,8 @@ export default class Account extends React.Component {
 }
 
 class PersonalInfo extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super()
     this.state = {
       loading: true,
       redirectToLogin: false,
@@ -124,8 +124,8 @@ class PersonalInfo extends React.Component {
 }
 
 class Security extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super()
     this.state = {
       loading: false,
       redirectToLogin: false,
@@ -171,8 +171,8 @@ class Security extends React.Component {
 }
 
 class Preferences extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super()
     this.state = {
       loading: false,
       redirectToLogin: false,
@@ -206,8 +206,8 @@ class Preferences extends React.Component {
 }
 
 class Orders extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super()
     this.state = {
       loading: false,
       redirectToLogin: false,

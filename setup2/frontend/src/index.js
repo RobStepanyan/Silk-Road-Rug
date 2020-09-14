@@ -30,109 +30,112 @@ import 'popper.js'
 import 'bootstrap';
 import 'slick-carousel';
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <Switch>
-          <Route exact path='/learn/about-us' component={AboutUs} />
-          <Route exact path='/learn/return-policy' component={ReturnPolicy} />
-          <Route exact path='/learn/shipping-info' component={ShippingInfo} />
-          <Route exact path='/services/rug-cleaning' component={RugCleaning} />
-          <Route exact path='/services/rug-restoration' component={RugRestoration} />
-          <Route exact path='/contact-us' component={ContactUs} />
-          <Route exact path='/cart' component={Cart} />
-          <Route exact path='/shop' component={Shop} />
-          <Route exact path='/rug/:id' component={Rug} />
-          <Route exact path='/account'>
-            {isAuthed()
-              ? <Account />
-              : <Redirect to='/login' />
-            }
-          </Route>
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path='/learn/about-us' component={AboutUs} />
+        <Route exact path='/learn/return-policy' component={ReturnPolicy} />
+        <Route exact path='/learn/shipping-info' component={ShippingInfo} />
+        <Route exact path='/services/rug-cleaning' component={RugCleaning} />
+        <Route exact path='/services/rug-restoration' component={RugRestoration} />
+        <Route exact path='/contact-us' component={ContactUs} />
+        <Route exact path='/cart'>
+          {isAuthed()
+            ? <Cart />
+            : <Redirect to='/login' />
+          }
+        </Route>
+        <Route exact path='/shop' component={Shop} />
+        <Route exact path='/rug/:id' component={Rug} />
+        <Route exact path='/account'>
+          {isAuthed()
+            ? <Account />
+            : <Redirect to='/login' />
+          }
+        </Route>
 
-          <Route exact path='/account/personal-info'>
-            {isAuthed()
-              ? <Account path='/account/personal-info' />
-              : <Redirect to='/login' />
-            }
-          </Route>
+        <Route exact path='/account/personal-info'>
+          {isAuthed()
+            ? <Account path='/account/personal-info' />
+            : <Redirect to='/login' />
+          }
+        </Route>
 
-          <Route exact path='/account/update/verify/:midb64'
-            render={props => {
-              return <AccountUpdateVerify {...props} apiURL={apiURLs.user.updateVerify}
-                text="Your personal info is changed. Now you can use your account." />
+        <Route exact path='/account/update/verify/:midb64'
+          render={props => {
+            return <AccountUpdateVerify {...props} apiURL={apiURLs.user.updateVerify}
+              text="Your personal info is changed. Now you can use your account." />
+          }} />
+
+        <Route exact path='/account/change-pwd/:midb64'
+          render={props => {
+            return <AccountUpdateVerify {...props} apiURL={apiURLs.user.changePwdVerify}
+              text="Your password is changed. Now you can use your account." />
+          }} />
+
+        <Route exact path='/account/security'>
+          {isAuthed()
+            ? <Account path='/account/security' />
+            : <Redirect to='/login' />
+          }
+        </Route>
+
+        <Route exact path='/account/preferences'>
+          {isAuthed()
+            ? <Account path='/account/preferences' />
+            : <Redirect to='/login' />
+          }
+        </Route>
+
+        <Route exact path='/account/orders'>
+          {isAuthed()
+            ? <Account path='/account/orders' />
+            : <Redirect to='/login' />
+          }
+        </Route>
+
+        <Route exact path='/signup'>
+          {isAuthed()
+            ? <Redirect to='/account' />
+            : <SignUp />
+          }
+        </Route>
+
+        <Route exact path='/signup-verify/:uidb64/:token' component={SignUpVerify} />
+
+        <Route exact path='/login'>
+          {isAuthed()
+            ? <Redirect to='/account' />
+            : <LogIn />
+          }
+        </Route>
+
+
+        <Route exact path='/forgot-password'>
+          {!isAuthed()
+            ? <ForgotPwd title="Password Reset" stage="inputEmail" />
+            : <Error error={404} />
+          }
+        </Route>
+
+        <Route exact path='/reset-password/:uidb64/:token'
+          render={(props) => !isAuthed() ? <ForgotPwd {...props} title="Password Reset" stage="inputNewPwd" /> : <Error error={404} />} />
+
+        <Route exact path='/logout'>
+          {isAuthed()
+            ? <Redirect to={{
+              pathname: '/', props: { logOut: true, alert: { isError: false, msg: 'Successfully Logged Out.' } }
             }} />
+            : <Redirect to='/login' />
+          }
+        </Route>
 
-          <Route exact path='/account/change-pwd/:midb64'
-            render={props => {
-              return <AccountUpdateVerify {...props} apiURL={apiURLs.user.changePwdVerify}
-                text="Your password is changed. Now you can use your account." />
-            }} />
-
-          <Route exact path='/account/security'>
-            {isAuthed()
-              ? <Account path='/account/security' />
-              : <Redirect to='/login' />
-            }
-          </Route>
-
-          <Route exact path='/account/preferences'>
-            {isAuthed()
-              ? <Account path='/account/preferences' />
-              : <Redirect to='/login' />
-            }
-          </Route>
-
-          <Route exact path='/account/orders'>
-            {isAuthed()
-              ? <Account path='/account/orders' />
-              : <Redirect to='/login' />
-            }
-          </Route>
-
-          <Route exact path='/signup'>
-            {isAuthed()
-              ? <Redirect to='/account' />
-              : <SignUp />
-            }
-          </Route>
-
-          <Route exact path='/signup-verify/:uidb64/:token' component={SignUpVerify} />
-
-          <Route exact path='/login'>
-            {isAuthed()
-              ? <Redirect to='/account' />
-              : <LogIn />
-            }
-          </Route>
-
-
-          <Route exact path='/forgot-password'>
-            {!isAuthed()
-              ? <ForgotPwd title="Password Reset" stage="inputEmail" />
-              : <Error error={404} />
-            }
-          </Route>
-
-          <Route exact path='/reset-password/:uidb64/:token'
-            render={(props) => !isAuthed() ? <ForgotPwd {...props} title="Password Reset" stage="inputNewPwd" /> : <Error error={404} />} />
-
-          <Route exact path='/logout'>
-            {isAuthed()
-              ? <Redirect to={{
-                pathname: '/', props: { logOut: true, alert: { isError: false, msg: 'Successfully Logged Out.' } }
-              }} />
-              : <Redirect to='/login' />
-            }
-          </Route>
-
-          <Route exact path='/' component={Home} />
-          <Route path=''><Error error={404} /></Route>
-        </Switch>
-      </Router>
-    );
-  }
+        <Route exact path='/' component={Home} />
+        <Route path=''><Error error={404} /></Route>
+      </Switch>
+    </Router>
+  );
 }
 
 

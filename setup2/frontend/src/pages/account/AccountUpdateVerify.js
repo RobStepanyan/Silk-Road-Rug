@@ -3,8 +3,8 @@ import Loading from '../../components/Loading';
 import axios from 'axios';
 
 export default class AccountUpdateVerify extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = { isTokenValid: false, loading: true }
   }
 

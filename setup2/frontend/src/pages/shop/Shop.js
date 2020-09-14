@@ -6,8 +6,8 @@ import Loading from '../../components/Loading';
 import axios from 'axios';
 
 export default class Shop extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       'selectedInputs': {},
       'filterToggled': false,

@@ -6,8 +6,8 @@ import { RangeSlider, InputGroup, InputNumber } from 'rsuite';
 import { Redirect } from 'react-router-dom';
 
 export default class Form extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       isValid: {},
       isTouched: {},

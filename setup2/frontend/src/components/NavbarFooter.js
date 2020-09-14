@@ -2,9 +2,6 @@ import React from 'react';
 import $ from 'jquery';
 
 export default class NavbarFooter extends React.Component {
-  constructor(props) {
-    super(props)
-  }
 
   handleNavbarToggleClick(e) {
     e.preventDefault();

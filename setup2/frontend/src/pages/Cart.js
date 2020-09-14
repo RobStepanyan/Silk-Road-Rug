@@ -5,8 +5,8 @@ import { toCamelCase, calculateAdditionalCosts, calculatePriceSum, formatPrice }
 import { cartCardInputsOrder, dummyData } from '../other/variables';
 
 export default class Cart extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.handleRadioWithPriceChange = this.handleRadioWithPriceChange.bind(this)
     this.state = {
       'additionalCosts': {},

@@ -7,8 +7,8 @@ import Loading from '../../components/Loading';
 import { RadioGroupWithPrice } from '../../components/Form';
 
 export default class Rug extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.id = props.match.params.id;
     this.state = {
       data: null,
@@ -99,6 +99,7 @@ export default class Rug extends React.Component {
                       <p>{data.desc}</p>
                     }
                     <hr className="my-2" />
+                    {/* Details w/ or w/o Sizes */}
                     <h4>Details</h4>
                     <ul className="style-default">
                       <li>Style: {styles[data.style]}</li>
@@ -116,6 +117,7 @@ export default class Rug extends React.Component {
                           onChange={(id) => handleChangeVrtn(id)} />
                       </>
                     }
+                    {/* *********************** */}
                     <div className="row">
                       <a href="" className="btn card-btn btn-primary">Buy Now</a>
                       <a href="" className="btn card-btn btn-secondary">Add to Cart</a>
