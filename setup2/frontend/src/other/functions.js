@@ -1,4 +1,4 @@
-import { emailRegex, pwdRegexes, pwdErrorMsgs, cartCardInputsOrder, onlyTextRegex, apiURLs } from './variables';
+import { emailRegex, pwdRegexes, pwdErrorMsgs, cartCardInputsOrder, onlyTextRegex, apiURLs, apiHeaders } from './variables';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 
@@ -26,6 +26,17 @@ export function validatePwd(pwds, confirmPwd = false) {
   return { isValid: true }
 }
 
+export function validatePhone(phone) {
+  return axios({
+    method: 'post',
+    headers: apiHeaders.csrf,
+    url: apiURLs.user.isPhoneValid,
+    data: {
+      number: phone
+    }
+  })
+}
+
 export function validateOnlyText(text) {
   return onlyTextRegex.test(text) ? true : false
 }
@@ -41,7 +52,7 @@ export function toTitleCase(text) {
 
 export function toCamelCase(text) {
   let res = toTitleCase(text);
-  res = res.replace(/\s+/g, '').replace('-', '').replace('_', '')
+  res = res.replaceAll(/\s+/g, '').replaceAll('-', '').replaceAll('_', '')
   return res.slice(0, 1).toLowerCase() + res.slice(1);
 }
 
@@ -145,9 +156,18 @@ export function isAuthed() {
     }
   })
     .then(response => {
-      let { data } = response
-      setJWTCookie(data)
-      return true
+      setJWTCookie(response.data)
     })
     .catch(() => false)
+  return true
+}
+
+export function formValueKey(title) {
+  title = title.toLowerCase().replaceAll(' ', '_')
+  title = title.replaceAll('/', '_')
+  let parenth = title.indexOf('(')
+  if (parenth != -1) {
+    title = title.slice(0, parenth - 1)
+  }
+  return title
 }

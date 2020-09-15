@@ -361,3 +361,44 @@ class UserChangePwdVerifyView(GenericAPIView):
             return Response({'is_valid': True})
         else:
             return Response({'is_valid': False})
+
+
+class UserAddressAddView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = serializers.UserAddressAddSerializer
+
+    @method_decorator(csrf_protect)
+    def post(self, request, *args, **kwargs):
+        print(request.data)
+        serializer = self.get_serializer(data=request.data)
+        try:
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response({'is_valid': True})
+        except Exception as e:
+            return Response({'error': str(e)})
+
+
+class UserAddressesView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = serializers.UserAddressesSerializer
+
+    def get_queryset(self):
+        print(self.request.user)
+        return models.Address.objects.filter(user=self.request.user)
+
+    def get(self, request):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+class ValidatePhoneNumberView(GenericAPIView):
+    serializer_class = serializers.ValidatePhoneNumberSerializer
+
+    @method_decorator(csrf_protect)
+    def post(self, request, *args, **kwargs):
+        s = self.get_serializer(data=request.data)
+        if s.is_valid():
+            return Response({'is_valid': True})
+        return Response({'is_valid': False})

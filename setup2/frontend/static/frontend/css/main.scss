@@ -39,7 +39,7 @@ body {
 
 section {
     margin-bottom: 2px;
-    padding: $navbar-logo-height + 2*$padding;
+    padding: $navbar-logo-height + 2*$padding 0;
 
     @include media-breakpoint-up(lg) {
         padding: $navbar-logo-height-lg + 2*$padding;
@@ -809,4 +809,44 @@ footer img {
     transform: translateY(50%);
 
     cursor: pointer;
+}
+
+.address.card {
+    height: 240px;
+    position: relative;
+
+    p {
+        margin: $margin / 3 0;
+    }
+
+    &.new-address {
+        align-items: center;
+        border: 2px dashed;
+
+        h3 {
+            text-align: center;
+            height: auto;
+        }
+    }
+
+    svg {
+        height: 4*$margin;
+        transform: rotate(45deg);
+        transition: $transition;
+        margin: 0 auto $margin / 3 auto;
+
+        &:hover {
+            transform: rotate(225deg);
+        }
+    }
+
+    .centered-div {
+        display: grid;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        justify-content: center;
+        width: 100%;
+    }
 }

@@ -81,6 +81,20 @@ function App() {
           }
         </Route>
 
+        <Route exact path='/account/addresses'>
+          {isAuthed()
+            ? <Account path='/account/addresses' />
+            : <Redirect to='/login' />
+          }
+        </Route>
+
+        <Route exact path='/account/addresses/add'>
+          {isAuthed()
+            ? <Account path='/account/addresses/add' parentHref="/account/addresses" />
+            : <Redirect to='/login' />
+          }
+        </Route>
+
         <Route exact path='/account/preferences'>
           {isAuthed()
             ? <Account path='/account/preferences' />

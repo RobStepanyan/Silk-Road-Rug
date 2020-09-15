@@ -1,6 +1,8 @@
 from django.db import models
-from .variables import styles
+from .variables import styles, COUNTRIES
 from django.contrib.auth.models import User
+from phonenumber_field.modelfields import PhoneNumberField
+
 
 STYLES = [(styles.index(x), x) for x in styles]
 
@@ -73,3 +75,17 @@ class PendingUserPersonalInfoUpdate(models.Model):
 class PendingUserPwdChange(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     password_to = models.CharField(max_length=255)
+
+
+class Address(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=255)
+    country = models.CharField(max_length=2, choices=COUNTRIES)
+    address_line_1 = models.CharField(max_length=255)
+    address_line_2 = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    state_province_region = models.CharField(max_length=255)
+    zip_code = models.CharField(max_length=10)
+    phone_number = PhoneNumberField()
+    delivery_instructions = models.TextField(
+        null=True, blank=True, default=None)

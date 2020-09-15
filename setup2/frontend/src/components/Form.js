@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { toTitleCase, validateEmail, validatePwd, formatPrice, setJWTCookie, validateOnlyText } from '../other/functions';
+import { toTitleCase, validateEmail, validatePwd, formatPrice, setJWTCookie, validateOnlyText, formValueKey, validatePhone } from '../other/functions';
 import Loading from '../components/Loading';
 import { RangeSlider, InputGroup, InputNumber } from 'rsuite';
 import { Redirect } from 'react-router-dom';
 
 export default class Form extends Component {
-  constructor() {
+  constructor(props) {
     super();
     this.state = {
       isValid: {},
@@ -28,7 +28,8 @@ export default class Form extends Component {
       }
       if (field.context == 'password') { this.state.typePwdState[i] = 'password' }
       let title = field.title ? field.title : field.context
-      if (field.initValue) { this.state.values[title.toLowerCase().replace(' ', '_')] = field.initValue }
+      if (field.initValue) { this.state.values[formValueKey(title)] = field.initValue }
+      if (field.context == 'select') { this.state.values[formValueKey(title)] = 'US' }
     });
 
     this.generateInput = this.generateInput.bind(this);
@@ -43,22 +44,23 @@ export default class Form extends Component {
   }
 
   generateInput(field, i) {
-    let component, { context, required, autoComplete, validate, onlyText, initValue } = field,
+    let component, { context, required, autoComplete, validate, onlyText, options, maxLength } = field,
       title = toTitleCase(field.title ? field.title : field.context);
 
     switch (context) {
       case 'text':
       case 'email':
       case 'password':
+      case 'tel':
         component = (
           <>
             <label>
               <h3 className={required ? 'required' : ''}>{title}</h3>
               <div className="eye-icon-wrapper">
                 <input className={'m-0' + (this.state.isTouched[i] && validate != false ? this.state.isValid[i] ? ' valid' : ' invalid' : '')}
-                  onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText)}
+                  onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText, maxLength)}
                   type={context == 'password' ? this.state.typePwdState[i] : context} placeholder={title} autoComplete={autoComplete}
-                  value={this.state.values[title.toLocaleLowerCase().replace(' ', '_')] ? this.state.values[title.toLocaleLowerCase().replace(' ', '_')] : ''} />
+                  value={this.state.values[formValueKey(title)] ? this.state.values[formValueKey(title)] : ''} />
                 {context == 'password' &&
                   <div className="eye-icon" onClick={() => this.handleClickTypePwd(i)}>
                     {(context == 'password' && this.state.typePwdState[i] == 'text') &&
@@ -98,9 +100,9 @@ export default class Form extends Component {
           <label>
             <h3 className={required ? 'required' : ''}>Message</h3>
             <textarea className={this.state.isTouched[i] && validate != false ? this.state.isValid[i] ? ' valid' : ' invalid' : ''}
-              onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText)}
+              onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText, maxLength)}
               placeholder="Enter your message here"
-              value={this.state.values[title.toLocaleLowerCase().replace(' ', '_')] ? this.state.values[title.toLocaleLowerCase().replace(' ', '_')] : ''}></textarea>
+              value={this.state.values[formValueKey(title)] ? this.state.values[formValueKey(title)] : ''}></textarea>
           </label>
         );
         break;
@@ -109,19 +111,34 @@ export default class Form extends Component {
           <label>
             <h3 className={'text-center' + (required ? ' required' : '')}>Give us an idea</h3>
             <label className="btn btn-secondary btn-file-upload" htmlFor="uploadFile">Upload a file</label>
-            <input onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText)}
+            <input onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText, maxLength)}
               type="file" id="uploadFile" name="uploadFile" />
             <small className={"mt-0 text-center" + (this.state.helpText[i].includes('exceeded') ? ' text-red' : '')}>{this.state.helpText[i]}</small>
           </label>
         );
         break;
+      case 'select':
+        component = (
+          <label>
+            <h3 className={required ? 'required' : ''}>{title}</h3>
+            <select name={title.replace(' ', '-')} value={this.state.values[formValueKey(title)]}
+              onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText, maxLength)}>>
+              {Object.entries(options).map((option, i) => {
+                let [value, name] = option
+                return <option key={i} value={value}>{name}</option>
+              })
+
+              }
+            </select>
+          </label>
+        )
     }
 
     return component;
   }
 
 
-  handleInputChange(e, context, i, required, validate, title, onlyText) {
+  handleInputChange(e, context, i, required, validate, title, onlyText, maxLength) {
     let pwds, confirmPwd, val = e.target.value, valid, file = context == 'file' ? e.target.files[0] : '';
     let { values, isValid, isTouched, helpText } = this.state;
     if (context == 'password') {
@@ -130,7 +147,7 @@ export default class Form extends Component {
       this.props.fields.forEach((field, ii) => {
         if (field.context == 'password') {
           indices = indices.concat(ii)
-          let title = field.title.toLowerCase().replace(' ', '_')
+          let title = field.formValueKey(title)
           pwds = pwds.concat(ii == i ? val : this.state.values[title])
         }
       })
@@ -146,10 +163,17 @@ export default class Form extends Component {
 
     if ((validate == false) && val.length > 1 && val.length < 255
       || (context == 'email' && validateEmail(val))
-      || (['text', 'textarea'].includes(context) && required && val.length > 0 && val.length < 255 && (onlyText ? validateOnlyText(val) ? true : false : true))
-      || (['text', 'textarea'].includes(context) && !required && val.length > 0 && val.length < 255)
+      || (['text', 'textarea'].includes(context) && required && val.length > 0 && val.length < (maxLength ? maxLength : 255) && (onlyText ? validateOnlyText(val) ? true : false : true))
+      || (['text', 'textarea'].includes(context) && !required && val.length > 0 && val.length < (maxLength ? maxLength : 255))
       || (context == 'file' && ((!required && e.target.length == 0) || file.size / 1024 / 1024 < this.state.fileMaxSizeMB))
-      || (context == 'password' && validatePwd(pwds, confirmPwd).isValid)) {
+      || (context == 'password' && validatePwd(pwds, confirmPwd).isValid)
+      || (context == 'select')
+      || (context == 'tel' && validatePhone(val).then(res => {
+        let { isValid } = this.state
+        isValid[i] = res.data.is_valid
+        this.setState({ isValid: isValid })
+      }))) {
+
       valid = true
       if (context == 'file') {
         helpText[i] = `${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`
@@ -178,11 +202,13 @@ export default class Form extends Component {
       }
     }
 
-    values[title.toLowerCase().replace(' ', '_')] = val;
+    values[formValueKey(title)] = val;
     isValid[i] = valid;
     isTouched[i] = true
-
-    this.setState({ values: values, isValid: isValid, isTouched: isTouched, helpText: helpText })
+    this.setState({ values: values, isTouched: isTouched, helpText: helpText })
+    if (context != 'tel') {
+      this.setState({ isValid: isValid })
+    }
   }
 
 
@@ -229,6 +255,9 @@ export default class Form extends Component {
 
 
   render() {
+    if (this.state.redirectNow && this.props.redirect) {
+      return <Redirect to={this.props.redirectTo ? this.props.redirectTo : '/'} />
+    }
     return (
       <div className={"row" + (this.props.notJustified ? '' : " justify-content-center")}>
         {this.state.loading ? <Loading /> : ''}
@@ -249,11 +278,8 @@ export default class Form extends Component {
                 })
               }
               <div className="col-12">
-                {(this.state.redirectNow)
-                  ? <>{this.props.removeBtnAfterSubmit
-                    ? <></>
-                    : this.props.redirect ? <Redirect to='/' /> : ''
-                  }</>
+                {this.props.removeBtnAfterSubmit && this.state.redirectNow
+                  ? <></>
                   : <div onClick={this.handleSubmitClick} className="btn btn-primary mb-4 ml-0">
                     {this.props.submitText ? this.props.submitText : 'Send a Message'}
                   </div>
@@ -271,23 +297,25 @@ export default class Form extends Component {
 Form.propTypes = {
   fields: PropTypes.array.isRequired,
   // Field props:
-  // context: e.g. password, email (type=), 
+  // context: e.g. password, email (type=) or select,
+  // options: used with context: 'select' 
   // autoComplete: check chrome docs,
-  // title: Title displayed above input (if empty context used),
+  // title: Title displayed above input (if empty context used) also used for sending values,
   // required: Boolean,
   // half: Boolean (half of the .row),
   // validate: Boolean,
   // initValue: String
   // onlyText: Boolean
-  // required: Boolean
+  // maxLength: integer
   loginForm: PropTypes.bool, // is it a Login Form? (forgot pass btn)
-  submitFields: PropTypes.array, // what fields to submit
+  submitFields: PropTypes.array, // what fields to submit (default: all)
   handleSubmit: PropTypes.func.isRequired, // func that handles submit
   authForm: PropTypes.bool, // is Authentication form? (login, signup)
   setJWT: PropTypes.bool, // are JWT's received and needed to be stored
   cols: PropTypes.string, // col classes to be applied to Form
   removeBtnAfterSubmit: PropTypes.bool,
   redirect: PropTypes.bool,
+  redirectTo: PropTypes.string, // default: '/'
   submitText: PropTypes.string, // submit btn's text
   uidb64: PropTypes.string, //optional (used in "Forgot" views)
   token: PropTypes.string, // optional (used in "Forgot" views)

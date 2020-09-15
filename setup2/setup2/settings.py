@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'frontend',
     'api.apps.ApiConfig',
     'corsheaders',
+    'phonenumber_field',
 ]
 
 MIDDLEWARE = [

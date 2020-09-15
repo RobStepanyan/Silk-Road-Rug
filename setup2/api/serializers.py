@@ -3,6 +3,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from . import models
+from phonenumber_field.serializerfields import PhoneNumberField
+from phonenumber_field.validators import validate_international_phonenumber
 
 
 class RugSerializer(serializers.ModelSerializer):
@@ -118,3 +120,36 @@ class UserChangePwdSerializer(serializers.Serializer):
         )
         m.save()
         return m
+
+
+class UserAddressAddSerializer(serializers.Serializer):
+    country = serializers.CharField()
+    address_line_1 = serializers.CharField()
+    address_line_2 = serializers.CharField()
+    city = serializers.CharField()
+    state_province_region = serializers.CharField()
+    zip_code = serializers.CharField()
+    phone_number = PhoneNumberField()
+    delivery_instructions = serializers.CharField(
+        allow_blank=True, required=False, style={'type': 'textarea'})
+
+    def create(self, validated_data):
+        validated_data.update({'user': self.context['request'].user})
+        m = models.Address(**validated_data)
+        m.save()
+        return m
+
+
+class UserAddressesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Address
+        exclude = ('user',)
+
+
+class ValidatePhoneNumberSerializer(serializers.Serializer):
+    number = serializers.CharField()
+
+    def validate(self, data):
+        number = dict(data)['number']
+        validate_international_phonenumber(number)
+        return number

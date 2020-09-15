@@ -19,3 +19,6 @@ class RugAdmin(admin.ModelAdmin):
     def save_related(self, request, form, formsets, change):
         super().save_related(request, form, formsets, change)
         form.save_images(form.instance)
+
+
+admin.site.register(models.Address)

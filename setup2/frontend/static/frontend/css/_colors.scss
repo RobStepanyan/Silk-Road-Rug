@@ -255,7 +255,9 @@ input:-webkit-autofill:active {
   transition: $transition;
 }
 
+select,
 textarea,
+input[type="tel"]:not(.rs-input),
 input[type="text"]:not(.rs-input),
 input[type="email"]:not(.rs-input),
 input[type="password"]:not(.rs-input) {
@@ -292,6 +294,7 @@ input[type="checkbox"],
 }
 
 textarea,
+input[type="tel"],
 input[type="text"],
 input[type="email"],
 input[type="password"] {
@@ -443,6 +446,10 @@ a.with-underline {
   &:hover {
     box-shadow: $shadow-neu;
   }
+
+  &:active {
+    box-shadow: none;
+  }
 }
 
 .account-card-icon {
@@ -452,5 +459,13 @@ a.with-underline {
 
   &.danger svg {
     color: c(red);
+  }
+}
+
+.address.card {
+  border-color: c(white) !important;
+
+  svg {
+    color: c(white);
   }
 }

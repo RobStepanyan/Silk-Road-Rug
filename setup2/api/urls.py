@@ -21,4 +21,7 @@ urlpatterns += [
     path('user/update/verify/', views.UserUpdateVerifyView.as_view()),
     path('user/change-pwd/', views.UserChangePwdView.as_view()),
     path('user/change-pwd/verify/', views.UserChangePwdVerifyView.as_view()),
+    path('user/addresses/', views.UserAddressesView.as_view()),
+    path('user/addresses/add/', views.UserAddressAddView.as_view()),
+    path('validate/phone-number/', views.ValidatePhoneNumberView.as_view()),
 ]

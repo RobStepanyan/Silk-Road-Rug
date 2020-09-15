@@ -189,8 +189,10 @@ strong {
     text-align: right;
 }
 
+select,
 .rs-tooltip,
 textarea,
+input[type="tel"],
 input[type="text"],
 input[type="email"],
 input[type="password"] {
