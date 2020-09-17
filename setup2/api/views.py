@@ -369,7 +369,6 @@ class UserAddressAddView(GenericAPIView):
 
     @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
-        print(request.data)
         serializer = self.get_serializer(data=request.data)
         try:
             serializer.is_valid(raise_exception=True)
@@ -384,13 +383,78 @@ class UserAddressesView(GenericAPIView):
     serializer_class = serializers.UserAddressesSerializer
 
     def get_queryset(self):
-        print(self.request.user)
         return models.Address.objects.filter(user=self.request.user)
 
     def get(self, request):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
+
+
+class UserAddressDeleteView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        id_ = dict(self.request.data)['id']
+        try:
+            m = models.Address.objects.get(id=id_, user=self.request.user)
+        except:
+            return Response({'error': 'Object doesn\'t exists.'})
+        m.delete()
+        return Response({'is_valid': True, 'msg': 'Object removed.'})
+
+
+class UserAddressEditView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = serializers.UserAddressEditSerializer
+
+    @method_decorator(csrf_protect)
+    def post(self, request, *args, **kwargs):
+        id_ = dict(self.request.data)['id']
+        try:
+            m = models.Address.objects.get(id=id_, user=self.request.user)
+        except:
+            return Response({'error': 'Object doesn\'t exists.'})
+
+        serializer = self.get_serializer(m, self.request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'is_valid': True, 'msg': 'Object updated.'})
+
+
+class UserAddressGetView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = serializers.UserAddressesSerializer
+
+    @method_decorator(csrf_protect)
+    def post(self, request, *args, **kwargs):
+        id_ = dict(self.request.data)['id']
+
+        queryset = models.Address.objects.filter(
+            id=id_, user=self.request.user)
+        if not queryset.exists():
+            return Response({'error': 'Object doesn\'t exists.'})
+
+        serializer = self.get_serializer(queryset[0])
+        return Response({'data': serializer.data})
+
+
+class UserAddressSetPrimaryView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        id_ = dict(self.request.data)['id']
+        try:
+            m = models.Address.objects.get(id=id_, user=self.request.user)
+        except:
+            return Response({'error': 'Object doesn\'t exists.'})
+        user = m.user
+        for x in models.Address.objects.filter(user=user):
+            x.is_primary = False
+            x.save()
+        m.is_primary = True
+        m.save()
+        return Response({'is_valid': True, 'msg': 'Success'})
 
 
 class ValidatePhoneNumberView(GenericAPIView):

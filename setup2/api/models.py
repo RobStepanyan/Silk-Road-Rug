@@ -89,3 +89,7 @@ class Address(models.Model):
     phone_number = PhoneNumberField()
     delivery_instructions = models.TextField(
         null=True, blank=True, default=None)
+    is_primary = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ('-is_primary',)

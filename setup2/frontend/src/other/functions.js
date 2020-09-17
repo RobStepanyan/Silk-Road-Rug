@@ -126,7 +126,7 @@ export function setJWTCookie(token) {
   }
   const cookies = new Cookies()
   // maxAge is same as in settings.py
-  cookies.set('accessJWT', token.access, { ...settings, maxAge: 10 * 60 })
+  cookies.set('accessJWT', token.access, { ...settings, maxAge: 20 * 60 })
   cookies.set('refreshJWT', token.refresh, { ...settings, maxAge: 60 * 60 * 24 })
 }
 

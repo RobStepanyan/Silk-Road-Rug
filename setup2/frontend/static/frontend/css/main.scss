@@ -38,6 +38,8 @@ body {
 }
 
 section {
+    content-visibility: auto;
+    contain-intrinsic-size: 30vh 100vw;
     margin-bottom: 2px;
     padding: $navbar-logo-height + 2*$padding 0;
 
@@ -45,7 +47,7 @@ section {
         padding: $navbar-logo-height-lg + 2*$padding;
     }
 
-    hr+p {
+    &:not(#account) hr+p {
         color: c(white);
         margin: 0;
         margin-bottom: $margin;
@@ -569,16 +571,6 @@ ul.small {
         margin-top: 2*$margin;
     }
 
-    .close-btn {
-        position: absolute;
-        top: 2*$margin;
-        right: 2*$margin;
-        height: 20px;
-        width: 20px;
-        transition: $transition;
-        cursor: pointer;
-    }
-
     .row {
         margin-bottom: $margin;
 
@@ -601,6 +593,68 @@ ul.small {
         }
     }
 
+}
+
+
+.svg-btn {
+    position: absolute;
+    top: $margin * 2 / 3;
+    transition: $transition;
+    cursor: pointer;
+
+    svg {
+        transition: $transition;
+    }
+}
+
+.close-btn,
+.close-btn svg {
+    right: 2*$margin;
+    height: 25px;
+    width: 25px;
+}
+
+.svg-btn {
+
+    &,
+    & svg {
+        height: 25px;
+        width: 25px;
+        right: 1.5*$margin;
+
+        &.borderless,
+        &.borderless svg {
+            height: 20px;
+            width: 20px;
+        }
+    }
+}
+
+.svg-group {
+    align-items: center;
+    height: 25px;
+    display: inline-flex;
+    position: absolute;
+
+    &:not(.toggled) {
+        visibility: hidden;
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    .svg-btn {
+        position: static;
+        margin-right: $margin * 2 / 3;
+    }
+
+    &.toggled {
+        visibility: visible;
+        transform: translateX(0);
+        opacity: 1;
+        top: 10px;
+        right: 30px + $margin * 2 / 3;
+        transition: transform $transition-duration;
+    }
 }
 
 #service {
@@ -812,16 +866,28 @@ footer img {
 }
 
 .address.card {
-    height: 240px;
-    position: relative;
+    height: calc(100% - #{2*$margin}); //margin bottom
+    min-height: 150px;
+    cursor: pointer;
 
     p {
         margin: $margin / 3 0;
     }
 
+    .svg-btn,
+    .close-btn {
+        top: 10px;
+        right: 15px;
+    }
+
+    &.primary {
+        border: 2px solid;
+    }
+
     &.new-address {
         align-items: center;
         border: 2px dashed;
+        position: relative;
 
         h3 {
             text-align: center;
@@ -829,7 +895,7 @@ footer img {
         }
     }
 
-    svg {
+    &.new-address svg {
         height: 4*$margin;
         transform: rotate(45deg);
         transition: $transition;
@@ -849,4 +915,11 @@ footer img {
         justify-content: center;
         width: 100%;
     }
+}
+
+.yellow-square {
+    height: 14px; //same as <small>
+    width: 14px; //same as <small>
+    margin-right: $margin / 3;
+    border: 2px solid;
 }

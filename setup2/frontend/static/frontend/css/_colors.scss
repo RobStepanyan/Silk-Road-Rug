@@ -405,10 +405,20 @@ ul.style-default {
   background: c(dark0);
 }
 
+.svg-btn,
 .close-btn {
-  color: c(white);
 
-  &:hover {
+  & svg {
+    color: c(white);
+  }
+}
+
+.svg-btn:hover svg {
+  color: c(gray3);
+}
+
+.close-btn {
+  &:hover svg {
     color: c(red);
   }
 }
@@ -463,9 +473,20 @@ a.with-underline {
 }
 
 .address.card {
-  border-color: c(white) !important;
 
-  svg {
-    color: c(white);
+  &.new-address {
+    border-color: c(white) !important;
+
+    svg {
+      color: c(white);
+    }
   }
+
+  &.primary {
+    border-color: c(primary) !important;
+  }
+}
+
+.yellow-square {
+  border-color: c(primary) !important;
 }

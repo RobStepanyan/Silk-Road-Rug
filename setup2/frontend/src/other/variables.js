@@ -199,6 +199,10 @@ export const apiURLs = {
     changePwdVerify: midb64 => apiBase + 'user/change-pwd/verify/?midb64=' + midb64,
     addresses: apiBase + 'user/addresses/',
     addAddress: apiBase + 'user/addresses/add/',
+    removeAddress: apiBase + 'user/addresses/delete/',
+    editAddress: apiBase + 'user/addresses/edit/',
+    getAddress: apiBase + 'user/address/',
+    setPrimaryAddress: apiBase + 'user/addresses/set-primary/',
     isPhoneValid: apiBase + 'validate/phone-number/'
   }
 }

@@ -7,7 +7,7 @@ import Loading from '../../components/Loading';
 import { RadioGroupWithPrice } from '../../components/Form';
 
 export default class Rug extends React.Component {
-  constructor() {
+  constructor(props) {
     super();
     this.id = props.match.params.id;
     this.state = {

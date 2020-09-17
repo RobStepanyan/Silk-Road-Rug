@@ -123,6 +123,7 @@ class UserChangePwdSerializer(serializers.Serializer):
 
 
 class UserAddressAddSerializer(serializers.Serializer):
+    full_name = serializers.CharField()
     country = serializers.CharField()
     address_line_1 = serializers.CharField()
     address_line_2 = serializers.CharField()
@@ -134,10 +135,40 @@ class UserAddressAddSerializer(serializers.Serializer):
         allow_blank=True, required=False, style={'type': 'textarea'})
 
     def create(self, validated_data):
-        validated_data.update({'user': self.context['request'].user})
+        user = self.context['request'].user
+        validated_data.update({'user': user, 'is_primary': True})
+        for m in models.Address.objects.filter(user=user):
+            m.is_primary = False
+            m.save()
         m = models.Address(**validated_data)
         m.save()
         return m
+
+
+class UserAddressEditSerializer(serializers.Serializer):
+    full_name = serializers.CharField()
+    country = serializers.CharField()
+    address_line_1 = serializers.CharField()
+    address_line_2 = serializers.CharField()
+    city = serializers.CharField()
+    state_province_region = serializers.CharField()
+    zip_code = serializers.CharField()
+    phone_number = PhoneNumberField()
+    delivery_instructions = serializers.CharField(
+        allow_blank=True, required=False, style={'type': 'textarea'}, default='')
+
+    def update(self, instance, validated_data):
+        instance.full_name = validated_data['full_name']
+        instance.country = validated_data['country']
+        instance.address_line_1 = validated_data['address_line_1']
+        instance.address_line_2 = validated_data['address_line_2']
+        instance.city = validated_data['city']
+        instance.state_province_region = validated_data['state_province_region']
+        instance.zip_code = validated_data['zip_code']
+        instance.phone_number = validated_data['phone_number']
+        instance.delivery_instructions = validated_data['delivery_instructions']
+        instance.save()
+        return instance
 
 
 class UserAddressesSerializer(serializers.ModelSerializer):

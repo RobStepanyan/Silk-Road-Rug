@@ -57,7 +57,7 @@ function App() {
 
         <Route exact path='/account/personal-info'>
           {isAuthed()
-            ? <Account path='/account/personal-info' />
+            ? <Account path='/personal-info' />
             : <Redirect to='/login' />
           }
         </Route>
@@ -76,35 +76,44 @@ function App() {
 
         <Route exact path='/account/security'>
           {isAuthed()
-            ? <Account path='/account/security' />
+            ? <Account path='/security' />
             : <Redirect to='/login' />
           }
         </Route>
 
         <Route exact path='/account/addresses'>
           {isAuthed()
-            ? <Account path='/account/addresses' />
+            ? <Account path='/addresses' />
             : <Redirect to='/login' />
           }
         </Route>
 
         <Route exact path='/account/addresses/add'>
           {isAuthed()
-            ? <Account path='/account/addresses/add' parentHref="/account/addresses" />
+            ? <Account path='/addresses/add' parentHref="/account/addresses" />
             : <Redirect to='/login' />
           }
         </Route>
 
+        <Route exact path='/account/addresses/edit/:id' render={props => {
+          {
+            return isAuthed()
+              ? <Account {...props} path='/addresses/edit' parentHref="/account/addresses" />
+              : <Redirect to='/login' />
+          }
+        }}
+        />
+
         <Route exact path='/account/preferences'>
           {isAuthed()
-            ? <Account path='/account/preferences' />
+            ? <Account path='/preferences' />
             : <Redirect to='/login' />
           }
         </Route>
 
         <Route exact path='/account/orders'>
           {isAuthed()
-            ? <Account path='/account/orders' />
+            ? <Account path='/orders' />
             : <Redirect to='/login' />
           }
         </Route>

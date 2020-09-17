@@ -18,6 +18,7 @@ export default class Form extends Component {
       loading: false,
       typePwdState: {}
     }
+
     props.fields.forEach((field, i) => {
       this.state.isValid[i] = field.required ? false : true;
       this.state.isTouched[i] = false
@@ -28,13 +29,19 @@ export default class Form extends Component {
       }
       if (field.context == 'password') { this.state.typePwdState[i] = 'password' }
       let title = field.title ? field.title : field.context
-      if (field.initValue) { this.state.values[formValueKey(title)] = field.initValue }
-      if (field.context == 'select') { this.state.values[formValueKey(title)] = 'US' }
+      if (field.initValue) { this.state.values[formValueKey(title)] = field.initValue; this.state.isValid[i] = true }
     });
 
     this.generateInput = this.generateInput.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmitClick = this.handleSubmitClick.bind(this);
+  }
+
+  componentWillUnmount() {
+    // fix Warning: Can't perform a React state update on an unmounted component
+    this.setState = (state, callback) => {
+      return;
+    };
   }
 
   handleClickTypePwd(i) {
@@ -98,7 +105,7 @@ export default class Form extends Component {
       case 'textarea':
         component = (
           <label>
-            <h3 className={required ? 'required' : ''}>Message</h3>
+            <h3 className={required ? 'required' : ''}>{field.title ? title : 'Message'}</h3>
             <textarea className={this.state.isTouched[i] && validate != false ? this.state.isValid[i] ? ' valid' : ' invalid' : ''}
               onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText, maxLength)}
               placeholder="Enter your message here"
@@ -109,7 +116,7 @@ export default class Form extends Component {
       case 'file':
         component = (
           <label>
-            <h3 className={'text-center' + (required ? ' required' : '')}>Give us an idea</h3>
+            <h3 className={'text-center' + (required ? ' required' : '')}>{field.title ? title : 'Give Us an Idea'}</h3>
             <label className="btn btn-secondary btn-file-upload" htmlFor="uploadFile">Upload a file</label>
             <input onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText, maxLength)}
               type="file" id="uploadFile" name="uploadFile" />
@@ -147,7 +154,7 @@ export default class Form extends Component {
       this.props.fields.forEach((field, ii) => {
         if (field.context == 'password') {
           indices = indices.concat(ii)
-          let title = field.formValueKey(title)
+          let title = formValueKey(field.title)
           pwds = pwds.concat(ii == i ? val : this.state.values[title])
         }
       })
@@ -164,7 +171,7 @@ export default class Form extends Component {
     if ((validate == false) && val.length > 1 && val.length < 255
       || (context == 'email' && validateEmail(val))
       || (['text', 'textarea'].includes(context) && required && val.length > 0 && val.length < (maxLength ? maxLength : 255) && (onlyText ? validateOnlyText(val) ? true : false : true))
-      || (['text', 'textarea'].includes(context) && !required && val.length > 0 && val.length < (maxLength ? maxLength : 255))
+      || (['text', 'textarea'].includes(context) && !required && val.length < (maxLength ? maxLength : 255))
       || (context == 'file' && ((!required && e.target.length == 0) || file.size / 1024 / 1024 < this.state.fileMaxSizeMB))
       || (context == 'password' && validatePwd(pwds, confirmPwd).isValid)
       || (context == 'select')
@@ -228,6 +235,7 @@ export default class Form extends Component {
       }
       if (this.props.uidb64) { values.uidb64 = this.props.uidb64 }
       if (this.props.token) { values.token = this.props.token }
+      if (this.props.addSubmitValues) { values = { ...this.props.addSubmitValues, ...values } }
 
       if (this.props.handleSubmit) {
         this.props.handleSubmit(values)
@@ -321,6 +329,7 @@ Form.propTypes = {
   token: PropTypes.string, // optional (used in "Forgot" views)
   withoutCard: PropTypes.bool, // do not wrap the form in .card
   notJustified: PropTypes.bool, // do not add .justify-content-center to the form's row
+  addSubmitValues: PropTypes.object, // additional values to send with Form values
 };
 
 export function RadioGroupWithPrice(props) {
