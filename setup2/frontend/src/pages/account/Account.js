@@ -316,6 +316,7 @@ class AddAddress extends React.Component {
       url: apiURLs.user.addAddress,
       data: values
     })
+      .catch(err => { if (err.response.status == 401) { window.location.reload() } })
   }
 
   render() {
@@ -360,6 +361,7 @@ class EditAddress extends React.Component {
       url: apiURLs.user.editAddress,
       data: { ...values, id: this.props.match.params.id }
     })
+      .catch(err => { if (err.response.status == 401) { window.location.reload() } })
   }
 
   componentDidMount() {
