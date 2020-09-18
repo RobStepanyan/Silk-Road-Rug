@@ -466,3 +466,45 @@ class ValidatePhoneNumberView(GenericAPIView):
         if s.is_valid():
             return Response({'is_valid': True})
         return Response({'is_valid': False})
+
+
+class CartItemViewSet(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def list(self, request):
+        cart_items = models.CartItem.objects.filter(
+            user=self.request.user)
+        data = []
+        for cart_item in cart_items:
+            serializer = serializers.CartItemSerializer()
+            try:
+                serializer = serializer.save(cart_item=cart_item)
+            except Exception as e:
+                return Response({'error': str(e)})
+            data.append(serializer['data'])
+        return Response(data)
+
+    def create(self, request):
+        pass
+
+    def retrieve(self, request, pk=None):
+        try:
+            cart_item = models.CartItem.objects.get(
+                user=self.request.user, pk=pk)
+        except:
+            return Response({'error': 'Object doesn\'t exists.'})
+        serializer = serializers.CartItemSerializer()
+        serializer = serializer.save(cart_item=cart_item)
+        return Response(serializer['data'])
+
+    def update(self, request, pk=None):
+        pass
+
+    def destroy(self, request, pk=None):
+        try:
+            cart_item = models.CartItem.objects.get(
+                user=self.request.user, pk=pk)
+        except:
+            return Response({'error': 'Object doesn\'t exists.'})
+        cart_item.delete()
+        return Response({'msg': 'Object removed.'})

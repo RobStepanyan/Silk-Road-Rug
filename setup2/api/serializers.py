@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
@@ -16,13 +17,13 @@ class RugSerializer(serializers.ModelSerializer):
 class RugImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RugImage
-        fields = '__all__'
+        exclude = ('rug',)
 
 
 class RugVariationSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RugVariation
-        fields = '__all__'
+        exclude = ('rug',)
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -184,3 +185,18 @@ class ValidatePhoneNumberSerializer(serializers.Serializer):
         number = dict(data)['number']
         validate_international_phonenumber(number)
         return number
+
+
+class CartItemSerializer(serializers.Serializer):
+    def save(self, cart_item):
+        rug = models.Rug.objects.get(id=cart_item.rug.id)
+        rug = RugSerializer(rug).data
+        rug_variation = models.RugVariation.objects.get(
+            id=cart_item.rug_variation.id)
+        rug_variation = RugVariationSerializer(rug_variation).data
+        rug_image = models.RugImage.objects.filter(
+            rug=cart_item.rug.id).first()
+        if not rug_image:
+            raise ObjectDoesNotExist()
+        rug_image = RugImageSerializer(rug_image).data
+        return {'data': {**dict(rug), **dict(rug_variation), **dict(rug_image)}}

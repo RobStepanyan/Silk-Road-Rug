@@ -5,6 +5,7 @@ from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
 router = DefaultRouter()
 router.register(r'rugs', views.RugViewSet, basename='rug')
+router.register(r'user/cart', views.CartItemViewSet, basename='cart')
 urlpatterns = router.urls
 urlpatterns += [
     path('auth/login/', views.LogInView.as_view()),
