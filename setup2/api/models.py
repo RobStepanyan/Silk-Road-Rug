@@ -1,10 +1,11 @@
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
-from .variables import styles, COUNTRIES
+from . import variables
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 
 
-STYLES = [(styles.index(x), x) for x in styles]
+STYLES = [(variables.styles.index(x), x) for x in variables.styles]
 
 
 class Rug(models.Model):
@@ -65,6 +66,38 @@ class RugVariation(models.Model):
         ordering = ['rug', 'width_feet']
 
 
+class RugShippingMethod(models.Model):
+    rug = models.ForeignKey(Rug, on_delete=models.CASCADE,
+                            related_query_name='shipping_methods')
+    Type = models.CharField(
+        choices=variables.SHIPPING_METHODS, max_length=2, db_column='type')
+    price = models.IntegerField(default=0)
+
+
+class RugAdditionalService(models.Model):
+    rug = models.ForeignKey(Rug, on_delete=models.CASCADE,
+                            related_query_name='additional_services')
+    Type = models.CharField(
+        choices=variables.ADDITIONAL_SERVICES, max_length=2, db_column='type')
+    price = models.IntegerField(default=0)
+
+
+class CartItem(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_query_name='cart_items')
+    rug = models.ForeignKey(Rug, on_delete=models.CASCADE)
+    rug_variation = models.ForeignKey(RugVariation, on_delete=models.CASCADE)
+
+    selecteds = ArrayField(
+        models.CharField(
+            max_length=2, choices=variables.ADDITIONAL_SERVICES + variables.SHIPPING_METHODS,
+        ),
+        size=max((len(variables.ADDITIONAL_SERVICES),
+                  len(variables.SHIPPING_METHODS))),
+        null=True, default=None, blank=True
+    )
+
+
 class PendingUserPersonalInfoUpdate(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     email_to = models.EmailField()
@@ -80,7 +113,7 @@ class PendingUserPwdChange(models.Model):
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=255)
-    country = models.CharField(max_length=2, choices=COUNTRIES)
+    country = models.CharField(max_length=2, choices=variables.COUNTRIES)
     address_line_1 = models.CharField(max_length=255)
     address_line_2 = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
