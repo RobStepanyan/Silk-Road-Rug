@@ -391,7 +391,7 @@ DEFAULT_SHIPPING_METHODS = (
     ('WC', 0),
     ('GS', 200),
 )
-
+# Avoid dupliacte keys in shippig methods and additional services (key example: 'XY')
 ADDITIONAL_SERVICES = (
     ('IN', 'Insurance'),
     ('ES', 'Expedited Shipping'),

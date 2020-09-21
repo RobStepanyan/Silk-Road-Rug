@@ -200,3 +200,9 @@ class CartItemSerializer(serializers.Serializer):
             raise ObjectDoesNotExist()
         rug_image = RugImageSerializer(rug_image).data
         return {'data': {**dict(rug), **dict(rug_variation), **dict(rug_image)}}
+
+
+class CartItemModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.CartItem
+        fields = '__all__'

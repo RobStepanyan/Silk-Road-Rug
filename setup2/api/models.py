@@ -38,7 +38,7 @@ class RugImage(models.Model):
     image = models.ImageField(upload_to='rugs')
 
     def __str__(self):
-        return ''
+        return self.rug.name + ' \'s Image'
 
 
 class RugVariation(models.Model):
@@ -60,7 +60,7 @@ class RugVariation(models.Model):
         verbose_name="Is Sample", default=False)
 
     def __str__(self):
-        return ''
+        return self.rug.name + ' Variation'
 
     class Meta:
         ordering = ['rug', 'width_feet']

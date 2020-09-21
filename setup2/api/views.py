@@ -470,8 +470,12 @@ class ValidatePhoneNumberView(GenericAPIView):
 
 class CartItemViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
+    serializer_class = serializers.CartItemModelSerializer
 
     def list(self, request):
+        """
+        Method: GET
+        """
         cart_items = models.CartItem.objects.filter(
             user=self.request.user)
         data = []
@@ -484,10 +488,32 @@ class CartItemViewSet(viewsets.ViewSet):
             data.append(serializer['data'])
         return Response(data)
 
+    @method_decorator(csrf_protect)
     def create(self, request):
-        pass
+        """
+        Method: POST
+        Check for duplicate if there's duplicate with ALL details
+        """
+        data = dict(self.request.data)
+        data['selecteds'] = data.get('selecteds', ['WC'])
+        wrong_fields = ['rug', 'rug_variation']
+        for field in wrong_fields:
+            if isinstance(data[field], (list, tuple)):
+                data[field] = data[field][0]
+
+        try:
+            serializer = self.serializer_class(
+                data={**data, 'user': self.request.user.id})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+        except Exception as e:
+            return Response({'error': str(e)})
+        return Response({'msg': 'Object created.'})
 
     def retrieve(self, request, pk=None):
+        """
+        Method: GET
+        """
         try:
             cart_item = models.CartItem.objects.get(
                 user=self.request.user, pk=pk)
@@ -497,10 +523,39 @@ class CartItemViewSet(viewsets.ViewSet):
         serializer = serializer.save(cart_item=cart_item)
         return Response(serializer['data'])
 
+    @method_decorator(csrf_protect)
     def update(self, request, pk=None):
-        pass
+        """
+        Method: PUT
+        Change Rug Variation and CartItem's Selecteds
+        """
+        data = dict(self.request.data)
+        data['selecteds'] = data.get('selecteds', [])
+        wrong_fields = ['rug', 'rug_variation']
+        for field in wrong_fields:
+            if isinstance(data[field], (list, tuple)):
+                data[field] = data[field][0]
+
+        if not pk:
+            return Response({'error': 'Object doesn\'t exists.'})
+        try:
+            instance = models.CartItem.objects.get(id=pk)
+        except:
+            return Response({'error': 'Object doesn\'t exists.'})
+
+        try:
+            serializer = self.serializer_class(instance,
+                                               data={**data, 'user': self.request.user.id})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+        except Exception as e:
+            return Response({'error': str(e)})
+        return Response({'msg': 'Object updated.'})
 
     def destroy(self, request, pk=None):
+        """
+        Method: DELETE
+        """
         try:
             cart_item = models.CartItem.objects.get(
                 user=self.request.user, pk=pk)
