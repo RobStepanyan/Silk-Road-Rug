@@ -27,6 +27,18 @@ class Rug(models.Model):
     desc = models.TextField(
         verbose_name='Description', blank=True, null=True)
     sku = models.CharField(verbose_name='SKU*', max_length=255)
+    wc = models.IntegerField(
+        verbose_name='Will-Call Pick Up (price)', default=0)
+    gs = models.IntegerField(
+        verbose_name='Ground Shipping (price)', default=100)
+    In = models.IntegerField(
+        verbose_name='Insurance (price)', default=75)
+    es = models.IntegerField(
+        verbose_name='Expedited Shipping (price)', default=150)
+    sr = models.IntegerField(
+        verbose_name='Signature Release Required (price)', default=0)
+    wg = models.IntegerField(
+        verbose_name='White Glove Delivery (price)', default=50)
 
     def __str__(self):
         return self.name if self.name else ''
@@ -64,22 +76,6 @@ class RugVariation(models.Model):
 
     class Meta:
         ordering = ['rug', 'width_feet']
-
-
-class RugShippingMethod(models.Model):
-    rug = models.ForeignKey(Rug, on_delete=models.CASCADE,
-                            related_query_name='shipping_methods')
-    Type = models.CharField(
-        choices=variables.SHIPPING_METHODS, max_length=2, db_column='type')
-    price = models.IntegerField(default=0)
-
-
-class RugAdditionalService(models.Model):
-    rug = models.ForeignKey(Rug, on_delete=models.CASCADE,
-                            related_query_name='additional_services')
-    Type = models.CharField(
-        choices=variables.ADDITIONAL_SERVICES, max_length=2, db_column='type')
-    price = models.IntegerField(default=0)
 
 
 class CartItem(models.Model):

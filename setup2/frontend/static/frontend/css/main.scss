@@ -38,8 +38,6 @@ body {
 }
 
 section {
-    content-visibility: auto;
-    contain-intrinsic-size: 30vh 100vw;
     margin-bottom: 2px;
     padding: $navbar-logo-height + 2*$padding 0;
 
@@ -489,6 +487,10 @@ ul.small {
         transition: $transition;
         min-height: 100vh;
     }
+
+    ul:last-of-type() {
+        margin-bottom: 3*$margin;
+    }
 }
 
 #filterToggle {
@@ -612,6 +614,20 @@ ul.small {
     right: 2*$margin;
     height: 25px;
     width: 25px;
+    transition: $transition;
+    cursor: pointer;
+}
+
+#cart .close-btn {
+    position: absolute;
+    top: $margin;
+    right: $margin;
+
+    &,
+    & svg {
+        height: 2*$margin;
+        width: 2*$margin;
+    }
 }
 
 .svg-btn {

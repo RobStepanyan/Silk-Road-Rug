@@ -488,7 +488,6 @@ class CartItemViewSet(viewsets.ViewSet):
             data.append(serializer['data'])
         return Response(data)
 
-    @method_decorator(csrf_protect)
     def create(self, request):
         """
         Method: POST
@@ -501,9 +500,14 @@ class CartItemViewSet(viewsets.ViewSet):
             if isinstance(data[field], (list, tuple)):
                 data[field] = data[field][0]
 
+        data = {**data, 'user': self.request.user.id}
+
+        if models.CartItem.objects.filter(**data).exists():
+            # Don't edit error (see Rug.js)
+            return Response({'error': 'Object already exists.'})
         try:
             serializer = self.serializer_class(
-                data={**data, 'user': self.request.user.id})
+                data=data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
         except Exception as e:

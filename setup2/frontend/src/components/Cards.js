@@ -5,7 +5,6 @@ import {
   RadioGroup, CheckboxGroup, RangeSliderGroup
 } from './Form';
 import { formatPrice } from '../other/functions';
-import { hrefURLs } from '../other/variables';
 
 
 export default function Card(props) {
@@ -47,15 +46,15 @@ export function CartCard(props) {
   return (
     <div className="cart card" >
       <div className="container">
-        <div onClick={props.onClickClose} className="navbar-icon close-btn">
-          <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" ><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z" class=""></path></svg>
+        <div onClick={props.onClickRemove} className="navbar-icon close-btn">
+          <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" ><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>
         </div>
         <div className="row">
           <div className="col-12 col-sm-4 p-0">
-            <img src={props.imgSrc} alt="" />
+            <img src={props.image} alt="" />
           </div>
           <div className="col p-0">
-            <h2>{props.heading}</h2>
+            <h2>{props.name}</h2>
             <h3 className="price">{formatPrice(props.price) + (props.additionalCosts ? ` (+${formatPrice(props.additionalCosts)})` : '')}</h3>
             <h4>Details</h4>
             <ul className="style-default">
@@ -65,6 +64,9 @@ export function CartCard(props) {
               }
               {props.color &&
                 <li>Color: {props.color}</li>
+              }
+              {props.sku &&
+                <li>SKU: {props.sku}</li>
               }
             </ul>
 
@@ -106,7 +108,7 @@ export function CartCard(props) {
 
 CartCard.propTypes = {
   keyProp: PropTypes.string.isRequired,
-  heading: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   size: PropTypes.string.isRequired,
   style: PropTypes.string,
   color: PropTypes.string,

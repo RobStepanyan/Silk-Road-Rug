@@ -386,7 +386,7 @@ RadioGroupWithPrice.propTypes = {
   onChange: PropTypes.func.isRequired,
   priceSign: PropTypes.string,
 }
-RadioGroup.defaultProps = {
+RadioGroupWithPrice.defaultProps = {
   priceSign: '+'
 }
 

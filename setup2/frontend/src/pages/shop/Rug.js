@@ -1,5 +1,5 @@
 import React from 'react';
-import { apiURLs, styles } from '../../other/variables';
+import { apiHeaders, apiURLs, styles } from '../../other/variables';
 import { formatPrice, formatSize } from '../../other/functions';
 import axios from 'axios';
 import NavbarFooter from '../../components/NavbarFooter';
@@ -17,7 +17,10 @@ export default class Rug extends React.Component {
       selectedImg: 0,
       // Vrtn - Rug Variation
       selectedVrtn: 0,
+      alert: null,
     }
+
+    this.handleAddToCart = this.handleAddToCart.bind(this)
   }
 
   getData() {
@@ -41,6 +44,25 @@ export default class Rug extends React.Component {
 
   componentDidMount() {
     this.getData()
+  }
+
+  handleAddToCart() {
+    axios({
+      method: 'post',
+      headers: apiHeaders.authorization,
+      url: apiURLs.user.cart.create,
+      data: {
+        rug: this.state.data.id,
+        rug_variation: this.state.data.rug_variations[this.state.selectedVrtn].id
+      }
+    })
+      .then(res => {
+        if (res.data.msg) {
+          this.setState({ alert: 'Added to Cart' })
+        } else if (res.data.error && res.data.error == 'Object already exists.') {
+          this.setState({ alert: 'Already in Cart' })
+        }
+      })
   }
 
   render() {
@@ -76,6 +98,9 @@ export default class Rug extends React.Component {
           ? (
             <section>
               <div className="container">
+                {this.state.alert &&
+                  <div className="alert success">{this.state.alert}</div>
+                }
                 <div className="row">
                   <div className="col-12 col-sm-6">
                     <img className="w-100 transition" src={data.rug_images[this.state.selectedImg]}></img>
@@ -120,7 +145,7 @@ export default class Rug extends React.Component {
                     {/* *********************** */}
                     <div className="row">
                       <a href="" className="btn card-btn btn-primary">Buy Now</a>
-                      <a href="" className="btn card-btn btn-secondary">Add to Cart</a>
+                      <div onClick={this.handleAddToCart} className="btn card-btn btn-secondary">Add to Cart</div>
                     </div>
                   </div>
                 </div>

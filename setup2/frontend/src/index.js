@@ -40,12 +40,7 @@ function App() {
         <Route exact path='/services/rug-cleaning' component={RugCleaning} />
         <Route exact path='/services/rug-restoration' component={RugRestoration} />
         <Route exact path='/contact-us' component={ContactUs} />
-        <Route exact path='/cart'>
-          {isAuthed()
-            ? <Cart />
-            : <Redirect to='/login' />
-          }
-        </Route>
+        <Route exact path='/cart' component={Cart} />
         <Route exact path='/shop' component={Shop} />
         <Route exact path='/rug/:id' component={Rug} />
         <Route exact path='/account'>

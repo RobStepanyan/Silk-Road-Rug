@@ -387,21 +387,10 @@ SHIPPING_METHODS = (
     ('GS', 'Ground Shipping'),
 )
 
-DEFAULT_SHIPPING_METHODS = (
-    ('WC', 0),
-    ('GS', 200),
-)
 # Avoid dupliacte keys in shippig methods and additional services (key example: 'XY')
 ADDITIONAL_SERVICES = (
     ('IN', 'Insurance'),
     ('ES', 'Expedited Shipping'),
     ('SR', 'Signature Release Required'),
     ('WG', 'White Glove Delivery'),
-)
-
-DEFAULT_ADDITIONAL_SERVICES = (
-    ('IN', 200),
-    ('ES', 200),
-    ('SR', 200),
-    ('WG', 200),
 )

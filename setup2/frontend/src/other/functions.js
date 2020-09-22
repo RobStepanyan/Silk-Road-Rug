@@ -88,12 +88,13 @@ export function calculateAdditionalCosts(selectedRadios, selectedCheckboxes, dat
   data.forEach((data, i) => {
     addCosts[i] = 0
     Object.keys(cartCardInputsOrder).forEach(key => {
+
       if (key == 'shipping') {
-        addCosts[i] += data.pricesUSD[toCamelCase(cartCardInputsOrder[key][selectedRadios[i]['shipping']])]
+        addCosts[i] += data[Object.values(cartCardInputsOrder[key])[selectedRadios[i]['shipping']]]
       } else {
-        cartCardInputsOrder[key].forEach((value, valueIndex) => {
-          if (selectedCheckboxes[i][key].includes(valueIndex)) {
-            addCosts[i] += data.pricesUSD[toCamelCase(value)]
+        Object.entries(cartCardInputsOrder[key]).forEach((value, ind) => {
+          if (selectedCheckboxes[i][key].includes(ind)) {
+            addCosts[i] += data[value[1]]
           }
         })
       }
@@ -106,7 +107,7 @@ export function calculatePriceSum(data, addCosts) {
   let sum = 0;
   if (data) {
     data.forEach(data => {
-      sum += data.pricesUSD['price']
+      sum += data.base_price
     })
   }
   if (addCosts) {
