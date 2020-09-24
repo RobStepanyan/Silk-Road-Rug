@@ -325,13 +325,15 @@ input[type="password"] {
   color: c(primary);
 }
 
+#checkoutToggle,
 #filterToggle {
   background-color: c(dark2);
   box-shadow: $shadow5;
   border-image-source: g(yellow) !important;
 
+  h3,
   svg {
-    color: c(primary);
+    color: c(primary) !important;
   }
 }
 
@@ -489,4 +491,28 @@ a.with-underline {
 
 .yellow-square {
   border-color: c(primary) !important;
+}
+
+.checkout-sidebar {
+  background-color: c(dark2);
+  box-shadow: $shadow2;
+  border-color: transparent !important;
+
+  hr {
+    background-color: c(dark5);
+  }
+
+  &.toggled {
+    background-color: c(dark3);
+    box-shadow: $shadow3;
+    border-color: c(primary) !important;
+
+    hr {
+      background-color: c(dark6);
+    }
+  }
+
+  svg:hover {
+    color: c(primary) !important;
+  }
 }

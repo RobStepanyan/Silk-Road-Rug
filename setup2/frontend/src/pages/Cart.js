@@ -17,6 +17,7 @@ export default class Cart extends React.Component {
       itemsQuanity: 4,
       isAuthed: false,
       data: [],
+      toggled: false,
     }
   }
 
@@ -119,49 +120,64 @@ export default class Cart extends React.Component {
       <NavbarFooter>
         <section id="cart">
           <div className="container">
-            <h1 className="text-center">Your Cart</h1>
+            <h1 className="text-center">Your Cart ({this.state.data.length ? this.state.data.length : 0})</h1>
             {this.state.isAuthed
               ? <>{this.state.data.length
-                ? <>
-                  <div className="cart-header">
-                    <h2>Order Total</h2>
-                    <ul>
-                      {this.state.data.map((data, i) => {
-                        return (
-                          <li key={i}>
-                            <div className="col p-0">
-                              {data.name}
-                              <span className="price">
-                                {formatPrice(data.base_price)}
-                              </span>
-                            </div>
-                          </li>
-                        )
-                      })
-                      }
-                    </ul>
-                    <hr />
-                    <div className="total">
-                      <p className="price">{formatPrice(calculatePriceSum(this.state.data, 0))}</p>
-                      <p className="price">{'+' + formatPrice(calculatePriceSum(0, this.state.additionalCosts))}</p>
-                      <h3 className="price">{formatPrice(calculatePriceSum(this.state.data, this.state.additionalCosts))}</h3>
+                ? <div className="row mh-50">
+                  <div className="col">
+                    {data.map((data, i) => {
+                      return (
+                        <CartCard
+                          key={String(i)} keyProp={String(i)}
+                          name={data.name} size={formatSize(data)} style={styles[data.style]}
+                          sku={data.sku} color={data.color} image={data.image}
+                          price={data.base_price} additionalCosts={this.state.additionalCosts[i]}
+                          inputs={inputs[i]} selectedId={this.state.selectedRadios[String(i)]} selectedIds={this.state.selectedCheckboxes[String(i)]}
+                          onClickRemove={() => this.handleClickRemove(i)}
+                          onChangeRadio={(keyProp, name, id) => this.handleRadioWithPriceChange(keyProp, name, id)}
+                          onChangeCheckbox={(keyProp, name, id) => this.handleCheckboxWithPriceChange(keyProp, name, id)} />
+                      )
+                    })}
+                  </div>
+
+                  <div className="col-auto p-0">
+                    <div onClick={() => this.setState({ toggled: !this.state.toggled })} id="checkoutToggle"
+                      className={this.state.toggled ? 'toggled' : ''}><h3>Checkout</h3></div>
+                    <div className={"checkout-sidebar cart-header" + (this.state.toggled ? ' toggled' : '')}>
+                      <div onClick={() => this.setState({ toggled: !this.state.toggled })} className="svg-btn">
+                        <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"></path></svg>
+                      </div>
+                      <h3>Order Total</h3>
+                      <ul>
+                        {this.state.data.map((data, i) => {
+                          return (
+                            <li key={i}>
+                              <div className="col p-0">
+                                {data.name}
+                                <span className="price">
+                                  {formatPrice(data.base_price)}
+                                </span>
+                              </div>
+                            </li>
+                          )
+                        })
+                        }
+                      </ul>
+                      <hr />
+                      <div className="total">
+                        <p className="price">{formatPrice(calculatePriceSum(this.state.data, 0))}</p>
+                        <p className="price">{'+' + formatPrice(calculatePriceSum(0, this.state.additionalCosts))}</p>
+                        <h3 className="price">{formatPrice(calculatePriceSum(this.state.data, this.state.additionalCosts))}</h3>
+                      </div>
+                      <div className="row">
+                        <div className="btn btn-primary ml-auto">Checkout</div>
+                      </div>
+
                     </div>
                   </div>
-                  {data.map((data, i) => {
-                    return (
-                      <CartCard
-                        key={String(i)} keyProp={String(i)}
-                        name={data.name} size={formatSize(data)} style={styles[data.style]}
-                        sku={data.sku} color={data.color} image={data.image}
-                        price={data.base_price} additionalCosts={this.state.additionalCosts[i]}
-                        inputs={inputs[i]} selectedId={this.state.selectedRadios[String(i)]} selectedIds={this.state.selectedCheckboxes[String(i)]}
-                        onClickRemove={() => this.handleClickRemove(i)}
-                        onChangeRadio={(keyProp, name, id) => this.handleRadioWithPriceChange(keyProp, name, id)}
-                        onChangeCheckbox={(keyProp, name, id) => this.handleCheckboxWithPriceChange(keyProp, name, id)} />
-                    )
-                  })}
-                </>
-                : <div className="row mh-50">
+                </div>
+                :
+                <div className="row mh-50">
                   <div className="col-12 m-auto">
                     <h2 className="text-center mt-n5">Your Cart is Empty</h2>
                     <p className="text-center">Add Rugs to your card so they will appear here.</p>
@@ -171,7 +187,8 @@ export default class Cart extends React.Component {
                   </div>
                 </div>
               } </>
-              : <div className="row mh-50">
+              :
+              <div className="row mh-50">
                 <div className="col-12 m-auto">
                   <h2 className="text-center mt-n5 mb-3">Please Authorize to Continue</h2>
                   <div className="d-flex justify-content-center">

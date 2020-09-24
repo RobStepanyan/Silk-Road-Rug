@@ -244,6 +244,12 @@ input[type="password"] {
     }
 }
 
+#checkoutToggle {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    text-transform: uppercase;
+}
+
 .dropdown-heading {
     font-size: 1rem;
     font-weight: bold;

@@ -42,7 +42,7 @@ section {
     padding: $navbar-logo-height + 2*$padding 0;
 
     @include media-breakpoint-up(lg) {
-        padding: $navbar-logo-height-lg + 2*$padding;
+        padding: $navbar-logo-height-lg + 2*$padding 0;
     }
 
     &:not(#account) hr+p {
@@ -493,6 +493,7 @@ ul.small {
     }
 }
 
+#checkoutToggle,
 #filterToggle {
     display: flex;
     position: fixed;
@@ -520,6 +521,73 @@ ul.small {
     @include media-breakpoint-up(lg) {
         display: none;
     }
+}
+
+#checkoutToggle {
+    right: 0;
+    top: 150px;
+    height: min-content;
+    padding: $padding * 2 / 3 0;
+
+    h3 {
+        margin: auto;
+    }
+
+    &.toggled {
+        opacity: 0;
+        display: none;
+    }
+}
+
+.checkout-sidebar {
+    top: 150px;
+    max-width: 100%;
+    width: 350px;
+    position: fixed;
+    right: 0;
+    z-index: 1000;
+    border: 2px solid;
+    padding: $padding;
+    height: min-content;
+
+    .svg-btn {
+        display: none;
+    }
+
+    @include media-breakpoint-down(md) {
+        &:not(.toggled) {
+            transform: translateX(100%);
+            transition: $transition;
+        }
+    }
+
+    &.toggled {
+        padding: 2*$padding;
+        position: fixed;
+        overflow-y: auto;
+        transition: $transition;
+        transform: translateX(0);
+
+        .svg-btn {
+            display: contents;
+        }
+    }
+
+    @include media-breakpoint-up(lg) {
+        position: static;
+        transform: translateX(0);
+        top: $navbar-logo-height-lg + 2*$padding;
+    }
+
+    svg {
+        height: 40px !important;
+        width: 40px !important;
+        transform: translate(25%, -25%);
+    }
+}
+
+.d-contents {
+    display: contents;
 }
 
 .mapouter {

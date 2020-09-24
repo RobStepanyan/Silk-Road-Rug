@@ -18,6 +18,7 @@ export default class Rug extends React.Component {
       // Vrtn - Rug Variation
       selectedVrtn: 0,
       alert: null,
+      loading: false,
     }
 
     this.handleAddToCart = this.handleAddToCart.bind(this)
@@ -47,6 +48,7 @@ export default class Rug extends React.Component {
   }
 
   handleAddToCart() {
+    this.setState({ loading: true })
     axios({
       method: 'post',
       headers: apiHeaders.authorization,
@@ -62,7 +64,9 @@ export default class Rug extends React.Component {
         } else if (res.data.error && res.data.error == 'Object already exists.') {
           this.setState({ alert: 'Already in Cart' })
         }
+        this.setState({ loading: false })
       })
+      .catch({ loading: false })
   }
 
   render() {
@@ -92,6 +96,7 @@ export default class Rug extends React.Component {
       }
     }
 
+    { if (this.state.loading) { return <Loading /> } }
     return (
       <NavbarFooter>
         {data
