@@ -164,6 +164,7 @@ section {
     }
 
     &+.angle {
+        display: flex;
         bottom: 2*$margin;
         width: $landing-angle-height;
         height: $landing-angle-height;
@@ -182,6 +183,7 @@ section {
             height: 100%;
             color: (white);
             transform: rotate(90deg);
+            margin: auto;
         }
     }
 }
