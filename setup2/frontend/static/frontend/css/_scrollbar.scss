@@ -4,7 +4,8 @@
 }
 
 ::-webkit-scrollbar-thumb {
-    background: c(gray3);
+    background: linear-gradient(180deg, c(gray2) 0%, c(gray3) 50%, c(gray2) 100%);
+    box-shadow: 0px 0px 20px c(black);
 }
 
 ::-webkit-scrollbar-track {
