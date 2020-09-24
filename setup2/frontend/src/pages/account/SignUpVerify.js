@@ -19,6 +19,7 @@ export default class SignUpVerify extends React.Component {
       this.setState({ isTokenValid: data.is_valid ? true : false, loading: false })
       if (data.is_valid) { setJWTCookie(data.token) }
     })
+      .catch(this.setState({ loading: false }))
   }
 
   render() {

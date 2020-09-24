@@ -393,6 +393,7 @@ class EditAddress extends React.Component {
           this.setState({ fields, loading: false })
         }
       })
+      .catch(this.setState({ loading: false }))
   }
 
   render() {

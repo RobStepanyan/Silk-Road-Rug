@@ -15,6 +15,7 @@ export default class AccountUpdateVerify extends React.Component {
       let { data } = response
       this.setState({ isTokenValid: data.is_valid ? true : false, loading: false })
     })
+      .catch(this.setState({ loading: false }))
   }
 
   render() {
