@@ -531,7 +531,7 @@ class CartItemViewSet(viewsets.ViewSet):
     def update(self, request, pk=None):
         """
         Method: PUT
-        Change Rug Variation and CartItem's Selecteds
+        Change Rug Variation and CartItem's Selecteds (All Fields are Required)
         """
         data = dict(self.request.data)
         data['selecteds'] = data.get('selecteds', [])
@@ -541,7 +541,7 @@ class CartItemViewSet(viewsets.ViewSet):
                 data[field] = data[field][0]
 
         if not pk:
-            return Response({'error': 'Object doesn\'t exists.'})
+            return Response({'error': 'Invalid object id.'})
         try:
             instance = models.CartItem.objects.get(id=pk)
         except:
@@ -550,6 +550,34 @@ class CartItemViewSet(viewsets.ViewSet):
         try:
             serializer = self.serializer_class(instance,
                                                data={**data, 'user': self.request.user.id})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+        except Exception as e:
+            return Response({'error': str(e)})
+        return Response({'msg': 'Object updated.'})
+
+    def partial_update(self, request, pk=None):
+        """
+        Method: PATCH
+        Update Rug Variation or/and CartItem's Selecteds
+        """
+        data = dict(self.request.data)
+        data['selecteds'] = data.get('selecteds', [])
+        wrong_fields = ['rug', 'rug_variation']
+        for field in wrong_fields:
+            if field in data and isinstance(data[field], (list, tuple)):
+                data[field] = data[field][0]
+
+        if not pk:
+            return Response({'error': 'Invalid object id.'})
+        try:
+            instance = models.CartItem.objects.get(id=pk)
+        except:
+            return Response({'error': 'Object doesn\'t exists.'})
+
+        try:
+            serializer = self.serializer_class(instance,
+                                               data={**data, 'user': self.request.user.id}, partial=True)
             serializer.is_valid(raise_exception=True)
             serializer.save()
         except Exception as e:
