@@ -29,6 +29,8 @@ export default class Cart extends React.Component {
       selectedRadios: selectedRadios,
       additionalCosts: calculateAdditionalCosts(this.state.selectedRadios, this.state.selectedCheckboxes, this.state.data)
     })
+
+    this.sendPartialUpdate(keyProp)
   }
 
   handleCheckboxWithPriceChange(keyProp, name, id) {
@@ -41,6 +43,38 @@ export default class Cart extends React.Component {
     this.setState({
       selectedCheckboxes: selectedCheckboxes,
       additionalCosts: calculateAdditionalCosts(this.state.selectedRadios, this.state.selectedCheckboxes, this.state.data)
+    })
+
+    this.sendPartialUpdate(keyProp)
+  }
+
+  sendPartialUpdate(keyProp) {
+    // send update api request to update CartItem on state change
+    let pk = this.state.data[keyProp].id
+
+    let { selectedCheckboxes, selectedRadios } = this.state
+    selectedCheckboxes = selectedCheckboxes[keyProp]
+    selectedRadios = selectedRadios[keyProp]
+
+    let selecteds = []
+    Object.entries(selectedRadios).map(entry => {
+      let [key, val] = entry
+      selecteds.push(Object.values(cartCardInputsOrder[key])[val].toUpperCase())
+    })
+    Object.entries(selectedCheckboxes).map(entry => {
+      let [key, val] = entry
+      val.map(selCheck => {
+        selecteds.push(Object.values(cartCardInputsOrder[key])[selCheck].toUpperCase())
+      })
+    })
+    console.log(selecteds)
+    axios({
+      method: 'patch',
+      headers: apiHeaders.authorization,
+      url: apiURLs.user.cart.partialUpdate(pk),
+      data: {
+        selecteds
+      }
     })
   }
 

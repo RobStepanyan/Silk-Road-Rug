@@ -569,6 +569,8 @@ ul.small {
         overflow-y: auto;
         transition: $transition;
         transform: translateX(0);
+        max-height: 50vh;
+        overflow: auto;
 
         .svg-btn {
             display: contents;

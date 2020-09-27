@@ -213,6 +213,7 @@ export const apiURLs = {
       delete: id => apiBase + `user/cart/${id}/`,
       create: apiBase + 'user/cart/',
       update: id => apiBase + `user/cart/${id}/`,
+      partialUpdate: id => apiBase + `user/cart/${id}/`,
     }
   },
 }
