@@ -529,7 +529,6 @@ ul.small {
 
 #checkoutToggle {
     right: 0;
-    top: 150px;
     height: min-content;
     padding: $padding * 2 / 3 0;
 
@@ -543,8 +542,20 @@ ul.small {
     }
 }
 
+#checkoutToggle,
 .checkout-sidebar {
-    top: 150px;
+    top: 2 * ($navbar-logo-height + 2*$padding) + 43.75px + $margin;
+
+    @include media-breakpoint-up(sm) {
+        top: 2 * ($navbar-logo-height + 2*$padding) + 55px + $margin;
+    }
+
+    @include media-breakpoint-up(lg) {
+        top: 2 * ($navbar-logo-height-lg + 2*$padding) + 65px + $margin;
+    }
+}
+
+.checkout-sidebar {
     max-width: 100%;
     width: 350px;
     position: fixed;
