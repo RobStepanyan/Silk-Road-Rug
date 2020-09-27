@@ -67,7 +67,7 @@ export default class Cart extends React.Component {
         selecteds.push(Object.values(cartCardInputsOrder[key])[selCheck].toUpperCase())
       })
     })
-    console.log(selecteds)
+
     axios({
       method: 'patch',
       headers: apiHeaders.authorization,

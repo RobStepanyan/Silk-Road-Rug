@@ -107,12 +107,12 @@ export function calculatePriceSum(data, addCosts) {
   let sum = 0;
   if (data) {
     data.forEach(data => {
-      sum += data.base_price
+      sum += parseInt(data.base_price)
     })
   }
   if (addCosts) {
     Object.values(addCosts).forEach(cost => {
-      sum += cost
+      sum += parseInt(cost)
     })
   }
   return sum;
