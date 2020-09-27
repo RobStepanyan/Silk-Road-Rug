@@ -519,7 +519,9 @@ ul.small {
         width: 1.5*$margin;
         margin: auto;
     }
+}
 
+#filterToggle {
     @include media-breakpoint-up(lg) {
         display: none;
     }
@@ -556,12 +558,13 @@ ul.small {
         display: none;
     }
 
-    @include media-breakpoint-down(md) {
-        &:not(.toggled) {
-            transform: translateX(100%);
-            transition: $transition;
-        }
+    // @include media-breakpoint-down(md) {
+    &:not(.toggled) {
+        transform: translateX(100%);
+        transition: $transition;
     }
+
+    // }
 
     &.toggled {
         padding: 2*$padding;
@@ -577,11 +580,11 @@ ul.small {
         }
     }
 
-    @include media-breakpoint-up(lg) {
-        position: static;
-        transform: translateX(0);
-        top: $navbar-logo-height-lg + 2*$padding;
-    }
+    // @include media-breakpoint-up(lg) {
+    //     position: static;
+    //     transform: translateX(0);
+    //     top: $navbar-logo-height-lg + 2*$padding;
+    // }
 
     svg {
         height: 40px !important;
