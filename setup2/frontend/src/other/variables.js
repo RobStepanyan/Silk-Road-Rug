@@ -18,13 +18,15 @@ export const pwdErrorMsgs = {
   diff: 'Passwords didn\'t match',
 }
 
+// Same as in models.py
 export const cartCardInputsOrder = {
   shipping: {
-    'Will-Call Pick Up': 'wc', 'Ground Shipping': 'gs'
+    'Will-Call Pick Up': 'WC', 'Ground Shipping': 'GS',
+    'Expedited Shipping': 'ES',
   },
   additional: {
-    'Insurance': 'In', 'Expedited Shipping': 'es',
-    'Signature Release Required': 'sr', 'White Glove Delivery': 'wg'
+    'Insurance': 'IN',
+    'Signature Release Required': 'SR', 'White Glove Delivery': 'WG'
   }
 }
 

@@ -385,12 +385,12 @@ COUNTRIES = (
 SHIPPING_METHODS = (
     ('WC', 'Will-Call Pick Up'),
     ('GS', 'Ground Shipping'),
+    ('ES', 'Expedited Shipping'),
 )
 
 # Avoid dupliacte keys in shippig methods and additional services (key example: 'XY')
 ADDITIONAL_SERVICES = (
     ('IN', 'Insurance'),
-    ('ES', 'Expedited Shipping'),
     ('SR', 'Signature Release Required'),
     ('WG', 'White Glove Delivery'),
 )

@@ -200,7 +200,15 @@ class CartItemSerializer(serializers.Serializer):
             raise ObjectDoesNotExist()
         rug_image = RugImageSerializer(rug_image).data
 
-        return {'data': {**dict(rug), **dict(rug_variation), **dict(rug_image), 'id': cart_item.id}}
+        return {
+            'data': {
+                **dict(rug),
+                **dict(rug_variation),
+                **dict(rug_image),
+                'id': cart_item.id,
+                'selecteds': cart_item.selecteds
+            }
+        }
 
 
 class CartItemModelSerializer(serializers.ModelSerializer):

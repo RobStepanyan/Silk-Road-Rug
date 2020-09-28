@@ -9,8 +9,8 @@ class RugAdminForm(forms.ModelForm):
         fields = (
             'name', 'style',
             'desc',  'sku',
-            'wc', 'gs', 'In',
-            'es', 'sr', 'wg',
+            'WC', 'GS', 'IN',
+            'ES', 'SR', 'WG',
         )
 
     images = forms.FileField(

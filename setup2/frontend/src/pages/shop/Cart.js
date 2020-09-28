@@ -59,12 +59,12 @@ export default class Cart extends React.Component {
     let selecteds = []
     Object.entries(selectedRadios).map(entry => {
       let [key, val] = entry
-      selecteds.push(Object.values(cartCardInputsOrder[key])[val].toUpperCase())
+      selecteds.push(Object.values(cartCardInputsOrder[key])[val])
     })
     Object.entries(selectedCheckboxes).map(entry => {
       let [key, val] = entry
       val.map(selCheck => {
-        selecteds.push(Object.values(cartCardInputsOrder[key])[selCheck].toUpperCase())
+        selecteds.push(Object.values(cartCardInputsOrder[key])[selCheck])
       })
     })
 
@@ -108,9 +108,36 @@ export default class Cart extends React.Component {
           additionalCosts[i] = 0
           selectedRadios[i] = {}
           selectedCheckboxes[i] = {}
-          selectedRadios[i]['shipping'] = 0 //iterate through data and check if radio's first item is not disabled
-          selectedCheckboxes[i]['additional'] = [] // also extract shipping & additioal from data
         }
+
+        let types = {
+          shipping: 'radio',
+          additional: 'checkbox',
+        }
+
+        // Setting selected Input using CartItem's selecteds field
+        data.map((cartItem, i) => {
+          Object.entries(types).map(entry => {
+            let [key, val] = entry
+            if (val == 'radio') {
+              selectedRadios[i][key] = 0 // setting default value
+            } else {
+              selectedCheckboxes[i][key] = []
+            }
+            cartItem.selecteds.map(sel => {
+              if (Object.values(cartCardInputsOrder[key]).includes(sel)) {
+                if (val == 'radio') {
+                  selectedRadios[i][key] = Object.values(cartCardInputsOrder[key]).indexOf(sel)
+                } else {
+                  selectedCheckboxes[i][key].push(Object.values(cartCardInputsOrder[key]).indexOf(sel))
+                }
+              }
+            })
+          })
+        })
+
+        additionalCosts = calculateAdditionalCosts(selectedRadios, selectedCheckboxes, data)
+        console.log(selectedRadios)
 
         this.setState({
           data,

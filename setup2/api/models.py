@@ -27,17 +27,17 @@ class Rug(models.Model):
     desc = models.TextField(
         verbose_name='Description', blank=True, null=True)
     sku = models.CharField(verbose_name='SKU*', max_length=255)
-    wc = models.IntegerField(
+    WC = models.IntegerField(
         verbose_name='Will-Call Pick Up (price)', default=0)
-    gs = models.IntegerField(
+    GS = models.IntegerField(
         verbose_name='Ground Shipping (price)', default=100)
-    In = models.IntegerField(
+    IN = models.IntegerField(
         verbose_name='Insurance (price)', default=75)
-    es = models.IntegerField(
+    ES = models.IntegerField(
         verbose_name='Expedited Shipping (price)', default=150)
-    sr = models.IntegerField(
+    SR = models.IntegerField(
         verbose_name='Signature Release Required (price)', default=0)
-    wg = models.IntegerField(
+    WG = models.IntegerField(
         verbose_name='White Glove Delivery (price)', default=50)
 
     def __str__(self):
@@ -88,8 +88,8 @@ class CartItem(models.Model):
         models.CharField(
             max_length=2, choices=variables.ADDITIONAL_SERVICES + variables.SHIPPING_METHODS,
         ),
-        size=max((len(variables.ADDITIONAL_SERVICES),
-                  len(variables.SHIPPING_METHODS))),
+        size=len(variables.ADDITIONAL_SERVICES) +
+        len(variables.SHIPPING_METHODS),
         null=True, default=None, blank=True
     )
 
