@@ -137,7 +137,6 @@ export default class Cart extends React.Component {
         })
 
         additionalCosts = calculateAdditionalCosts(selectedRadios, selectedCheckboxes, data)
-        console.log(selectedRadios)
 
         this.setState({
           data,
