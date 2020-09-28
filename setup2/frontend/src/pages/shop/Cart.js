@@ -1,9 +1,9 @@
 import React from 'react';
-import NavbarFooter from '../components/NavbarFooter';
-import { CartCard } from '../components/Cards';
-import { toCamelCase, calculateAdditionalCosts, calculatePriceSum, formatPrice, isAuthed, formatSize } from '../other/functions';
-import { apiHeaders, apiURLs, cartCardInputsOrder, dummyData, styles } from '../other/variables';
-import Loading from '../components/Loading';
+import NavbarFooter from '../../components/NavbarFooter';
+import { CartCard } from '../../components/Cards';
+import { toCamelCase, calculateAdditionalCosts, calculatePriceSum, formatPrice, isAuthed, formatSize } from '../../other/functions';
+import { apiHeaders, apiURLs, cartCardInputsOrder, dummyData, styles } from '../../other/variables';
+import Loading from '../../components/Loading';
 import axios from 'axios';
 
 export default class Cart extends React.Component {
