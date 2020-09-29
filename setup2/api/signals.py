@@ -11,17 +11,21 @@ def rug_post_save_receiver(sender, instance, *args, **kwargs):
     prices = []
     prices_before_sale = []
     prices_after_sale = []
-    for x in models.RugVariation.objects.filter(rug=model_to_dict(instance)['rug']):
+    for x in models.RugVariation.objects.filter(rug=instance.rug.id):
         if x.is_sample:
             continue
+
         if x.price_usd_after_sale:
             prices.append(x.price_usd_after_sale)
         else:
             prices.append(x.price_usd)
+
         prices_before_sale.append(x.price_usd)
         if x.price_usd_after_sale:
             prices_after_sale.append(x.price_usd_after_sale)
 
+    if not len(prices):
+        return
     base_price = sorted(prices)[0]
     base_price_before_sale = sorted(prices_before_sale)[
         0] if any(prices_before_sale) else None
