@@ -9,28 +9,18 @@ from .variables import styles
 def rug_post_save_receiver(sender, instance, *args, **kwargs):
 
     prices = []
-    prices_before_sale = []
-    prices_after_sale = []
     for x in models.RugVariation.objects.filter(rug=instance.rug.id):
         if x.is_sample:
             continue
-
-        if x.price_usd_after_sale:
-            prices.append(x.price_usd_after_sale)
-        else:
-            prices.append(x.price_usd)
-
-        prices_before_sale.append(x.price_usd)
-        if x.price_usd_after_sale:
-            prices_after_sale.append(x.price_usd_after_sale)
+        prices.append(x)
 
     if not len(prices):
         return
-    base_price = sorted(prices)[0]
-    base_price_before_sale = sorted(prices_before_sale)[
-        0] if any(prices_before_sale) else None
-    base_price_after_sale = sorted(prices_after_sale)[
-        0] if any(prices_after_sale) else None
+    price = sorted(
+        prices, key=lambda x: x.price_usd_after_sale if x.price_usd_after_sale else x.price_usd)[0]
+    base_price = price.price_usd_after_sale if price.price_usd_after_sale else price.price_usd
+    base_price_before_sale = price.price_usd
+    base_price_after_sale = price.price_usd_after_sale
 
     m = models.Rug.objects.get(id=model_to_dict(instance)['rug'])
     m.base_price = base_price
