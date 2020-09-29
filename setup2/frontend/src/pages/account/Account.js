@@ -21,7 +21,7 @@ export default class Account extends React.Component {
         '/addresses/edit': { title: 'Edit Address', component: <EditAddress {...props} />, include: false },
         '/orders': { title: 'Orders', component: <Orders /> },
         '/preferences': { title: 'Preferences', component: <Preferences /> },
-        '/logout': { title: 'Log Out', withoutAngle: true, danger: true },
+        './logout': { title: 'Log Out', withoutAngle: true, danger: true },
       },
       icons: [
         <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="user-alt" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" > <path fill="currentColor" d="M256 32c61.8 0 112 50.2 112 112s-50.2 112-112 112-112-50.2-112-112S194.2 32 256 32m128 320c52.9 0 96 43.1 96 96v32H32v-32c0-52.9 43.1-96 96-96 85 0 67.3 16 128 16 60.9 0 42.9-16 128-16M256 0c-79.5 0-144 64.5-144 144s64.5 144 144 144 144-64.5 144-144S335.5 0 256 0zm128 320c-92.4 0-71 16-128 16-56.8 0-35.7-16-128-16C57.3 320 0 377.3 0 448v32c0 17.7 14.3 32 32 32h448c17.7 0 32-14.3 32-32v-32c0-70.7-57.3-128-128-128z" ></path></svg >,
@@ -53,7 +53,7 @@ export default class Account extends React.Component {
                 {Object.entries(this.state.cards).map((card, i) => {
                   if (card[1].include == false) { return }
                   return <div key={i} className="col-12">
-                    <AccountCard href={'/account' + card[0]} {...card[1]}>
+                    <AccountCard href={(card[0][0] == '.' ? '' : '/account') + card[0]} {...card[1]}>
                       {this.state.icons[i]}
                     </AccountCard>
                   </div>
