@@ -349,7 +349,7 @@ export function RadioGroupWithPrice(props) {
                       {item.with_sale
                         ? <>
                           <span className="price">{formatPrice(item.price[1]) + ' '}</span>
-                          <span className="price discounted">{formatPrice(item.price[1])}
+                          <span className="price discounted">{formatPrice(item.price[0])}
                             {item.is_sample &&
                               <span className="badge">Sample</span>
                             }
