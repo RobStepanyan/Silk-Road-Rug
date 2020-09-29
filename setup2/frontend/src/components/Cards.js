@@ -55,7 +55,14 @@ export function CartCard(props) {
           </div>
           <div className="col p-0">
             <h2>{props.name}</h2>
-            <h3 className="price">{formatPrice(props.price) + (props.additionalCosts ? ` (+${formatPrice(props.additionalCosts)})` : '')}</h3>
+            {!props.price_after
+              ? <h3 className="price">{formatPrice(props.price_before) + (props.additionalCosts ? ` (+${formatPrice(props.additionalCosts)})` : '')}</h3>
+              : <div className="d-flex">
+                <h3 className="price mr-2">{formatPrice(props.price_after)}</h3>
+                <h3 className="price discounted mr-2">{formatPrice(props.price_before)}</h3>
+                <h3 className="price">{props.additionalCosts ? `(+${formatPrice(props.additionalCosts)})` : ''}</h3>
+              </div>
+            }
             <h4>Details</h4>
             <ul className="style-default">
               <li>Size: {props.size}</li>

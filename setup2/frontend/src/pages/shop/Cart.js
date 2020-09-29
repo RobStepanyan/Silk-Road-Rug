@@ -191,7 +191,7 @@ export default class Cart extends React.Component {
                           key={String(i)} keyProp={String(i)}
                           name={data.name} size={formatSize(data)} style={styles[data.style]}
                           sku={data.sku} color={data.color} image={data.image}
-                          price={data.base_price} additionalCosts={this.state.additionalCosts[i]}
+                          price_before={data.price_usd} price_after={data.price_usd_after_sale} additionalCosts={this.state.additionalCosts[i]}
                           inputs={inputs[i]} selectedId={this.state.selectedRadios[String(i)]} selectedIds={this.state.selectedCheckboxes[String(i)]}
                           onClickRemove={() => this.handleClickRemove(i)}
                           onChangeRadio={(keyProp, name, id) => this.handleRadioWithPriceChange(keyProp, name, id)}
