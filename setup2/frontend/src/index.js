@@ -9,13 +9,13 @@ import {
 import { isAuthed } from './other/functions';
 import { apiURLs } from './other/variables';
 import Home from './pages/Home';
-import Cart from './pages/Cart';
 import ContactUs from './pages/ContactUs';
 import AboutUs from './pages/learn/AboutUs';
 import ReturnPolicy from './pages/learn/ReturnPolicy';
 import ShippingInfo from './pages/learn/ShippingInfo';
 import RugCleaning from './pages/services/RugCleaning';
 import RugRestoration from './pages/services/RugRestoration';
+import Cart from './pages/shop/Cart';
 import Shop from './pages/shop/Shop';
 import Rug from './pages/shop/Rug';
 import Error from './pages/Error';
