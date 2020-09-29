@@ -24,3 +24,4 @@ class RugAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Address)
 admin.site.register(models.CartItem)
+admin.site.register(models.RugImage)
