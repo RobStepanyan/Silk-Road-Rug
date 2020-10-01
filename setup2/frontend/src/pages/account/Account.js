@@ -180,7 +180,7 @@ class Security extends React.Component {
   }
 }
 
-class Addresses extends React.Component {
+export class Addresses extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -220,13 +220,15 @@ class Addresses extends React.Component {
       if (addresses[0]) {
         addresses[0].is_primary = true
       }
-      this.setState({ addresses: addresses, loading: false })
+
+      this.setState({ addresses: addresses })
       this.handleClickPrimary(0)
+      window.location.reload()
     })
   }
 
   handleClickPrimary(id) {
-    if (this.state.addresses.length == 0 || this.state.addresses[id].is_primary) { return }
+    if (this.state.addresses.length == 0) { return }
     this.setState({ loading: true })
     axios({
       method: 'post',
@@ -234,66 +236,83 @@ class Addresses extends React.Component {
       url: apiURLs.user.setPrimaryAddress,
       data: { id: this.state.addresses[id].id }
     }).then(() => {
+      this.setState({ loading: false })
       window.location.reload()
     })
   }
 
   render() {
+    if (this.state.redirectToLogin) { return <Redirect to='/login' /> }
+    if (this.state.loading) { return <Loading /> }
+    if (this.props.state && this.props.state.displayAddAddress) { return <AddAddress redirectTo={this.props.redirectTo} /> }
+    if (this.props.state && this.props.state.displayEditAddress) { return <EditAddress redirectTo={this.props.redirectTo} id={this.props.state.editId} /> }
+
     return (
       <>
-        {this.state.redirectToLogin ? <Redirect to='/login' /> : ''}
-        {this.state.loading ? <Loading />
-          : <>
-            {this.state.addresses.length > 0 &&
-              <small className="mt-n3 mb-3 d-inline-flex"><div className="yellow-square"></div>Indicates Primary Address (click to change)</small>
-            }
-            <div className="row">
-              <div className="col-12 col-sm-6 col-lg-4">
-                <a href="/account/addresses/add" className="d-block account address card new-address">
-                  <div className="centered-div">
-                    <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" ><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>
-                    <h3>Add Address</h3>
-                  </div>
-                </a>
-              </div>
-              {this.state.addresses.map((address, i) => {
-                return <div key={i} className="col-12 col-sm-6 col-lg-4">
-                  <div>
-                    <div onClick={() => { this.setState({ toggled: this.state.toggled[i] ? delete this.state.toggled[i] : { [i]: true } }) }} className="svg-btn">
-                      {this.state.toggled[i]
-                        ? <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"></path></svg>
-                        : <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="ellipsis-v" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><path fill="currentColor" d="M64 208c26.5 0 48 21.5 48 48s-21.5 48-48 48-48-21.5-48-48 21.5-48 48-48zM16 104c0 26.5 21.5 48 48 48s48-21.5 48-48-21.5-48-48-48-48 21.5-48 48zm0 304c0 26.5 21.5 48 48 48s48-21.5 48-48-21.5-48-48-48-48 21.5-48 48z"></path></svg>
-                      }
-                    </div>
-                    <div className={"svg-group" + (this.state.toggled[i] ? ' toggled' : '')}>
-                      <div onClick={() => this.handleClickRemove(i)} className="svg-btn close-btn borderless">
-                        <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" ><path fill="currentColor" d="M432 80h-82.4l-34-56.7A48 48 0 0 0 274.4 0H173.6a48 48 0 0 0-41.2 23.3L98.4 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16l21.2 339a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM173.6 48h100.8l19.2 32H154.4zm173.3 416H101.11l-21-336h287.8z"></path></svg>
-                      </div>
-                      <a href={"/account/addresses/edit/" + this.state.addresses[i].id} className="svg-btn">
-                        <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="edit" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"></path></svg>
-                      </a>
-                    </div>
-                    <div onClick={() => this.handleClickPrimary(i)}
-                      className={"address card" + (address.is_primary ? ' primary' : '')}>
-                      {Object.entries(address).map((field, i) => {
-                        let [key, value] = field
-                        if (['id', 'is_primary'].includes(key)) { return }
-                        return <div key={i}>
-                          {key == 'delivery_instructions' && <hr />}
-                          <p className={"overflow-hidden" + (key == 'full_name' ? ' font-bold' : key == 'delivery_instructions' ? ' text-gray' : '')}>
-                            {key == 'country' ? COUNTRIES[value] : value}
-                          </p>
-                          {key == 'full_name' && <hr />}
-                        </div>
-                      })}
-                    </div>
-                  </div>
-                </div>
-              })
-              }
-            </div>
-          </>
+        {this.state.addresses.length > 0 &&
+          <small className="mt-n3 mb-3 d-inline-flex"><div className="yellow-square"></div>Indicates Primary Address (click to change)</small>
         }
+        <div className="row">
+          <div className="col-12 col-sm-6 col-lg-4">
+            {this.props.integrated
+              ? <div onClick={() => this.props.onClick('displayAddAddress', true)} className="d-block account address card new-address">
+                <div className="centered-div">
+                  <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" ><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>
+                  <h3>Add Address</h3>
+                </div>
+              </div>
+              : <a href="/account/addresses/add" className="d-block account address card new-address">
+                <div className="centered-div">
+                  <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" ><path fill="currentColor" d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg>
+                  <h3>Add Address</h3>
+                </div>
+              </a>
+            }
+          </div>
+          {this.state.addresses.map((address, i) => {
+            return <div key={i} className="col-12 col-sm-6 col-lg-4">
+              <div>
+                <div onClick={() => { this.setState({ toggled: this.state.toggled[i] ? delete this.state.toggled[i] : { [i]: true } }) }} className="svg-btn">
+                  {this.state.toggled[i]
+                    ? <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"></path></svg>
+                    : <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="ellipsis-v" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><path fill="currentColor" d="M64 208c26.5 0 48 21.5 48 48s-21.5 48-48 48-48-21.5-48-48 21.5-48 48-48zM16 104c0 26.5 21.5 48 48 48s48-21.5 48-48-21.5-48-48-48-48 21.5-48 48zm0 304c0 26.5 21.5 48 48 48s48-21.5 48-48-21.5-48-48-48-48 21.5-48 48z"></path></svg>
+                  }
+                </div>
+                <div className={"svg-group" + (this.state.toggled[i] ? ' toggled' : '')}>
+                  <div onClick={() => this.handleClickRemove(i)} className="svg-btn close-btn borderless">
+                    <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" ><path fill="currentColor" d="M432 80h-82.4l-34-56.7A48 48 0 0 0 274.4 0H173.6a48 48 0 0 0-41.2 23.3L98.4 80H16A16 16 0 0 0 0 96v16a16 16 0 0 0 16 16h16l21.2 339a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128h16a16 16 0 0 0 16-16V96a16 16 0 0 0-16-16zM173.6 48h100.8l19.2 32H154.4zm173.3 416H101.11l-21-336h287.8z"></path></svg>
+                  </div>
+                  {this.props.integrated
+                    ? <div onClick={() => {
+                      this.props.onClick('displayEditAddress', true)
+                      this.props.onClick('editId', this.state.addresses[i].id)
+                    }} className="svg-btn">
+                      <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="edit" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"></path></svg>
+                    </div>
+                    : <a href={"/account/addresses/edit/" + this.state.addresses[i].id} className="svg-btn">
+                      <svg aria-hidden="true" focusable="false" data-prefix="far" data-icon="edit" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M402.3 344.9l32-32c5-5 13.7-1.5 13.7 5.7V464c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h273.5c7.1 0 10.7 8.6 5.7 13.7l-32 32c-1.5 1.5-3.5 2.3-5.7 2.3H48v352h352V350.5c0-2.1.8-4.1 2.3-5.6zm156.6-201.8L296.3 405.7l-90.4 10c-26.2 2.9-48.5-19.2-45.6-45.6l10-90.4L432.9 17.1c22.9-22.9 59.9-22.9 82.7 0l43.2 43.2c22.9 22.9 22.9 60 .1 82.8zM460.1 174L402 115.9 216.2 301.8l-7.3 65.3 65.3-7.3L460.1 174zm64.8-79.7l-43.2-43.2c-4.1-4.1-10.8-4.1-14.8 0L436 82l58.1 58.1 30.9-30.9c4-4.2 4-10.8-.1-14.9z"></path></svg>
+                    </a>
+                  }
+                </div>
+                <div onClick={() => this.handleClickPrimary(i)}
+                  className={"address card" + (address.is_primary ? ' primary' : '')}>
+                  {Object.entries(address).map((field, i) => {
+                    let [key, value] = field
+                    if (['id', 'is_primary'].includes(key)) { return }
+                    return <div key={i}>
+                      {key == 'delivery_instructions' && <hr />}
+                      <p className={"overflow-hidden" + (key == 'full_name' ? ' font-bold' : key == 'delivery_instructions' ? ' text-gray' : '')}>
+                        {key == 'country' ? COUNTRIES[value] : value}
+                      </p>
+                      {key == 'full_name' && <hr />}
+                    </div>
+                  })}
+                </div>
+              </div>
+            </div>
+          })
+          }
+        </div>
       </>
     )
   }
@@ -325,7 +344,7 @@ class AddAddress extends React.Component {
       <Form handleSubmit={this.handleSubmit}
         cols="col-12 col-sm-10 col-lg-6"
         submitText="Save"
-        withoutCard notJustified redirect redirectTo='/account/addresses'
+        withoutCard notJustified redirect redirectTo={this.props.redirectTo ? this.props.redirectTo : '/account/addresses'}
         fields={[
           { context: 'text', autoComplete: "name", title: 'Full Name', required: true, validate: true, onlyText: true },
           { context: 'select', options: COUNTRIES, title: 'Country', required: true, initValue: 'US' },
@@ -349,6 +368,7 @@ class EditAddress extends React.Component {
       redirectTo404: false,
       loading: true,
       fields: [],
+      id: props.id + 1 ? props.id : props.match.params.id
     }
     this.handleSubmit = this.handleSubmit.bind(this)
   }
@@ -359,7 +379,7 @@ class EditAddress extends React.Component {
       method: 'post',
       headers: { ...apiHeaders.csrf, ...apiHeaders.authorization },
       url: apiURLs.user.editAddress,
-      data: { ...values, id: this.props.match.params.id }
+      data: { ...values, id: this.state.id }
     })
       .catch(err => { if (err.response.status == 401) { window.location.reload() } })
   }
@@ -369,7 +389,7 @@ class EditAddress extends React.Component {
       method: 'post',
       headers: { ...apiHeaders.csrf, ...apiHeaders.authorization },
       url: apiURLs.user.getAddress,
-      data: { id: this.props.match.params.id }
+      data: { id: this.state.id }
     })
       .then(res => {
         let { data } = res
@@ -407,7 +427,7 @@ class EditAddress extends React.Component {
             : <Form handleSubmit={this.handleSubmit}
               cols="col-12 col-sm-10 col-lg-6"
               submitText="Save"
-              withoutCard notJustified redirect redirectTo='/account/addresses'
+              withoutCard notJustified redirect redirectTo={this.props.redirectTo ? this.props.redirectTo : '/account/addresses'}
               fields={this.state.fields} />
         }
       </>

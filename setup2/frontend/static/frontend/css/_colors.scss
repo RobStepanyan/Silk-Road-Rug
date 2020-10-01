@@ -67,7 +67,8 @@ hr {
 
 .card,
 .filter-sidebar,
-.shop-filter-card {
+.shop-filter-card,
+.breadcrumb {
   background: c(dark2);
   box-shadow: $shadow2;
 
@@ -515,4 +516,12 @@ a.with-underline {
   svg:hover {
     color: c(primary) !important;
   }
+}
+
+.breadcrumb li {
+  color: c(white);
+}
+
+.breadcrumb-item.active {
+  color: c(primary) !important;
 }

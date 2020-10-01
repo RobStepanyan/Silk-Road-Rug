@@ -18,6 +18,7 @@ import RugRestoration from './pages/services/RugRestoration';
 import Cart from './pages/shop/Cart';
 import Shop from './pages/shop/Shop';
 import Rug from './pages/shop/Rug';
+import Checkout from './pages/shop/Checkout';
 import Error from './pages/Error';
 import Account from './pages/account/Account';
 import SignUp from './pages/account/SignUp';
@@ -42,6 +43,7 @@ function App() {
         <Route exact path='/contact-us' component={ContactUs} />
         <Route exact path='/cart' component={Cart} />
         <Route exact path='/shop' component={Shop} />
+        <Route exact path='/checkout' component={Checkout} />
         <Route exact path='/rug/:id' component={Rug} />
         <Route exact path='/account'>
           {isAuthed()

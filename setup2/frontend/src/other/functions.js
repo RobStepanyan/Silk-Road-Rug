@@ -107,7 +107,7 @@ export function calculatePriceSum(data, addCosts) {
   let sum = 0;
   if (data) {
     data.forEach(data => {
-      sum += parseInt(data.base_price)
+      sum += parseInt(data.price_usd_after_sale ? data.price_usd_after_sale : data.price_usd)
     })
   }
   if (addCosts) {

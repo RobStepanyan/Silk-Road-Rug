@@ -243,11 +243,10 @@ export default class Form extends Component {
             let { data } = response
             if (this.props.setJWT && data.token) { setJWTCookie(data.token) }
             if (Object.keys(data).includes('error')) {
-              this.setState({ alert: { isError: true, msg: data['error'] } })
+              this.setState({ alert: { isError: true, msg: data['error'] }, loading: false })
             } else {
               this.setState({ redirectNow: true, alert: { msg: data['msg'] } })
             }
-            this.setState({ loading: false })
           })
           .catch(error => {
             if (error.response) {
@@ -264,7 +263,11 @@ export default class Form extends Component {
 
   render() {
     if (this.state.redirectNow && this.props.redirect) {
-      return <Redirect to={this.props.redirectTo ? this.props.redirectTo : '/'} />
+      if (this.props.redirectTo && this.props.redirectTo == '.') {
+        window.location.reload()
+      } else {
+        return <Redirect to={this.props.redirectTo ? this.props.redirectTo : '/'} />
+      }
     }
     return (
       <div className={"row" + (this.props.notJustified ? '' : " justify-content-center")}>
