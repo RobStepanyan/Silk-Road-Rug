@@ -188,7 +188,7 @@ export default class Cart extends React.Component {
                     {data.map((data, i) => {
                       return (
                         <CartCard
-                          key={String(i)} keyProp={String(i)}
+                          key={String(i)} keyProp={String(i)} rugId={data.rug_id}
                           name={data.name} size={formatSize(data)} style={styles[data.style]}
                           sku={data.sku} color={data.color} image={data.image}
                           price_before={data.price_usd} price_after={data.price_usd_after_sale} additionalCosts={this.state.additionalCosts[i]}
@@ -215,7 +215,7 @@ export default class Cart extends React.Component {
                               <div className="col p-0">
                                 {data.name}
                                 <span className="price">
-                                  {formatPrice(data.base_price)}
+                                  {formatPrice(data.price_usd_after_sale ? data.price_usd_after_sale : data.price_usd)}
                                 </span>
                               </div>
                             </li>
@@ -230,7 +230,7 @@ export default class Cart extends React.Component {
                         <h3 className="price">{formatPrice(calculatePriceSum(this.state.data, this.state.additionalCosts))}</h3>
                       </div>
                       <div className="row">
-                        <div className="btn btn-primary ml-auto">Checkout</div>
+                        <a href="/checkout" className="btn btn-primary ml-auto">Checkout</a>
                       </div>
 
                     </div>

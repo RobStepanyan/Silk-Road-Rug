@@ -54,7 +54,7 @@ export function CartCard(props) {
             <img src={props.image} alt="" />
           </div>
           <div className="col p-0">
-            <h2>{props.name}</h2>
+            <a href={'/rug/' + props.rugId}><h2>{props.name}</h2></a>
             {!props.price_after
               ? <h3 className="price">{formatPrice(props.price_before) + (props.additionalCosts ? ` (+${formatPrice(props.additionalCosts)})` : '')}</h3>
               : <div className="d-flex">
