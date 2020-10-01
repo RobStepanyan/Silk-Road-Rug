@@ -1,10 +1,11 @@
 import React from 'react';
 import { apiHeaders, apiURLs, styles } from '../../other/variables';
-import { formatPrice, formatSize } from '../../other/functions';
+import { formatPrice, formatSize, isAuthed } from '../../other/functions';
 import axios from 'axios';
 import NavbarFooter from '../../components/NavbarFooter';
 import Loading from '../../components/Loading';
 import { RadioGroupWithPrice } from '../../components/Form';
+import { Redirect } from 'react-router-dom';
 
 export default class Rug extends React.Component {
   constructor(props) {
@@ -19,6 +20,7 @@ export default class Rug extends React.Component {
       selectedVrtn: 0,
       alert: null,
       loading: false,
+      redirectNow: false,
     }
 
     this.handleAddToCart = this.handleAddToCart.bind(this)
@@ -49,6 +51,7 @@ export default class Rug extends React.Component {
 
   handleAddToCart() {
     this.setState({ loading: true })
+    if (!isAuthed()) { this.setState({ redirectNow: true }) }
     axios({
       method: 'post',
       headers: apiHeaders.authorization,
@@ -66,7 +69,7 @@ export default class Rug extends React.Component {
         }
         this.setState({ loading: false })
       })
-      .catch({ loading: false })
+      .catch(this.setState({ loading: false }))
   }
 
   render() {
@@ -96,7 +99,8 @@ export default class Rug extends React.Component {
       }
     }
 
-    { if (this.state.loading) { return <Loading /> } }
+    if (this.state.loading) { return <Loading /> }
+    if (this.state.redirectNow) { return <Redirect to='/login' /> }
     return (
       <NavbarFooter>
         {data
@@ -116,7 +120,7 @@ export default class Rug extends React.Component {
                       selectedImg={this.state.selectedImg}
                     />
                   </div>
-                  <div className="card col-12 col-sm-6">
+                  <div className="card col-12 col-sm-6 h-100">
                     <h2>{data.name}</h2>
                     {!price_after
                       ? <h3 className="price">{formatPrice(price_before)}</h3>
@@ -149,8 +153,7 @@ export default class Rug extends React.Component {
                     }
                     {/* *********************** */}
                     <div className="row">
-                      <a href="" className="btn card-btn btn-primary">Buy Now</a>
-                      <div onClick={this.handleAddToCart} className="btn card-btn btn-secondary">Add to Cart</div>
+                      <div onClick={this.handleAddToCart} className="btn card-btn btn-primary">Add to Cart</div>
                     </div>
                   </div>
                 </div>
