@@ -417,21 +417,18 @@ class EditAddress extends React.Component {
   }
 
   render() {
-    return (
-      <>
-        { this.state.redirectToLogin && <Redirect to='/login' />}
-        { this.state.redirectTo404
-          ? <Error error={404} />
-          : this.state.loading
-            ? <Loading />
-            : <Form handleSubmit={this.handleSubmit}
-              cols="col-12 col-sm-10 col-lg-6"
-              submitText="Save"
-              withoutCard notJustified redirect redirectTo={this.props.redirectTo ? this.props.redirectTo : '/account/addresses'}
-              fields={this.state.fields} />
-        }
-      </>
-    )
+    if (this.state.redirectToLogin) { return <Redirect to='/login' /> }
+    if (this.state.redirectTo404) { return <Error error={404} /> }
+    if (this.state.loading) { return <Loading /> }
+    return <>
+      {this.state.fields.length > 0 &&
+        <Form handleSubmit={this.handleSubmit}
+          cols="col-12 col-sm-10 col-lg-6"
+          submitText="Save"
+          withoutCard notJustified redirect redirectTo={this.props.redirectTo ? this.props.redirectTo : '/account/addresses'}
+          fields={this.state.fields} />
+      }
+    </>
   }
 }
 

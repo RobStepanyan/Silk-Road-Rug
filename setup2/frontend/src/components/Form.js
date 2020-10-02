@@ -15,22 +15,9 @@ export default class Form extends Component {
       helpText: {},
       alert: null,
       redirectNow: false,
-      loading: false,
+      loading: true,
       typePwdState: {}
     }
-
-    props.fields.forEach((field, i) => {
-      this.state.isValid[i] = field.required ? false : true;
-      this.state.isTouched[i] = false
-      this.state.helpText[i] = ''
-      if (field.context == 'file') {
-        this.state.helpText[i] = `Max size: ${field.maxSizeMB}MB`
-        this.state.fileMaxSizeMB = field.maxSizeMB
-      }
-      if (field.context == 'password') { this.state.typePwdState[i] = 'password' }
-      let title = field.title ? field.title : field.context
-      if (field.initValue) { this.state.values[formValueKey(title)] = field.initValue; this.state.isValid[i] = true }
-    });
 
     this.generateInput = this.generateInput.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -42,6 +29,23 @@ export default class Form extends Component {
     this.setState = (state, callback) => {
       return;
     };
+  }
+
+  componentDidMount() {
+    let { state } = this
+    this.props.fields.forEach((field, i) => {
+      state.isValid[i] = field.required ? false : true;
+      state.isTouched[i] = false
+      state.helpText[i] = ''
+      if (field.context == 'file') {
+        state.helpText[i] = `Max size: ${field.maxSizeMB}MB`
+        state.fileMaxSizeMB = field.maxSizeMB
+      }
+      if (field.context == 'password') { state.typePwdState[i] = 'password' }
+      let title = field.title ? field.title : field.context
+      if (field.initValue) { state.values[formValueKey(title)] = field.initValue; state.isValid[i] = true }
+    });
+    this.setState({ ...state, loading: false })
   }
 
   handleClickTypePwd(i) {
@@ -269,6 +273,7 @@ export default class Form extends Component {
         return <Redirect to={this.props.redirectTo ? this.props.redirectTo : '/'} />
       }
     }
+
     return (
       <div className={"row" + (this.props.notJustified ? '' : " justify-content-center")}>
         {this.state.loading ? <Loading /> : ''}
