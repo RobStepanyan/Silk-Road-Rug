@@ -246,14 +246,18 @@ i {
   background: c(black);
 }
 
-input:-internal-autofill-selected,
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
-  box-shadow: 0 0 0 30px c(dark5) inset !important;
-  -webkit-text-fill-color: c(white) !important;
-  transition: $transition;
+input,
+select {
+
+  &:-internal-autofill-selected,
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    box-shadow: 0 0 0 30px c(dark5) inset !important;
+    -webkit-text-fill-color: c(white) !important;
+    transition: $transition;
+  }
 }
 
 select,
@@ -294,6 +298,7 @@ input[type="checkbox"],
   }
 }
 
+select,
 textarea,
 input[type="tel"],
 input[type="text"],
@@ -304,9 +309,13 @@ input[type="password"] {
   }
 
   &.valid {
-    border-bottom-color: c(green) !important;
+    border-bottom-color: c(dark5) !important;
   }
 
+}
+
+select {
+  border-color: c(dark5) !important;
 }
 
 .rs-input-group {
@@ -436,8 +445,8 @@ ul.style-default {
   }
 
   &.success {
-    color: c(green);
-    border-color: c(green);
+    color: c(primary);
+    border-color: c(primary);
     background: c(dark5);
   }
 }
