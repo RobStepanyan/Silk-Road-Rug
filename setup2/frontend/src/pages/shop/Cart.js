@@ -18,6 +18,7 @@ export default class Cart extends React.Component {
       isAuthed: false,
       data: [],
       toggled: false,
+      loading: true,
     }
   }
 
@@ -49,6 +50,7 @@ export default class Cart extends React.Component {
   }
 
   sendPartialUpdate(keyProp) {
+    this.setState({ loading: true })
     // send update api request to update CartItem on state change
     let pk = this.state.data[keyProp].id
 
@@ -76,6 +78,8 @@ export default class Cart extends React.Component {
         selecteds
       }
     })
+      .then(this.setState({ loading: false }))
+    // .catch(window.location.reload())
   }
 
   handleClickRemove(key) {
@@ -230,7 +234,7 @@ export default class Cart extends React.Component {
                         <h3 className="price">{formatPrice(calculatePriceSum(this.state.data, this.state.additionalCosts))}</h3>
                       </div>
                       <div className="row">
-                        <a href="/checkout" className="btn btn-primary ml-auto">Checkout</a>
+                        <a href="/checkout" className="btn btn-primary ml-auto">Proceed to Checkout</a>
                       </div>
 
                     </div>
