@@ -265,6 +265,7 @@ textarea,
 input[type="tel"]:not(.rs-input),
 input[type="text"]:not(.rs-input),
 input[type="email"]:not(.rs-input),
+input[type="number"]:not(.rs-input),
 input[type="password"]:not(.rs-input) {
   background-color: c(dark5) !important;
   color: c(white) !important;
@@ -303,6 +304,7 @@ textarea,
 input[type="tel"],
 input[type="text"],
 input[type="email"],
+input[type="number"],
 input[type="password"] {
   &.invalid {
     border-bottom-color: c(red) !important;

@@ -10,10 +10,12 @@ export default class Cart extends React.Component {
   constructor() {
     super();
     this.handleRadioWithPriceChange = this.handleRadioWithPriceChange.bind(this)
+    this.setAdditionalCosts = this.setAdditionalCosts.bind(this)
     this.state = {
       additionalCosts: {},
       selectedRadios: {},
       selectedCheckboxes: {},
+      selectedNumbers: {},
       itemsQuanity: 4,
       isAuthed: false,
       data: [],
@@ -22,30 +24,39 @@ export default class Cart extends React.Component {
     }
   }
 
+  setAdditionalCosts() {
+    this.setState({ additionalCosts: calculateAdditionalCosts(this.state.selectedNumbers, this.state.selectedRadios, this.state.selectedCheckboxes, this.state.data) })
+  }
+
   handleRadioWithPriceChange(keyProp, name, id) {
+    this.setState({ loading: true })
     let { selectedRadios } = this.state;
     selectedRadios[keyProp][name] = id;
 
-    this.setState({
-      selectedRadios: selectedRadios,
-      additionalCosts: calculateAdditionalCosts(this.state.selectedRadios, this.state.selectedCheckboxes, this.state.data)
-    })
-
+    this.setState({ selectedRadios })
+    this.setAdditionalCosts()
     this.sendPartialUpdate(keyProp)
   }
 
   handleCheckboxWithPriceChange(keyProp, name, id) {
+    this.setState({ loading: true })
     let { selectedCheckboxes } = this.state;
 
     selectedCheckboxes[keyProp][name].includes(id)
       ? selectedCheckboxes[keyProp][name].splice(selectedCheckboxes[keyProp][name].indexOf(id), 1) // remove id from the list
       : selectedCheckboxes[keyProp][name].push(id)
 
-    this.setState({
-      selectedCheckboxes: selectedCheckboxes,
-      additionalCosts: calculateAdditionalCosts(this.state.selectedRadios, this.state.selectedCheckboxes, this.state.data)
-    })
+    this.setState({ selectedCheckboxes })
+    this.setAdditionalCosts()
+    this.sendPartialUpdate(keyProp)
+  }
 
+  handleNumberChange(keyProp, val) {
+    this.setState({ loading: true })
+    let { selectedNumbers } = this.state
+    selectedNumbers[keyProp] = parseInt(val)
+    this.setState({ selectedNumbers })
+    this.setAdditionalCosts()
     this.sendPartialUpdate(keyProp)
   }
 
@@ -54,9 +65,10 @@ export default class Cart extends React.Component {
     // send update api request to update CartItem on state change
     let pk = this.state.data[keyProp].id
 
-    let { selectedCheckboxes, selectedRadios } = this.state
+    let { selectedCheckboxes, selectedRadios, selectedNumbers } = this.state
     selectedCheckboxes = selectedCheckboxes[keyProp]
     selectedRadios = selectedRadios[keyProp]
+    let quantity = selectedNumbers[keyProp]
 
     let selecteds = []
     Object.entries(selectedRadios).map(entry => {
@@ -75,7 +87,8 @@ export default class Cart extends React.Component {
       headers: apiHeaders.authorization,
       url: apiURLs.user.cart.partialUpdate(pk),
       data: {
-        selecteds
+        selecteds,
+        quantity
       }
     })
       .then(this.setState({ loading: false }))
@@ -107,8 +120,9 @@ export default class Cart extends React.Component {
       .then(res => {
         let { data } = res
 
-        let { additionalCosts, selectedRadios, selectedCheckboxes } = this.state;
+        let { additionalCosts, selectedRadios, selectedCheckboxes, selectedNumbers } = this.state;
         for (let i = 0; i <= data.length - 1; i++) {
+          selectedNumbers[i] = 1
           additionalCosts[i] = 0
           selectedRadios[i] = {}
           selectedCheckboxes[i] = {}
@@ -137,17 +151,19 @@ export default class Cart extends React.Component {
                 }
               }
             })
+            selectedNumbers[i] = cartItem.quantitySelected
           })
         })
 
-        additionalCosts = calculateAdditionalCosts(selectedRadios, selectedCheckboxes, data)
+        additionalCosts = calculateAdditionalCosts(selectedNumbers, selectedRadios, selectedCheckboxes, data)
 
         this.setState({
           data,
           loading: false,
-          selectedRadios: selectedRadios,
-          selectedCheckboxes: selectedCheckboxes,
-          additionalCosts: additionalCosts,
+          selectedRadios,
+          selectedCheckboxes,
+          additionalCosts,
+          selectedNumbers,
         })
       })
       .catch(err => {
@@ -194,10 +210,11 @@ export default class Cart extends React.Component {
                         <CartCard
                           key={String(i)} keyProp={String(i)} rugId={data.rug_id}
                           name={data.name} size={formatSize(data)} style={styles[data.style]}
-                          sku={data.sku} color={data.color} image={data.image}
+                          sku={data.sku} color={data.color} image={data.image} quantityAvailable={data.quantity} quantitySel={this.state.selectedNumbers[i]}
                           price_before={data.price_usd} price_after={data.price_usd_after_sale} additionalCosts={this.state.additionalCosts[i]}
                           inputs={inputs[i]} selectedId={this.state.selectedRadios[String(i)]} selectedIds={this.state.selectedCheckboxes[String(i)]}
                           onClickRemove={() => this.handleClickRemove(i)}
+                          onChangeNumber={(keyProp, val) => this.handleNumberChange(keyProp, val)} selectedNumber={this.state.selectedNumbers[i]}
                           onChangeRadio={(keyProp, name, id) => this.handleRadioWithPriceChange(keyProp, name, id)}
                           onChangeCheckbox={(keyProp, name, id) => this.handleCheckboxWithPriceChange(keyProp, name, id)} />
                       )
@@ -217,9 +234,9 @@ export default class Cart extends React.Component {
                           return (
                             <li key={i}>
                               <div className="col p-0">
-                                {data.name}
+                                {data.name + (this.state.selectedNumbers[i] > 1 ? ` (x${this.state.selectedNumbers[i]})` : '')}
                                 <span className="price">
-                                  {formatPrice(data.price_usd_after_sale ? data.price_usd_after_sale : data.price_usd)}
+                                  {formatPrice((data.price_usd_after_sale ? data.price_usd_after_sale : data.price_usd) * this.state.selectedNumbers[i])}
                                 </span>
                               </div>
                             </li>
@@ -229,9 +246,9 @@ export default class Cart extends React.Component {
                       </ul>
                       <hr />
                       <div className="total">
-                        <p className="price">{formatPrice(calculatePriceSum(this.state.data, 0))}</p>
-                        <p className="price">{'+' + formatPrice(calculatePriceSum(0, this.state.additionalCosts))}</p>
-                        <h3 className="price">{formatPrice(calculatePriceSum(this.state.data, this.state.additionalCosts))}</h3>
+                        <p className="price">{formatPrice(calculatePriceSum(this.state.data, this.state.selectedNumbers, 0))}</p>
+                        <p className="price">{'+' + formatPrice(calculatePriceSum(0, this.state.selectedNumbers, this.state.additionalCosts))}</p>
+                        <h3 className="price">{formatPrice(calculatePriceSum(this.state.data, this.state.selectedNumbers, this.state.additionalCosts))}</h3>
                       </div>
                       <div className="row">
                         <a href="/checkout" className="btn btn-primary ml-auto">Proceed to Checkout</a>

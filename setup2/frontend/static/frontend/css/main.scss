@@ -951,7 +951,8 @@ footer img {
 
 .breadcrumb {
     border-radius: 0;
-    margin-bottom: 2*$margin;
+    margin: $margin 0 2*$margin 0;
+    padding: $padding * 2 /3 $padding;
 }
 
 .breadcrumb-item::before {

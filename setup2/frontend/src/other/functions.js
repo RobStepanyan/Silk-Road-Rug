@@ -83,7 +83,7 @@ export function formatSize(obj) {
   return `${width} x ${height}`
 }
 
-export function calculateAdditionalCosts(selectedRadios, selectedCheckboxes, data) {
+export function calculateAdditionalCosts(selectedNumbers, selectedRadios, selectedCheckboxes, data) {
   let addCosts = {};
   data.forEach((data, i) => {
     addCosts[i] = 0
@@ -99,15 +99,16 @@ export function calculateAdditionalCosts(selectedRadios, selectedCheckboxes, dat
         })
       }
     })
+    addCosts[i] *= selectedNumbers[i]
   })
   return addCosts;
 }
 
-export function calculatePriceSum(data, addCosts) {
+export function calculatePriceSum(data, selectedNumbers, addCosts) {
   let sum = 0;
   if (data) {
-    data.forEach(data => {
-      sum += parseInt(data.price_usd_after_sale ? data.price_usd_after_sale : data.price_usd)
+    data.forEach((data, i) => {
+      sum += parseInt((data.price_usd_after_sale ? data.price_usd_after_sale : data.price_usd) * selectedNumbers[i])
     })
   }
   if (addCosts) {

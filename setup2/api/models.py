@@ -66,7 +66,7 @@ class RugVariation(models.Model):
         verbose_name="Price (USD)*", max_digits=12, decimal_places=2, default=0)
     price_usd_after_sale = models.DecimalField(
         verbose_name="Price (USD) After Sale", max_digits=12, decimal_places=2, blank=True, null=True)
-    quanity = models.IntegerField(
+    quantity = models.IntegerField(
         verbose_name='Quanity (Available)*', default=1)
     is_sample = models.BooleanField(
         verbose_name="Is Sample", default=False)
@@ -90,8 +90,9 @@ class CartItem(models.Model):
         ),
         size=len(variables.ADDITIONAL_SERVICES) +
         len(variables.SHIPPING_METHODS),
-        null=True, default=None, blank=True
+        default=['WC']
     )
+    quantity = models.IntegerField(default=1)
 
 
 class PendingUserPersonalInfoUpdate(models.Model):

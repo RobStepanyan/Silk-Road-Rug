@@ -21,6 +21,7 @@ export default class Rug extends React.Component {
       alert: null,
       loading: false,
       redirectNow: false,
+      quantitySelected: 1,
     }
 
     this.handleAddToCart = this.handleAddToCart.bind(this)
@@ -58,7 +59,8 @@ export default class Rug extends React.Component {
       url: apiURLs.user.cart.create,
       data: {
         rug: this.state.data.id,
-        rug_variation: this.state.data.rug_variations[this.state.selectedVrtn].id
+        rug_variation: this.state.data.rug_variations[this.state.selectedVrtn].id,
+        quantity: this.state.quantitySelected,
       }
     })
       .then(res => {
@@ -70,6 +72,7 @@ export default class Rug extends React.Component {
         this.setState({ loading: false })
       })
       .catch(this.setState({ loading: false }))
+    window.scrollTo(0, 0);
   }
 
   render() {
@@ -152,6 +155,10 @@ export default class Rug extends React.Component {
                       </>
                     }
                     {/* *********************** */}
+                    <h4 className="mb-3">Quantity</h4>
+                    <input type='number' value={this.state.quantitySelected}
+                      min={1} max={data.rug_variations[this.state.selectedVrtn].quantity}
+                      onChange={(e) => this.setState({ quantitySelected: parseInt(e.target.value) })} />
                     <div className="row">
                       <div onClick={this.handleAddToCart} className="btn card-btn btn-primary">Add to Cart</div>
                     </div>

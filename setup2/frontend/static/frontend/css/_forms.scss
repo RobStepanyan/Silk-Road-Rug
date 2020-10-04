@@ -11,7 +11,7 @@ select,
 input,
 textarea {
     outline: 0 !important;
-    transition: border-color $transition-duration;
+    transition: border-color $transition-duration, box-shadow $transition-duration;
 }
 
 input[type="radio"],
@@ -60,6 +60,7 @@ textarea,
 input[type="tel"],
 input[type="text"],
 input[type="email"],
+input[type="number"],
 input[type="password"] {
     width: 100%;
     border: 0;
@@ -86,4 +87,8 @@ textarea {
 
 input[type="file"] {
     display: none;
+}
+
+input[type="number"] {
+    width: auto;
 }

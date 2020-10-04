@@ -207,7 +207,8 @@ class CartItemSerializer(serializers.Serializer):
                 **dict(rug_image),
                 'id': cart_item.id,
                 'rug_id': dict(rug)['id'],
-                'selecteds': cart_item.selecteds
+                'selecteds': cart_item.selecteds,
+                'quantitySelected': cart_item.quantity,
             }
         }
 

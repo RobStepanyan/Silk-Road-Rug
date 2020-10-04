@@ -56,7 +56,7 @@ export function CartCard(props) {
           <div className="col p-0">
             <a href={'/rug/' + props.rugId}><h2>{props.name}</h2></a>
             {!props.price_after
-              ? <h3 className="price">{formatPrice(props.price_before) + (props.additionalCosts ? ` (+${formatPrice(props.additionalCosts)})` : '')}</h3>
+              ? <h3 className="price">{formatPrice(props.price_before * props.quantitySel) + (props.additionalCosts ? ` (+${formatPrice(props.additionalCosts)})` : '')}</h3>
               : <div className="d-flex">
                 <h3 className="price mr-2">{formatPrice(props.price_after)}</h3>
                 <h3 className="price discounted mr-2">{formatPrice(props.price_before)}</h3>
@@ -106,6 +106,8 @@ export function CartCard(props) {
                 </div>
               )
             })}
+            <h4 className="mb-3">Quantity</h4>
+            <input type='number' value={props.selectedNumber} min={1} max={props.quantityAvailable} onChange={(e) => props.onChangeNumber(props.keyProp, e.target.value,)} />
           </div>
         </div>
       </div>
