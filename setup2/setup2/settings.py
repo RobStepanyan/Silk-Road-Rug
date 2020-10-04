@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'corsheaders',
     'phonenumber_field',
+    'stripe',
 ]
 
 MIDDLEWARE = [

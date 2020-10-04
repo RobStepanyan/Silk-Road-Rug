@@ -3,8 +3,13 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import NavbarFooter from '../../components/NavbarFooter';
 import { toTitleCase } from '../../other/functions';
-import { apiHeaders, apiURLs } from '../../other/variables';
+import { apiHeaders, apiURLs, cartCardInputsOrder } from '../../other/variables';
 import { Addresses } from '../account/Account';
+import { loadStripe } from '@stripe/stripe-js';
+import Loading from '../../components/Loading';
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe('pk_test_51HW4GfCi0RkzIpI9n9JCxZctQNH5HsQTUC92yFZWO9r0RKrHHxmIfvAMFPCOicGZ8ou1aEEm4F7AaglwzuB3EeeZ00faB2nc03');
 
 export default class Checkout extends React.Component {
   constructor(props) {
@@ -12,12 +17,14 @@ export default class Checkout extends React.Component {
     this.state = {
       stage: ['address', 'payment'][0],
       redirectNow: false,
-      loading: false,
+      loading: true,
       cartItems: [],
       addresses: [],
       displayAddAddress: false,
       displayEditAddress: false,
-      editId: null
+      editId: null,
+      willCalls: 0, //quantity of will-call pick ups in cart items
+      alert: null,
     }
 
     this.getAddresses = this.getAddresses.bind(this)
@@ -35,7 +42,13 @@ export default class Checkout extends React.Component {
         if (data.length == 0) {
           this.setState({ redirectNow: true })
         } else {
-          this.setState({ cartItems: data, loading: false })
+          let willCalls = 0
+          data.forEach(x => {
+            if (x.selecteds.includes(cartCardInputsOrder.shipping['Will-Call Pick Up'])) {
+              willCalls += 1
+            }
+          })
+          this.setState({ cartItems: data, willCalls, loading: false })
         }
       })
       .catch(this.setState({ loading: false }))
@@ -59,57 +72,98 @@ export default class Checkout extends React.Component {
     this.setState({ [x]: val })
   }
 
+  async handleClickPayment() {
+    this.setState({ loading: true })
+    // Get Stripe.js instance
+    const stripe = await stripePromise;
+
+    // Call your backend to create the Checkout Session
+    const response = await axios({
+      method: 'post',
+      headers: { ...apiHeaders.authorization, ...apiHeaders.csrf },
+      url: apiURLs.checkout.createSession
+    });
+
+    const session = await response.data;
+
+    // When the customer clicks on the button, redirect them to Checkout.
+    const result = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      this.setState({ alert: result.error, loading: false })
+      window.scrollTo(0, 0)
+    }
+  }
+
   render() {
     const stages = ['address', 'payment']
 
     if (this.state.redirectNow) { return <Redirect to='/cart' /> }
+    if (this.state.loading) { return <Loading /> }
     return (
       <NavbarFooter>
         <section id="checkout">
           <div className="container">
+            {this.state.alert &&
+              <div className="alert danger">{this.state.alert}</div>
+            }
             <h1 className="text-center">Checkout</h1>
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb">
                 {stages.map((x, i) => {
                   return <li key={i} className={"breadcrumb-item" + (this.state.stage == x ? ' active' : '')}>
-                    {i < stages.indexOf(this.state.stage)
-                      ? <div className="cursor-pointer" onClick={() => this.setState({ stage: x })}>
-                        {toTitleCase(x)}
-                      </div>
-                      : <>
-                        {toTitleCase(x)}
-                      </>
-                    }
+                    {toTitleCase(x)}
                   </li>
                 })
                 }
               </ol>
             </nav>
-            <h2 className="mb-3">{toTitleCase(this.state.stage)}</h2>
-            {this.state.stage == 'address'
-              ?
-              <>
-                {(this.state.displayAddAddress || this.state.displayEditAddress) &&
-                  <div className="btn btn-secondary btn-back mb-3 ml-0" onClick={() => window.location.reload()}>Back</div>
-                }
-                <Addresses integrated={true} redirectTo={'.'} onClick={(x, val) => this.onClickAccount(x, val)} state={this.state} />
-                {!this.state.displayAddAddress && !this.state.displayEditAddress &&
-                  <div className="row">
-                    {this.state.addresses.length
-                      ? <div className="btn btn-primary" onClick={() => this.setState({ stage: 'payment' })}>Proceed to Payment</div>
-                      : <div className="btn btn-primary disabled">Proceed to Payment</div>
-                    }
-                  </div>
-                }
-              </>
-              :
-              <>
-              </>
-            }
+
+            <>
+              {(this.state.displayAddAddress || this.state.displayEditAddress) &&
+                <div className="btn btn-secondary btn-back mb-3 ml-0" onClick={() => window.location.reload()}>Back</div>
+              }
+              {(this.state.cartItems.length > this.state.willCalls && this.state.willCalls > 0)
+                && <>
+                  <h2 className="mb-3">Your Address</h2>
+                  <Addresses integrated={true} redirectTo={'.'} onClick={(x, val) => this.onClickAccount(x, val)} state={this.state} />
+                  <WillCall />
+                </>
+              }
+              {this.state.cartItems.length == this.state.willCalls
+                && <WillCall />
+              }
+              {this.state.willCalls == 0
+                && <Addresses integrated={true} redirectTo={'.'} onClick={(x, val) => this.onClickAccount(x, val)} state={this.state} />
+              }
+              {!this.state.displayAddAddress && !this.state.displayEditAddress &&
+                <div className="row">
+                  {(this.state.addresses.length && this.state.cartItems.length > this.state.willCalls) || this.state.cartItems.length == this.state.willCalls
+                    ? <div className="btn btn-primary" onClick={() => this.handleClickPayment()}>Proceed to Payment</div>
+                    : <div className="btn btn-primary disabled">Proceed to Payment</div>
+                  }
+                </div>
+              }
+            </>
           </div>
         </section>
-      </NavbarFooter>
+      </NavbarFooter >
     )
   }
 
 }
+
+function WillCall() {
+  return (
+    <>
+      <h2 className="mb-3">Will-Call Pick Up Location</h2>
+      <div className="mapouter">
+        <div className="gmap_canvas"><iframe id="gmap_canvas" src="https://maps.google.com/maps?q=2881%20W.%20PICO%20BLVD.%20LOS%20ANGELES%2C%20CA%2090006&t=&z=15&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe>
+        </div>
+      </div>
+    </>
+  )
+}
+

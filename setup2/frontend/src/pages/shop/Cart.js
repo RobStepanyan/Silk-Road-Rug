@@ -84,7 +84,7 @@ export default class Cart extends React.Component {
 
     axios({
       method: 'patch',
-      headers: apiHeaders.authorization,
+      headers: { ...apiHeaders.authorization, ...apiHeaders.csrf },
       url: apiURLs.user.cart.partialUpdate(pk),
       data: {
         selecteds,
@@ -99,7 +99,7 @@ export default class Cart extends React.Component {
     this.setState({ loading: true })
     axios({
       method: 'delete',
-      headers: apiHeaders.authorization,
+      headers: { ...apiHeaders.authorization, ...apiHeaders.csrf },
       url: apiURLs.user.cart.delete(this.state.data[key].id),
     }).then(() => {
       let { data } = this.state
@@ -114,7 +114,7 @@ export default class Cart extends React.Component {
 
     axios({
       method: 'get',
-      headers: apiHeaders.authorization,
+      headers: { ...apiHeaders.authorization, ...apiHeaders.csrf },
       url: apiURLs.user.cart.list,
     })
       .then(res => {

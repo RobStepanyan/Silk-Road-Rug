@@ -55,7 +55,7 @@ export default class Rug extends React.Component {
     if (!isAuthed()) { this.setState({ redirectNow: true }) }
     axios({
       method: 'post',
-      headers: apiHeaders.authorization,
+      headers: { ...apiHeaders.authorization, ...apiHeaders.csrf },
       url: apiURLs.user.cart.create,
       data: {
         rug: this.state.data.id,

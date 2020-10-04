@@ -1,9 +1,12 @@
+import stripe
+from . import models
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode
 from django.views.decorators.csrf import csrf_protect
 from . import models, serializers, tokens, functions
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -442,6 +445,7 @@ class UserAddressGetView(GenericAPIView):
 class UserAddressSetPrimaryView(GenericAPIView):
     permission_classes = [IsAuthenticated]
 
+    @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         id_ = dict(self.request.data)['id']
         try:
@@ -472,6 +476,7 @@ class CartItemViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = serializers.CartItemModelSerializer
 
+    @method_decorator(csrf_protect)
     def list(self, request):
         """
         Method: GET
@@ -488,6 +493,7 @@ class CartItemViewSet(viewsets.ViewSet):
             data.append(serializer['data'])
         return Response(data)
 
+    @method_decorator(csrf_protect)
     def create(self, request):
         """
         Method: POST
@@ -501,8 +507,9 @@ class CartItemViewSet(viewsets.ViewSet):
                 data[field] = data[field][0]
 
         data = {**data, 'user': self.request.user.id}
+        del data['selecteds']
 
-        if models.CartItem.objects.filter(**data).exists():
+        if models.CartItem.objects.filter(rug=data['rug']).exists():
             # Don't edit error (see Rug.js)
             return Response({'error': 'Object already exists.'})
         try:
@@ -514,6 +521,7 @@ class CartItemViewSet(viewsets.ViewSet):
             return Response({'error': str(e)})
         return Response({'msg': 'Object created.'})
 
+    @method_decorator(csrf_protect)
     def retrieve(self, request, pk=None):
         """
         Method: GET
@@ -556,6 +564,7 @@ class CartItemViewSet(viewsets.ViewSet):
             return Response({'error': str(e)})
         return Response({'msg': 'Object updated.'})
 
+    @method_decorator(csrf_protect)
     def partial_update(self, request, pk=None):
         """
         Method: PATCH
@@ -584,6 +593,7 @@ class CartItemViewSet(viewsets.ViewSet):
             return Response({'error': str(e)})
         return Response({'msg': 'Object updated.'})
 
+    @method_decorator(csrf_protect)
     def destroy(self, request, pk=None):
         """
         Method: DELETE
@@ -595,3 +605,50 @@ class CartItemViewSet(viewsets.ViewSet):
             return Response({'error': 'Object doesn\'t exists.'})
         cart_item.delete()
         return Response({'msg': 'Object removed.'})
+
+
+stripe.api_key = 'sk_test_51HW4GfCi0RkzIpI9eYv2ygd9WZTkknqKO0DCG3HXepw2JPzaaT4mmGld6bRXM1mrbTYne9VkZfEtTYBqdsZGvjl600YvArGqDC'
+
+
+class CreateCheckotSession(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+    DOMAIN_NAME = 'https://localhost:8000/'
+
+    @method_decorator(csrf_protect)
+    def post(self, request, *args, **kwargs):
+        line_items = []
+        for cart_item in models.CartItem.objects.filter(user=request.user.id):
+            # Calculate Rug Price
+            rug_var = cart_item.rug_variation
+            s = rug_var.price_usd_after_sale if rug_var.price_usd_after_sale else rug_var.price_usd
+            # Calculate Additional Costs
+            rug = cart_item.rug
+            for sel in cart_item.selecteds:
+                s += model_to_dict(rug)[sel]
+
+            line_items.append({
+                'price_data': {
+                    'currency': 'usd',
+                    'unit_amount_decimal': s,
+                    'product_data': {
+                        'name': rug.name.title(),
+                        'images': [self.DOMAIN_NAME + str(x.image) for x in models.RugImage.objects.filter(rug=rug)]
+                    }
+                },
+                'quantity': cart_item.quantity
+            })
+
+        try:
+            checkout_session = stripe.checkout.Session.create(
+                payment_method_types=['card'],
+
+                line_items=line_items,
+
+                mode='payment',
+                success_url=self.DOMAIN_NAME + 'checkout/success',
+                cancel_url=self.DOMAIN_NAME + 'checkout/cancel',
+            )
+
+            return Response({'id': checkout_session.id})
+        except Exception as e:
+            return Response({'error': str(e)})

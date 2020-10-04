@@ -84,13 +84,16 @@ class CartItem(models.Model):
     rug = models.ForeignKey(Rug, on_delete=models.CASCADE)
     rug_variation = models.ForeignKey(RugVariation, on_delete=models.CASCADE)
 
+    def default_selecteds():
+        return ['WC']
+
     selecteds = ArrayField(
         models.CharField(
             max_length=2, choices=variables.ADDITIONAL_SERVICES + variables.SHIPPING_METHODS,
         ),
         size=len(variables.ADDITIONAL_SERVICES) +
         len(variables.SHIPPING_METHODS),
-        default=['WC']
+        default=default_selecteds
     )
     quantity = models.IntegerField(default=1)
 

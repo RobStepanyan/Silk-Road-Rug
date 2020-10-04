@@ -218,6 +218,9 @@ export const apiURLs = {
       partialUpdate: id => apiBase + `user/cart/${id}/`,
     }
   },
+  checkout: {
+    createSession: apiBase + 'checkout/create-session/',
+  },
 }
 const cookies = new Cookies()
 export const apiHeaders = {

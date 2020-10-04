@@ -232,7 +232,7 @@ export class Addresses extends React.Component {
     this.setState({ loading: true })
     axios({
       method: 'post',
-      headers: apiHeaders.authorization,
+      headers: { ...apiHeaders.authorization, ...apiHeaders.csrf },
       url: apiURLs.user.setPrimaryAddress,
       data: { id: this.state.addresses[id].id }
     }).then(() => {

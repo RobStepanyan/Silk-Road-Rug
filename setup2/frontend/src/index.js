@@ -10,6 +10,7 @@ import { isAuthed } from './other/functions';
 import { apiURLs } from './other/variables';
 import Home from './pages/Home';
 import ContactUs from './pages/ContactUs';
+import FullPageNoScroll from './pages/FullPageNoScroll';
 import AboutUs from './pages/learn/AboutUs';
 import ReturnPolicy from './pages/learn/ReturnPolicy';
 import ShippingInfo from './pages/learn/ShippingInfo';
@@ -44,6 +45,14 @@ function App() {
         <Route exact path='/cart' component={Cart} />
         <Route exact path='/shop' component={Shop} />
         <Route exact path='/checkout' component={Checkout} />
+        <Route exact path='/checkout/success'>
+          <FullPageNoScroll heading="Order Placed" text="Thanks for you order. You can easily manage your orders in your account. We appreciate your business!"
+            btnText="Go to Orders" btnHref="/account/orders" />
+        </Route>
+        <Route exact path='/checkout/cancel'>
+          <FullPageNoScroll heading="Order Canceled" text="Something went wrong, and your order is canceled. Please try again later or contact us for a resolution. We appreciate your business!"
+            btnText="Contact Us" btnHref="/contact-us" />
+        </Route>
         <Route exact path='/rug/:id' component={Rug} />
         <Route exact path='/account'>
           {isAuthed()
