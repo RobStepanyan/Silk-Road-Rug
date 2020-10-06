@@ -191,6 +191,10 @@ export class Addresses extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.setState = () => { }
+  }
+
   componentWillMount() {
     if (!isAuthed()) { this.setState({ redirectToLogin: true }) }
 

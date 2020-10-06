@@ -31,4 +31,5 @@ urlpatterns += [
          views.UserAddressSetPrimaryView.as_view()),
     path('validate/phone-number/', views.ValidatePhoneNumberView.as_view()),
     path('checkout/create-session/', views.CreateCheckotSession.as_view()),
+    path('checkout/check/', views.CheckCheckoutSession.as_view()),
 ]

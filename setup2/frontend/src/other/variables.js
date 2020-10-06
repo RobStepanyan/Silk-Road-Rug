@@ -220,6 +220,7 @@ export const apiURLs = {
   },
   checkout: {
     createSession: apiBase + 'checkout/create-session/',
+    check: apiBase + 'checkout/check/',
   },
 }
 const cookies = new Cookies()

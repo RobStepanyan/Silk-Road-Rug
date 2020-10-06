@@ -20,6 +20,7 @@ import Cart from './pages/shop/Cart';
 import Shop from './pages/shop/Shop';
 import Rug from './pages/shop/Rug';
 import Checkout from './pages/shop/Checkout';
+import CheckoutSuccess from './pages/shop/CheckoutSuccess';
 import Error from './pages/Error';
 import Account from './pages/account/Account';
 import SignUp from './pages/account/SignUp';
@@ -45,13 +46,10 @@ function App() {
         <Route exact path='/cart' component={Cart} />
         <Route exact path='/shop' component={Shop} />
         <Route exact path='/checkout' component={Checkout} />
-        <Route exact path='/checkout/success'>
-          <FullPageNoScroll heading="Order Placed" text="Thanks for you order. You can easily manage your orders in your account. We appreciate your business!"
-            btnText="Go to Orders" btnHref="/account/orders" />
-        </Route>
+        <Route exact path='/checkout/success/:checkout' component={CheckoutSuccess} />
         <Route exact path='/checkout/cancel'>
           <FullPageNoScroll heading="Order Canceled" text="Something went wrong, and your order is canceled. Please try again later or contact us for a resolution. We appreciate your business!"
-            btnText="Contact Us" btnHref="/contact-us" />
+            btnText="Back to Home" btnHref="/" />
         </Route>
         <Route exact path='/rug/:id' component={Rug} />
         <Route exact path='/account'>

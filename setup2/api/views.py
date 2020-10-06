@@ -1,4 +1,5 @@
 import stripe
+import datetime
 from . import models
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode
@@ -18,6 +19,7 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.models import User
 from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
+from django.utils import timezone
 from django.http import HttpResponse
 
 
@@ -500,7 +502,7 @@ class CartItemViewSet(viewsets.ViewSet):
         Check for duplicate if there's duplicate with ALL details
         """
         data = dict(self.request.data)
-        data['selecteds'] = data.get('selecteds', ['WC'])
+        data['selecteds'] = data.get('selecteds', ['GS'])
         wrong_fields = ['rug', 'rug_variation']
         for field in wrong_fields:
             if isinstance(data[field], (list, tuple)):
@@ -612,7 +614,7 @@ stripe.api_key = 'sk_test_51HW4GfCi0RkzIpI9eYv2ygd9WZTkknqKO0DCG3HXepw2JPzaaT4mm
 
 class CreateCheckotSession(GenericAPIView):
     permission_classes = [IsAuthenticated]
-    DOMAIN_NAME = 'https://localhost:8000/'
+    DOMAIN_NAME = 'http://localhost:8000/'
 
     @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
@@ -629,7 +631,7 @@ class CreateCheckotSession(GenericAPIView):
             line_items.append({
                 'price_data': {
                     'currency': 'usd',
-                    'unit_amount_decimal': s,
+                    'unit_amount_decimal': int(s * 100),
                     'product_data': {
                         'name': rug.name.title(),
                         'images': [self.DOMAIN_NAME + str(x.image) for x in models.RugImage.objects.filter(rug=rug)]
@@ -645,10 +647,70 @@ class CreateCheckotSession(GenericAPIView):
                 line_items=line_items,
 
                 mode='payment',
-                success_url=self.DOMAIN_NAME + 'checkout/success',
+                success_url=self.DOMAIN_NAME +
+                'checkout/success/{CHECKOUT_SESSION_ID}',
                 cancel_url=self.DOMAIN_NAME + 'checkout/cancel',
             )
 
-            return Response({'id': checkout_session.id})
         except Exception as e:
             return Response({'error': str(e)})
+
+        orders = []
+        for cart_item in models.CartItem.objects.filter(user=request.user.id):
+            cart_item = model_to_dict(cart_item)
+            del cart_item['id']
+            del cart_item['user']
+            fields_to_update = {'rug': models.Rug,
+                                'rug_variation': models.RugVariation}
+            for key, val in fields_to_update.items():
+                cart_item[key] = val.objects.get(id=cart_item[key])
+
+            order = models.Order(
+                **cart_item,
+                user=request.user,
+                payment_status='unpaid',
+                forecasted_arrival=timezone.now() - datetime.timedelta(days=7),
+                delivery_address=models.Address.objects.get(
+                    user=request.user.id, is_primary=True)
+            )
+            order.save()
+            orders.append(order.id)
+
+        m = models.CheckoutSession(
+            stripe_checkout_sess_id=checkout_session.id,
+            user=request.user,
+            order_models=orders,
+        )
+        m.save()
+
+        return Response({'id': checkout_session.id})
+
+
+class CheckCheckoutSession(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @method_decorator(csrf_protect)
+    def post(self, request, *args, **kwargs):
+        checkout_id = request.data['checkout_id']
+
+        if not checkout_id:
+            return Response({'error': 'No checkout_id provided'})
+
+        try:
+            stripe.checkout.Session.retrieve(checkout_id)  # session =
+        except Exception as e:
+            return Response({'error': str(e)})
+
+        user = models.CheckoutSession.objects.get(
+            stripe_checkout_sess_id=checkout_id).user
+
+        models.CartItem.objects.filter(user=request.user.id).delete()
+        for order_model_id in models.CheckoutSession.objects.get(stripe_checkout_sess_id=checkout_id).order_models:
+            m = models.Order.objects.get(id=order_model_id)
+            m.payment_status = 'paid'
+            m.save()
+
+        models.CheckoutSession.objects.filter(
+            stripe_checkout_sess_id=checkout_id).delete()
+
+        return Response({'first_name': user.first_name})

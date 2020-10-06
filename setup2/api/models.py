@@ -3,7 +3,7 @@ from django.db import models
 from . import variables
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
-
+from django.utils import timezone
 
 STYLES = [(variables.styles.index(x), x) for x in variables.styles]
 
@@ -78,38 +78,6 @@ class RugVariation(models.Model):
         ordering = ['rug', 'width_feet']
 
 
-class CartItem(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_query_name='cart_items')
-    rug = models.ForeignKey(Rug, on_delete=models.CASCADE)
-    rug_variation = models.ForeignKey(RugVariation, on_delete=models.CASCADE)
-
-    def default_selecteds():
-        return ['WC']
-
-    selecteds = ArrayField(
-        models.CharField(
-            max_length=2, choices=variables.ADDITIONAL_SERVICES + variables.SHIPPING_METHODS,
-        ),
-        size=len(variables.ADDITIONAL_SERVICES) +
-        len(variables.SHIPPING_METHODS),
-        default=default_selecteds
-    )
-    quantity = models.IntegerField(default=1)
-
-
-class PendingUserPersonalInfoUpdate(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    email_to = models.EmailField()
-    first_name_to = models.CharField(max_length=255)
-    last_name_to = models.CharField(max_length=255)
-
-
-class PendingUserPwdChange(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    password_to = models.CharField(max_length=255)
-
-
 class Address(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=255)
@@ -126,3 +94,78 @@ class Address(models.Model):
 
     class Meta:
         ordering = ('-is_primary',)
+
+    def __str__(self):
+        return self.full_name + ' ' + self.address_line_1
+
+    def __repr__(self):
+        self.__str__()
+
+
+class AbstractCartItem(models.Model):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_query_name='cart_items')
+    rug = models.ForeignKey(Rug, on_delete=models.CASCADE)
+    rug_variation = models.ForeignKey(RugVariation, on_delete=models.CASCADE)
+
+    def default_selecteds():
+        return ['GS']
+
+    selecteds = ArrayField(
+        models.CharField(
+            max_length=2, choices=variables.ADDITIONAL_SERVICES + variables.SHIPPING_METHODS,
+        ),
+        size=len(variables.ADDITIONAL_SERVICES) +
+        len(variables.SHIPPING_METHODS),
+        default=default_selecteds
+    )
+    quantity = models.IntegerField(default=1)
+
+    class Meta:
+        abstract = True
+
+
+class CartItem(AbstractCartItem):
+    pass
+
+
+class Order(AbstractCartItem):
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_query_name='orders')
+
+    # Same as in stripe
+    PAYMENT_STATUSES = (
+        ('paid', 'Paid'),
+        ('unpaid', 'Unpaid'),
+    )
+    ordered_at = models.DateTimeField(default=timezone.now)
+    payment_status = models.CharField(max_length=6, choices=PAYMENT_STATUSES)
+    forecasted_arrival = models.DateTimeField(
+        blank=True, null=True, default=None)
+    tracking_url = models.URLField(blank=True, null=True, default=None)
+    delivery_address = models.ForeignKey(
+        Address, on_delete=models.PROTECT, default=None, blank=True, null=True)
+
+    def __str__(self):
+        return User.objects.get(id=self.user.id).username + "'s Order"
+
+
+class PendingUserPersonalInfoUpdate(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    email_to = models.EmailField()
+    first_name_to = models.CharField(max_length=255)
+    last_name_to = models.CharField(max_length=255)
+
+
+class PendingUserPwdChange(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    password_to = models.CharField(max_length=255)
+
+
+class CheckoutSession(models.Model):
+    stripe_checkout_sess_id = models.CharField(max_length=1024)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    order_models = ArrayField(
+        models.CharField(max_length=1024),
+        default=list
+    )

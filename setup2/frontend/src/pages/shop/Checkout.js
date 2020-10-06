@@ -140,10 +140,12 @@ export default class Checkout extends React.Component {
               }
               {!this.state.displayAddAddress && !this.state.displayEditAddress &&
                 <div className="row">
-                  {(this.state.addresses.length && this.state.cartItems.length > this.state.willCalls) || this.state.cartItems.length == this.state.willCalls
-                    ? <div className="btn btn-primary" onClick={() => this.handleClickPayment()}>Proceed to Payment</div>
-                    : <div className="btn btn-primary disabled">Proceed to Payment</div>
-                  }
+                  <div className="col">
+                    {(this.state.addresses.length && this.state.cartItems.length > this.state.willCalls) || this.state.cartItems.length == this.state.willCalls
+                      ? <div className="btn btn-primary mx-0" onClick={() => this.handleClickPayment()}>Proceed to Payment</div>
+                      : <div className="btn btn-primary disabled mx-0">Proceed to Payment</div>
+                    }
+                  </div>
                 </div>
               }
             </>
