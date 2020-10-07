@@ -117,7 +117,9 @@ class AbstractCartItem(models.Model):
         ),
         size=len(variables.ADDITIONAL_SERVICES) +
         len(variables.SHIPPING_METHODS),
-        default=default_selecteds
+        default=default_selecteds,
+        help_text=" | ".join(
+            [x[0] + " - " + x[1] for x in (variables.ADDITIONAL_SERVICES + variables.SHIPPING_METHODS)])
     )
     quantity = models.IntegerField(default=1)
 
