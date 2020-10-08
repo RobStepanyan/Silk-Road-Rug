@@ -140,6 +140,11 @@ class Order(AbstractCartItem):
         ('paid', 'Paid'),
         ('unpaid', 'Unpaid'),
     )
+    DELIVERY_STATUSES = (
+        ('i', 'In Shop'),
+        ('s', 'Sent'),
+        ('d', 'Delivered'),
+    )
     ordered_at = models.DateTimeField(default=timezone.now)
     payment_status = models.CharField(max_length=6, choices=PAYMENT_STATUSES)
     forecasted_arrival = models.DateTimeField(
@@ -147,6 +152,8 @@ class Order(AbstractCartItem):
     tracking_url = models.URLField(blank=True, null=True, default=None)
     delivery_address = models.ForeignKey(
         Address, on_delete=models.PROTECT, default=None, blank=True, null=True)
+    delivery_status = models.CharField(
+        max_length=1, choices=DELIVERY_STATUSES, default='i')
 
     def __str__(self):
         return User.objects.get(id=self.user.id).username + "'s Order"
