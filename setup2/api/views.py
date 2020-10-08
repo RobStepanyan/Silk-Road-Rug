@@ -656,6 +656,7 @@ class CreateCheckotSession(GenericAPIView):
             return Response({'error': str(e)})
 
         orders = []
+        now = timezone.now()
         for cart_item in models.CartItem.objects.filter(user=request.user.id):
             cart_item = model_to_dict(cart_item)
             del cart_item['id']
@@ -667,6 +668,7 @@ class CreateCheckotSession(GenericAPIView):
 
             order = models.Order(
                 **cart_item,
+                ordered_at=now,
                 user=request.user,
                 payment_status='unpaid',
                 forecasted_arrival=timezone.now() - datetime.timedelta(days=7),
