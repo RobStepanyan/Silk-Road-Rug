@@ -730,6 +730,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     @method_decorator(csrf_protect)
     def list(self, request):
         # Method: GET
-        queryset = models.Order.objects.filter(user=request.user)
+        queryset = models.Order.objects.filter(
+            user=request.user, payment_status="paid ")
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
