@@ -716,3 +716,15 @@ class CheckCheckoutSession(GenericAPIView):
             stripe_checkout_sess_id=checkout_id).delete()
 
         return Response({'first_name': user.first_name})
+
+
+class OrderViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
+    serializer_class = serializers.OrderModelSerializer
+
+    @method_decorator(csrf_protect)
+    def list(self, request):
+        # Method: GET
+        queryset = models.Order.objects.filter(user=request.user)
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)

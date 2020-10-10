@@ -217,3 +217,10 @@ class CartItemModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CartItem
         fields = '__all__'
+
+
+class OrderModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Order
+        exclude = ('user',)
+        depth = 1
