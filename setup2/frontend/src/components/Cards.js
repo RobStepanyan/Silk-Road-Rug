@@ -4,7 +4,10 @@ import {
   RadioGroupWithPrice, CheckboxGroupWithPrice,
   RadioGroup, CheckboxGroup, RangeSliderGroup
 } from './Form';
-import { formatPrice } from '../other/functions';
+import { formatPrice, formatSize } from '../other/functions';
+import Moment from 'react-moment';
+import 'moment-timezone';
+import { styles } from '../other/variables';
 
 
 export default function Card(props) {
@@ -183,5 +186,57 @@ export function AccountCard(props) {
         </div>
       </div>
     </a>
+  )
+}
+
+export function OrderCard(props) {
+  let data = props.order
+  return (
+    <div className="card order">
+      <div className="row">
+        <div className="col-12 col-sm-6 col-lg-3">
+          <p>Ordered at</p>
+          <p> <Moment date={props.order[0]} format="DD MMM, YYYY (h:mma)" /></p>
+        </div>
+        <div className="col-12 col-sm-6 col-lg-3">
+          <p>Total Price</p>
+          <p>{formatPrice(data.total)}</p>
+        </div>
+        {data.selecteds.includes('WC')
+          ?
+          <div className="col-12 col-sm-6 col-lg-4">
+            <p>Will-Call Pick Up Location</p>
+            <p><a className="with-underline" href="/contact-us#map">See here</a></p>
+          </div>
+          : <>
+            <div className="col-12 col-sm-6 col-lg-3">
+              <p>Forecasted Arrival</p>
+              <p><Moment date={data.forecasted_arrival} format="DD MMM, YYYY" /></p>
+            </div>
+            <div className="col-12 col-sm-6 col-lg-3">
+              <p>Deliver to</p>
+              <p>{data.delivery_address.address_line_1 + ' ' + data.delivery_address.address_line_2}</p>
+            </div>
+          </>
+        }
+
+      </div>
+      <hr />
+      <div className="row my-3">
+        <div className="col-12 col-sm-6 col-lg-3">
+          <img className="w-100" src={data.rug.image[0].image} alt="Image" />
+        </div>
+        <div className="col">
+          <h2 className="mb-4">{data.rug.name}</h2>
+          <h4>Details</h4>
+          <ul className="style-default mt-2">
+            <li>Size: {formatSize(data.rug_variation)}</li>
+            <li>Style: {styles[data.rug.style]}</li>
+            <li>SKU: {data.rug.sku}</li>
+            <li>Quantity: {data.quantity}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
   )
 }

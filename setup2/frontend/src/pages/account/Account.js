@@ -1,6 +1,6 @@
 import React from 'react';
 import NavbarFooter from '../../components/NavbarFooter';
-import { AccountCard } from '../../components/Cards';
+import { AccountCard, OrderCard } from '../../components/Cards';
 import Loading from '../../components/Loading';
 import Form from '../../components/Form';
 import Error from '../../pages/Error';
@@ -475,33 +475,42 @@ class Orders extends React.Component {
   constructor() {
     super()
     this.state = {
-      loading: false,
+      loading: true,
       redirectToLogin: false,
-      firstName: '',
-      lastName: '',
-      email: '',
+      orders: {}
     }
-    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSubmit(values) {
+  componentDidMount() {
     if (!isAuthed()) { this.setState({ redirectToLogin: true }) }
-    // return axios({
-    //   method: 'post',
-    //   headers: { ...apiHeaders.csrf, ...apiHeaders.authorization },
-    //   url: apiURLs.user.changePwd,
-    //   data: values
-    // })
+    axios({
+      method: 'get',
+      headers: { ...apiHeaders.csrf, ...apiHeaders.authorization },
+      url: apiURLs.user.order.list,
+    })
+      .then(res => {
+        let { data } = res
+        this.setState({ orders: data, loading: false })
+      })
+      .catch(err => { if (err.response.status == 401) { window.location.reload() } else { this.setState({ loading: false }) } })
   }
 
   render() {
-    return (
-      <>
-        {this.state.redirectToLogin ? <Redirect to='/login' /> : ''}
-        {this.state.loading ? <Loading />
-          : <p>Content</p>
-        }
-      </>
-    )
+    if (this.state.redirectToLogin) { return <Redirect to='/login' /> }
+    if (this.state.loading) { return <Loading /> }
+    if (Object.keys(this.state.orders).length == 0) {
+      return (<>
+        <h2>You don't have any orders yet.</h2>
+        <p className="mt-2">Shop for Rug so they will appear here.</p>
+        <a href="/shop" className="btn btn-primary ml-0">Go to Shop</a>
+      </>)
+    }
+
+    return <>
+      {this.state.orders.map((x, i) => {
+        return <OrderCard key={i} order={x} />
+      })
+      }
+    </>
   }
 }

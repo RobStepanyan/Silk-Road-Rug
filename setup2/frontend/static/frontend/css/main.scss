@@ -708,8 +708,8 @@ ul.small {
 
 #cart .close-btn {
     position: absolute;
-    top: $margin;
-    right: $margin;
+    top: 25px;
+    right: 25px;
 
     &,
     & svg {
@@ -1054,4 +1054,22 @@ footer img {
 
 .cursor-pointer {
     cursor: pointer;
+}
+
+.order.card {
+    p {
+        margin: 0;
+    }
+
+    .col-12 {
+        margin-bottom: $margin / 3;
+
+        p {
+            width: fit-content;
+
+            &:last-of-type() {
+                font-weight: bold;
+            }
+        }
+    }
 }

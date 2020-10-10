@@ -8,16 +8,18 @@ from phonenumber_field.serializerfields import PhoneNumberField
 from phonenumber_field.validators import validate_international_phonenumber
 
 
+class RugImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RugImage
+        exclude = ('rug',)
+
+
 class RugSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Rug
         fields = '__all__'
 
-
-class RugImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.RugImage
-        exclude = ('rug',)
+    image = RugImageSerializer(many=True)
 
 
 class RugVariationSerializer(serializers.ModelSerializer):
@@ -224,3 +226,5 @@ class OrderModelSerializer(serializers.ModelSerializer):
         model = models.Order
         exclude = ('user',)
         depth = 1
+
+    rug = RugSerializer()

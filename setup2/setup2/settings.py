@@ -118,7 +118,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+# Same with variables.js
+TIME_ZONE = 'America/Los_Angeles'
 
 USE_I18N = True
 

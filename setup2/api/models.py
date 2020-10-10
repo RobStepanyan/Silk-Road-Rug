@@ -46,7 +46,7 @@ class Rug(models.Model):
 
 class RugImage(models.Model):
     rug = models.ForeignKey(Rug, on_delete=models.CASCADE,
-                            related_query_name='image')
+                            related_query_name='image', related_name='image')
     image = models.ImageField(upload_to='rugs')
 
     def __str__(self):
@@ -154,6 +154,9 @@ class Order(AbstractCartItem):
         Address, on_delete=models.PROTECT, default=None, blank=True, null=True)
     delivery_status = models.CharField(
         max_length=1, choices=DELIVERY_STATUSES, default='i')
+    total = models.DecimalField(
+        verbose_name="Order Total",
+        max_digits=12, decimal_places=2, default=0)
 
     def __str__(self):
         return User.objects.get(id=self.user.id).username + "'s Order"

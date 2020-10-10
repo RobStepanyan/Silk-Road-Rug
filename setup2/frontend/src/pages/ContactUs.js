@@ -11,15 +11,15 @@ export default function ContactUs() {
           <hr />
           <p>We would love to hear from you!</p>
 
-          <Form fields={[
+          {/* <Form fields={[
             { 'context': 'text', 'title': 'name', 'required': false, 'half': true },
             { 'context': 'email', 'required': true, 'half': true },
             { 'context': 'textarea', 'required': true, 'half': false },
             { 'context': 'file', 'maxSizeMB': 25, 'required': false, 'half': false }
-          ]} />
+          ]} /> */}
 
 
-          <h2 className="text-center mb-2">Address</h2>
+          <h2 id="map" className="text-center mb-2">Address</h2>
           <div className="mapouter">
             <div className="gmap_canvas"><iframe id="gmap_canvas" src="https://maps.google.com/maps?q=2881%20W.%20PICO%20BLVD.%20LOS%20ANGELES%2C%20CA%2090006&t=&z=15&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe>
             </div>

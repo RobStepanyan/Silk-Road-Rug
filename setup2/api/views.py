@@ -511,7 +511,7 @@ class CartItemViewSet(viewsets.ViewSet):
         data = {**data, 'user': self.request.user.id}
         del data['selecteds']
 
-        if models.CartItem.objects.filter(rug=data['rug']).exists():
+        if models.CartItem.objects.filter(rug=data['rug'], rug_variation=data['rug_variation']).exists():
             # Don't edit error (see Rug.js)
             return Response({'error': 'Object already exists.'})
         try:
@@ -619,6 +619,7 @@ class CreateCheckotSession(GenericAPIView):
     @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         line_items = []
+        order_totals = {}
         for cart_item in models.CartItem.objects.filter(user=request.user.id):
             # Calculate Rug Price
             rug_var = cart_item.rug_variation
@@ -627,6 +628,7 @@ class CreateCheckotSession(GenericAPIView):
             rug = cart_item.rug
             for sel in cart_item.selecteds:
                 s += model_to_dict(rug)[sel]
+            order_totals[cart_item.id] = s*cart_item.quantity
 
             line_items.append({
                 'price_data': {
@@ -658,6 +660,7 @@ class CreateCheckotSession(GenericAPIView):
         orders = []
         now = timezone.now()
         for cart_item in models.CartItem.objects.filter(user=request.user.id):
+            total = order_totals[cart_item.id]
             cart_item = model_to_dict(cart_item)
             del cart_item['id']
             del cart_item['user']
@@ -671,9 +674,11 @@ class CreateCheckotSession(GenericAPIView):
                 ordered_at=now,
                 user=request.user,
                 payment_status='unpaid',
-                forecasted_arrival=timezone.now() - datetime.timedelta(days=7),
+                forecasted_arrival=timezone.now(
+                ) + datetime.timedelta(days=(7 if 'GS' in cart_item['selecteds'] else 2)),
                 delivery_address=models.Address.objects.get(
-                    user=request.user.id, is_primary=True)
+                    user=request.user.id, is_primary=True),
+                total=total
             )
             order.save()
             orders.append(order.id)

@@ -216,7 +216,10 @@ export const apiURLs = {
       create: apiBase + 'user/cart/',
       update: id => apiBase + `user/cart/${id}/`,
       partialUpdate: id => apiBase + `user/cart/${id}/`,
-    }
+    },
+    order: {
+      list: apiBase + 'user/order/'
+    },
   },
   checkout: {
     createSession: apiBase + 'checkout/create-session/',
@@ -548,3 +551,5 @@ export const COUNTRIES = {
   ZM: 'Zambia',
   ZW: 'Zimbabwe',
 }
+
+export const apiTimeZone = 'America/Los_Angeles'
