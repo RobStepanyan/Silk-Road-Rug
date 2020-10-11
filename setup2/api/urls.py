@@ -33,4 +33,5 @@ urlpatterns += [
     path('validate/phone-number/', views.ValidatePhoneNumberView.as_view()),
     path('checkout/create-session/', views.CreateCheckotSession.as_view()),
     path('checkout/check/', views.CheckCheckoutSession.as_view()),
+    path('checkout/cancel/', views.CancelCheckoutSession.as_view()),
 ]

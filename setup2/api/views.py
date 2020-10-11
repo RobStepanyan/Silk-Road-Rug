@@ -651,7 +651,8 @@ class CreateCheckotSession(GenericAPIView):
                 mode='payment',
                 success_url=self.DOMAIN_NAME +
                 'checkout/success/{CHECKOUT_SESSION_ID}',
-                cancel_url=self.DOMAIN_NAME + 'checkout/cancel',
+                cancel_url=self.DOMAIN_NAME +
+                'checkout/cancel/{CHECKOUT_SESSION_ID}',
             )
 
         except Exception as e:
@@ -698,29 +699,57 @@ class CheckCheckoutSession(GenericAPIView):
 
     @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
-        checkout_id = request.data['checkout_id']
+        checkout_id = request.data.get('checkout_id')
 
         if not checkout_id:
             return Response({'error': 'No checkout_id provided'})
 
+        # Check Checkout Session
         try:
             stripe.checkout.Session.retrieve(checkout_id)  # session =
         except Exception as e:
             return Response({'error': str(e)})
 
+        # Get user using checkout session stored in local db
         user = models.CheckoutSession.objects.get(
             stripe_checkout_sess_id=checkout_id).user
 
+        # Remove all cart items of user
         models.CartItem.objects.filter(user=request.user.id).delete()
+
+        # Mark all orders of the user as 'paid'
         for order_model_id in models.CheckoutSession.objects.get(stripe_checkout_sess_id=checkout_id).order_models:
             m = models.Order.objects.get(id=order_model_id)
             m.payment_status = 'paid'
             m.save()
 
+        # Remove locally stored checkout sessions
         models.CheckoutSession.objects.filter(
             stripe_checkout_sess_id=checkout_id).delete()
 
         return Response({'first_name': user.first_name})
+
+
+class CancelCheckoutSession(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+
+    @method_decorator(csrf_protect)
+    def post(self, request, *args, **kwargs):
+        checkout_id = request.data.get('checkout_id')
+
+        if not checkout_id:
+            return Response({'error': 'No checkout_id provided'})
+
+        # Check Checkout Session
+        try:
+            stripe.checkout.Session.retrieve(checkout_id)  # session =
+        except Exception as e:
+            return Response({'error': str(e)})
+
+        models.CheckoutSession.objects.filter(
+            stripe_checkout_sess_id=checkout_id).delete()
+
+        return Response({'msg': 'Object removed.'})
 
 
 class OrderViewSet(viewsets.ModelViewSet):

@@ -10,7 +10,6 @@ import { isAuthed } from './other/functions';
 import { apiURLs } from './other/variables';
 import Home from './pages/Home';
 import ContactUs from './pages/ContactUs';
-import FullPageNoScroll from './pages/FullPageNoScroll';
 import AboutUs from './pages/learn/AboutUs';
 import ReturnPolicy from './pages/learn/ReturnPolicy';
 import ShippingInfo from './pages/learn/ShippingInfo';
@@ -21,6 +20,7 @@ import Shop from './pages/shop/Shop';
 import Rug from './pages/shop/Rug';
 import Checkout from './pages/shop/Checkout';
 import CheckoutSuccess from './pages/shop/CheckoutSuccess';
+import CheckoutCancel from './pages/shop/CheckoutCancel';
 import Error from './pages/Error';
 import Account from './pages/account/Account';
 import SignUp from './pages/account/SignUp';
@@ -47,10 +47,7 @@ function App() {
         <Route exact path='/shop' component={Shop} />
         <Route exact path='/checkout' component={Checkout} />
         <Route exact path='/checkout/success/:checkout' component={CheckoutSuccess} />
-        <Route exact path='/checkout/cancel'>
-          <FullPageNoScroll heading="Order Canceled" text="Something went wrong, and your order is canceled. Please try again later or contact us for a resolution. We appreciate your business!"
-            btnText="Back to Home" btnHref="/" />
-        </Route>
+        <Route exact path='/checkout/cancel/:checkout' component={CheckoutCancel} />
         <Route exact path='/rug/:id' component={Rug} />
         <Route exact path='/account'>
           {isAuthed()
@@ -161,7 +158,7 @@ function App() {
         <Route exact path='/' component={Home} />
         <Route path=''><Error error={404} /></Route>
       </Switch>
-    </Router>
+    </Router >
   );
 }
 
