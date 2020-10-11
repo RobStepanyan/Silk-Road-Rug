@@ -178,6 +178,6 @@ class CheckoutSession(models.Model):
     stripe_checkout_sess_id = models.CharField(max_length=1024)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     order_models = ArrayField(
-        models.CharField(max_length=1024),
+        models.CharField(max_length=128),
         default=list
     )
