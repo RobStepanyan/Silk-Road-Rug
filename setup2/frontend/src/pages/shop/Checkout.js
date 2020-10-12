@@ -133,7 +133,7 @@ export default class Checkout extends React.Component {
                   <WillCall />
                 </>
               }
-              {this.state.cartItems.length == this.state.willCalls
+              {this.state.cartItems.length == this.state.willCalls && this.state.cartItems.length > 0
                 && <WillCall />
               }
               {this.state.willCalls == 0
