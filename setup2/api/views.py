@@ -789,6 +789,6 @@ class OrderViewSet(viewsets.ModelViewSet):
     def list(self, request):
         # Method: GET
         queryset = models.Order.objects.filter(
-            user=request.user, payment_status="paid ")
+            user=request.user, payment_status="paid")
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
