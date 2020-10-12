@@ -28,6 +28,7 @@ export default class CheckoutSuccess extends React.Component {
         if (data.error) { this.setState({ redirectTo404: true, loading: false }); return }
         this.setState({ firstName: data.first_name, loading: false })
       })
+      .catch(res => this.setState({ redirectTo404: true }))
   }
 
   render() {

@@ -5,7 +5,7 @@ import { apiHeaders, apiURLs } from '../../other/variables';
 import Error from '../Error';
 import FullPageNoScroll from '../FullPageNoScroll';
 
-export default class CheckoutSuccess extends React.Component {
+export default class CheckoutCancel extends React.Component {
   constructor(props) {
     super();
     this.state = {
@@ -27,6 +27,7 @@ export default class CheckoutSuccess extends React.Component {
         if (data.error) { this.setState({ redirectTo404: true, loading: false }); return }
         this.setState({ loading: false })
       })
+      .catch(res => this.setState({ redirectTo404: true }))
   }
 
   render() {

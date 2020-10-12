@@ -746,9 +746,11 @@ class CancelCheckoutSession(GenericAPIView):
         except Exception as e:
             return Response({'error': str(e)})
 
-        session = models.CheckoutSession.objects.get(
-            stripe_checkout_sess_id=checkout_id)
-
+        try:
+            session = models.CheckoutSession.objects.get(
+                stripe_checkout_sess_id=checkout_id)
+        except:
+            return Response({'error': 'Object doesn\'t exists.'})
         # Delete checkout Session assosiated unpaid orders
         for order_model in session.order_models:
             models.Order.objects.get(id=order_model).delete()
