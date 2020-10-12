@@ -637,6 +637,9 @@ class CreateCheckotSession(GenericAPIView):
             for x in queryset:
                 try:
                     stripe.PaymentIntent.cancel(x.stripe_payment_intent_id)
+                    # Delete checkout Session assosiated unpaid orders
+                    for order_model in x.order_models:
+                        models.Order.objects.get(id=order_model).delete()
                     x.delete()
                 except Exception as e:
                     print(str(e))
