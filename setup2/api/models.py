@@ -175,9 +175,18 @@ class PendingUserPwdChange(models.Model):
 
 
 class CheckoutSession(models.Model):
-    stripe_checkout_sess_id = models.CharField(max_length=1024)
+    stripe_checkout_sess_id = models.CharField(max_length=100)
+    stripe_payment_intent_id = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    # (below) Thats why we don't use foreign key here
+    # (postgres.E002) Base field for array cannot be a related field.
     order_models = ArrayField(
-        models.CharField(max_length=128),
+        models.CharField(max_length=24),
+        default=list
+    )
+    rug_models = ArrayField(
+        models.CharField(max_length=24),
         default=list
     )

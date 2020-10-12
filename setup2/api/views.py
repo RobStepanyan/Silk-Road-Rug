@@ -21,6 +21,7 @@ from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_decode
 from django.utils import timezone
 from django.http import HttpResponse
+from django.conf import settings
 
 
 class RugViewSet(viewsets.ViewSet):
@@ -619,17 +620,36 @@ class CreateCheckotSession(GenericAPIView):
     @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         line_items = []
+        rugs = []  # collects rug model id's
         order_totals = {}
         for cart_item in models.CartItem.objects.filter(user=request.user.id):
             # Calculate Rug Price
             rug_var = cart_item.rug_variation
             s = rug_var.price_usd_after_sale if rug_var.price_usd_after_sale else rug_var.price_usd
-            # Calculate Additional Costs
+
             rug = cart_item.rug
+            rugs.append(rug.id)
+
+            # Remove outdated checkout sessions that were closed (not canceled)
+            queryset = models.CheckoutSession.objects.filter(
+                created_at__lte=timezone.now()-datetime.timedelta(minutes=settings.CUSTOM_CONFS['STRIPE_SESSION_TIMEOUT']))
+            # Also send cancel request to Stripe to stop sessions
+            for x in queryset:
+                try:
+                    stripe.PaymentIntent.cancel(x.stripe_payment_intent_id)
+                    x.delete()
+                except Exception as e:
+                    print(str(e))
+
+            if models.CheckoutSession.objects.filter(rug_models__contains=[str(rug.id)]).exists():
+                # If someone is ordering that rug
+                return Response({'error': 'Something went wrong. Please try again later.'})
+
+            # Calculate Additional Costs
             for sel in cart_item.selecteds:
                 s += model_to_dict(rug)[sel]
             order_totals[cart_item.id] = s*cart_item.quantity
-
+            # According to Stripe Docs
             line_items.append({
                 'price_data': {
                     'currency': 'usd',
@@ -686,7 +706,9 @@ class CreateCheckotSession(GenericAPIView):
 
         m = models.CheckoutSession(
             stripe_checkout_sess_id=checkout_session.id,
+            stripe_payment_intent_id=checkout_session.payment_intent,
             user=request.user,
+            rug_models=rugs,
             order_models=orders,
         )
         m.save()

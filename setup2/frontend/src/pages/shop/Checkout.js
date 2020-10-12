@@ -83,6 +83,7 @@ export default class Checkout extends React.Component {
       headers: { ...apiHeaders.authorization, ...apiHeaders.csrf },
       url: apiURLs.checkout.createSession
     });
+    if (response.data.error) { this.setState({ alert: response.data.error, loading: false }); return }
 
     const session = await response.data;
 

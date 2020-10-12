@@ -172,3 +172,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
     "https://silkroadruginc.com"
 ]
+
+# Dev created confs (not related to third-party apps)
+CUSTOM_CONFS = {
+    'STRIPE_SESSION_TIMEOUT': 10,  # in minutes
+}
