@@ -188,6 +188,7 @@ export class Addresses extends React.Component {
       redirectToLogin: false,
       addresses: [],
       toggled: {},
+      alert: null,
     }
   }
 
@@ -218,7 +219,11 @@ export class Addresses extends React.Component {
       headers: apiHeaders.authorization,
       url: apiURLs.user.removeAddress,
       data: { id: this.state.addresses[id].id }
-    }).then(() => {
+    }).then(res => {
+      if (res.data.error) {
+        this.setState({ alert: res.data.error, loading: false })
+        return
+      }
       let { addresses } = this.state
       addresses.splice(id, 1)
       if (addresses[0]) {
@@ -253,6 +258,9 @@ export class Addresses extends React.Component {
 
     return (
       <>
+        {this.state.alert
+          && <div className="alert danger">{this.state.alert}</div>
+        }
         {this.state.addresses.length > 0 &&
           <small className="mt-n3 mb-3 d-inline-flex"><div className="yellow-square"></div>Indicates Primary Address (click to change)</small>
         }

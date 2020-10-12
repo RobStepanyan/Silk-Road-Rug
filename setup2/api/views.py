@@ -22,6 +22,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.utils import timezone
 from django.http import HttpResponse
 from django.conf import settings
+from django.db.models.deletion import ProtectedError
 
 
 class RugViewSet(viewsets.ViewSet):
@@ -406,7 +407,10 @@ class UserAddressDeleteView(GenericAPIView):
             m = models.Address.objects.get(id=id_, user=self.request.user)
         except:
             return Response({'error': 'Object doesn\'t exists.'})
-        m.delete()
+        try:
+            m.delete()
+        except ProtectedError:
+            return Response({'error': 'Sorry, we are unable to remove an address associated with one of your orders.'})
         return Response({'is_valid': True, 'msg': 'Object removed.'})
 
 
