@@ -32,6 +32,10 @@ export default class Form extends Component {
   }
 
   componentDidMount() {
+    window.addEventListener('keydown', (event) => {
+      if (event.code == 'Enter') { this.handleSubmitClick() }
+    });
+
     let { state } = this
     this.props.fields.forEach((field, i) => {
       state.isValid[i] = field.required ? false : true;
