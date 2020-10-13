@@ -483,6 +483,24 @@ class CartItemViewSet(viewsets.ViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = serializers.CartItemModelSerializer
 
+    @staticmethod
+    def validate_data(data, request):
+        data['selecteds'] = data.get('selecteds', ['GS'])
+        wrong_fields = ['rug', 'rug_variation']
+        for field in wrong_fields:
+            if isinstance(data[field], (list, tuple)):
+                data[field] = data[field][0]
+
+        try:
+            available_quantity = models.RugVariation.objects.get(
+                id=data['rug_variation']).quantity
+        except:
+            return Response({'error': 'Object doesn\'t exists.'})
+
+        if data['quantity'] > available_quantity:
+            data['quantity'] = available_quantity
+        return data
+
     @method_decorator(csrf_protect)
     def list(self, request):
         """
@@ -507,11 +525,7 @@ class CartItemViewSet(viewsets.ViewSet):
         Check for duplicate if there's duplicate with ALL details
         """
         data = dict(self.request.data)
-        data['selecteds'] = data.get('selecteds', ['GS'])
-        wrong_fields = ['rug', 'rug_variation']
-        for field in wrong_fields:
-            if isinstance(data[field], (list, tuple)):
-                data[field] = data[field][0]
+        data = self.validate_data(data, request)
 
         data = {**data, 'user': self.request.user.id}
         del data['selecteds']
@@ -549,11 +563,7 @@ class CartItemViewSet(viewsets.ViewSet):
         Change Rug Variation and CartItem's Selecteds (All Fields are Required)
         """
         data = dict(self.request.data)
-        data['selecteds'] = data.get('selecteds', [])
-        wrong_fields = ['rug', 'rug_variation']
-        for field in wrong_fields:
-            if isinstance(data[field], (list, tuple)):
-                data[field] = data[field][0]
+        data = self.validate_data(data, request)
 
         if not pk:
             return Response({'error': 'Invalid object id.'})
@@ -578,11 +588,7 @@ class CartItemViewSet(viewsets.ViewSet):
         Update Rug Variation or/and CartItem's Selecteds
         """
         data = dict(self.request.data)
-        data['selecteds'] = data.get('selecteds', [])
-        wrong_fields = ['rug', 'rug_variation']
-        for field in wrong_fields:
-            if field in data and isinstance(data[field], (list, tuple)):
-                data[field] = data[field][0]
+        data = self.validate_data(data, request)
 
         if not pk:
             return Response({'error': 'Invalid object id.'})
