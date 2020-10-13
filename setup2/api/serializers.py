@@ -196,11 +196,9 @@ class CartItemSerializer(serializers.Serializer):
         rug_variation = models.RugVariation.objects.get(
             id=cart_item.rug_variation.id)
         rug_variation = RugVariationSerializer(rug_variation).data
-        rug_image = models.RugImage.objects.filter(
-            rug=cart_item.rug.id).first()
-        if not rug_image:
-            raise ObjectDoesNotExist()
-        rug_image = RugImageSerializer(rug_image).data
+        rug_image = models.RugImage.objects.filter(rug=cart_item.rug.id)
+        if rug_image.exists():
+            rug_image = RugImageSerializer(rug_image[0]).data
 
         return {
             'data': {
