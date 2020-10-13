@@ -57,7 +57,7 @@ export default class Home extends Component {
             <p>Find a perfect rug</p>
             {!this.state.data || this.state.data.length == 0
               ? <h3 className="center">Error Occured</h3>
-              : <Slider {...slickCarouselSettings[1]} className="row mb-3">
+              : <Slider {...slickCarouselSettings[1]} className="row mb-3 h-unset">
                 {this.state.data.map((data, i) => {
                   return <ShopCard notResponsive={true} key={i} id={data.id} heading={data.name} imgSrc={data.rug_images[0]} imgAlt={'Rug Image'}
                     price={[data.base_price_before_sale, data.base_price_after_sale]} />
