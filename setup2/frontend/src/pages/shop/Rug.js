@@ -40,7 +40,7 @@ export default class Rug extends React.Component {
         })
         response.data[0].rug_variations.map((vrtn, i) => {
           if (vrtn.is_sample) {
-            this.setState({ selectedVrtn: i + 1 })
+            this.setState({ selectedVrtn: i + (response.data[0].rug_variations.length > 1 ? 1 : 0) })
           }
         })
       })
