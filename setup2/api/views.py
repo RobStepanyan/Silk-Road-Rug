@@ -516,7 +516,7 @@ class CartItemViewSet(viewsets.ViewSet):
         data = {**data, 'user': self.request.user.id}
         del data['selecteds']
 
-        if models.CartItem.objects.filter(rug=data['rug'], rug_variation=data['rug_variation']).exists():
+        if models.CartItem.objects.filter(rug=data['rug'], rug_variation=data['rug_variation'], user=request.user).exists():
             # Don't edit error (see Rug.js)
             return Response({'error': 'Object already exists.'})
         try:
@@ -751,6 +751,19 @@ class CheckCheckoutSession(GenericAPIView):
             m = models.Order.objects.get(id=order_model_id)
             m.payment_status = 'paid'
             m.save()
+            # Remove quantity from rug_variation and cart_items
+            querysets = [
+                models.CartItem.objects.filter(
+                    rug_variation=m.rug_variation.id),
+                models.RugVariation.objects.filter(id=m.rug_variation.id),
+            ]
+            for queryset in querysets:
+                for obj in queryset:
+                    if obj.quantity - m.quantity < 1:
+                        obj.delete()
+                    else:
+                        obj.quantity -= m.quantity
+                        obj.save()
 
         # Remove locally stored checkout sessions
         models.CheckoutSession.objects.filter(
