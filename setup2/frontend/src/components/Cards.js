@@ -111,6 +111,7 @@ export function CartCard(props) {
             })}
             <h4 className="mb-3">Quantity</h4>
             <input type='number' value={props.selectedNumber} min={1} max={props.quantityAvailable} onChange={(e) => props.onChangeNumber(props.keyProp, e.target.value,)} />
+            <small className="m-0 mb-1">{props.quantityAvailable} Available</small>
           </div>
         </div>
       </div>

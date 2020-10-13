@@ -159,6 +159,7 @@ export default class Rug extends React.Component {
                     <input type='number' value={this.state.quantitySelected}
                       min={1} max={data.rug_variations[this.state.selectedVrtn].quantity}
                       onChange={(e) => this.setState({ quantitySelected: parseInt(e.target.value) })} />
+
                     <div className="row">
                       <div onClick={this.handleAddToCart} className="btn card-btn btn-primary">Add to Cart</div>
                     </div>
