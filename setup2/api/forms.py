@@ -26,11 +26,15 @@ class RugAdminForm(forms.ModelForm):
 
     def save_images(self, rug):
         """Process each uploaded image."""
-        if not self.files.getlist("images"):
+        if not self.files.getlist("images") and not RugImage.objects.filter(rug=rug).exists():
             # image attribute will take its default value
             image = RugImage(rug=rug)
             image.save()
         else:
+            for x in RugImage.objects.filter(rug=rug):
+                if 'default' in str(x.image):
+                    x.delete()
+
             for upload in self.files.getlist("images"):
                 image = RugImage(rug=rug, image=upload)
                 image.save()

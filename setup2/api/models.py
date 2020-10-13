@@ -47,6 +47,7 @@ class Rug(models.Model):
 class RugImage(models.Model):
     rug = models.ForeignKey(Rug, on_delete=models.CASCADE,
                             related_query_name='image', related_name='image')
+    # include "default" see signals.py
     image = models.ImageField(upload_to='rugs', default='default-rug.png')
 
     def __str__(self):
