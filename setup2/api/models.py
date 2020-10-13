@@ -47,7 +47,7 @@ class Rug(models.Model):
 class RugImage(models.Model):
     rug = models.ForeignKey(Rug, on_delete=models.CASCADE,
                             related_query_name='image', related_name='image')
-    image = models.ImageField(upload_to='rugs')
+    image = models.ImageField(upload_to='rugs', default='default-rug.png')
 
     def __str__(self):
         return self.rug.name + ' \'s Image'
