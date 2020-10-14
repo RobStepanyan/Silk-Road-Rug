@@ -226,6 +226,9 @@ export const apiURLs = {
     check: apiBase + 'checkout/check/',
     cancel: apiBase + 'checkout/cancel/',
   },
+  contactUs: {
+    create: apiBase + 'contact-us/'
+  }
 }
 const cookies = new Cookies()
 export const apiHeaders = {
@@ -554,3 +557,5 @@ export const COUNTRIES = {
 }
 
 export const apiTimeZone = 'America/Los_Angeles'
+
+export const supportedFiles = '.mov,.mpeg,.mp4,.avi,.svg, .png,.jpeg,.jpg,.pdf'

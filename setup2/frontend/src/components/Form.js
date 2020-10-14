@@ -4,6 +4,7 @@ import { toTitleCase, validateEmail, validatePwd, formatPrice, setJWTCookie, val
 import Loading from '../components/Loading';
 import { RangeSlider, InputGroup, InputNumber } from 'rsuite';
 import { Redirect } from 'react-router-dom';
+import { supportedFiles } from '../other/variables';
 
 export default class Form extends Component {
   constructor(props) {
@@ -127,7 +128,7 @@ export default class Form extends Component {
             <h3 className={'text-center' + (required ? ' required' : '')}>{field.title ? title : 'Give Us an Idea'}</h3>
             <label className="btn btn-secondary btn-file-upload" htmlFor="uploadFile">Upload a file</label>
             <input onChange={() => this.handleInputChange(event, context, i, required, validate, title, onlyText, maxLength)}
-              type="file" id="uploadFile" name="uploadFile" />
+              type="file" id="uploadFile" name="uploadFile" accept={supportedFiles} />
             <small className={"mt-0 text-center" + (this.state.helpText[i].includes('exceeded') ? ' text-red' : '')}>{this.state.helpText[i]}</small>
           </label>
         );
@@ -217,12 +218,12 @@ export default class Form extends Component {
       }
     }
 
-    values[formValueKey(title)] = val;
+    values[formValueKey(title)] = context == 'file' ? file : val;
     isValid[i] = valid;
     isTouched[i] = true
-    this.setState({ values: values, isTouched: isTouched, helpText: helpText })
+    this.setState({ values, isTouched, helpText })
     if (context != 'tel') {
-      this.setState({ isValid: isValid })
+      this.setState({ isValid })
     }
   }
 
@@ -253,7 +254,7 @@ export default class Form extends Component {
             if (Object.keys(data).includes('error')) {
               this.setState({ alert: { isError: true, msg: data['error'] }, loading: false })
             } else {
-              this.setState({ redirectNow: true, alert: { msg: data['msg'] } })
+              this.setState({ redirectNow: true, alert: { msg: data['msg'] }, loading: false })
             }
           })
           .catch(error => {
@@ -277,10 +278,9 @@ export default class Form extends Component {
         return <Redirect to={this.props.redirectTo ? this.props.redirectTo : '/'} />
       }
     }
-
+    if (this.state.loading) { return <Loading /> }
     return (
       <div className={"row" + (this.props.notJustified ? '' : " justify-content-center")}>
-        {this.state.loading ? <Loading /> : ''}
         <div className={this.props.cols ? this.props.cols : "col-12"}>
           {this.state.alert &&
             <div className={"alert" + (this.state.alert.isError ? " danger" : " success")}>{this.state.alert.msg}</div>
@@ -299,8 +299,11 @@ export default class Form extends Component {
               }
               <div className="col-12">
                 {this.props.removeBtnAfterSubmit && this.state.redirectNow
-                  ? <></>
-                  : <div onClick={this.handleSubmitClick} className="btn btn-primary mb-4 ml-0">
+                  ? <div className="btn btn-primary mb-4 ml-0 disabled">
+                    {this.props.submitText ? this.props.submitText : 'Send a Message'}
+                  </div>
+                  : <div onClick={this.handleSubmitClick}
+                    className="btn btn-primary mb-4 ml-0">
                     {this.props.submitText ? this.props.submitText : 'Send a Message'}
                   </div>
                 }

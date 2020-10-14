@@ -394,3 +394,6 @@ ADDITIONAL_SERVICES = (
     ('SR', 'Signature Release Required'),
     ('WG', 'White Glove Delivery'),
 )
+
+supported_files = ".mov,.mpeg,.mp4,.avi,.svg,.png,.jpeg,.jpg,.pdf".replace(
+    '.', '').split(',')

@@ -818,3 +818,19 @@ class OrderViewSet(viewsets.ModelViewSet):
             user=request.user, payment_status="paid")
         serializer = self.serializer_class(queryset, many=True)
         return Response(serializer.data)
+
+
+class ContactUsViewSet(viewsets.ModelViewSet):
+    serializer_class = serializers.ContactUsModelSerializer
+    queryset = []
+
+    @method_decorator(csrf_protect)
+    def create(self, request):
+        try:
+            serializer = self.serializer_class(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+        except Exception as e:
+            print(str(e))
+            return Response({'error': 'An error has occurred. Please try again later.'})
+        return Response({'msg': 'Request sent. We will contact you via your email shortly.'})

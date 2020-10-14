@@ -32,3 +32,8 @@ def rug_post_save_receiver(sender, instance, *args, **kwargs):
 @receiver(pre_delete, sender=models.RugImage)
 def rug_pre_delete_receiver(sender, instance, **kwargs):
     instance.image.delete()
+
+
+@receiver(pre_delete, sender=models.ContactUs)
+def contact_pre_delete_receiver(sender, instance, **kwargs):
+    instance.file.delete()

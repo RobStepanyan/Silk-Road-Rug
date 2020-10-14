@@ -1,9 +1,12 @@
+from django.core.validators import FileExtensionValidator
+from django.core.exceptions import ValidationError
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from . import models
+from .variables import supported_files
 from phonenumber_field.serializerfields import PhoneNumberField
 from phonenumber_field.validators import validate_international_phonenumber
 
@@ -226,3 +229,19 @@ class OrderModelSerializer(serializers.ModelSerializer):
         depth = 1
 
     rug = RugSerializer()
+
+
+class ContactUsModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ContactUs
+        exclude = ('status',)
+
+    def file_size(value):
+        limit = 25 * 1024 * 1024
+        if value.size > limit:
+            raise ValidationError(
+                'File too large. Size should not exceed 25 MiB.')
+
+    file = serializers.FileField(
+        required=False,
+        validators=[file_size, FileExtensionValidator(allowed_extensions=supported_files)])

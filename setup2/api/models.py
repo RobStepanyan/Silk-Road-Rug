@@ -191,3 +191,15 @@ class CheckoutSession(models.Model):
         models.CharField(max_length=24),
         default=list
     )
+
+
+class ContactUs(models.Model):
+    title = models.CharField(max_length=255)
+    email = models.EmailField()
+    message = models.TextField()
+    file = models.FileField(upload_to='contact-us')
+    status = models.CharField(max_length=1, default='n', choices=(
+        ('n', 'Not Reviewed'), ('r', 'Reviewed')))
+
+    class Meta:
+        verbose_name = 'Contact Us Request'

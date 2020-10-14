@@ -1,6 +1,23 @@
 import React from 'react';
 import NavbarFooter from '../components/NavbarFooter';
 import Form from '../components/Form';
+import axios from 'axios';
+import { apiHeaders, apiURLs } from '../other/variables';
+
+
+function handleSubmit(values) {
+  let data = new FormData()
+  Object.entries(values).map(x => {
+    data.append(x[0], x[1])
+  })
+
+  return axios({
+    method: 'post',
+    url: apiURLs.contactUs.create,
+    data,
+    headers: { ...apiHeaders.csrf, "Content-Type": "multipart/form-data" },
+  })
+}
 
 export default function ContactUs() {
   return (
@@ -11,12 +28,14 @@ export default function ContactUs() {
           <hr />
           <p>We would love to hear from you!</p>
 
-          {/* <Form fields={[
-            { 'context': 'text', 'title': 'name', 'required': false, 'half': true },
-            { 'context': 'email', 'required': true, 'half': true },
-            { 'context': 'textarea', 'required': true, 'half': false },
-            { 'context': 'file', 'maxSizeMB': 25, 'required': false, 'half': false }
-          ]} /> */}
+          <Form removeBtnAfterSubmit handleSubmit={handleSubmit}
+            fields={[
+              { context: 'text', title: 'name', required: true, half: true },
+              { context: 'email', required: true, half: true },
+              { context: 'text', title: 'title', required: true, half: false },
+              { context: 'textarea', title: 'message', required: true, half: false },
+              { context: 'file', maxSizeMB: 25, required: false, half: false }
+            ]} />
 
 
           <h2 id="map" className="text-center mb-2">Address</h2>
