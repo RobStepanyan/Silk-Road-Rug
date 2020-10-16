@@ -1,5 +1,5 @@
 version: '3'
-    
+
 services:
   db:
     image: postgres
@@ -8,16 +8,25 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=yfgNc2#7Eh6mUqtl
   backend:
-    build: ./setup2
+    build: ./backend
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./setup2:/code
+      - ./backend:/code
     ports:
       - "8000:8000"
     depends_on:
       - db
   frontend:
-    build: ./setup2/frontend
-    command: npm run dev
+    build: ./frontend
     volumes:
-      - ./setup2:/code
+      - ./frontend:/code
+      # One-way volume to use node_modules from inside image
+      - /code/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+    stdin_open: true
+    command: npm start
