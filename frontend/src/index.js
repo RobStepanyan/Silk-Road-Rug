@@ -28,9 +28,12 @@ import LogIn from './pages/account/LogIn';
 import ForgotPwd from './pages/account/ForgotPwd';
 import SignUpVerify from './pages/account/SignUpVerify';
 import AccountUpdateVerify from './pages/account/AccountUpdateVerify';
-
+import axios from 'axios';
+import 'bootstrap';
 // CSS & Fonts
 import './css/main.min.css';
+
+axios.defaults.withCredentials = true
 
 function App() {
   return (

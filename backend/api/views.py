@@ -23,7 +23,7 @@ from django.utils import timezone
 from django.http import HttpResponse
 from django.conf import settings
 from django.db.models.deletion import ProtectedError
-
+from django.middleware.csrf import get_token
 
 class RugViewSet(viewsets.ViewSet):
     """
@@ -109,7 +109,7 @@ class RugViewSet(viewsets.ViewSet):
 class SignUpView(GenericAPIView):
     serializer_class = serializers.SignUpSerializer
 
-    @method_decorator(csrf_protect)
+    # @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         try:
@@ -159,7 +159,6 @@ class SignUpVerifyView(GenericAPIView):
 class LogInView(GenericAPIView):
     serializer_class = serializers.LogInSerializer
 
-    @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         try:
@@ -834,3 +833,7 @@ class ContactUsViewSet(viewsets.ModelViewSet):
             print(str(e))
             return Response({'error': 'An error has occurred. Please try again later.'})
         return Response({'msg': 'Request sent. We will contact you via your email shortly.'})
+
+@api_view(['GET'])
+def getCSRFToken(request):
+    return Response({'token': get_token(request)})

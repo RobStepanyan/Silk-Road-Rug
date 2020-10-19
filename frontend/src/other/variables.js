@@ -1,5 +1,4 @@
-import { toTitleCase } from './functions';
-import Cookies from 'universal-cookie';
+import { getHeaders, toTitleCase } from './functions';
 
 export const onlyTextRegex = /^[a-zA-Z ]*$/
 export const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -228,12 +227,13 @@ export const apiURLs = {
   },
   contactUs: {
     create: apiBase + 'contact-us/'
-  }
+  },
+  getCSRF: apiBase + 'get-csrf/',
 }
-const cookies = new Cookies()
+
 export const apiHeaders = {
-  'csrf': { 'X-CSRFToken': cookies.get('csrftoken') },
-  'authorization': { 'Authorization': `Bearer ${cookies.get('accessJWT')}` }
+  'csrf': { 'X-CSRFToken': getHeaders('csrftoken') },
+  'authorization': { 'Authorization': `Bearer ${getHeaders('accessJWT')}` }
 }
 
 export const dummyData = [

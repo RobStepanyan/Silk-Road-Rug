@@ -26,6 +26,7 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+      - REACT_APP_EDITOR=vscode
     depends_on:
       - backend
     stdin_open: true

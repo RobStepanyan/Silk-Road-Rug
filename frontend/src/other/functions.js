@@ -1,6 +1,8 @@
-import { emailRegex, pwdRegexes, pwdErrorMsgs, cartCardInputsOrder, onlyTextRegex, apiURLs, apiHeaders } from './variables';
-import Cookies from 'universal-cookie';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
+import {
+  emailRegex, pwdRegexes, pwdErrorMsgs, cartCardInputsOrder, onlyTextRegex, apiURLs, apiHeaders
+} from './variables';
 
 export function validateEmail(email) {
   return emailRegex.test(email)
@@ -130,6 +132,8 @@ export function setJWTCookie(token) {
   // maxAge is same as in settings.py
   cookies.set('accessJWT', token.access, { ...settings, maxAge: 20 * 60 })
   cookies.set('refreshJWT', token.refresh, { ...settings, maxAge: 60 * 60 * 24 })
+
+  cookies.addChangeListener(x => console.log(x))
 }
 
 export function removeJWTCookies() {
@@ -150,7 +154,7 @@ export function isAuthed() {
     return true
   }
   // if access is not available
-  axios({
+  return axios({
     method: 'post',
     url: apiURLs.token.refresh,
     data: {
@@ -159,9 +163,9 @@ export function isAuthed() {
   })
     .then(response => {
       setJWTCookie(response.data)
+      return true
     })
     .catch(() => false)
-  return true
 }
 
 export function formValueKey(title) {
@@ -172,4 +176,24 @@ export function formValueKey(title) {
     title = title.slice(0, parenth - 1)
   }
   return title
+}
+
+export function getHeaders(header) {
+  const cookies = new Cookies()
+  switch (header) {
+    case 'csrftoken':
+      if (cookies.get('csrftoken')) { return cookies.get('csrftoken') }
+      else {
+        return axios.get(apiURLs.getCSRF)
+          .then(res => {
+            cookies.set('csrftoken', res.data.token, { maxAge: 31449600, sameSite: false }) // same in settings.py
+            return res.data.token
+          })
+      }
+    case 'accessJWT':
+      if (isAuthed()) { return cookies.get('accessJWT') }
+      break;
+    default:
+      break;
+  }
 }

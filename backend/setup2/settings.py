@@ -26,7 +26,11 @@ SECRET_KEY = '91n@ezz7qbe#b8&1(b1jwlqyan_ekul903+wcu*wt2u-rtp+wc'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+DOMAIN_W_PORT = '45.79.68.126:3000'
+DOMAIN = '45.79.68.126'
+DOMAIN_SCHEME = 'http://'
+
+ALLOWED_HOSTS = ['localhost',DOMAIN]
 
 
 # Application definition
@@ -168,10 +172,11 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
     "http://localhost:3000",
-    "https://silkroadruginc.com"
+    DOMAIN_SCHEME + DOMAIN_W_PORT,
 ]
+CSRF_COOKIE_AGE = 31449600 # (approximately 1 year, in seconds)
+CORS_ALLOW_CREDENTIALS = True
 
 # Dev created confs (not related to third-party apps)
 CUSTOM_CONFS = {

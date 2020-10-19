@@ -4,7 +4,7 @@ export default class NavbarFooter extends React.Component {
 
   handleNavbarToggleClick(e) {
     e.preventDefault();
-    document.getElementsByTagName('body').classList.toggle('sidenav-toggled');
+    document.getElementsByTagName('body')[0].classList.toggle('sidenav-toggled');
   }
 
   render() {

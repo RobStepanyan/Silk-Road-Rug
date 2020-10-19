@@ -63,7 +63,7 @@ export default class Shop extends Component {
   }
 
   onClickFilterToggle() {
-    document.getElementsByTagName('body').classList.toggle('sidenav-toggled')
+    document.getElementsByTagName('body')[0].classList.toggle('sidenav-toggled')
   }
 
   getData() {

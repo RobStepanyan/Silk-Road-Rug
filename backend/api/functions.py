@@ -24,15 +24,12 @@ def send_email(request, user, html_path, to_email, mail_subject, mail_login, mai
         variables
     )
 
-    try:
-        with SMTP_SSL('smtp.yandex.ru', 465) as server:
-            msg = MIMEText(message, 'html')
-            msg['Subject'] = mail_subject
-            msg['From'] = f'SilkRoadRugInc.com <{mail_login}>'
+    with SMTP_SSL('smtp.yandex.ru', 465) as server:
+        msg = MIMEText(message, 'html')
+        msg['Subject'] = mail_subject
+        msg['From'] = f'SilkRoadRugInc.com <{mail_login}>'
 
-            server.login(mail_login, mail_pass)
-            server.sendmail(from_addr=mail_login,
-                            to_addrs=to_email, msg=msg.as_string())
-        return
-    except Exception:
-        raise Exception
+        server.login(mail_login, mail_pass)
+        server.sendmail(from_addr=mail_login,
+                        to_addrs=to_email, msg=msg.as_string())
+    return

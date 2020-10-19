@@ -74,7 +74,7 @@ export default class Form extends Component {
               <h3 className={required ? 'required' : ''}>{title}</h3>
               <div className="eye-icon-wrapper">
                 <input className={'m-0' + (this.state.isTouched[i] && validate !== false ? this.state.isValid[i] ? ' valid' : ' invalid' : '')}
-                  onChange={() => this.handleInputChange(context, i, required, validate, title, onlyText, maxLength)}
+                  onChange={(e) => this.handleInputChange(e, context, i, required, validate, title, onlyText, maxLength)}
                   type={context === 'password' ? this.state.typePwdState[i] : context} placeholder={title} autoComplete={autoComplete}
                   value={this.state.values[formValueKey(title)] ? this.state.values[formValueKey(title)] : ''} />
                 {context === 'password' &&
@@ -116,7 +116,7 @@ export default class Form extends Component {
           <label>
             <h3 className={required ? 'required' : ''}>{field.title ? title : 'Message'}</h3>
             <textarea className={this.state.isTouched[i] && validate !== false ? this.state.isValid[i] ? ' valid' : ' invalid' : ''}
-              onChange={() => this.handleInputChange(context, i, required, validate, title, onlyText, maxLength)}
+              onChange={(e) => this.handleInputChange(e, context, i, required, validate, title, onlyText, maxLength)}
               placeholder="Enter your message here"
               value={this.state.values[formValueKey(title)] ? this.state.values[formValueKey(title)] : ''}></textarea>
           </label>
@@ -127,7 +127,7 @@ export default class Form extends Component {
           <label>
             <h3 className={'text-center' + (required ? ' required' : '')}>{field.title ? title : 'Give Us an Idea'}</h3>
             <label className="btn btn-secondary btn-file-upload" htmlFor="uploadFile">Upload a file</label>
-            <input onChange={() => this.handleInputChange(context, i, required, validate, title, onlyText, maxLength)}
+            <input onChange={(e) => this.handleInputChange(e, context, i, required, validate, title, onlyText, maxLength)}
               type="file" id="uploadFile" name="uploadFile" accept={supportedFiles} />
             <small className={"mt-0 text-center" + (this.state.helpText[i].includes('exceeded') ? ' text-red' : '')}>{this.state.helpText[i]}</small>
           </label>
@@ -138,7 +138,7 @@ export default class Form extends Component {
           <label>
             <h3 className={required ? 'required' : ''}>{title}</h3>
             <select name={title.replace(' ', '-')} value={this.state.values[formValueKey(title)]}
-              onChange={() => this.handleInputChange(context, i, required, validate, title, onlyText, maxLength)}>>
+              onChange={(e) => this.handleInputChange(e, context, i, required, validate, title, onlyText, maxLength)}>>
               {Object.entries(options).map((option, i) => {
                 let [value, name] = option
                 return <option key={i} value={value}>{name}</option>
