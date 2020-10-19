@@ -25,6 +25,7 @@ from django.conf import settings
 from django.db.models.deletion import ProtectedError
 from django.middleware.csrf import get_token
 
+
 class RugViewSet(viewsets.ViewSet):
     """
     ViewSet for listing or retrieving rugs.
@@ -833,6 +834,7 @@ class ContactUsViewSet(viewsets.ModelViewSet):
             print(str(e))
             return Response({'error': 'An error has occurred. Please try again later.'})
         return Response({'msg': 'Request sent. We will contact you via your email shortly.'})
+
 
 @api_view(['GET'])
 def getCSRFToken(request):

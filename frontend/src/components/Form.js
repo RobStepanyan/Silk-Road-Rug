@@ -62,6 +62,7 @@ export default class Form extends Component {
   generateInput(field, i) {
     let component, { context, required, autoComplete, validate, onlyText, options, maxLength } = field,
       title = toTitleCase(field.title ? field.title : field.context);
+    if (validate === undefined) { validate = true }
 
     switch (context) {
       case 'text':
@@ -98,8 +99,8 @@ export default class Form extends Component {
                   ? <>
                     <small className="text-red mb-0">{this.state.helpText[i][0]}</small>
                     <ul className="small">
-                      {this.state.helpText[i].forEach((text, i) => {
-                        if (i === 0) { return }
+                      {this.state.helpText[i].map((text, i) => {
+                        if (i === 0) { return null }
                         return <li key={i}> <small className="text-red">{text}</small></li>
                       })
                       }

@@ -25,10 +25,10 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=production
+      - NODE_ENV=development
       - REACT_APP_EDITOR=vscode
     depends_on:
       - backend
     stdin_open: true
-    # command: npm start
+    command: npm start
     # command: npm run build
