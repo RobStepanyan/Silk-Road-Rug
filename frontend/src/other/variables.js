@@ -1,4 +1,5 @@
-import { getHeaders, toTitleCase } from './functions';
+
+import {toTitleCase } from './functions';
 
 export const onlyTextRegex = /^[a-zA-Z ]*$/
 export const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -179,7 +180,7 @@ export const shopFilterInputOrder = [
   // }
 ]
 
-const apiBase = '//localhost:8000/api/'
+const apiBase = '//52.56.46.154:8000/api/'
 export const apiURLs = {
   listRugs: apiBase + 'rugs/',
   rugById: id => apiBase + `rugs/${id}/`,
@@ -231,10 +232,8 @@ export const apiURLs = {
   getCSRF: apiBase + 'get-csrf/',
 }
 
-export const apiHeaders = {
-  'csrf': { 'X-CSRFToken': getHeaders('csrftoken') },
-  'authorization': { 'Authorization': `Bearer ${getHeaders('accessJWT')}` }
-}
+// To avoid circular import errors
+export {apiHeaders} from './functions'
 
 export const dummyData = [
   {

@@ -1,3 +1,4 @@
+
 """
 Django settings for setup2 project.
 
@@ -24,13 +25,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '91n@ezz7qbe#b8&1(b1jwlqyan_ekul903+wcu*wt2u-rtp+wc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-DOMAIN_W_PORT = '45.79.68.126:3000'
-DOMAIN = '45.79.68.126'
+DOMAIN_W_PORT = '52.56.46.154:80'
+DOMAIN = DOMAIN_W_PORT[:DOMAIN_W_PORT.index(':')]
 DOMAIN_SCHEME = 'http://'
+DJANGO_PORT = ':8000'
 
-ALLOWED_HOSTS = ['localhost',DOMAIN]
+ALLOWED_HOSTS = [DOMAIN]
 
 
 # Application definition
@@ -134,10 +136,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-MEDIA_URL = 'http://localhost:8000/media/'
+MEDIA_URL = '//' + DOMAIN + DJANGO_PORT + '/media/'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -171,10 +174,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    DOMAIN_SCHEME + DOMAIN_W_PORT,
-]
+CORS_ALLOWED_ORIGINS = [DOMAIN_SCHEME + DOMAIN]
 CSRF_COOKIE_AGE = 31449600 # (approximately 1 year, in seconds)
 CORS_ALLOW_CREDENTIALS = True
 

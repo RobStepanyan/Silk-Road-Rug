@@ -1,6 +1,6 @@
-from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.conf import settings
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from smtplib import SMTP_SSL
@@ -8,14 +8,13 @@ from email.mime.text import MIMEText
 
 
 def send_email(request, user, html_path, to_email, mail_subject, mail_login, mail_pass, custom_params=None):
-    current_url = get_current_site(request)
     if not custom_params:
         custom_params = {'uid': urlsafe_base64_encode(force_bytes(user.id)),
                          'token': account_activation_token.make_token(user)}
     variables = {
         'user': user,
         'request': request,
-        'domain': current_url.domain,
+        'domain': settings.DOMAIN_W_PORT,
         **custom_params
     }
 

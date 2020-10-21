@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import {
-  emailRegex, pwdRegexes, pwdErrorMsgs, cartCardInputsOrder, onlyTextRegex, apiURLs, apiHeaders
+  emailRegex, pwdRegexes, pwdErrorMsgs, cartCardInputsOrder, onlyTextRegex, apiURLs,
 } from './variables';
 
 export function validateEmail(email) {
@@ -168,16 +168,6 @@ export function isAuthed() {
     .catch(() => false)
 }
 
-export function formValueKey(title) {
-  title = title.toLowerCase().replaceAll(' ', '_')
-  title = title.replaceAll('/', '_')
-  let parenth = title.indexOf('(')
-  if (parenth !== -1) {
-    title = title.slice(0, parenth - 1)
-  }
-  return title
-}
-
 export function getHeaders(header) {
   const cookies = new Cookies()
   switch (header) {
@@ -196,4 +186,20 @@ export function getHeaders(header) {
     default:
       break;
   }
+}
+
+// Import and Exported in variables.js
+export const apiHeaders = {
+  'csrf': { 'X-CSRFToken': getHeaders('csrftoken') },
+  'authorization': { 'Authorization': `Bearer ${getHeaders('accessJWT')}` }
+}
+
+export function formValueKey(title) {
+  title = title.toLowerCase().replaceAll(' ', '_')
+  title = title.replaceAll('/', '_')
+  let parenth = title.indexOf('(')
+  if (parenth !== -1) {
+    title = title.slice(0, parenth - 1)
+  }
+  return title
 }
