@@ -250,9 +250,7 @@ export default class Cart extends React.Component {
                         <p className="price">{'+' + formatPrice(calculatePriceSum(0, this.state.selectedNumbers, this.state.additionalCosts))}</p>
                         <h3 className="price">{formatPrice(calculatePriceSum(this.state.data, this.state.selectedNumbers, this.state.additionalCosts))}</h3>
                       </div>
-                      <div className="row">
-                        <a href="/checkout" className="btn btn-primary ml-auto">Proceed to Checkout</a>
-                      </div>
+                      <a href="/checkout" className="btn btn-primary m-0 ml-auto">Proceed to Checkout</a>
 
                     </div>
                   </div>

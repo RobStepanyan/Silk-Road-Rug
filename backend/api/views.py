@@ -588,7 +588,6 @@ class CartItemViewSet(viewsets.ViewSet):
         Update Rug Variation or/and CartItem's Selecteds
         """
         data = dict(self.request.data)
-        data = self.validate_data(data, request)
 
         if not pk:
             return Response({'error': 'Invalid object id.'})
@@ -625,7 +624,6 @@ stripe.api_key = 'sk_test_51HW4GfCi0RkzIpI9eYv2ygd9WZTkknqKO0DCG3HXepw2JPzaaT4mm
 
 class CreateCheckotSession(GenericAPIView):
     permission_classes = [IsAuthenticated]
-    DOMAIN_NAME = 'http://localhost:8000/'
 
     @method_decorator(csrf_protect)
     def post(self, request, *args, **kwargs):
@@ -669,7 +667,7 @@ class CreateCheckotSession(GenericAPIView):
                     'unit_amount_decimal': int(s * 100),
                     'product_data': {
                         'name': rug.name.title(),
-                        'images': [self.DOMAIN_NAME + str(x.image) for x in models.RugImage.objects.filter(rug=rug)]
+                        'images': [settings.MEDIA_URL + str(x.image) for x in models.RugImage.objects.filter(rug=rug)]
                     }
                 },
                 'quantity': cart_item.quantity
@@ -682,14 +680,15 @@ class CreateCheckotSession(GenericAPIView):
                 line_items=line_items,
 
                 mode='payment',
-                success_url=self.DOMAIN_NAME +
+                success_url='http://' + settings.DOMAIN_W_PORT + '/' +
                 'checkout/success/{CHECKOUT_SESSION_ID}',
-                cancel_url=self.DOMAIN_NAME +
+                cancel_url='http://' + settings.DOMAIN_W_PORT + '/' +
                 'checkout/cancel/{CHECKOUT_SESSION_ID}',
             )
 
         except Exception as e:
-            return Response({'error': str(e)})
+            print(str(e))
+            return Response({'error': 'Something went wrong. Please try again later.'})
 
         orders = []
         now = timezone.now()
@@ -715,6 +714,7 @@ class CreateCheckotSession(GenericAPIView):
                 total=total
             )
             order.save()
+            print(order)
             orders.append(order.id)
 
         m = models.CheckoutSession(
@@ -832,7 +832,7 @@ class ContactUsViewSet(viewsets.ModelViewSet):
             serializer.save()
         except Exception as e:
             print(str(e))
-            return Response({'error': 'An error has occurred. Please try again later.'})
+            return Response({'error': 'Something went wrong. Please try again later.'})
         return Response({'msg': 'Request sent. We will contact you via your email shortly.'})
 
 

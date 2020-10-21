@@ -25,14 +25,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '91n@ezz7qbe#b8&1(b1jwlqyan_ekul903+wcu*wt2u-rtp+wc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-DOMAIN_W_PORT = '52.56.46.154:80'
+DOMAIN_W_PORT = '52.56.46.154:80' if not DEBUG else 'localhost:80'
 DOMAIN = DOMAIN_W_PORT[:DOMAIN_W_PORT.index(':')]
 DOMAIN_SCHEME = 'http://'
 DJANGO_PORT = ':8000'
 
-ALLOWED_HOSTS = [DOMAIN]
+ALLOWED_HOSTS = ['localhost', DOMAIN]
 
 
 # Application definition
@@ -140,7 +140,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-MEDIA_URL = '//' + DOMAIN + DJANGO_PORT + '/media/'
+MEDIA_URL = 'http://' + (DOMAIN if DEBUG ==
+                         False else 'localhost') + DJANGO_PORT + '/media/'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -174,8 +175,8 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-CORS_ALLOWED_ORIGINS = [DOMAIN_SCHEME + DOMAIN]
-CSRF_COOKIE_AGE = 31449600 # (approximately 1 year, in seconds)
+CORS_ALLOWED_ORIGINS = [DOMAIN_SCHEME + DOMAIN, 'http://localhost']
+CSRF_COOKIE_AGE = 31449600  # (approximately 1 year, in seconds)
 CORS_ALLOW_CREDENTIALS = True
 
 # Dev created confs (not related to third-party apps)

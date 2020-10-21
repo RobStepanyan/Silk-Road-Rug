@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save, pre_delete
+from django.db.models.signals import post_save, pre_delete, pre_save
 from django.forms.models import model_to_dict
 from django.dispatch import receiver
 from . import models
@@ -31,7 +31,10 @@ def rug_post_save_receiver(sender, instance, *args, **kwargs):
 
 @receiver(pre_delete, sender=models.RugImage)
 def rug_pre_delete_receiver(sender, instance, **kwargs):
-    instance.image.delete()
+    try:
+        instance.image.delete()
+    except:
+        pass
 
 
 @receiver(pre_delete, sender=models.ContactUs)

@@ -30,5 +30,5 @@ services:
     depends_on:
       - backend
     stdin_open: true
-    # command: npm start
+    command: npm start
     # command: npm run build

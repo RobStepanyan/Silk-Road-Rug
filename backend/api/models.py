@@ -1,3 +1,4 @@
+from PIL import Image
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from . import variables
@@ -48,10 +49,21 @@ class RugImage(models.Model):
     rug = models.ForeignKey(Rug, on_delete=models.CASCADE,
                             related_query_name='image', related_name='image')
     # include "default" see signals.py
-    image = models.ImageField(upload_to='rugs', default='default-rug.png')
+    image = models.ImageField(
+        upload_to='rugs', default='default-rug.png')
 
     def __str__(self):
         return self.rug.name + ' \'s Image'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        img = Image.open(self.image.path)
+        x = img.width / img.height
+        size = (1000, int(1000 / x))
+        if img.width > 1000:
+            img.thumbnail(size)
+            img.save(self.image.path)
 
 
 class RugVariation(models.Model):

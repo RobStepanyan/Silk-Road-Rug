@@ -361,7 +361,7 @@ class AddAddress extends React.Component {
           { context: 'text', autoComplete: "name", title: 'Full Name', required: true, validate: true, onlyText: true },
           { context: 'select', options: COUNTRIES, title: 'Country', required: true, initValue: 'US' },
           { context: 'text', title: 'Address Line 1', required: true, validate: true },
-          { context: 'text', title: 'Address Line 2', required: true, validate: true },
+          { context: 'text', title: 'Address Line 2', required: false, validate: true },
           { context: 'text', title: 'City', required: true, validate: true },
           { context: 'text', title: 'State/Province/Region', required: true, validate: true },
           { context: 'text', title: 'Zip Code', maxLength: 10, required: true, validate: true },
@@ -411,7 +411,7 @@ class EditAddress extends React.Component {
             { context: 'text', autoComplete: "name", title: 'Full Name', required: true, validate: true, onlyText: true },
             { context: 'select', options: COUNTRIES, title: 'Country', required: true },
             { context: 'text', title: 'Address Line 1', required: true, validate: true },
-            { context: 'text', title: 'Address Line 2', required: true, validate: true },
+            { context: 'text', title: 'Address Line 2', required: false, validate: true },
             { context: 'text', title: 'City', required: true, validate: true },
             { context: 'text', title: 'State/Province/Region', required: true, validate: true },
             { context: 'text', title: 'Zip Code', maxLength: 10, required: true, validate: true },
@@ -509,7 +509,7 @@ class Orders extends React.Component {
     if (Object.keys(this.state.orders).length === 0) {
       return (<>
         <h2>You don't have any orders yet.</h2>
-        <p className="mt-2">Shop for Rug so they will appear here.</p>
+        <p className="mt-2">Shop for Rugs so they will appear here.</p>
         <a href="/shop" className="btn btn-primary ml-0">Go to Shop</a>
       </>)
     }
