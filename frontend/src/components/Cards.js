@@ -34,10 +34,10 @@ export function ShopCard(props) {
         </div>
         <h5>{props.heading}</h5>
         {!after
-          ? <h5 className="price">{formatPrice(before)}</h5>
+          ? <h5 className="price mb-0">{formatPrice(before)}</h5>
           : <div className="d-flex">
-            <h5 className="price mr-2">{formatPrice(after)}</h5>
-            <h5 className="price discounted">{formatPrice(before)}</h5>
+            <h5 className="price mb-0 mr-2">{formatPrice(after)}</h5>
+            <h5 className="price mb-0 discounted">{formatPrice(before)}</h5>
           </div>
         }
       </a>

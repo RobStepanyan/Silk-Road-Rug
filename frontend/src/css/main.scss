@@ -363,6 +363,7 @@ a.with-underline {
 }
 
 .slick-list {
+    height: 100% !important;
     transition: height $transition-duration;
 }
 
