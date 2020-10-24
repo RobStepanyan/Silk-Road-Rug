@@ -2,7 +2,6 @@ from django.db.models.signals import post_save, pre_delete, pre_save
 from django.forms.models import model_to_dict
 from django.dispatch import receiver
 from . import models
-from .variables import styles
 
 
 @receiver(post_save, sender=models.RugVariation)

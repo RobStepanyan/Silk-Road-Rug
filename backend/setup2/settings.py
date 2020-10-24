@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'phonenumber_field',
     'stripe',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -183,3 +184,5 @@ CORS_ALLOW_CREDENTIALS = True
 CUSTOM_CONFS = {
     'STRIPE_SESSION_TIMEOUT': 10,  # in minutes
 }
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True

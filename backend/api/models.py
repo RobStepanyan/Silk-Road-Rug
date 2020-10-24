@@ -5,8 +5,40 @@ from . import variables
 from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils import timezone
+from django.utils.functional import cached_property
 
-STYLES = [(variables.styles.index(x), x) for x in variables.styles]
+
+class RugGroup(models.Model):
+    TYPES = (('a', 'Age (e.g. Vintage)'), ('t', 'Type (e.g. Runner)'))
+    type = models.CharField(max_length=1, choices=TYPES, default='a')
+    title = models.CharField(max_length=255)
+    description = models.TextField(null=True, default=None, blank=True)
+    image = models.ImageField(upload_to='rug-groups',
+                              default='default-rug.png')
+    parent_group = models.ForeignKey(
+        'self', on_delete=models.CASCADE, null=True, default=None, blank=True)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        img = Image.open(self.image.path)
+        x = img.width / img.height
+        size = (320, int(320 / x))
+        if img.width > 320:
+            img.thumbnail(size)
+            img.save(self.image.path)
+
+    @cached_property
+    def tree(self):
+        tree = [self.title]
+        group = self
+        while group.parent_group:
+            tree.append(group.parent_group.title)
+            group = group.parent_group
+        return tree[::-1]
+
+    def __str__(self):
+        return " > ".join(self.tree)
 
 
 class Rug(models.Model):
@@ -23,8 +55,11 @@ class Rug(models.Model):
         verbose_name="(LEAVE EMPTY)",
         max_digits=12, decimal_places=2, default=0,
         blank=True, null=True)
-    style = models.IntegerField(
-        verbose_name="Style*", choices=STYLES)
+    group_by_age = models.ForeignKey(
+        RugGroup, on_delete=models.PROTECT, verbose_name="Group by Age (e.g. Vintage)*",
+        default=None, null=True, related_name='rug_a',)
+    group_by_type = models.ForeignKey(
+        RugGroup, on_delete=models.PROTECT, verbose_name="Group by Type (e.g. Runner)*", default=None, null=True)
     desc = models.TextField(
         verbose_name='Description', blank=True, null=True)
     sku = models.CharField(verbose_name='SKU*', max_length=255)

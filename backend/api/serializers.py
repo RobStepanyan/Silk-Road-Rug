@@ -245,3 +245,15 @@ class ContactUsModelSerializer(serializers.ModelSerializer):
     file = serializers.FileField(
         required=False,
         validators=[file_size, FileExtensionValidator(allowed_extensions=supported_files)])
+
+
+class RugGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.RugGroup
+        fields = '__all__'
+
+
+class RugGroupSerializerLite(serializers.ModelSerializer):
+    class Meta:
+        model = models.RugGroup
+        exclude = ('description',)

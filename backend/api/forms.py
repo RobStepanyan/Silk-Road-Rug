@@ -7,7 +7,8 @@ class RugAdminForm(forms.ModelForm):
     class Meta:
         model = Rug
         fields = (
-            'name', 'style',
+            'name', 'group_by_age',
+            'group_by_type',
             'desc',  'sku',
             'WC', 'GS', 'IN',
             'ES', 'SR', 'WG',

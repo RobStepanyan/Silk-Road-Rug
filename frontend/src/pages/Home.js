@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NavbarFooter from '../components/NavbarFooter';
-import Card, { ShopCard } from '../components/Cards';
+import Card, { CategoryCard, ShopCard } from '../components/Cards';
 import { apiURLs, slickCarouselSettings } from '../other/variables';
 import axios from 'axios';
 import Slider from 'react-slick';
@@ -9,16 +9,21 @@ import { removeJWTCookies } from '../other/functions';
 export default class Home extends Component {
   constructor() {
     super();
-    this.state = { data: null }
+    this.state = { data: {} }
   }
 
   componentWillMount() {
     if (this.props.location.props && this.props.location.props.logOut) { removeJWTCookies() }
     axios({
       method: 'get',
-      url: apiURLs['listRugs'],
+      url: apiURLs.rugGroup.list,
     })
-      .then(response => this.setState({ data: response.data }))
+      .then(res => {
+        let data = {}
+        data.byAge = res.data.by_age
+        data.byType = res.data.by_type
+        this.setState({ data })
+      })
   }
 
   render() {
@@ -38,7 +43,7 @@ export default class Home extends Component {
                 We are Fulfilling Your Vision of the Ideal Room
             </div>
               <div className="d-flex">
-                <a href="/shop" className="btn btn-primary ml-0">Our Shop</a>
+                <a href="#shop" className="btn btn-primary ml-0">Our Shop</a>
                 <a href="#services" className="btn btn-secondary">Services</a>
               </div>
             </div>
@@ -55,18 +60,29 @@ export default class Home extends Component {
             <h1 className="center">Shop</h1>
             <hr />
             <p>Find a perfect rug</p>
-            {!this.state.data || this.state.data.length === 0
+            {!Object.keys(this.state.data).length
               ? <h3 className="center">Error Occured</h3>
-              : <Slider {...slickCarouselSettings[1]} className="row mb-3">
-                {this.state.data.map((data, i) => {
-                  return <ShopCard notResponsive={true} key={i} id={data.id} heading={data.name} imgSrc={data.rug_images[0]} imgAlt={'Rug Image'}
-                    price={[data.base_price_before_sale, data.base_price_after_sale]} />
-                })}
-              </Slider>
+              : <>
+                <div className="row justify-content-center">
+                  {this.state.data.byAge.map((x, i) => {
+                    return <div className="col-12 col-sm-6 col-lg-4" key={i} >
+                      <CategoryCard imageSrc={x.image} href={'#'} heading={x.title} />
+                    </div>
+                  })
+                  }
+                </div>
+                <hr />
+                <h2 className="text-center mb-3">Shop by Categories</h2>
+                <div className="row">
+                  {this.state.data.byType.map((x, i) => {
+                    return <div className="col-12 col-sm-6 col-lg-4" key={i}>
+                      <CategoryCard imageSrc={x.image} href={'#'} heading={x.title} />
+                    </div>
+                  })
+                  }
+                </div>
+              </>
             }
-            <div className="row justify-content-center">
-              <a className="btn btn-primary" href="/shop">Open Shop</a>
-            </div>
           </div>
         </section>
 

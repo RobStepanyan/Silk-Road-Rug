@@ -1,3 +1,5 @@
+from import_export.admin import ImportExportModelAdmin
+from import_export import resources
 from django.contrib import admin
 from . import models, forms, variables
 from django.forms.models import BaseInlineFormSet
@@ -48,9 +50,20 @@ class ContactUsAdmin(admin.ModelAdmin):
     actions = [make_reviewed, make_not_reviewed]
 
 
+class RugGroupResource(resources.ModelResource):
+
+    class Meta:
+        model = models.RugGroup
+
+
+class RugGroupAdmin(ImportExportModelAdmin):
+    pass
+
+
 admin.site.register(models.Address)
 admin.site.register(models.CartItem)
 admin.site.register(models.RugImage)
 admin.site.register(models.Order)
 admin.site.register(models.CheckoutSession)
 admin.site.register(models.ContactUs, ContactUsAdmin)
+admin.site.register(models.RugGroup, RugGroupAdmin)

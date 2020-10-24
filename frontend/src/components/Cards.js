@@ -7,7 +7,6 @@ import {
 import { formatPrice, formatSize } from '../other/functions';
 import Moment from 'react-moment';
 import 'moment-timezone';
-import { styles } from '../other/variables';
 
 
 export default function Card(props) {
@@ -34,10 +33,10 @@ export function ShopCard(props) {
         </div>
         <h5>{props.heading}</h5>
         {!after
-          ? <h5 className="price mb-0">{formatPrice(before)}</h5>
+          ? <h5 className="price">{formatPrice(before)}</h5>
           : <div className="d-flex">
-            <h5 className="price mb-0 mr-2">{formatPrice(after)}</h5>
-            <h5 className="price mb-0 discounted">{formatPrice(before)}</h5>
+            <h5 className="price mr-2">{formatPrice(after)}</h5>
+            <h5 className="price discounted">{formatPrice(before)}</h5>
           </div>
         }
       </a>
@@ -232,12 +231,26 @@ export function OrderCard(props) {
           <h4>Details</h4>
           <ul className="style-default mt-2">
             <li>Size: {formatSize(data.rug_variation)}</li>
-            <li>Style: {styles[data.rug.style]}</li>
+            <li>Style: {'style'}</li>
             <li>SKU: {data.rug.sku}</li>
             <li>Quantity: {data.quantity}</li>
           </ul>
         </div>
       </div>
+    </div>
+  )
+}
+
+
+export function CategoryCard(props) {
+  return (
+    <div className="card category-card">
+      <img src={props.imageSrc} />
+      <a href={props.href}>
+        <div className="heading-container">
+          <h2>{props.heading}</h2>
+        </div>
+      </a>
     </div>
   )
 }
