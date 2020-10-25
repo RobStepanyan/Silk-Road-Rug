@@ -5,6 +5,10 @@ sizes = [
     {'minMax': [1, 50]}
 ]
 
+sort_by_order = ['name', 'price']
+sort_by = [xx for x in sort_by_order for xx in (
+    x.title() + ' ↑', x.title() + ' ↓')]
+
 COUNTRIES = (
     ('AF', 'Afghanistan',),
     ('AX', 'Aland Islands',),

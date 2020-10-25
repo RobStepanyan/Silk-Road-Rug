@@ -29,9 +29,9 @@ export function ShopCard(props) {
     <div className={props.notResponsive ? "col-auto" : "col-6 col-sm-6 col-md-4"}>
       <a href={'/rug/' + props.id} className="shop-card-a">
         <div className="shop-card">
-          <img src={props.imgSrc} alt={props.imgAlt} />
+          <img src={props.imgSrc} alt="Rug" />
         </div>
-        <h5>{props.heading}</h5>
+        <h3>{props.heading}</h3>
         {!after
           ? <h5 className="price">{formatPrice(before)}</h5>
           : <div className="d-flex">
@@ -140,6 +140,8 @@ export class ShopFilterSidebar extends Component {
           <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="filter" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
             <path fill="currentColor" d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z" className=""></path>
           </svg>
+          <hr />
+          <h3>Filter</h3>
         </div>
         <div className={"filter-sidebar" + (this.state.filterToggled ? ' toggled' : '')}>
           {this.props.inputs.map((input, i) => {
@@ -245,7 +247,7 @@ export function OrderCard(props) {
 export function CategoryCard(props) {
   return (
     <div className="card category-card">
-      <img src={props.imageSrc} />
+      <img src={props.imageSrc} alt="Category" />
       <a href={props.href}>
         <div className="heading-container">
           <h2>{props.heading}</h2>

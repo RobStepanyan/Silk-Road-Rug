@@ -336,7 +336,7 @@ a.with-underline {
 
     &:hover {
         img {
-            opacity: .25;
+            opacity: .45;
         }
 
         .shop-card:after {
@@ -454,40 +454,23 @@ ul.small {
 }
 
 .filter-sidebar {
+    height: 100%;
     width: 100%;
     max-width: 350px;
     position: fixed;
     left: 0;
-    top: $navbar-logo-height + 2*$padding;
     z-index: 1000;
-
     padding: 2*$padding;
-    // margin-right: 2*$margin;
 
-    @include media-breakpoint-down(md) {
-        &:not(.toggled) {
-            transform: translateX(-100%);
-            transition: $transition;
-        }
+    &:not(.toggled) {
+        transform: translateX(-100%);
+        transition: $transition;
     }
 
     &.toggled {
         position: fixed;
-        height: 100%;
-        overflow-y: auto;
         transition: $transition;
         transform: translateX(0);
-    }
-
-    @include media-breakpoint-up(sm) {
-        width: unset;
-    }
-
-    @include media-breakpoint-up(lg) {
-        position: static;
-        height: 100%;
-        transform: translateX(0);
-        top: $navbar-logo-height-lg + 2*$padding;
     }
 
     h3 {
@@ -509,16 +492,36 @@ ul.small {
     }
 }
 
+.filter-sidebar {
+    top: $navbar-logo-height + 2*$padding;
+
+    @include media-breakpoint-up(lg) {
+        top: $navbar-logo-height-lg + 2*$padding;
+    }
+}
+
+#filterToggle {
+    top: $navbar-logo-height + 2*$padding + 118px;
+
+    @include media-breakpoint-up(lg) {
+        top: $navbar-logo-height-lg + 2*$padding + 118px;
+    }
+}
+
+
+
 #checkoutToggle,
 #filterToggle {
     display: flex;
     position: fixed;
     bottom: 2*$margin;
-    right: 2*$margin;
+    right: -3px;
+    transform: scale(.85);
     z-index: 99999;
 
-    height: 3*$margin;
+    height: min-content;
     width: 3*$margin;
+    padding: $padding * 2 / 3 0;
     border: 2px solid;
     border-image-slice: 1;
     cursor: pointer;
@@ -528,23 +531,17 @@ ul.small {
         box-shadow: none;
     }
 
+    hr {
+        margin: $padding * 2 / 3;
+    }
+
     svg {
         height: 1.5*$margin;
         width: 1.5*$margin;
-        margin: auto;
+        margin: 1.5 / 2 * $margin - 2px; // 2px border
+        margin-top: 0;
+        margin-bottom: 0;
     }
-}
-
-#filterToggle {
-    @include media-breakpoint-up(lg) {
-        display: none;
-    }
-}
-
-#checkoutToggle {
-    right: 0;
-    height: min-content;
-    padding: $padding * 2 / 3 0;
 
     h3 {
         margin: auto;
@@ -554,7 +551,37 @@ ul.small {
         opacity: 0;
         display: none;
     }
+
+    @include media-breakpoint-up(md) {
+        right: 0;
+        transform: scale(1);
+    }
 }
+
+// #filterToggle {
+//     width: unset;
+//     align-items: center;
+
+//     h3 {
+//         margin: 0;
+//         margin-right: 1.5 / 2 * $margin - 2px; // 2px border
+//     }
+// }
+
+// #checkoutToggle {
+//     right: 0;
+//     height: min-content;
+//     padding: $padding * 2 / 3 0;
+
+//     h3 {
+//         margin: auto;
+//     }
+
+//     &.toggled {
+//         opacity: 0;
+//         display: none;
+//     }
+// }
 
 #checkoutToggle,
 .checkout-sidebar {

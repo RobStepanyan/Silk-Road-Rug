@@ -1,5 +1,5 @@
 import React from 'react';
-import { apiHeaders, apiURLs, styles } from '../../other/variables';
+import { apiHeaders, apiURLs } from '../../other/variables';
 import { formatPrice, formatSize, isAuthed } from '../../other/functions';
 import axios from 'axios';
 import NavbarFooter from '../../components/NavbarFooter';
@@ -139,7 +139,7 @@ export default class Rug extends React.Component {
                     {/* Details w/ or w/o Sizes */}
                     <h4>Details</h4>
                     <ul className="style-default">
-                      <li>Style: {styles[data.style]}</li>
+                      <li>Style: {'style'}</li>
                       {data.rug_variations.length === 1 &&
                         <li>Size: {formatSize(data.rug_variations[0])}</li>
                       }

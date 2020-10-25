@@ -14,21 +14,47 @@ from phonenumber_field.validators import validate_international_phonenumber
 class RugImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RugImage
-        exclude = ('rug',)
-
-
-class RugSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Rug
-        fields = '__all__'
-
-    image = RugImageSerializer(many=True)
+        exclude = ('rug', 'id')
 
 
 class RugVariationSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.RugVariation
         exclude = ('rug',)
+
+
+class RugSerializer(serializers.ModelSerializer):
+    image = RugImageSerializer(many=True)
+
+    class Meta:
+        model = models.Rug
+        fields = '__all__'
+
+
+class RugSerializerLite(serializers.ModelSerializer):
+    # Used in list()
+    images = RugImageSerializer(source='image', many=True)
+
+    class Meta:
+        model = models.Rug
+        fields = ('id', 'name', 'base_price_before_sale',
+                  'base_price_after_sale', 'images', 'group_by_age', 'group_by_type')
+
+
+class RugGroupSerializer(serializers.ModelSerializer):
+    tree = serializers.ListField()
+    children = serializers.ListField()
+
+    class Meta:
+        model = models.RugGroup
+        exclude = ('parent_group', 'type', 'image')
+
+
+class RugGroupSerializerLite(serializers.ModelSerializer):
+    # Used for list()
+    class Meta:
+        model = models.RugGroup
+        exclude = ('description', 'parent_group', 'type')
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -245,15 +271,3 @@ class ContactUsModelSerializer(serializers.ModelSerializer):
     file = serializers.FileField(
         required=False,
         validators=[file_size, FileExtensionValidator(allowed_extensions=supported_files)])
-
-
-class RugGroupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.RugGroup
-        fields = '__all__'
-
-
-class RugGroupSerializerLite(serializers.ModelSerializer):
-    class Meta:
-        model = models.RugGroup
-        exclude = ('description',)

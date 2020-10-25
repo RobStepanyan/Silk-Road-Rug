@@ -4,8 +4,8 @@ from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
 router = DefaultRouter()
-# router.register(r'rugs', views.RugViewSet, basename='rug')
-router.register(r'rug-groups', views.RugGroupViewSet, basename='rug-groups')
+router.register(r'rugs', views.RugViewSet, basename='rug')
+router.register(r'rug-groups', views.RugGroupViewSet, basename='rug-group')
 router.register(r'user/cart', views.CartItemViewSet, basename='cart')
 router.register(r'user/order', views.OrderViewSet, basename='order')
 router.register(r'contact-us', views.ContactUsViewSet, basename='contact-us')

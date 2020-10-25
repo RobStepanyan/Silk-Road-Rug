@@ -154,7 +154,7 @@ export function isAuthed() {
     return true
   }
   // if access is not available
-  return axios({
+  axios({
     method: 'post',
     url: apiURLs.token.refresh,
     data: {
@@ -165,7 +165,8 @@ export function isAuthed() {
       setJWTCookie(response.data)
       return true
     })
-    .catch(() => false)
+
+  return true
 }
 
 export function getHeaders(header) {

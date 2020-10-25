@@ -46,7 +46,7 @@ function App() {
         <Route exact path='/services/rug-restoration' component={RugRestoration} />
         <Route exact path='/contact-us' component={ContactUs} />
         <Route exact path='/cart' component={Cart} />
-        <Route exact path='/shop' component={Shop} />
+        <Route exact path='/shop/:rugGroup' component={Shop} />
         <Route exact path='/checkout' component={Checkout} />
         <Route exact path='/checkout/success/:checkout' component={CheckoutSuccess} />
         <Route exact path='/checkout/cancel/:checkout' component={CheckoutCancel} />

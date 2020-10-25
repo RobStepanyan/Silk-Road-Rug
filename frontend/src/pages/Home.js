@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import NavbarFooter from '../components/NavbarFooter';
-import Card, { CategoryCard, ShopCard } from '../components/Cards';
+import Card, { CategoryCard } from '../components/Cards';
 import { apiURLs, slickCarouselSettings } from '../other/variables';
 import axios from 'axios';
 import Slider from 'react-slick';
@@ -66,17 +66,17 @@ export default class Home extends Component {
                 <div className="row justify-content-center">
                   {this.state.data.byAge.map((x, i) => {
                     return <div className="col-12 col-sm-6 col-lg-4" key={i} >
-                      <CategoryCard imageSrc={x.image} href={'#'} heading={x.title} />
+                      <CategoryCard imageSrc={x.image} href={`/shop/${x.id}`} heading={x.title} />
                     </div>
                   })
                   }
                 </div>
                 <hr />
                 <h2 className="text-center mb-3">Shop by Categories</h2>
-                <div className="row">
+                <div className="row justify-content-center">
                   {this.state.data.byType.map((x, i) => {
                     return <div className="col-12 col-sm-6 col-lg-4" key={i}>
-                      <CategoryCard imageSrc={x.image} href={'#'} heading={x.title} />
+                      <CategoryCard imageSrc={x.image} href={`/shop/${x.id}`} heading={x.title} />
                     </div>
                   })
                   }

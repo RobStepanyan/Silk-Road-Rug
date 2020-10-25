@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from phonenumber_field.modelfields import PhoneNumberField
 from django.utils import timezone
 from django.utils.functional import cached_property
+from django.conf import settings
 
 
 class RugGroup(models.Model):
@@ -30,39 +31,46 @@ class RugGroup(models.Model):
 
     @cached_property
     def tree(self):
-        tree = [self.title]
         group = self
+        tree = [{'id': group.id, 'title': group.title}]
         while group.parent_group:
-            tree.append(group.parent_group.title)
             group = group.parent_group
+            tree.append({'id': group.id, 'title': group.title})
         return tree[::-1]
 
+    @cached_property
+    def children(self):
+        children = self.__class__.objects.filter(
+            parent_group=self).values('id', 'title', 'image')
+        for x in children:
+            x['image'] = settings.MEDIA_URL + x['image']
+        return children
+
     def __str__(self):
-        return " > ".join(self.tree)
+        return " > ".join([x['title'] for x in self.tree])
 
 
 class Rug(models.Model):
-    name = models.CharField(verbose_name="Name*", max_length=256)
+    name = models.CharField(
+        max_length=256)
     base_price = models.DecimalField(
-        verbose_name="(LEAVE EMPTY)",
         max_digits=12, decimal_places=2, default=0,
         blank=True, null=True)
     base_price_before_sale = models.DecimalField(
-        verbose_name="(LEAVE EMPTY)",
         max_digits=12, decimal_places=2, default=0,
         blank=True, null=True)
     base_price_after_sale = models.DecimalField(
-        verbose_name="(LEAVE EMPTY)",
         max_digits=12, decimal_places=2, default=0,
         blank=True, null=True)
     group_by_age = models.ForeignKey(
-        RugGroup, on_delete=models.PROTECT, verbose_name="Group by Age (e.g. Vintage)*",
-        default=None, null=True, related_name='rug_a',)
+        RugGroup, on_delete=models.PROTECT, verbose_name="Group by Age (e.g. Vintage)",
+        blank=True, default=None, null=True, related_name='rug_a',)
     group_by_type = models.ForeignKey(
-        RugGroup, on_delete=models.PROTECT, verbose_name="Group by Type (e.g. Runner)*", default=None, null=True)
+        RugGroup, on_delete=models.PROTECT, verbose_name="Group by Type (e.g. Runner)",
+        blank=True, default=None, null=True)
     desc = models.TextField(
         verbose_name='Description', blank=True, null=True)
-    sku = models.CharField(verbose_name='SKU*', max_length=255)
+    sku = models.CharField(max_length=255)
     WC = models.IntegerField(
         verbose_name='Will-Call Pick Up (price)', default=0)
     GS = models.IntegerField(
@@ -82,7 +90,7 @@ class Rug(models.Model):
 
 class RugImage(models.Model):
     rug = models.ForeignKey(Rug, on_delete=models.CASCADE,
-                            related_query_name='image', related_name='image')
+                            related_query_name='images', related_name='image')
     # include "default" see signals.py
     image = models.ImageField(
         upload_to='rugs', default='default-rug.png')

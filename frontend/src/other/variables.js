@@ -37,126 +37,6 @@ export const sizes = [
   { 'minMax': [1, 50] }
 ]
 
-export const styles = [
-  { 'heading': 'Antique' },
-  'Khotan',
-  'Samarkand',
-  'Chinese',
-  'Afghan',
-  'Balouch',
-  'Afshar',
-  'Turkaman',
-  'Ersari',
-  'Bukara',
-  'Tekke',
-
-  { 'heading': 'Antique Persian' },
-  'Malayer',
-  'Tabriz',
-  'Sultanabad',
-  'Mahal',
-  'Mahal',
-  'Farahan',
-  'Kerman',
-  'Khorassan',
-  'Heriz',
-  'Serapi',
-  'Sarab / Camel',
-  'Bakhshaish',
-  'Bakhtiari',
-  'Bidjar',
-
-  { 'heading': 'Persian Traditional' },
-  'Kashan',
-  'Mashad',
-  'Isfahan',
-  'Tehran',
-  'Qum',
-  'Nain',
-
-  { 'heading': 'Antique Armenian / Caucasian' },
-  'Karabagh',
-  'Soumack',
-  'Shirvan',
-  'Caucasian',
-  'Kazak',
-
-  { 'heading': 'Antique Turkish' },
-  'Ghiordes',
-  'Sivas',
-  'Hereke',
-  'Kaysari',
-  'Kilim',
-  'Oushak',
-
-  { 'heading': 'Antique Indian' },
-  'Agra',
-  'Amritsar',
-  'Dhurrie',
-  'Kashmir',
-  'Lahour',
-  'Larestan',
-
-  { 'heading': 'Antique European' },
-  'Tapestery',
-  'French Deco',
-  'French Aubusson',
-  'French Savonerrie',
-  'Spanish',
-  'Donegal',
-  'Arts and Crafts',
-  'Bessarabian / Ukrainian',
-  'Italian Textile',
-
-  { 'heading': 'Contemporary Moroccan' },
-  'High Atlas Collection',
-  'African Tuareg Mat',
-
-  { 'heading': 'Other Contemporary Rugs' },
-  'Antique Inspired / Recreation',
-  'Swedish / Scandinavian Recreation',
-  'Modern',
-  'Modern Flat Weave',
-  'Afghan Modern Flat Weave',
-
-  { 'heading': 'Vintage' },
-  'Turkish',
-  'Kilim / Flat Weave',
-  'Over-Dyed Distressed',
-  'Tulu',
-  'Morrocan',
-
-  { 'heading': 'Vintage Swedish / Scandinavian' },
-  'Ingegerd',
-  'Marta Mass Fjetterstrom',
-  'Judith',
-  'Swedish',
-  'Scandinavian',
-
-  { 'heading': 'Other' },
-  'Saddle Bags',
-  'Gallery-Size',
-  'Furniture / Accessories',
-  'Sustainable',
-  'Decorative',
-  'Ethnic',
-  'Traditional',
-  'Natural & Broad Loom',
-  'Custom Order'
-]
-
-// export const colors = [
-//   'Black / Charcoal',
-//   'Blue',
-//   'Green',
-//   'Grey',
-//   'Neutral / Beige / Taupe',
-//   'Orange',
-//   'Purple / Lilac',
-//   'Red / Pink',
-//   'White / Cream',
-//   'Yellow'
-// ]
 
 export const sortByOrder = ['name', 'price']
 export const sortBy = sortByOrder.flatMap(x => [toTitleCase(x) + ' ↑', toTitleCase(x) + ' ↓'])
@@ -170,23 +50,21 @@ export const shopFilterInputOrder = [
     'inputType': 'range', 'heading': 'Size', 'subHeading': '(Feet)', 'name': 'size',
     'items': sizes
   },
-  {
-    'inputType': 'checkbox', 'heading': 'Style', 'name': 'style',
-    'items': styles
-  },
-  // {
-  //   'inputType': 'checkbox', 'heading': 'Color', 'name': 'color',
-  //   'items': colors
-  // }
 ]
 
 const apiBase = `//${window.location.hostname}:8000/api/`
 export const apiURLs = {
-  listRugs: apiBase + 'rugs/',
-  rugById: id => apiBase + `rugs/${id}/`,
   signUp: apiBase + 'auth/signup/',
   signUpVerify: (uidb64, token) => apiBase + `auth/signup-verify/?uidb64=${uidb64}&token=${token}`,
   logIn: apiBase + 'auth/login/',
+  rug: {
+    list: apiBase + 'rugs/',
+    retrieve: id => apiBase + `rugs/${id}/`,
+  },
+  rugGroup: {
+    list: apiBase + 'rug-groups/',
+    get: id => apiBase + `rug-groups/${id}/`,
+  },
   forgotPwd: {
     inputEmail: apiBase + 'auth/forgot/input-email/',
     verifyToken: (uidb64, token) => apiBase + `auth/forgot/verify-token/?uidb64=${uidb64}&token=${token}`,
@@ -234,35 +112,6 @@ export const apiURLs = {
 
 // To avoid circular import errors
 export { apiHeaders } from './functions'
-
-export const dummyData = [
-  {
-
-    'name': 'Rug Name', 'size': "10' x 13'", 'style': 'Contemporary',
-    'sku': '123', 'image': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': null, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-  {
-    'name': 'Another Fancy rug', 'size': "1' x 3'", 'style': 'Contemporary',
-    'sku': '123', 'image': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-  {
-    'name': 'Still rug names', 'size': "11' x 13'", 'style': 'Contemporary',
-    'sku': '123', 'image': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': null, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': null },
-  },
-  {
-    'name': 'Name of the Rug', 'size': "1' x 3'", 'style': 'Contemporary',
-    'sku': '123', 'image': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': 300.00 - 250.00, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-  {
-    'name': 'Rug Name', 'size': "11' x 13'", 'style': 'Contemporary',
-    'sku': '123', 'image': '/static/frontend/img/rug.jpeg',
-    'pricesUSD': { 'price': 25000.00, 'willcallPickUp': 0, 'groundShipping': 250, 'insurance': 100.00, 'expeditedShipping': null, 'signatureReleaseRequired': 0.00, 'whiteGloveDelivery': 200.00 },
-  },
-]
 
 export const slickCarouselSettings = [
   {

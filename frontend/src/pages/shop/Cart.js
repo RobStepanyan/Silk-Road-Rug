@@ -2,7 +2,7 @@ import React from 'react';
 import NavbarFooter from '../../components/NavbarFooter';
 import { CartCard } from '../../components/Cards';
 import { calculateAdditionalCosts, calculatePriceSum, formatPrice, isAuthed, formatSize } from '../../other/functions';
-import { apiHeaders, apiURLs, cartCardInputsOrder, styles } from '../../other/variables';
+import { apiHeaders, apiURLs, cartCardInputsOrder } from '../../other/variables';
 import Loading from '../../components/Loading';
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ export default class Cart extends React.Component {
       selectedCheckboxes: {},
       selectedNumbers: {},
       itemsQuanity: 4,
-      isAuthed: false,
+      isAuthed: isAuthed(),
       data: [],
       toggled: false,
       loading: true,
@@ -109,8 +109,7 @@ export default class Cart extends React.Component {
   }
 
   componentWillMount() {
-    let isAuth = isAuthed()
-    this.setState({ loading: true, isAuthed: isAuth })
+    this.setState({ loading: true })
 
     axios({
       method: 'get',
@@ -167,7 +166,7 @@ export default class Cart extends React.Component {
         })
       })
       .catch(err => {
-        if (err.response.status === 401 && isAuth) {
+        if (err.response.status === 401 && this.state.isAuthed) {
           window.location.reload()
         } else {
           this.setState({ loading: false })
@@ -209,7 +208,7 @@ export default class Cart extends React.Component {
                       return (
                         <CartCard
                           key={String(i)} keyProp={String(i)} rugId={data.rug_id}
-                          name={data.name} size={formatSize(data)} style={styles[data.style]}
+                          name={data.name} size={formatSize(data)} style={'style placeholder'}
                           sku={data.sku} color={data.color} image={data.image} quantityAvailable={data.quantity} quantitySel={this.state.selectedNumbers[i]}
                           price_before={data.price_usd} price_after={data.price_usd_after_sale} additionalCosts={this.state.additionalCosts[i]}
                           inputs={inputs[i]} selectedId={this.state.selectedRadios[String(i)]} selectedIds={this.state.selectedCheckboxes[String(i)]}
