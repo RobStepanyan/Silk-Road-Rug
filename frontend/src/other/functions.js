@@ -85,6 +85,16 @@ export function formatSize(obj) {
   return `${width} x ${height}`
 }
 
+export function formatRugGroup(tree, title) {
+  return (tree.length > 1 ? tree[0].title : '') + ' ' + title
+}
+
+export function formatRugStyle(groups) {
+  let styles = []
+  groups.forEach(group => styles.push(formatRugGroup(group.tree, group.title)))
+  return styles.join(', ')
+}
+
 export function calculateAdditionalCosts(selectedNumbers, selectedRadios, selectedCheckboxes, data) {
   let addCosts = {};
   data.forEach((data, i) => {

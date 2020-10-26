@@ -86,13 +86,24 @@ class Rug(models.Model):
     WG = models.IntegerField(
         verbose_name='White Glove Delivery (price)', default=50)
 
+    @cached_property
+    def groups(self):
+        x = []
+        if self.group_by_age:
+            x.append({'title': self.group_by_age.title,
+                      'tree': self.group_by_age.tree})
+        if self.group_by_type:
+            x.append({'title': self.group_by_type.title,
+                      'tree': self.group_by_type.tree})
+        return x
+
     def __str__(self):
         return self.name if self.name else ''
 
 
 class RugImage(models.Model):
     rug = models.ForeignKey(Rug, on_delete=models.CASCADE,
-                            related_query_name='images', related_name='image')
+                            related_query_name='images', related_name='images')
     # include "default" see signals.py
     image = models.ImageField(
         upload_to='rugs', default='default-rug.png')
@@ -113,7 +124,7 @@ class RugImage(models.Model):
 
 class RugVariation(models.Model):
     rug = models.ForeignKey(Rug, on_delete=models.CASCADE,
-                            related_query_name='variations')
+                            related_query_name='variations', related_name='variations')
     width_feet = models.IntegerField(verbose_name="Width Feet X'*")
     width_inch = models.IntegerField(
         verbose_name="Width Inch X\"", blank=True, null=True)

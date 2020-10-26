@@ -24,7 +24,14 @@ class RugVariationSerializer(serializers.ModelSerializer):
 
 
 class RugSerializer(serializers.ModelSerializer):
-    image = RugImageSerializer(many=True)
+    groups = serializers.ListField()
+    images = RugImageSerializer(many=True)
+    variations = serializers.SerializerMethodField('get_variations')
+
+    def get_variations(self, rug):
+        qs = models.RugVariation.objects.filter(quantity__gt=0, rug=rug)
+        serializer = RugVariationSerializer(instance=qs, many=True)
+        return serializer.data
 
     class Meta:
         model = models.Rug
@@ -33,7 +40,7 @@ class RugSerializer(serializers.ModelSerializer):
 
 class RugSerializerLite(serializers.ModelSerializer):
     # Used in list()
-    images = RugImageSerializer(source='image', many=True)
+    images = RugImageSerializer(many=True)
 
     class Meta:
         model = models.Rug

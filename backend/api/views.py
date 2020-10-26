@@ -24,11 +24,10 @@ from django.http import HttpResponse
 from django.conf import settings
 from django.db.models.deletion import ProtectedError
 from django.middleware.csrf import get_token
-from django.db.models import Q
 
 
 class RugViewSet(viewsets.ViewSet):
-    queryset = models.Rug.objects
+    queryset = models.Rug.objects.filter(variations__quantity__gt=0)
     serializer = serializers.RugSerializer
     serializer_lite = serializers.RugSerializerLite
 
@@ -58,7 +57,14 @@ class RugViewSet(viewsets.ViewSet):
         return Response(self.serializer_lite(queryset, many=True).data)
 
     def retrieve(self, request, pk=None):
-        pass
+        if not pk:
+            return Response({'error': 'pk is missing.'})
+        pk = [int(x) for x in pk.split(',')]
+
+        queryset = self.queryset.filter(id__in=pk)
+        if not queryset.exists():
+            return Response({'error': 'Invalid pk/pks.'})
+        return Response(self.serializer(queryset, many=True).data)
 
 
 class RugGroupViewSet(viewsets.ViewSet):
@@ -686,12 +692,11 @@ class CreateCheckotSession(GenericAPIView):
                 payment_status='unpaid',
                 forecasted_arrival=timezone.now(
                 ) + datetime.timedelta(days=(7 if 'GS' in cart_item['selecteds'] else 2)),
-                delivery_address=models.Address.objects.get(
-                    user=request.user.id, is_primary=True),
+                delivery_address=models.Address.objects.filter(
+                    user=request.user.id, is_primary=True).first(),
                 total=total
             )
             order.save()
-            print(order)
             orders.append(order.id)
 
         m = models.CheckoutSession(
@@ -736,6 +741,7 @@ class CheckCheckoutSession(GenericAPIView):
             m.save()
             # Remove quantity from rug_variation and cart_items
             querysets = [
+                # ATTENTION!!! See for loop below before editing this list
                 models.CartItem.objects.filter(
                     rug_variation=m.rug_variation.id),
                 models.RugVariation.objects.filter(id=m.rug_variation.id),
@@ -743,7 +749,11 @@ class CheckCheckoutSession(GenericAPIView):
             for queryset in querysets:
                 for obj in queryset:
                     if obj.quantity - m.quantity < 1:
-                        obj.delete()
+                        if querysets.index(queryset) == 1:
+                            obj.quantity = 0
+                            obj.save()
+                        else:
+                            obj.delete()
                     else:
                         obj.quantity -= m.quantity
                         obj.save()

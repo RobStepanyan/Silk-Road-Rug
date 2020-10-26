@@ -1,7 +1,7 @@
 import React from 'react';
 import NavbarFooter from '../../components/NavbarFooter';
 import { CartCard } from '../../components/Cards';
-import { calculateAdditionalCosts, calculatePriceSum, formatPrice, isAuthed, formatSize } from '../../other/functions';
+import { calculateAdditionalCosts, calculatePriceSum, formatPrice, isAuthed, formatSize, formatRugStyle } from '../../other/functions';
 import { apiHeaders, apiURLs, cartCardInputsOrder } from '../../other/variables';
 import Loading from '../../components/Loading';
 import axios from 'axios';
@@ -208,7 +208,7 @@ export default class Cart extends React.Component {
                       return (
                         <CartCard
                           key={String(i)} keyProp={String(i)} rugId={data.rug_id}
-                          name={data.name} size={formatSize(data)} style={'style placeholder'}
+                          name={data.name} size={formatSize(data)} style={formatRugStyle(data.groups)}
                           sku={data.sku} color={data.color} image={data.image} quantityAvailable={data.quantity} quantitySel={this.state.selectedNumbers[i]}
                           price_before={data.price_usd} price_after={data.price_usd_after_sale} additionalCosts={this.state.additionalCosts[i]}
                           inputs={inputs[i]} selectedId={this.state.selectedRadios[String(i)]} selectedIds={this.state.selectedCheckboxes[String(i)]}

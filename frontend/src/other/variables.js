@@ -59,6 +59,7 @@ export const apiURLs = {
   logIn: apiBase + 'auth/login/',
   rug: {
     list: apiBase + 'rugs/',
+    // retrieve: id accepts array like str or str e.g. 1 or 1,2,...
     retrieve: id => apiBase + `rugs/${id}/`,
   },
   rugGroup: {

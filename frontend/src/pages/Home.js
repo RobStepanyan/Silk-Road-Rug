@@ -55,36 +55,7 @@ export default class Home extends Component {
           </div>
         </section>
 
-        <section id="shop">
-          <div className="container">
-            <h1 className="center">Shop</h1>
-            <hr />
-            <p>Find a perfect rug</p>
-            {!Object.keys(this.state.data).length
-              ? <h3 className="center">Error Occured</h3>
-              : <>
-                <div className="row justify-content-center">
-                  {this.state.data.byAge.map((x, i) => {
-                    return <div className="col-12 col-sm-6 col-lg-4" key={i} >
-                      <CategoryCard imageSrc={x.image} href={`/shop/${x.id}`} heading={x.title} />
-                    </div>
-                  })
-                  }
-                </div>
-                <hr />
-                <h2 className="text-center mb-3">Shop by Categories</h2>
-                <div className="row justify-content-center">
-                  {this.state.data.byType.map((x, i) => {
-                    return <div className="col-12 col-sm-6 col-lg-4" key={i}>
-                      <CategoryCard imageSrc={x.image} href={`/shop/${x.id}`} heading={x.title} />
-                    </div>
-                  })
-                  }
-                </div>
-              </>
-            }
-          </div>
-        </section>
+        <ShopSection data={this.state.data} />
 
         <section id="services">
           <div className="container">
@@ -139,4 +110,37 @@ export default class Home extends Component {
       </NavbarFooter >
     )
   }
+}
+
+export function ShopSection(props) {
+  return <section id="shop">
+    <div className="container">
+      <h1 className="center">Shop</h1>
+      <hr />
+      <p>Find a perfect rug</p>
+      {!Object.keys(props.data).length
+        ? <h3 className="center">Error Occured</h3>
+        : <>
+          <div className="row justify-content-center">
+            {props.data.byAge.map((x, i) => {
+              return <div className="col-12 col-sm-6 col-lg-4" key={i} >
+                <CategoryCard imageSrc={x.image} href={`/shop/${x.id}`} heading={x.title} />
+              </div>
+            })
+            }
+          </div>
+          <hr />
+          <h2 className="text-center mb-3">Shop by Categories</h2>
+          <div className="row justify-content-center">
+            {props.data.byType.map((x, i) => {
+              return <div className="col-12 col-sm-6 col-lg-4" key={i}>
+                <CategoryCard imageSrc={x.image} href={`/shop/${x.id}`} heading={x.title} />
+              </div>
+            })
+            }
+          </div>
+        </>
+      }
+    </div>
+  </section>
 }

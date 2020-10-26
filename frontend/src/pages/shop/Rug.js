@@ -1,11 +1,12 @@
 import React from 'react';
 import { apiHeaders, apiURLs } from '../../other/variables';
-import { formatPrice, formatSize, isAuthed } from '../../other/functions';
+import { formatPrice, formatRugStyle, formatSize, isAuthed } from '../../other/functions';
 import axios from 'axios';
 import NavbarFooter from '../../components/NavbarFooter';
 import Loading from '../../components/Loading';
 import { RadioGroupWithPrice } from '../../components/Form';
 import { Redirect } from 'react-router-dom';
+import Error from '../../pages/Error';
 
 export default class Rug extends React.Component {
   constructor(props) {
@@ -21,33 +22,31 @@ export default class Rug extends React.Component {
       alert: null,
       loading: false,
       redirectNow: false,
+      redirectTo404: false,
       quantitySelected: 1,
     }
 
     this.handleAddToCart = this.handleAddToCart.bind(this)
   }
 
-  getData() {
+  componentDidMount() {
     axios({
       method: 'get',
-      url: apiURLs['rugById'](this.id),
+      url: apiURLs.rug.retrieve(this.id),
     })
-      .then(response => {
+      .then(res => {
         this.setState({
-          data: response.data[0],
-          price_before: parseInt(response.data[0].base_price_before_sale),
-          price_after: parseInt(response.data[0].base_price_after_sale)
+          data: res.data[0],
+          price_before: parseInt(res.data[0].base_price_before_sale),
+          price_after: parseInt(res.data[0].base_price_after_sale)
         })
-        response.data[0].rug_variations.forEach((vrtn, i) => {
+        res.data[0].variations.forEach((vrtn, i) => {
           if (vrtn.is_sample) {
-            this.setState({ selectedVrtn: i + (response.data[0].rug_variations.length > 1 ? 1 : 0) })
+            this.setState({ selectedVrtn: i + (res.data[0].variations.length > 1 ? 1 : 0) })
           }
         })
       })
-  }
-
-  componentDidMount() {
-    this.getData()
+      .catch(() => this.setState({ redirectTo404: true }))
   }
 
   handleAddToCart() {
@@ -59,7 +58,7 @@ export default class Rug extends React.Component {
       url: apiURLs.user.cart.create,
       data: {
         rug: this.state.data.id,
-        rug_variation: this.state.data.rug_variations[this.state.selectedVrtn].id,
+        rug_variation: this.state.data.variations[this.state.selectedVrtn].id,
         quantity: this.state.quantitySelected,
       }
     })
@@ -82,8 +81,8 @@ export default class Rug extends React.Component {
       price_before = this.state.price_before;
       price_after = this.state.price_after;
 
-      if (this.state.data.rug_variations.length > 1) {
-        items = this.state.data.rug_variations.map((vrtn, i) => {
+      if (this.state.data.variations.length > 1) {
+        items = this.state.data.variations.map((vrtn, i) => {
           let obj = {}
           obj['label'] = formatSize(vrtn)
           obj['price'] = [vrtn.price_usd, vrtn.price_usd_after_sale]
@@ -95,8 +94,8 @@ export default class Rug extends React.Component {
         handleChangeVrtn = (id) => {
           this.setState({
             selectedVrtn: id,
-            price_before: this.state.data.rug_variations[id].price_usd,
-            price_after: this.state.data.rug_variations[id].price_usd_after_sale,
+            price_before: this.state.data.variations[id].price_usd,
+            price_after: this.state.data.variations[id].price_usd_after_sale,
           })
         }
       }
@@ -104,6 +103,7 @@ export default class Rug extends React.Component {
 
     if (this.state.loading) { return <Loading /> }
     if (this.state.redirectNow) { return <Redirect to='/login' /> }
+    if (this.state.redirectTo404) { return <Error error={404} /> }
     return (
       <NavbarFooter>
         {data
@@ -115,11 +115,11 @@ export default class Rug extends React.Component {
                 }
                 <div className="row">
                   <div className="col-12 col-sm-6">
-                    <img alt="Selected Thumbnail" className="w-100 transition" src={data.rug_images[this.state.selectedImg]}></img>
+                    <img alt="Selected Thumbnail" className="w-100 transition" src={data.images[this.state.selectedImg].image}></img>
                     <hr className="my-2" />
                     <RugThumbnails
                       onClick={(i) => this.setState({ 'selectedImg': i })}
-                      images={data.rug_images}
+                      images={data.images}
                       selectedImg={this.state.selectedImg}
                     />
                   </div>
@@ -139,13 +139,13 @@ export default class Rug extends React.Component {
                     {/* Details w/ or w/o Sizes */}
                     <h4>Details</h4>
                     <ul className="style-default">
-                      <li>Style: {'style'}</li>
-                      {data.rug_variations.length === 1 &&
-                        <li>Size: {formatSize(data.rug_variations[0])}</li>
+                      <li>Style: {formatRugStyle(data.groups)}</li>
+                      {data.variations.length === 1 &&
+                        <li>Size: {formatSize(data.variations[0])}</li>
                       }
                       <li>SKU: {data.sku}</li>
                     </ul>
-                    {data.rug_variations.length > 1 &&
+                    {data.variations.length > 1 &&
                       <>
                         <h4>Sizes</h4>
                         <RadioGroupWithPrice
@@ -157,9 +157,9 @@ export default class Rug extends React.Component {
                     {/* *********************** */}
                     <h4 className="mb-3">Quantity</h4>
                     <input type='number' value={this.state.quantitySelected}
-                      min={1} max={data.rug_variations[this.state.selectedVrtn].quantity}
+                      min={1} max={data.variations[this.state.selectedVrtn].quantity}
                       onChange={(e) => this.setState({ quantitySelected: parseInt(e.target.value) })} />
-                    <small className="m-0 mb-1">{data.rug_variations[this.state.selectedVrtn].quantity} Available</small>
+                    <small className="m-0 mb-1">{data.variations[this.state.selectedVrtn].quantity} Available</small>
                     <div className="row">
                       <div onClick={this.handleAddToCart} className="btn card-btn btn-primary">Add to Cart</div>
                     </div>
@@ -181,7 +181,7 @@ function RugThumbnails(props) {
       <div className="row">
         {props.images.map((src, i) => {
           return (
-            <img alt="Rug Thumbnail" key={i} src={src}
+            <img alt="Rug Thumbnail" key={i} src={src.image}
               onClick={() => props.onClick(i)}
               className={"thumbnail" + (i === props.selectedImg ? " selected" : "")}
             ></img>

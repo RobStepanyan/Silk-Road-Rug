@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import NavbarFooter from '../../components/NavbarFooter';
 import { ShopFilterSidebar, ShopCard, CategoryCard } from '../../components/Cards';
 import { shopFilterInputOrder, apiURLs } from '../../other/variables';
-import { toTitleCase } from '../../other/functions';
+import { formatRugGroup, toTitleCase } from '../../other/functions';
 import Loading from '../../components/Loading';
 import axios from 'axios';
 import Error from '../../pages/Error';
@@ -124,6 +124,7 @@ export default class Shop extends Component {
               <div className="container">
                 <nav aria-label="breadcrumb">
                   <ol className="breadcrumb mt-0">
+                    <li className="breadcrumb-item"><a href="/shop">Shop</a></li>
                     {this.state.data.rugGroup.tree.map((x, i) => {
                       let isActive = x.id.toString() === this.props.match.params.rugGroup
                       return <li key={i} className={"breadcrumb-item" + (isActive ? ' active' : '')}>
@@ -149,8 +150,7 @@ export default class Shop extends Component {
                   </>
                 }
                 <h2 className="mb-3">
-                  {(this.state.data.rugGroup.tree.length > 1 ? this.state.data.rugGroup.tree[0].title : '') +
-                    ` ${this.state.data.rugGroup.title}  Rugs`}
+                  {formatRugGroup(this.state.data.rugGroup.tree, this.state.data.rugGroup.title) + '  Rugs'}
                 </h2>
                 {!this.state.data.rugs.length && <p>No rugs found.</p>}
                 <div className="row">

@@ -4,7 +4,7 @@ import {
   RadioGroupWithPrice, CheckboxGroupWithPrice,
   RadioGroup, CheckboxGroup, RangeSliderGroup
 } from './Form';
-import { formatPrice, formatSize } from '../other/functions';
+import { formatPrice, formatRugStyle, formatSize } from '../other/functions';
 import Moment from 'react-moment';
 import 'moment-timezone';
 
@@ -226,14 +226,14 @@ export function OrderCard(props) {
       <hr />
       <div className="row my-3">
         <div className="col-12 col-sm-6 col-lg-3">
-          <img className="w-100" src={data.rug.image[0].image} alt="Rug" />
+          <img className="w-100" src={data.rug.images[0].image} alt="Rug" />
         </div>
         <div className="col">
           <h2 className="mb-4">{data.rug.name}</h2>
           <h4>Details</h4>
           <ul className="style-default mt-2">
             <li>Size: {formatSize(data.rug_variation)}</li>
-            <li>Style: {'style'}</li>
+            <li>Style: {formatRugStyle(data.rug.groups)}</li>
             <li>SKU: {data.rug.sku}</li>
             <li>Quantity: {data.quantity}</li>
           </ul>

@@ -17,6 +17,7 @@ import RugCleaning from './pages/services/RugCleaning';
 import RugRestoration from './pages/services/RugRestoration';
 import Cart from './pages/shop/Cart';
 import Shop from './pages/shop/Shop';
+import ShopRoot from './pages/shop/ShopRoot';
 import Rug from './pages/shop/Rug';
 import Checkout from './pages/shop/Checkout';
 import CheckoutSuccess from './pages/shop/CheckoutSuccess';
@@ -46,6 +47,7 @@ function App() {
         <Route exact path='/services/rug-restoration' component={RugRestoration} />
         <Route exact path='/contact-us' component={ContactUs} />
         <Route exact path='/cart' component={Cart} />
+        <Route exact path='/shop' component={ShopRoot} />
         <Route exact path='/shop/:rugGroup' component={Shop} />
         <Route exact path='/checkout' component={Checkout} />
         <Route exact path='/checkout/success/:checkout' component={CheckoutSuccess} />
