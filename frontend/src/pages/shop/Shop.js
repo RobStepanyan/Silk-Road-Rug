@@ -85,8 +85,8 @@ export default class Shop extends Component {
         sortBy = selectedInputs[i][0]
       }
       else if (x.name === 'size') {
-        width = selectedInputs[i][1]
-        height = selectedInputs[i][3]
+        width = selectedInputs[i][1].join(',')
+        height = selectedInputs[i][3].join(',')
       }
     })
     axios({

@@ -18,6 +18,8 @@ class RugGroup(models.Model):
                               default='default-rug.png')
     parent_group = models.ForeignKey(
         'self', on_delete=models.CASCADE, null=True, default=None, blank=True)
+    tree_ids = ArrayField(models.IntegerField(
+    ), verbose_name="tree_ids (FILLED AUTOMATICALLY)", default=list)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

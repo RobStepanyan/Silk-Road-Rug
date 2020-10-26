@@ -1,3 +1,4 @@
+import time
 from django.db.models.signals import post_save, pre_delete, pre_save
 from django.forms.models import model_to_dict
 from django.dispatch import receiver
@@ -39,3 +40,8 @@ def rug_pre_delete_receiver(sender, instance, **kwargs):
 @receiver(pre_delete, sender=models.ContactUs)
 def contact_pre_delete_receiver(sender, instance, **kwargs):
     instance.file.delete()
+
+
+@receiver(pre_save, sender=models.RugGroup)
+def rug_group_pre_save_receiver(sender, instance, **kwargs):
+    instance.tree_ids = [x['id'] for x in instance.tree]

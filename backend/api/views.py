@@ -33,19 +33,24 @@ class RugViewSet(viewsets.ViewSet):
     serializer_lite = serializers.RugSerializerLite
 
     def list(self, request):
-        rug_group = request.GET.get('rug_group', None)
         order_by = int(request.GET.get('sort_by', 0))
+        rug_group = request.GET.get('rug_group', None)
         width = request.GET.get('width', sizes[1]['minMax'])
         height = request.GET.get('height', sizes[3]['minMax'])
-        if not rug_group:
-            return Response({'error': 'rug_group is missing.'})
+        if not rug_group or not models.RugGroup.objects.filter(id=rug_group).exists():
+            return Response({'error': 'rug_group is missing or incorrect.'})
+        rug_group = [int(rug_group)]
+        if type(width) == str:
+            width = [int(x) for x in width.split(',')]
+        if type(height) == str:
+            height = [int(x) for x in height.split(',')]
 
         sorting_fields = {'name': 'name', 'price': 'base_price'}
         asc_or_desc = '' if order_by % 2 == 0 else '-'
         order_by = sorting_fields[sort_by[order_by].split(' ')[0].lower()]
 
-        queryset = self.queryset.filter(
-            group_by_age=rug_group) | self.queryset.filter(group_by_type=rug_group)
+        queryset = self.queryset.filter(group_by_age__tree_ids__contains=rug_group) | self.queryset.filter(
+            group_by_type__tree_ids__contains=rug_group)
         queryset = queryset.filter(
             variations__width_feet__range=width,
             variations__height_feet__range=height
