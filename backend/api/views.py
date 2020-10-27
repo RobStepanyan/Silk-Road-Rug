@@ -370,7 +370,7 @@ class UserAddressAddView(GenericAPIView):
         try:
             serializer.is_valid(raise_exception=True)
             serializer.save()
-            return Response({'is_valid': True})
+            return Response({'is_valid': True, 'msg': 'Successfuly added.'})
         except Exception as e:
             print(str(e))
             return Response({'error': 'Something went wrong. Please try again later.'})

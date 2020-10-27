@@ -165,7 +165,7 @@ class UserAddressAddSerializer(serializers.Serializer):
     full_name = serializers.CharField()
     country = serializers.CharField()
     address_line_1 = serializers.CharField()
-    address_line_2 = serializers.CharField()
+    address_line_2 = serializers.CharField(required=False, allow_blank=True)
     city = serializers.CharField()
     state_province_region = serializers.CharField()
     zip_code = serializers.CharField()

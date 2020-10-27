@@ -212,7 +212,11 @@ export default class Form extends Component {
             break;
           case 'text':
           case 'textarea':
-            helpText[i] = toTitleCase(title) + ' shouldn\'t empty'
+            if (!validateOnlyText(val)) {
+              helpText[i] = toTitleCase(title) + ' should only contain letters.'
+            } else {
+              helpText[i] = toTitleCase(title) + ' shouldn\'t be empty'
+            }
             break;
           case 'password':
             helpText[i] = validatePwd(pwds, confirmPwd).errorMsgs
