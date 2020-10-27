@@ -1,6 +1,6 @@
 from django import forms
 from django.core.validators import validate_image_file_extension
-from .models import Rug, RugImage
+from .models import Rug, RugImage, RugGroup
 
 
 class RugAdminForm(forms.ModelForm):
@@ -13,6 +13,11 @@ class RugAdminForm(forms.ModelForm):
             'WC', 'GS', 'IN',
             'ES', 'SR', 'WG',
         )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['group_by_age'].queryset = RugGroup.objects.filter(type='a')
+        self.fields['group_by_type'].queryset = RugGroup.objects.filter(type='t')
 
     images = forms.FileField(
         widget=forms.ClearableFileInput(attrs={"multiple": True}),
