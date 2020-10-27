@@ -53,7 +53,7 @@ class RugViewSet(viewsets.ViewSet):
         queryset = queryset.filter(
             variations__width_feet__range=width,
             variations__height_feet__range=height
-        ).order_by(asc_or_desc+order_by)
+        ).order_by(asc_or_desc+order_by).distinct()
         return Response(self.serializer_lite(queryset, many=True).data)
 
     def retrieve(self, request, pk=None):
@@ -100,7 +100,8 @@ class SignUpView(GenericAPIView):
             serializer.is_valid(raise_exception=True)
             user = serializer.save()
         except Exception as e:
-            return Response({'error': e.detail[0]})
+            print(e.detail[0])
+            return Response({'error': 'Something went wrong. Please try again later.'})
 
         try:
             # Send email with token
@@ -149,7 +150,8 @@ class LogInView(GenericAPIView):
             serializer.is_valid(raise_exception=True)
             user = serializer.validated_data
         except Exception as e:
-            return Response({'error': e.detail['non_field_errors'][0]})
+            print(e.detail['non_field_errors'][0])
+            return Response({'error': 'Something went wrong. Please try again later.'})
         return Response({
             # 'user': serializers.UserSerializer(user, context=self.get_serializer_context()).data,
             'token': tokens.get_tokens_for_user(user)
@@ -185,7 +187,8 @@ class ForgotInputEmail(GenericAPIView):
             serializer.is_valid(raise_exception=True)
             user = serializer.validated_data
         except Exception as e:
-            return Response({'error': e.detail['non_field_errors'][0]})
+            print(e.detail['non_field_errors'][0])
+            return Response({'error': 'Something went wrong. Please try again later.'})
 
         try:
             # Send email with token
@@ -226,7 +229,8 @@ class ForgotInputNewPwd(GenericAPIView):
                 serializer.is_valid(raise_exception=True)
                 user = serializer.save()
             except Exception as e:
-                return Response({'error': e.detail['non_field_errors'][0]})
+                print(e.detail['non_field_errors'][0])
+                return Response({'error': 'Something went wrong. Please try again later.'})
             return Response({'msg': 'Your password is changed. Now you can use your account.'})
 
         return HttpResponse(status=500)
@@ -256,7 +260,8 @@ class UserUpdateView(GenericAPIView):
             serializer.is_valid(raise_exception=True)
             m = serializer.save()
         except Exception as e:
-            return Response({'error': e.detail['non_field_errors'][0]})
+            print(e.detail['non_field_errors'][0])
+            return Response({'error': 'Something went wrong. Please try again later.'})
         try:
             # Send email with token
             functions.send_email(
@@ -310,7 +315,8 @@ class UserChangePwdView(GenericAPIView):
             serializer.is_valid(raise_exception=True)
             m = serializer.save()
         except Exception as e:
-            return Response({'error': e.detail[0]})
+            print(e.detail[0])
+            return Response({'error': 'Something went wrong. Please try again later.'})
 
         try:
             # Send email with token
@@ -365,7 +371,8 @@ class UserAddressAddView(GenericAPIView):
             serializer.save()
             return Response({'is_valid': True})
         except Exception as e:
-            return Response({'error': str(e)})
+            print(str(e))
+            return Response({'error': 'Something went wrong. Please try again later.'})
 
 
 class UserAddressesView(GenericAPIView):
@@ -497,7 +504,8 @@ class CartItemViewSet(viewsets.ViewSet):
             try:
                 serializer = serializer.save(cart_item=cart_item)
             except Exception as e:
-                return Response({'error': str(e)})
+                print(str(e))
+                return Response({'error': 'Something went wrong. Please try again later.'})
             data.append(serializer['data'])
         return Response(data)
 
@@ -522,7 +530,8 @@ class CartItemViewSet(viewsets.ViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
         except Exception as e:
-            return Response({'error': str(e)})
+            print(str(e))
+            return Response({'error': 'Something went wrong. Please try again later.'})
         return Response({'msg': 'Object created.'})
 
     @method_decorator(csrf_protect)
@@ -561,7 +570,8 @@ class CartItemViewSet(viewsets.ViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
         except Exception as e:
-            return Response({'error': str(e)})
+            print(str(e))
+            return Response({'error': 'Something went wrong. Please try again later.'})
         return Response({'msg': 'Object updated.'})
 
     @method_decorator(csrf_protect)
@@ -585,7 +595,8 @@ class CartItemViewSet(viewsets.ViewSet):
             serializer.is_valid(raise_exception=True)
             serializer.save()
         except Exception as e:
-            return Response({'error': str(e)})
+            print(str(e))
+            return Response({'error': 'Something went wrong. Please try again later.'})
         return Response({'msg': 'Object updated.'})
 
     @method_decorator(csrf_protect)
@@ -725,7 +736,8 @@ class CheckCheckoutSession(GenericAPIView):
         try:
             stripe.checkout.Session.retrieve(checkout_id)  # session =
         except Exception as e:
-            return Response({'error': str(e)})
+            print(str(e))
+            return Response({'error': 'Something went wrong. Please try again later.'})
 
         # Get user using checkout session stored in local db
         user = models.CheckoutSession.objects.get(
@@ -779,7 +791,8 @@ class CancelCheckoutSession(GenericAPIView):
         try:
             stripe.checkout.Session.retrieve(checkout_id)  # session =
         except Exception as e:
-            return Response({'error': str(e)})
+            print(str(e))
+            return Response({'error': 'Something went wrong. Please try again later.'})
 
         try:
             session = models.CheckoutSession.objects.get(

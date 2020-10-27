@@ -26,8 +26,9 @@ SECRET_KEY = '91n@ezz7qbe#b8&1(b1jwlqyan_ekul903+wcu*wt2u-rtp+wc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+PSEUDO_DEBUG = False
 
-DOMAIN_W_PORT = '52.56.46.154:80' if not DEBUG else 'localhost:80'
+DOMAIN_W_PORT = '18.184.104.251:80' if not PSEUDO_DEBUG else 'localhost:80'
 DOMAIN = DOMAIN_W_PORT[:DOMAIN_W_PORT.index(':')]
 DOMAIN_SCHEME = 'http://'
 DJANGO_PORT = ':8000'
@@ -141,7 +142,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-MEDIA_URL = 'http://' + (DOMAIN if DEBUG ==
+MEDIA_URL = 'http://' + (DOMAIN if PSEUDO_DEBUG ==
                          False else 'localhost') + DJANGO_PORT + '/media/'
 
 REST_FRAMEWORK = {
