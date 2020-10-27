@@ -152,7 +152,7 @@ class Address(models.Model):
     full_name = models.CharField(max_length=255)
     country = models.CharField(max_length=2, choices=variables.COUNTRIES)
     address_line_1 = models.CharField(max_length=255)
-    address_line_2 = models.CharField(max_length=255, null=True, blank=True, default=None)
+    address_line_2 = models.CharField(max_length=255, blank=True, default='')
     city = models.CharField(max_length=255)
     state_province_region = models.CharField(max_length=255)
     zip_code = models.CharField(max_length=10)
