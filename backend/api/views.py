@@ -51,6 +51,7 @@ class RugViewSet(viewsets.ViewSet):
         queryset = self.queryset.filter(group_by_age__tree_ids__contains=rug_group) | self.queryset.filter(
             group_by_type__tree_ids__contains=rug_group)
         queryset = queryset.filter(
+            variations__is_sample=False,
             variations__width_feet__range=width,
             variations__height_feet__range=height
         ).order_by(asc_or_desc+order_by).distinct()
