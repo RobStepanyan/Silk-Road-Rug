@@ -141,7 +141,7 @@ class RugVariation(models.Model):
         verbose_name="Is Sample", default=False)
 
     def __str__(self):
-        return self.rug.name + ' Variation'
+        return self.rug.name[:20] + f'... {self.width_feet}\'x{self.height_feet}\' ${self.price_usd}'
 
     class Meta:
         ordering = ['rug', 'width_feet']
@@ -214,7 +214,7 @@ class Order(AbstractCartItem):
         ('s', 'Sent'),
         ('d', 'Delivered'),
     )
-    ordered_at = models.DateTimeField(default=timezone.now)
+    ordered_at = models.DateTimeField(auto_now_add=True)
     payment_status = models.CharField(max_length=6, choices=PAYMENT_STATUSES)
     forecasted_arrival = models.DateTimeField(
         blank=True, null=True, default=None)

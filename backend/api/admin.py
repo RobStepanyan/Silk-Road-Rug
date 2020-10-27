@@ -60,10 +60,14 @@ class RugGroupAdmin(ImportExportModelAdmin):
     pass
 
 
+class OrderAdmin(admin.ModelAdmin):
+    readonly_fields = ('ordered_at',)
+
+
 admin.site.register(models.Address)
 admin.site.register(models.CartItem)
 admin.site.register(models.RugImage)
-admin.site.register(models.Order)
+admin.site.register(models.Order, OrderAdmin)
 admin.site.register(models.CheckoutSession)
 admin.site.register(models.ContactUs, ContactUsAdmin)
 admin.site.register(models.RugGroup, RugGroupAdmin)

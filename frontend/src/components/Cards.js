@@ -198,7 +198,7 @@ export function OrderCard(props) {
       <div className="row">
         <div className="col-12 col-sm-6 col-lg-3">
           <p>Ordered at</p>
-          <p> <Moment date={props.order[0]} format="DD MMM, YYYY (h:mma)" /></p>
+          <p> <Moment date={data.ordered_at} format="DD MMM, YYYY (h:mma)" /></p>
         </div>
         <div className="col-12 col-sm-6 col-lg-3">
           <p>Total Price</p>
