@@ -102,7 +102,7 @@ class SignUpView(GenericAPIView):
             user = serializer.save()
         except Exception as e:
             print(e.detail[0])
-            return Response({'error': 'Something went wrong. Please try again later.'})
+            return Response({'error': f'{e.detail[0]}'})
 
         try:
             # Send email with token
