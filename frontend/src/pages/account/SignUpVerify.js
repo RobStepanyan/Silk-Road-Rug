@@ -3,6 +3,7 @@ import Loading from '../../components/Loading';
 import axios from 'axios';
 import { apiURLs } from '../../other/variables';
 import { setJWTCookie } from '../../other/functions';
+import NavbarFooter from '../../components/NavbarFooter';
 
 export default class SignUpVerify extends React.Component {
   constructor() {
@@ -24,7 +25,7 @@ export default class SignUpVerify extends React.Component {
 
   render() {
     return (
-      <>
+      <NavbarFooter>
         {this.state.loading ? <Loading /> : ''}
         <div className="full-page-noscroll">
           <div className="centered-div">
@@ -42,7 +43,7 @@ export default class SignUpVerify extends React.Component {
 
           </div>
         </div>
-      </>
+      </NavbarFooter>
     )
   }
 

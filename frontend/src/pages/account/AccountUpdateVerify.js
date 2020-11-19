@@ -1,6 +1,7 @@
 import React from 'react';
 import Loading from '../../components/Loading';
 import axios from 'axios';
+import NavbarFooter from '../../components/NavbarFooter';
 
 export default class AccountUpdateVerify extends React.Component {
   constructor() {
@@ -20,7 +21,7 @@ export default class AccountUpdateVerify extends React.Component {
 
   render() {
     return (
-      <>
+      <NavbarFooter>
         {this.state.loading ? <Loading /> : ''}
         <div className="full-page-noscroll">
           <div className="centered-div">
@@ -38,7 +39,7 @@ export default class AccountUpdateVerify extends React.Component {
 
           </div>
         </div>
-      </>
+      </NavbarFooter>
     )
   }
 
