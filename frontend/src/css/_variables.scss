@@ -13,7 +13,7 @@ $transition-half: all $transition-duration / 2;
 
 // border related
 $radius: .25rem;
-$border-width: 2px;
+$border-width: 1px;
 
 
 // gutter
@@ -22,20 +22,20 @@ $margin: 15px;
 
 
 // Shadows
-$shadow-normal: 5px 5px 10px #191919;
-$shadow-neu:10px 10px 20px #0d0d0d,
--10px -10px 20px #333333;
+$shadow-normal: 5px 5px 10px var(--s-normal);
+$shadow-neu:10px 10px 20px var(--s-neu1),
+-10px -10px 20px var(--s-neu2);
 
-$shadow1 : 0 1px 3px rgba(0, 0, 0, 0.12),
-0 1px 2px rgba(0, 0, 0, 0.24);
-$shadow2 : 0 3px 6px rgba(0, 0, 0, 0.16),
-0 3px 6px rgba(0, 0, 0, 0.23);
-$shadow3 : 0 10px 20px rgba(0, 0, 0, 0.19),
-0 6px 6px rgba(0, 0, 0, 0.23);
-$shadow4 : 0 14px 28px rgba(0, 0, 0, 0.25),
-0 10px 10px rgba(0, 0, 0, 0.22);
-$shadow5 : 0 19px 38px rgba(0, 0, 0, 0.30),
-0 15px 12px rgba(0, 0, 0, 0.22);
+$shadow1 : 0 1px 3px var(--s-11),
+0 1px 2px var(--s-12);
+$shadow2 : 0 3px 6px var(--s-21),
+0 3px 6px var(--s-21);
+$shadow3 : 0 10px 20px var(--s-31),
+0 6px 6px var(--s-32);
+$shadow4 : 0 14px 28px var(--s-41),
+0 10px 10px var(--s-42);
+$shadow5 : 0 19px 38px var(--s-51),
+0 15px 12px var(--s-52);
 
 
 // Navbar

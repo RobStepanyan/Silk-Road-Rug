@@ -327,3 +327,7 @@ $height: 12px;
   font-weight: 400;
   text-align: center;
 }
+
+.rs-input-group:not(.rs-input-group-inside) {
+  border: $border-width solid;
+}

@@ -1,6 +1,32 @@
 import React from 'react';
+import { RadioGroup } from '../components/Form';
 
 export default class NavbarFooter extends React.Component {
+  constructor(props) {
+    super();
+    this.state = {
+      selectedTheme: 0, //0-light, 1-dark
+    }
+  }
+
+  handleThemeChange(id) {
+    if (id) {
+      document.getElementsByTagName('body')[0].classList.remove('light');
+    } else {
+      document.getElementsByTagName('body')[0].classList.add('light');
+    }
+    localStorage.setItem('theme', id)
+    this.setState({ selectedTheme: id })
+  }
+
+  componentDidMount() {
+    if (localStorage.getItem('theme') === '1') {
+      document.getElementsByTagName('body')[0].classList.remove('light');
+      this.setState({ selectedTheme: 1 })
+    } else {
+      document.getElementsByTagName('body')[0].classList.add('light');
+    }
+  }
 
   handleNavbarToggleClick(e) {
     e.preventDefault();
@@ -19,9 +45,14 @@ export default class NavbarFooter extends React.Component {
                 </span>
               </button>
             </div>
-            <a className="navbar-brand" href="/">
-              <img src="/img/srri-logo-reversed.png" alt="Silk Road Rug Logo" />
-            </a>
+            {this.state.selectedTheme === 0
+              ? <a className="navbar-brand" href="/">
+                <img src="/img/srri-logo.png" alt="Silk Road Rug Logo" />
+              </a>
+              : <a className="navbar-brand" href="/">
+                <img src="/img/srri-logo-reversed.png" alt="Silk Road Rug Logo" />
+              </a>
+            }
             <div className="ml-auto d-flex">
               <a href="/cart" className="navbar-icon">
                 <svg focusable="false" drole="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
@@ -150,6 +181,10 @@ export default class NavbarFooter extends React.Component {
                     </nav>
                   </div>
 
+                  {/* Theme */}
+                  <div className="sidenav-menu-heading">Theme</div>
+                  <RadioGroup name="theme" items={['Light', 'Dark']} onChange={(id) => this.handleThemeChange(id)} selectedId={this.state.selectedTheme} />
+
                 </div>
               </div>
             </nav>
@@ -162,7 +197,14 @@ export default class NavbarFooter extends React.Component {
               <div className="container">
                 <div className="row">
                   <div className="col-auto">
-                    <img src="/img/srri-logo-reversed-full-shrinked.png" width="195" alt="Silk Road Rug Logo" />
+                    {this.state.selectedTheme === 0
+                      ? <a className="navbar-brand" href="/">
+                        <img width="195" src="/img/srri-logo-full-shrinked.png" alt="Silk Road Rug Logo" />
+                      </a>
+                      : <a className="navbar-brand" href="/">
+                        <img width="195" src="/img/srri-logo-reversed-full-shrinked.png" alt="Silk Road Rug Logo" />
+                      </a>
+                    }
                   </div>
                   <div className="col-auto ">
                     <div className="footer-heading">Contact Information</div>

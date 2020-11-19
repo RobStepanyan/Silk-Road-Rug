@@ -1,172 +1,222 @@
 // Colors
-$dark0: #121212;
-$colors: (dark0: #121212,
-  dark1: mix($dark0, #fff, 95%),
-  dark2: mix($dark0, #fff, 93%),
-  dark3: mix($dark0, #fff, 92%),
-  dark4: mix($dark0, #fff, 91%),
-  dark5: mix($dark0, #fff, 89%),
-  dark6: mix($dark0, #fff, 88%),
-  dark7: mix($dark0, #fff, 86%),
-  dark8: mix($dark0, #fff, 85%),
-  black: #101010,
+body {
+  --back0: #121212;
+  --back0-trans1: #{rgba(#121212, 0.9)};
+  --back0-trans2: #{rgba(#121212, 0.8)};
+  --back1: #{mix(#121212, #fff, 95%)};
+  --back2: #{mix(#121212, #fff, 93%)};
+  --back3: #{mix(#121212, #fff, 92%)};
+  --back4: #{mix(#121212, #fff, 91%)};
+  --back4-trans: #{rgba(mix(#121212, #fff, 91%), .975)};
+  --back5: #{mix(#121212, #fff, 89%)};
+  --back6: #{mix(#121212, #fff, 88%)};
+  --back7: #{mix(#121212, #fff, 86%)};
+  --back8: #{mix(#121212, #fff, 85%)};
+  --black: #101010;
 
-  gray1: darken(#ACACAC, 20%),
-  gray2: darken(#ACACAC, 10%),
-  gray3: #ACACAC,
+  // static - same in light/dark themes
+  --static-black: #101010;
+  --static-white: #fff;
 
-  white: #fff,
-  bright1: rgba(#fff, .95),
-  bright2: rgba(#fff, .93),
-  bright3: rgba(#fff, .92),
-  bright4: rgba(#fff, .91),
-  bright5: rgba(#fff, .89),
-  bright6: rgba(#fff, .88),
-  bright7: rgba(#fff, .86),
-  bright8: rgba(#fff, .85),
+  --white: #fff;
 
+  --gray1: #{darken(#ACACAC, 20%)};
+  --gray2: #{darken(#ACACAC, 10%)};
+  --gray3: #ACACAC;
 
-  yellow1: darken(#facf5a, 20%),
-  yellow2: #facf5a, // Primary
-  primary: #facf5a,
+  --yellow1: #{darken(#facf5a, 20%)};
+  --yellow2: #facf5a; // Primary
+  --yellow3: #{lighten(#facf5a, 5%)};
+  --primary: #facf5a;
+  --primary-static: #facf5a;
 
-  red: #ff5959,
-  green: #009100,
-  blue1:#085f63,
-  blue2: #49beb7,
-);
+  --red: #ff5959;
+  --green: #009100;
+  --blue1: #085f63;
+  --blue2: #49beb7;
 
-@function c($color-name) {
-  @return map-get($colors, $color-name);
+  // gradients
+  --g-yellow: linear-gradient(145deg, var(--yellow3), var(--yellow1));
+  --g-gray: linear-gradient(180deg, var(--back0-trans2) 0%, var(--back0-trans1) 90%, var(--back1) 100%);
+
+  // shadows
+  --s-11: rgba(0, 0, 0, 0.12);
+  --s-12: rgba(0, 0, 0, 0.24);
+  --s-21: rgba(0, 0, 0, 0.16);
+  --s-22: rgba(0, 0, 0, 0.23);
+  --s-31: rgba(0, 0, 0, 0.19);
+  --s-32: rgba(0, 0, 0, 0.23);
+  --s-41: rgba(0, 0, 0, 0.25);
+  --s-42: rgba(0, 0, 0, 0.22);
+  --s-51: rgba(0, 0, 0, 0.30);
+  --s-52: rgba(0, 0, 0, 0.22);
+
+  --s-normal: #191919;
+  --s-neu1: #0d0d0d;
+  --s-neu2: #333;
 }
 
-$gradients: (yellow: linear-gradient(145deg, lighten(c(yellow2), 5%), c(yellow1)));
+body.light {
+  --back0: #{darken(#fff, 10%)};
+  --back0-trans1: #{rgba(darken(#fff, 10%), 0.7)};
+  --back0-trans2: #{rgba(darken(#fff, 10%), 0.6)};
+  --back1: #{darken(#fff, 9%)};
+  --back2: #{darken(#fff, 8%)};
+  --back3: #{darken(#fff, 7%)};
+  --back4: #{darken(#fff, 6%)};
+  --back4-trans: #{rgba(darken(#fff, 5%), .975)};
+  --back5: #{darken(#fff, 4%)};
+  --back6: #{darken(#fff, 3%)};
+  --back7: #{darken(#fff, 2%)};
+  --back8: #{darken(#fff, 1%)};
+  --black: #fff;
 
-@function g($gradient-name) {
-  @return map-get($gradients, $gradient-name);
+  --white: #101010;
+
+  --yellow2: #{darken(#545454, 10%)};
+  --primary: #{darken(#545454, 10%)};
+
+  --gray1: #{darken(#545454, 20%)};
+  --gray2: #{darken(#545454, 10%)};
+  --gray3: #545454;
+
+  // shadows
+  --s-normal: #19191941;
+  --s-neu1: #c8c8c8;
+  --s-neu2: #fff;
+
+  --red: #b50000;
 }
-
 
 // Surface colors, elevations
 body {
-  background: c(dark0)
+  background: var(--back0)
 }
 
 footer {
-  background: c(dark1)
+  background: var(--back1)
 }
 
 section {
-  background: c(dark1);
+  background: var(--back1);
   box-shadow: $shadow1;
 }
 
 hr {
-  background: c(dark2)
+  background: var(--back2)
 }
 
 .card,
 .filter-sidebar,
 .shop-filter-card,
 .breadcrumb {
-  background: c(dark2);
+  background: var(--back2);
   box-shadow: $shadow2;
 
   // .card-btn,
   .btn:not(.btn-primary) {
-    background: c(dark3);
+    background: var(--back3);
   }
 }
 
 #shop {
   .carousel-2 {
     margin: $margin 0;
-    background: c(dark2);
+    background: var(--back2);
     box-shadow: $shadow2;
   }
 }
 
 .card {
   hr {
-    background: c(dark7);
+    background: var(--back7);
   }
 }
 
 .dropdown-menu {
-  background: c(dark3);
+  background: var(--back3);
   box-shadow: $shadow1;
 
   .dropdown-item {
     &:hover {
-      background: c(dark5);
+      background: var(--back5);
     }
 
     &.active {
-      background-color: c(yellow2);
-      color: c(black) !important;
+      background-color: var(--yellow2);
+      color: var(--black) !important;
     }
   }
 }
 
 .note,
 .disclaimer {
-  color: c(white);
+  color: var(--white);
 }
 
 .note {
-  background-color: c(dark2);
+  background-color: var(--back2);
   box-shadow: $shadow2;
-  border-color: c(white) !important;
+  border-color: var(--white) !important;
 }
 
 .disclaimer {
-  background-color: c(dark2);
+  background-color: var(--back2);
   box-shadow: $shadow2;
-  border-color: c(red) !important;
+  border-color: var(--red) !important;
 }
 
 .sidenav {
-  background-color: rgba(c(dark4), .975);
+  background-color: var(--back4-trans);
   box-shadow: $shadow3;
   // backdrop-filter: blur(15px);
 
   .sidenav-menu-heading {
-    color: c(yellow2);
+    color: var(--primary);
   }
 
   .sidenav-svg-2 {
-    fill: c(white);
+    fill: var(--white);
   }
 
   .nav-link {
-    color: c(white);
+    color: var(--white);
     border-bottom: 2px solid transparent;
 
+    svg path {
+      fill: var(--white);
+    }
+
     &:hover {
-      border-color: c(white);
+      border-color: var(--white);
     }
   }
 
   .sidenav-collapse-arrow {
 
     svg {
-      color: rgba(#fff, .5);
+      color: var(--white);
+      opacity: .5;
     }
   }
 }
 
+.navbar-collapse {
+  background: var(--back3);
+}
+
 .navbar {
-  background: rgba(c(dark4), .975);
+  background: var(--back4-trans);
   box-shadow: $shadow4;
   // backdrop-filter: blur(15px);
 
   .navbar-icon {
     svg {
-      color: c(gray3);
+      color: var(--gray3);
       transition: $transition-half;
 
       &:hover {
-        color: c(white);
+        color: var(--white);
       }
     }
   }
@@ -176,13 +226,13 @@ hr {
     &,
     &:after,
     &:before {
-      background-color: c(gray3);
+      background-color: var(--gray3);
     }
   }
 }
 
 .heading {
-  color: c(white);
+  color: var(--white);
 }
 
 .hamburger:hover {
@@ -191,14 +241,14 @@ hr {
     body:not(.sidenav-toggled) &,
     &:after,
     &:before {
-      background-color: c(white);
+      background-color: var(--white);
     }
   }
 }
 
 @include media-breakpoint-down(sm) {
   .navbar-collapse {
-    background: c(dark3);
+    background: var(--back3);
     box-shadow: $shadow3;
   }
 }
@@ -214,33 +264,33 @@ a:not(.btn),
 small,
 .form-check-label,
 .text-white {
-  color: c(white) !important;
+  color: var(--white) !important;
 }
 
 .text-gray {
 
   &,
   * {
-    color: c(gray3) !important;
+    color: var(--gray3) !important;
   }
 }
 
 .text-red {
-  color: c(red) !important;
+  color: var(--red) !important;
 }
 
 .text-primary {
-  color: c(primary) !important;
+  color: var(--primary) !important;
 }
 
 small,
 i {
-  color: c(gray3) !important;
+  color: var(--gray3) !important;
 }
 
 .dropdown-heading,
 .shop-card:after {
-  color: c(primary);
+  color: var(--primary);
 }
 
 .shop-card {
@@ -255,8 +305,8 @@ select {
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,
   &:-webkit-autofill:active {
-    box-shadow: 0 0 0 30px c(dark5) inset !important;
-    -webkit-text-fill-color: c(white) !important;
+    box-shadow: 0 0 0 30px var(--back5) inset !important;
+    -webkit-text-fill-color: var(--white) !important;
     transition: $transition;
   }
 }
@@ -268,9 +318,9 @@ input[type="text"]:not(.rs-input),
 input[type="email"]:not(.rs-input),
 input[type="number"]:not(.rs-input),
 input[type="password"]:not(.rs-input) {
-  background-color: c(dark5) !important;
-  color: c(white) !important;
-  box-shadow: none;
+  background-color: var(--back5) !important;
+  color: var(--white) !important;
+  box-shadow: $shadow1;
 
   &:hover,
   &:focus {
@@ -279,7 +329,7 @@ input[type="password"]:not(.rs-input) {
 }
 
 .eye-icon svg {
-  color: c(white);
+  color: var(--white);
 }
 
 input[type="radio"],
@@ -287,16 +337,27 @@ input[type="checkbox"],
 .rs-slider-bar,
 .rs-input {
   transition: $transition;
-  background-color: c(dark1);
-  border-color: c(dark5) !important;
-  color: c(white);
+  background-color: var(--back1);
+  border-color: var(--back5) !important;
+  color: var(--white);
 
   &:hover {
-    background-color: c(dark0);
+    background-color: var(--back0);
   }
 
   &:checked:before {
-    background-color: c(primary);
+    background-color: var(--primary);
+  }
+}
+
+body.light {
+
+  input[type="radio"],
+  input[type="checkbox"],
+  .rs-slider-bar,
+  .rs-input-group,
+  .rs-input {
+    border-color: var(--primary) !important;
   }
 }
 
@@ -308,49 +369,49 @@ input[type="email"],
 input[type="number"],
 input[type="password"] {
   &.invalid {
-    border-bottom-color: c(red) !important;
+    border-bottom-color: var(--red) !important;
   }
 
   &.valid {
-    border-bottom-color: c(dark5) !important;
+    border-bottom-color: var(--back5) !important;
   }
 
 }
 
 select {
-  border-color: c(dark5) !important;
+  border-color: var(--back5) !important;
 }
 
 .rs-input-group {
-  border-color: c(dark5) !important;
+  border-color: var(--back5) !important;
 }
 
 // .card-btn {
-//   color: c(yellow2) !important;
+//   color: var(--yellow2) !important;
 // }
 
 .dropdown-item {
-  color: c(white) !important;
+  color: var(--white) !important;
 }
 
 
 .dropdown-heading {
-  color: c(primary);
+  color: var(--primary);
 }
 
 #checkoutToggle,
 #filterToggle {
-  background-color: c(dark2);
+  background-color: var(--back2);
   box-shadow: $shadow5;
-  border-image-source: g(yellow) !important;
+  border-image-source: var(--g-yellow) !important;
 
   h3,
   svg {
-    color: c(primary) !important;
+    color: var(--primary) !important;
   }
 
   hr {
-    background: c(dark5);
+    background: var(--back5);
   }
 }
 
@@ -361,36 +422,36 @@ img {
 
 ul.style-default {
   li:before {
-    background: c(primary);
+    background: var(--primary);
   }
 }
 
 .cart.card {
   p {
-    color: c(gray3);
+    color: var(--gray3);
   }
 }
 
 .price {
-  color: c(primary) !important;
+  color: var(--primary) !important;
 
   &.discounted {
-    color: c(gray3) !important;
+    color: var(--gray3) !important;
   }
 }
 
 .rs-slider-progress-bar {
-  background-color: c(primary);
+  background-color: var(--primary);
 }
 
 .rs-slider-handle {
   &::before {
-    background-color: c(dark5);
-    border-color: c(primary) !important;
+    background-color: var(--back5);
+    border-color: var(--primary) !important;
   }
 
   &:hover::before {
-    background-color: c(dark3);
+    background-color: var(--back3);
     box-shadow: $shadow1;
   }
 }
@@ -400,76 +461,76 @@ ul.style-default {
 }
 
 .rs-tooltip-inner {
-  color: c(primary);
-  background-color: c(dark5);
+  color: var(--primary);
+  background-color: var(--back5);
 }
 
 .rs-tooltip[class*='placement-top'] {
   .rs-tooltip-arrow {
-    border-top-color: c(dark5);
+    border-top-color: var(--back5);
   }
 }
 
 .rs-input-group-btn,
 .rs-input-group-addon,
 .btn-subtle {
-  color: c(white);
+  color: var(--white);
 }
 
 .rs-input-number-btn-group-vertical {
-  background: c(dark1);
+  background: var(--back1);
 }
 
 .loading:after {
-  background: c(dark0);
+  background: var(--back0);
 }
 
 .svg-btn,
 .close-btn {
 
   & svg {
-    color: c(white);
+    color: var(--white);
   }
 }
 
 .svg-btn:hover svg {
-  color: c(gray3);
+  color: var(--gray3);
 }
 
 .close-btn {
   &:hover svg {
-    color: c(red);
+    color: var(--red);
   }
 }
 
 .alert {
-  background: c(dark2);
+  background: var(--back2);
 
   &.danger {
-    color: c(red);
-    border-color: c(red) !important;
-    background: c(dark5);
+    color: var(--red);
+    border-color: var(--red) !important;
+    background: var(--back5);
   }
 
   &.success {
-    color: c(primary);
-    border-color: c(primary);
-    background: c(dark5);
+    color: var(--primary);
+    border-color: var(--primary);
+    background: var(--back5);
   }
 }
 
 ul a,
 a.with-underline {
-  color: c(white);
+  color: var(--white);
 
   &:hover {
-    border-color: c(white);
+    border-color: var(--white);
   }
 }
 
 .account.card {
   .angle {
-    color: c(white);
+    color: var(--white);
   }
 
   &:hover {
@@ -483,61 +544,72 @@ a.with-underline {
 
 .account-card-icon {
   svg {
-    color: c(primary);
+    color: var(--primary);
   }
 
   &.danger svg {
-    color: c(red);
+    color: var(--red);
   }
 }
 
 .address.card {
 
   &.new-address {
-    border-color: c(white) !important;
+    border-color: var(--white) !important;
 
     svg {
-      color: c(white);
+      color: var(--white);
     }
   }
 
   &.primary {
-    border-color: c(primary) !important;
+    border-color: var(--primary) !important;
   }
 }
 
 .yellow-square {
-  border-color: c(primary) !important;
+  border-color: var(--primary) !important;
 }
 
 .checkout-sidebar {
-  background-color: c(dark2);
+  background-color: var(--back2);
   box-shadow: $shadow2;
   border-color: transparent !important;
 
   hr {
-    background-color: c(dark5);
+    background-color: var(--back5);
   }
 
   &.toggled {
-    background-color: c(dark3);
+    background-color: var(--back3);
     box-shadow: $shadow3;
-    border-color: c(primary) !important;
+    border-color: var(--primary) !important;
 
     hr {
-      background-color: c(dark6);
+      background-color: var(--back6);
     }
   }
 
   svg:hover {
-    color: c(primary) !important;
+    color: var(--primary) !important;
   }
 }
 
 .breadcrumb li {
-  color: c(white);
+  color: var(--white);
 }
 
 .breadcrumb-item.active {
-  color: c(primary) !important;
+  color: var(--primary) !important;
+}
+
+.card.category-card h2 {
+  color: var(--static-white) !important;
+}
+
+body.light {
+  hr {
+    background: var(--static-black) !important;
+    opacity: .1;
+  }
 }

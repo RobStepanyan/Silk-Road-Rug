@@ -9,7 +9,10 @@
         bottom: 0;
         left: 0;
         height: 1px;
-        background: linear-gradient(90deg, rgba(#fff, 0.1) 0%, rgba(#fff, .5) 50%, rgba(#fff, 0.1) 100%);
+        background: linear-gradient(90deg,
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, .5) 50%,
+                rgba(255, 255, 255, 0.1) 100%);
         content: "";
     }
 
@@ -77,7 +80,7 @@
         }
 
         a {
-            color: c(white);
+            color: var(--white);
             padding: 0 !important;
             margin: 0 .9*$margin !important;
             text-transform: uppercase;
@@ -93,7 +96,7 @@
 
                 &:hover {
                     border-color: initial;
-                    color: c(black) !important;
+                    color: var(--black) !important;
                 }
             }
         }
@@ -113,6 +116,13 @@
             }
         }
     }
+}
+
+body.light .navbar:before {
+    background: linear-gradient(90deg,
+            rgba(#000, 0.3) 0%,
+            rgba(#000, .7) 50%,
+            rgba(#000, 0.3) 100%);
 }
 
 .hamburger {
@@ -183,7 +193,7 @@ body.sidenav-toggled .hamburger-inner {
         height: $hamburger-line-height;
         border-radius: $hamburger-line-height;
         transition: $transition;
-        background-color: c(gray3);
+        background-color: var(--gray3);
 
         .hamburger-inner:hover & {
             display: none;
@@ -281,7 +291,7 @@ body.sidenav-toggled .hamburger-inner {
     left: 0;
     width: 100%;
     height: 100%;
-    background: c(black);
+    background: var(--black);
     z-index: 1037;
     opacity: 0.5;
 }

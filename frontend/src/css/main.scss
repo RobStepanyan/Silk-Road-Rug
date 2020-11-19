@@ -9,7 +9,7 @@
 @import '../../node_modules/bootstrap/scss/_dropdown';
 @import '../../node_modules/bootstrap/scss/_nav';
 @import '../../node_modules/bootstrap/scss/bootstrap-grid';
-$breadcrumb-divider: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fal' data-icon='angle-right' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 512'%3E%3Cpath fill='rgb(250, 207, 90)' d='M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z'%3E%3C/path%3E%3C/svg%3E");
+$breadcrumb-divider: url("data:image/svg+xml,%3Csvg aria-hidden='true' focusable='false' data-prefix='fal' data-icon='angle-right' role='img' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 512'%3E%3Cpath fill='rgba(0, 0, 0, .5)' d='M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z'%3E%3C/path%3E%3C/svg%3E");
 @import '../../node_modules/bootstrap/scss/breadcrumb';
 @import '../../node_modules/bootstrap/scss/utilities/spacing';
 @import '../../node_modules/bootstrap/scss/utilities/position';
@@ -49,7 +49,7 @@ section {
     }
 
     &:not(#account) hr+p {
-        color: c(white);
+        color: var(--white);
         margin: 0;
         margin-bottom: $margin;
         text-align: center;
@@ -118,7 +118,7 @@ section {
 .sub-heading {
     font-weight: bold;
     font-size: 1rem;
-    color: c(gray3);
+    color: var(--gray3);
     margin-bottom: .5*$margin;
 }
 
@@ -163,7 +163,7 @@ section {
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(180deg, rgba(c(dark0), 0.8) 0%, rgba(c(dark0), 0.9) 90%, rgba(c(dark1), 1) 100%);
+        background: var(--g-gray);
     }
 
     &+.angle {
@@ -184,7 +184,7 @@ section {
 
         svg {
             height: 100%;
-            color: (white);
+            color: var(--white);
             transform: rotate(90deg);
             margin: auto;
         }
@@ -215,7 +215,7 @@ footer {
         font-size: 1rem;
         text-transform: uppercase;
         font-weight: bold;
-        color: c(yellow2);
+        color: var(--primary);
     }
 
     .col-auto {
@@ -226,7 +226,7 @@ footer {
         line-height: 3rem;
         text-align: right;
         font-size: .75rem;
-        color: c(white);
+        color: var(--white);
         letter-spacing: 0;
     }
 }
@@ -235,7 +235,7 @@ ul {
     li {
         font-size: 1rem;
         text-transform: uppercase;
-        color: c(white);
+        color: var(--white);
         // For icons
         align-items: flex-end;
         display: flex;
@@ -243,7 +243,7 @@ ul {
 
     svg {
         height: 1rem;
-        fill: c(white);
+        fill: var(--white);
         margin-right: .25*$margin;
     }
 
@@ -283,7 +283,7 @@ a.with-underline {
     }
 
     .card-text {
-        color: c(white);
+        color: var(--white);
         font-weight: normal;
     }
 }
@@ -295,7 +295,7 @@ a.with-underline {
 
     .card-heading {
         border: 0;
-        border-bottom: 1px solid c(gray3);
+        border-bottom: 1px solid var(--gray3);
         padding-bottom: $padding / 3;
     }
 }
@@ -400,6 +400,17 @@ a.with-underline {
     content: url('../img/right-icon.png');
 }
 
+body.light {
+    .slick-prev:before {
+        content: url('../img/left-icon-reversed.png');
+    }
+
+    .slick-next:before {
+        content: url('../img/right-icon-reversed.png');
+    }
+
+}
+
 ul.style-default {
     margin: $margin 0;
     padding-left: 2*$padding;
@@ -439,7 +450,7 @@ ul.small {
             width: .25rem;
             height: .25rem;
             border-radius: 50%;
-            background: c(red);
+            background: var(--red);
         }
 
         small {
@@ -525,7 +536,7 @@ ul.small {
     border: 2px solid;
     border-image-slice: 1;
     cursor: pointer;
-    transition: $transition;
+    transition: opacity $transition-duration, box-shadow $transition-duration;
 
     &:active {
         box-shadow: none;
@@ -912,6 +923,11 @@ h3.required:after {
     }
 }
 
+body.light .loading:before {
+    border-color: var(--static-black) !important;
+    border-top-color: transparent !important;
+}
+
 .overflow-hidden {
     height: 100%;
     width: 100%;
@@ -967,7 +983,7 @@ footer img {
 .alert {
     padding: $padding;
     margin: $margin 0;
-    border: 2px solid transparent;
+    border: $border-width solid transparent;
     transition: $transition;
 }
 
@@ -1138,7 +1154,7 @@ footer img {
         display: flex;
         align-items: center;
         justify-content: center;
-        backdrop-filter: brightness(.45);
+        backdrop-filter: brightness(.65);
 
         h2 {
             text-align: center;
@@ -1147,7 +1163,7 @@ footer img {
 
     &:hover {
         .heading-container {
-            backdrop-filter: brightness(.7);
+            backdrop-filter: brightness(.75);
         }
     }
 }

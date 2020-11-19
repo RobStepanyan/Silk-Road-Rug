@@ -9,12 +9,13 @@
     }
 
     margin: 0 .5*$margin;
-    transition: $transition;
+    transition: box-shadow $transition-duration;
     font-weight: bold;
-    color: c(black);
-    border: 2px solid;
+    color: var(--static-black);
+    border: $border-width solid;
     border-image-slice: 1; // for gradient
     cursor: pointer;
+    box-shadow: $shadow1;
 
     @include media-breakpoint-up(sm) {
         & {
@@ -40,14 +41,20 @@
 }
 
 .btn-primary {
-    background: g(yellow);
-    border-image-source: g(yellow);
+    background: var(--g-yellow);
+    border-image-source: var(--g-yellow);
+}
+
+body.light .btn {
+    border-image-source: unset;
+    border-color: var(--static-black);
+    color: var(--static-black);
 }
 
 .btn-secondary {
     background: transparent;
-    border-image-source: g(yellow);
-    color: c(yellow2);
+    border-image-source: var(--g-yellow);
+    color: var(--yellow2);
 }
 
 .btn-file-upload {
@@ -90,7 +97,7 @@
 //         height: 0;
 //         border-left: 5px solid transparent;
 //         border-right: 5px solid transparent;
-//         border-top: 5px solid c(yellow2);
+//         border-top: 5px solid var(--yellow2);
 //         transition: $transition-half;
 //     }
 // }
@@ -107,7 +114,7 @@
         display: inline-block;
         border-bottom: 5px solid transparent;
         border-top: 5px solid transparent;
-        border-right: 5px solid c(primary);
+        border-right: 5px solid var(--primary);
         margin-right: $margin * 2 / 3;
     }
 }
